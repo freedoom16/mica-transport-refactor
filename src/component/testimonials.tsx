@@ -32,7 +32,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="testimonials" className="py-20  lg:py-20 px-10 bg-gray-900">
+    <section id="reviews" className="py-20  lg:py-20 px-10 bg-gray-900">
       <div className="container mx-auto">
         <p className="uppercase tracking-wider mb-8 text-white text-center">
           What customers are saying

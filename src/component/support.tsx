@@ -4,7 +4,7 @@ const CustomContentSection = () => {
   return (
     <section
       className="relative w-full h-[500px] bg-gray-700 mx-auto flex flex-col md:flex-row items-center justify-center py-20 px-8"
-      id="lp-pom-block-226"
+      id="support"
     >
       {/* Left Column: Title */}
       <div

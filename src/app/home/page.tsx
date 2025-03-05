@@ -5,7 +5,7 @@ import Footer from "@/component/footer";
 import Home from "@/component/home";
 import NavBar from "@/component/navbar";
 import ServicesSection from "@/component/ourService";
-import CustomContentSection from "@/component/quote";
+import CustomContentSection from "@/component/support";
 import Testimonials from "@/component/testimonials";
 import React from "react";
 

@@ -2,7 +2,10 @@ import React from "react";
 
 const ServicesSection = () => {
   return (
-    <section className="relative bg-gray-900 text-white py-16 ">
+    <section
+      id="our-service"
+      className="relative bg-gray-900 text-white py-16 "
+    >
       {/* Section Container */}
       <div className="container mx-auto text-center">
         {/* Title */}
