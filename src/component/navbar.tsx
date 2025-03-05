@@ -96,7 +96,7 @@ export default function NavBar(props: INavBarProps) {
       {isMenuOpen && (
         <div
           id="lp-pom-box-357"
-          className="md:hidden fixed top-0 left-0 bg-black bg-opacity-80 w-full h-[500px] z-30 flex flex-col items-center pt-4"
+          className="md:hidden fixed top-0 left-0 bg-gray-800 w-full h-[500px] z-30 flex flex-col items-center pt-4"
         >
           <div className="flex justify-between items-center w-full px-6">
             {/* Close Button */}

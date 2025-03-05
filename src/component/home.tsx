@@ -1,4 +1,5 @@
 import * as React from "react";
+import FeaturesBox from "./featureBox";
 
 export interface IHomeProps {}
 
@@ -6,7 +7,7 @@ export default function Home(props: IHomeProps) {
   return (
     <div
       id="section-1"
-      className="relative block w-full h-screen mx-auto bg-black/20 bg-center bg-cover bg-no-repeat"
+      className="relative block w-full h-[762px] mx-auto bg-black/20 bg-center bg-cover bg-no-repeat"
       style={{
         backgroundImage:
           "url(https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/8e6cf7b9-bg_1000000000000000000028.png)",
@@ -32,6 +33,8 @@ export default function Home(props: IHomeProps) {
           </p>
         </div>
       </div>
+
+      <FeaturesBox />
     </div>
   );
 }
