@@ -1,7 +1,12 @@
 "use client";
 
+import SectionOne from "@/component/aboutUs";
+import Footer from "@/component/footer";
 import Home from "@/component/home";
 import NavBar from "@/component/navbar";
+import ServicesSection from "@/component/ourService";
+import CustomContentSection from "@/component/support";
+import Testimonials from "@/component/testimonials";
 import React from "react";
 
 const BlockComponent: React.FC = () => {
@@ -14,28 +19,19 @@ const BlockComponent: React.FC = () => {
       <Home />
 
       {/* Section 2 */}
-      <div
-        id="section-2"
-        className="h-[600px] flex items-center justify-center bg-gray-800 text-white"
-      >
-        <p className="text-xl">This is Section 2</p>
-      </div>
+      <SectionOne />
 
       {/* Section 3 */}
-      <div
-        id="section-3"
-        className="h-[600px] flex items-center justify-center bg-gray-900 text-white"
-      >
-        <p className="text-xl">This is Section 3</p>
-      </div>
+      <ServicesSection />
 
       {/* Section 4 */}
-      <div
-        id="section-4"
-        className="h-[600px] flex items-center justify-center bg-black text-white"
-      >
-        <p className="text-xl">This is Section 4</p>
-      </div>
+      <Testimonials />
+
+      {/* Section 5 */}
+      <CustomContentSection />
+
+      {/* footer  */}
+      <Footer />
     </div>
   );
 };

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCar, faPhone } from "@fortawesome/free-solid-svg-icons";
 export interface INavBarProps {}
 
 export default function NavBar(props: INavBarProps) {
@@ -9,31 +11,34 @@ export default function NavBar(props: INavBarProps) {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   return (
     <div>
-      <nav className="fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center bg-transparent z-20">
+      <nav className="fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center bg-white  z-20">
         {/* Brand Logo */}
-        <div className="text-white text-2xl font-bold font-montserrat mx-auto md:mx-0">
-          Mica Transportion
+        <div className=" text-black text-2xl font-bold font-montserrat mx-auto md:mx-0">
+          <a href="/#home">Mica Transportion</a>
         </div>
 
         {/* Desktop Navigation Links */}
-        <ul className="hidden md:flex gap-6 text-white text-lg font-medium">
+        <ul className="hidden md:flex gap-6 text-gray-900 text-lg font-medium">
           <li>
-            <a href="#section-1" className="hover:text-gray-300 cursor-pointer">
+            <a href="/#about-us" className="hover:text-gray-300 cursor-pointer">
               About Us
             </a>
           </li>
           <li>
-            <a href="#section-2" className="hover:text-gray-300 cursor-pointer">
+            <a
+              href="/#our-service"
+              className="hover:text-gray-300 cursor-pointer"
+            >
               Our Service
             </a>
           </li>
           <li>
-            <a href="#section-3" className="hover:text-gray-300 cursor-pointer">
+            <a href="/#support" className="hover:text-gray-300 cursor-pointer">
               Support
             </a>
           </li>
           <li>
-            <a href="#section-4" className="hover:text-gray-300 cursor-pointer">
+            <a href="/#reviews" className="hover:text-gray-300 cursor-pointer">
               Review
             </a>
           </li>
@@ -41,7 +46,7 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile Navbar toggle */}
         <button
-          className="md:hidden text-white text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold"
+          className="md:hidden md:text-white text-black text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold"
           onClick={toggleMenu}
         >
           &#9776;
@@ -51,23 +56,12 @@ export default function NavBar(props: INavBarProps) {
         <div className="flex gap-4 items-center md:hidden">
           <a
             href="tel:+18554802466"
-            className="text-white hover:text-gray-300 text-lg"
+            className="text-black hover:text-gray-300 text-lg"
           >
-            <img
-              src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/02e671f4-ico-phone.svg"
-              alt="Phone Icon"
-              className="w-6 h-6"
-            />
+            <FontAwesomeIcon icon={faPhone} className="text-black w-6 h-6" />
           </a>
-          <a
-            href="#lp-pom-box-274"
-            className="text-white hover:text-gray-300 text-lg"
-          >
-            <img
-              src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/c013cde9-ico-location.svg"
-              alt="Car Icon"
-              className="w-6 h-6"
-            />
+          <a href="/#quoet" className="text-black hover:text-gray-300 text-lg">
+            <FontAwesomeIcon icon={faCar} className="text-black w-6 h-6" />{" "}
           </a>
         </div>
 
@@ -75,18 +69,19 @@ export default function NavBar(props: INavBarProps) {
         <div className="hidden md:flex gap-6 items-center">
           <div>
             <a
-              href="tel:+18554802466"
-              className="text-white text-base font-normal font-montserrat hover:text-gray-300"
+              href="tel:+1234567890"
+              className="text-black text-base font-normal font-montserrat hover:text-gray-200"
             >
+              <FontAwesomeIcon icon={faPhone} className="px-2" />
               (855) 480-2466
             </a>
           </div>
           <div>
             <a
-              href="#lp-pom-box-274"
-              className="text-[#d9a682] text-sm font-semibold font-montserrat hover:text-gray-300"
+              href="/#quote"
+              className="text-black text-base font-bold font-montserrat hover:text-blue-600"
             >
-              Request a quote
+              <FontAwesomeIcon icon={faCar} className="px-2" /> Request a quote
             </a>
           </div>
         </div>
@@ -96,7 +91,7 @@ export default function NavBar(props: INavBarProps) {
       {isMenuOpen && (
         <div
           id="lp-pom-box-357"
-          className="md:hidden fixed top-0 left-0 bg-black bg-opacity-80 w-full h-[500px] z-30 flex flex-col items-center pt-4"
+          className="md:hidden fixed top-0 left-0 bg-gray-800 w-full h-[500px] z-30 flex flex-col items-center pt-4"
         >
           <div className="flex justify-between items-center w-full px-6">
             {/* Close Button */}
@@ -117,28 +112,28 @@ export default function NavBar(props: INavBarProps) {
           {/* Mobile Navigation Links */}
           <div className="flex flex-col gap-8 items-center text-white text-lg">
             <a
-              href="#section-1"
+              href="/#about-us"
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
               About Us
             </a>
             <a
-              href="#section-2"
+              href="/#our-service"
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
               Our Service
             </a>
             <a
-              href="#section-3"
+              href="/#support"
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
               Support
             </a>
             <a
-              href="#section-4"
+              href="/#review"
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
@@ -152,7 +147,7 @@ export default function NavBar(props: INavBarProps) {
               (855) 480-2466
             </a>
             <a
-              href="#lp-pom-box-274"
+              href="/#quote"
               className="text-[#d9a682] text-sm font-semibold font-montserrat hover:text-gray-300"
               onClick={toggleMenu}
             >
