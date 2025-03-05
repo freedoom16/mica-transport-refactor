@@ -11,38 +11,65 @@ export default function NavBar(props: INavBarProps) {
     <div>
       <nav className="fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center bg-transparent z-20">
         {/* Brand Logo */}
-        <div className="text-white text-2xl font-bold font-montserrat">
-          BrandLogo
+        <div className="text-white text-2xl font-bold font-montserrat mx-auto md:mx-0">
+          Mica Transportion
         </div>
 
         {/* Desktop Navigation Links */}
         <ul className="hidden md:flex gap-6 text-white text-lg font-medium">
           <li>
             <a href="#section-1" className="hover:text-gray-300 cursor-pointer">
-              Section 1
+              About Us
             </a>
           </li>
           <li>
             <a href="#section-2" className="hover:text-gray-300 cursor-pointer">
-              Section 2
+              Our Service
             </a>
           </li>
           <li>
             <a href="#section-3" className="hover:text-gray-300 cursor-pointer">
-              Section 3
+              Support
             </a>
           </li>
           <li>
             <a href="#section-4" className="hover:text-gray-300 cursor-pointer">
-              Section 4
+              Review
             </a>
           </li>
         </ul>
 
         {/* Mobile Navbar toggle */}
-        <button className="md:hidden text-white text-2xl" onClick={toggleMenu}>
+        <button
+          className="md:hidden text-white text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold"
+          onClick={toggleMenu}
+        >
           &#9776;
         </button>
+
+        {/* Mobile icons display  */}
+        <div className="flex gap-4 items-center md:hidden">
+          <a
+            href="tel:+18554802466"
+            className="text-white hover:text-gray-300 text-lg"
+          >
+            <img
+              src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/02e671f4-ico-phone.svg"
+              alt="Phone Icon"
+              className="w-6 h-6"
+            />
+          </a>
+          <a
+            href="#lp-pom-box-274"
+            className="text-white hover:text-gray-300 text-lg"
+          >
+            <img
+              src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/c013cde9-ico-location.svg"
+              alt="Car Icon"
+              className="w-6 h-6"
+            />
+          </a>
+        </div>
 
         {/* Phone Number and Request a Quote (Desktop) */}
         <div className="hidden md:flex gap-6 items-center">
@@ -69,13 +96,23 @@ export default function NavBar(props: INavBarProps) {
       {isMenuOpen && (
         <div
           id="lp-pom-box-357"
-          className="md:hidden fixed top-0 left-0 bg-black bg-opacity-80 w-full h-full z-30 flex flex-col items-center pt-20"
+          className="md:hidden fixed top-0 left-0 bg-black bg-opacity-80 w-full h-[500px] z-30 flex flex-col items-center pt-4"
         >
-          <div className="flex justify-between w-full px-8">
+          <div className="flex justify-between items-center w-full px-6">
+            {/* Close Button */}
             <button onClick={toggleMenu} className="text-white text-3xl">
               &times;
             </button>
+
+            {/* Centered Logo */}
+            <div className="absolute left-2/3 transform -translate-x-1/2 text-white text-2xl font-bold font-montserrat w-2/3 ">
+              {/* Replace with your actual logo image */}
+              Mica Transportion
+            </div>
           </div>
+
+          {/* Line Below the Logo */}
+          <div className="w-full border-t border-gray-500 my-4"></div>
 
           {/* Mobile Navigation Links */}
           <div className="flex flex-col gap-8 items-center text-white text-lg">
@@ -84,28 +121,28 @@ export default function NavBar(props: INavBarProps) {
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
-              Section 1
+              About Us
             </a>
             <a
               href="#section-2"
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
-              Section 2
+              Our Service
             </a>
             <a
               href="#section-3"
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
-              Section 3
+              Support
             </a>
             <a
               href="#section-4"
               className="hover:text-gray-300"
               onClick={toggleMenu}
             >
-              Section 4
+              Review
             </a>
             <a
               href="tel:+18554802466"
