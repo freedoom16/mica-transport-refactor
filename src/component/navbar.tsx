@@ -9,9 +9,9 @@ export default function NavBar(props: INavBarProps) {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   return (
     <div>
-      <nav className="fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center bg-transparent z-20">
+      <nav className="fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center bg-white md:bg-transparent z-20">
         {/* Brand Logo */}
-        <div className="text-white text-2xl font-bold font-montserrat mx-auto md:mx-0">
+        <div className="md:text-white text-black text-2xl font-bold font-montserrat mx-auto md:mx-0">
           Mica Transportion
         </div>
 
@@ -41,7 +41,7 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile Navbar toggle */}
         <button
-          className="md:hidden text-white text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold"
+          className="md:hidden md:text-white text-black text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold"
           onClick={toggleMenu}
         >
           &#9776;
