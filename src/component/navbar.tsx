@@ -1,6 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPhone, faCarSide } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebookF,
+  faTwitter,
+  faInstagram,
+  faLinkedin,
+  faYoutube,
+  faPhoenixFramework,
+} from "@fortawesome/free-brands-svg-icons";
+import { faCar, faCarSide, faPhone } from "@fortawesome/free-solid-svg-icons";
 export interface INavBarProps {}
 
 export default function NavBar(props: INavBarProps) {
@@ -53,21 +64,18 @@ export default function NavBar(props: INavBarProps) {
             href="tel:+18554802466"
             className="text-white hover:text-gray-300 text-lg"
           >
-            <img
-              src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/02e671f4-ico-phone.svg"
-              alt="Phone Icon"
-              className="w-6 h-6"
-            />
+            <FontAwesomeIcon icon={faPhone} className="text-black w-6 h-6" />
           </a>
           <a
             href="#lp-pom-box-274"
             className="text-white hover:text-gray-300 text-lg"
           >
-            <img
+            {/* <img
               src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/c013cde9-ico-location.svg"
               alt="Car Icon"
               className="w-6 h-6"
-            />
+            /> */}
+            <FontAwesomeIcon icon={faCar} className="text-black w-6 h-6" />{" "}
           </a>
         </div>
 
@@ -75,18 +83,19 @@ export default function NavBar(props: INavBarProps) {
         <div className="hidden md:flex gap-6 items-center">
           <div>
             <a
-              href="tel:+18554802466"
-              className="text-white text-base font-normal font-montserrat hover:text-gray-300"
+              href="tel:+1234567890"
+              className="text-white text-base font-normal font-montserrat hover:text-gray-200"
             >
+              <FontAwesomeIcon icon={faPhone} className="px-2" />
               (855) 480-2466
             </a>
           </div>
           <div>
             <a
               href="#lp-pom-box-274"
-              className="text-[#d9a682] text-sm font-semibold font-montserrat hover:text-gray-300"
+              className="text-white text-base font-bold font-montserrat hover:text-blue-600"
             >
-              Request a quote
+              <FontAwesomeIcon icon={faCar} className="px-2" /> Request a quote
             </a>
           </div>
         </div>
