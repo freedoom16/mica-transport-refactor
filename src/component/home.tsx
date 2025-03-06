@@ -9,28 +9,33 @@ export default function Home(props: IHomeProps) {
     <section id="home">
       <div
         id="section-1"
-        className="relative block w-full h-[762px] mx-auto bg-black/20 bg-center bg-cover bg-no-repeat"
+        className="relative block w-full h-[762px] mx-auto bg-black bg-opacity-70  bg-center bg-cover bg-no-repeat"
         style={{
           backgroundImage:
             "url(https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/8e6cf7b9-bg_1000000000000000000028.png)",
         }}
       >
         {/* Overlay */}
-        <div
+        {/* <div
           id="lp-pom-block-12-color-overlay"
           className="absolute inset-0"
+        ></div> */}
+        <div
+          id="lp-pom-block-12-color-overlay"
+          className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/10 opacity-70 lg:opacity-20"
         ></div>
+
         {/* Content */}
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-between py-16 px-4 h-full">
+        <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between py-16 px-4 h-full">
           {/* Left Section */}
           <div className="text-white max-w-[600px]">
-            <div id="lp-pom-text-481" className="mb-3 px-6">
-              <p className="text-[35px] md:text-[52px] font-extrabold leading-[77px] font-montserrat text-left">
+            <div id="lp-pom-text-481" className="mb-3 px-6 py-6">
+              <p className="text-[35px] md:text-[52px] font-extrabold leading-[50px]  md:leading-[77px] font-montserrat text-left md:text-left">
                 ENCLOSED AUTO TRANSPORT
               </p>
             </div>
-            <div id="lp-pom-text-482" className="mt-2 px-6">
-              <p className="text-[17px] md:text-[17px] font-normal leading-[29px] font-montserrat text-left">
+            <div id="lp-pom-text-482" className="mt-2 px-6 ">
+              <p className="text-[20px] md:text-[17px] font-semibold leading-[29px] font-montserrat text-left">
                 We will ensure your exotic or classic automobile is transported
                 in an enclosed car hauler with soft straps over the tires and
                 handled with the utmost care.
