@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 import QouetForm from "./quoetForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCar,
+  faPhone,
+  faShieldAlt,
+  faCheckCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const SectionOne = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -12,13 +19,15 @@ const SectionOne = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
-  const handleStepClick = (step: any) => {
-    setCurrentStep(step);
-  };
-
   const stepContents = [
     {
       title: "Booking an order is easy. You are always kept in the loop.",
+      // icon: (
+      //   <FontAwesomeIcon
+      //     icon={faCheckCircle}
+      //     className="text-green-500 w-6 h-6 mr-3"
+      //   />
+      // ),
       points: [
         "Agree to your order electronically",
         "Know when your carrier is confirmed",
@@ -30,6 +39,12 @@ const SectionOne = () => {
     },
     {
       title: "You choose how you would like to communicate with us:",
+      // icon: (
+      //   <FontAwesomeIcon
+      //     icon={faPhone}
+      //     className="text-blue-500 w-6 h-6 mr-3"
+      //   />
+      // ),
       points: [
         "Available 24hrs a day, 7 days a week",
         "Phone",
@@ -40,6 +55,12 @@ const SectionOne = () => {
     {
       title:
         "We take the guesswork and verification out of your hands. This is supposed to be hassle and stress-free.",
+      // icon: (
+      //   <FontAwesomeIcon
+      //     icon={faShieldAlt}
+      //     className="text-yellow-500 w-6 h-6 mr-3"
+      //   />
+      // ),
       points: ["Licensed", "Bonded", "Insured"],
     },
   ];
@@ -48,18 +69,10 @@ const SectionOne = () => {
     <section id="about-us">
       <div className="w-full bg-gray-900 py-24">
         <div className="container mx-auto relative mt-16">
-          <section id="/#quote">
-            <div className="bg-gray-900 px-6 rounded-xl shadow-lg max-w-md w-full  md:mt-0 block md:hidden">
-              <p className="text-[20px]   font-bold  font-montserrat text-center">
-                Shipping Quote Calculator
-              </p>
-              <QouetForm />
-            </div>
-          </section>
           <div className="flex flex-col lg:flex-row items-center relative">
             {/* Image Section */}
             <div className="flex flex-col w-full lg:w-1/2 px-4">
-              <div className="text-center mt-8 ">
+              <div className="text-center mt-8">
                 <p
                   className="text-white font-semibold text-[45px] p-8"
                   style={{ lineHeight: "58px", fontFamily: "Spectral" }}
@@ -67,7 +80,7 @@ const SectionOne = () => {
                   About Us
                 </p>
               </div>
-              <div className="w-full mb-[-8px] ">
+              <div className="w-full mb-[-8px]">
                 <img
                   src="img/truck4.jpeg"
                   alt="Shiplux"
@@ -77,7 +90,7 @@ const SectionOne = () => {
             </div>
 
             {/* Steps Section */}
-            <div className="w-full lg:w-1/2 p-6 rounded-lg shadow-lg md:relative mt-12  lg:mt-[-200px] xl:mt-[-200px]  lg:ml-[-100px]">
+            <div className="w-full lg:w-1/2 p-6 rounded-lg shadow-lg md:relative mt-12 lg:mt-[-200px] xl:mt-[-200px] lg:ml-[-100px]">
               <div className="bg-gray-800 p-8">
                 <h2 className="text-center mb-8 text-white">
                   <span className="text-lg font-bold">{`0${currentStep}`}</span>
@@ -91,7 +104,7 @@ const SectionOne = () => {
                   className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300"
                   key={currentStep}
                 >
-                  <div className="des-text mb-8 w-full text-white">
+                  <div className="des-text mb-8 w-full text-white flex items-center">
                     {stepContents[currentStep - 1].title}
                   </div>
 
@@ -99,18 +112,32 @@ const SectionOne = () => {
                     {stepContents[currentStep - 1].points
                       .slice(0, 3)
                       .map((point, index) => (
-                        <div key={index} className="p mb-4 text-white">
-                          <span className="hyphen"></span> {point}
+                        <div
+                          key={index}
+                          className="p mb-4 text-white flex items-center"
+                        >
+                          <FontAwesomeIcon
+                            icon={faCheckCircle}
+                            className="text-green-500 w-4 h-4 mr-2"
+                          />
+                          {point}
                         </div>
                       ))}
                   </div>
 
-                  <div className="w-full md:w-1/2 ">
+                  <div className="w-full md:w-1/2">
                     {stepContents[currentStep - 1].points
                       .slice(3)
                       .map((point, index) => (
-                        <div key={index} className="p mb-4 text-white">
-                          <span className="hyphen"></span> {point}
+                        <div
+                          key={index}
+                          className="p mb-4 text-white flex items-center"
+                        >
+                          <FontAwesomeIcon
+                            icon={faCheckCircle}
+                            className="text-green-500 w-4 h-4 mr-2"
+                          />
+                          {point}
                         </div>
                       ))}
                   </div>
@@ -122,15 +149,13 @@ const SectionOne = () => {
                     <div className="flex items-center">
                       {[1, 2, 3].map((step) => (
                         <React.Fragment key={step}>
-                          {step !== 3 && (
-                            <div
-                              className={`color-step ${
-                                currentStep >= step
-                                  ? "bg-main-color"
-                                  : "bg-gray-500"
-                              } w-2 h-2 rounded-full mx-2`}
-                            ></div>
-                          )}
+                          <div
+                            className={`color-step ${
+                              currentStep >= step
+                                ? "bg-main-color"
+                                : "bg-gray-500"
+                            } w-2 h-2 rounded-full mx-2`}
+                          ></div>
                         </React.Fragment>
                       ))}
                     </div>
