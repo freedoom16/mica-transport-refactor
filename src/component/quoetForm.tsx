@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAddQuoetsMutation } from "../../src/store/Api/quotesApi"; // Import your API hook
 
 const QouetForm: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -13,19 +14,26 @@ const QouetForm: React.FC = () => {
   const [vehicleModel, setVehicleModel] = useState("");
   const [vehicleType, setVehicleType] = useState("");
 
-  const phoneRegex =
-    /^(?:\+1\s?)?(\([2-9]{1}[0-9]{2}\)|[2-9]{1}[0-9]{2})[2-9]{1}[0-9]{2}[0-9]{4}(?:\s?x\d{1,4})?$/;
-
   // Step 3 fields
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
+  const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
+  const [paymentLink, setPaymentLink] = useState<string | null>(null);
+
+  const phoneRegex =
+    /^(?:\+1\s?)?(\([2-9]{1}[0-9]{2}\)|[2-9]{1}[0-9]{2})[2-9]{1}[0-9]{2}[0-9]{4}(?:\s?x\d{1,4})?$/;
+
   // Validation logic for each step
   const isStep1Valid = pickupLocation && deliveryLocation && shipmentDate;
   const isStep2Valid = vehicleYear && vehicleModel && vehicleType;
-  const isStep3Valid = firstName && lastName && email && phoneRegex.test(phone);
+  const isStep3Valid = firstName && lastName && email && phone;
+
+  // Use the mutation hook
+  const [addQuote, { isLoading, isSuccess, isError, error }] =
+    useAddQuoetsMutation();
 
   const nextStep = () => {
     if (
@@ -39,9 +47,48 @@ const QouetForm: React.FC = () => {
 
   const prevStep = () => setStep(step - 1);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const quoteData = {
+      pickup: pickupLocation,
+      delivery: deliveryLocation,
+      shipDate: shipmentDate,
+      firstName: firstName,
+      email: email,
+      phoneNumber: phone,
+      vehicleYear: parseInt(vehicleYear),
+      vehicleMake: vehicleModel, // Assuming the vehicle model is being sent as "make"
+      vehicleModel: vehicleModel,
+      transportType: vehicleType,
+      status: "pending", // Assuming 'pending' is a default status
+    };
+
+    try {
+      await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
+
+      // Reset the form or navigate to a confirmation page on success
+      setStep(1); // Optional: Reset form after submission
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  const handlePaymentMethodChange = (method: string) => {
+    setPaymentMethod(method);
+    if (method === "down_time" || method === "full_payment") {
+      setPaymentLink("https://payment.link/your-payment-url"); // Replace with actual payment link logic
+    } else {
+      setPaymentLink(null); // Clear the payment link if 'upon delivery' is selected
+    }
+  };
+
   return (
     <section id="quote">
-      <form className="max-w-lg mx-auto mt-10 bg-gray-800 p-6 rounded-lg shadow-lg">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-lg mx-auto mt-10 bg-gray-800 p-6 rounded-lg shadow-lg"
+      >
         {/* Step 1: Pickup, Delivery, and Shipment Date */}
         {step === 1 && (
           <div>
@@ -188,14 +235,6 @@ const QouetForm: React.FC = () => {
 
             <button
               type="button"
-              onClick={prevStep}
-              className="w-full px-4 py-2 mt-4 text-sm font-medium rounded-lg bg-gray-600 text-white hover:bg-gray-700"
-            >
-              Previous
-            </button>
-
-            <button
-              type="button"
               onClick={nextStep}
               disabled={!isStep2Valid}
               className={`w-full px-4 py-2 mt-4 text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
@@ -206,20 +245,27 @@ const QouetForm: React.FC = () => {
             >
               Next
             </button>
+            <button
+              type="button"
+              onClick={prevStep}
+              className="w-full px-4 py-2 mt-2 text-sm font-medium text-blue-600 hover:text-blue-800"
+            >
+              Back
+            </button>
           </div>
         )}
 
-        {/* Step 3: User Info */}
+        {/* Step 3: Contact Info */}
         {step === 3 && (
           <div>
-            <h2 className="text-lg font-bold text-white mb-4">User Info</h2>
+            <h2 className="text-lg font-bold text-white mb-4">Contact Info</h2>
             <div className="relative z-0 w-full mb-5 group">
               <input
                 type="text"
                 name="first_name"
                 id="first_name"
                 value={firstName}
-                onChange={(e: any) => setFirstName(e.target.value)}
+                onChange={(e) => setFirstName(e.target.value)}
                 className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
                 placeholder=" "
                 required
@@ -266,13 +312,13 @@ const QouetForm: React.FC = () => {
                 htmlFor="email"
                 className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
               >
-                Email
+                Email Address
               </label>
             </div>
 
             <div className="relative z-0 w-full mb-5 group">
               <input
-                type="tel"
+                type="text"
                 name="phone"
                 id="phone"
                 value={phone}
@@ -285,22 +331,9 @@ const QouetForm: React.FC = () => {
                 htmlFor="phone"
                 className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
               >
-                Phone
+                Phone Number
               </label>
-              {!phoneRegex.test(phone) && phone.length > 0 && (
-                <p className="text-sm text-red-500 mt-1">
-                  Please enter a valid phone number.
-                </p>
-              )}
             </div>
-
-            <button
-              type="button"
-              onClick={prevStep}
-              className="w-full px-4 py-2 mt-4 text-sm font-medium rounded-lg bg-gray-600 text-white hover:bg-gray-700"
-            >
-              Previous
-            </button>
 
             <button
               type="submit"
@@ -311,8 +344,15 @@ const QouetForm: React.FC = () => {
                   : "bg-gray-600 text-gray-400 cursor-not-allowed"
               }`}
             >
-              Submit
+              {isLoading ? "Submitting..." : "Submit"}
             </button>
+
+            {isSuccess && (
+              <div className="mt-4 text-green-500">
+                Quote added successfully!
+              </div>
+            )}
+            {isError && <div className="mt-4 text-red-500">Error:</div>}
           </div>
         )}
       </form>
