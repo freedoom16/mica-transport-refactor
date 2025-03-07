@@ -52,7 +52,7 @@ export const usersApi = createApi({
       invalidatesTags: ["User"],
     }),
     getQuoetsByID: builder.query<User | any, string>({
-      query: (userId) => `/quoets/${userId}`, // Adjust the URL if necessary
+      query: (userId) => `/bill-of-lading/${userId}`, // Adjust the URL if necessary
       providesTags: ["User"],
     }),
     updateQuoets: builder.mutation<

@@ -1,11 +1,17 @@
+"use client";
 import * as React from "react";
+import QouetFormTwo from "@/component/quotesFromTwo";
+import QouetFormThree from "@/component/quotesFromThree";
 
 export interface IAppProps {}
 
 function App(props: IAppProps) {
   return (
     <>
-      <div>form</div>
+      <div>
+        <QouetFormTwo />
+        <QouetFormThree />
+      </div>
     </>
   );
 }

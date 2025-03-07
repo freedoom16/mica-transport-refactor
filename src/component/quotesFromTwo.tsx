@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 // import { useRouter } from "next/navigation";
-import { useGetQuotesQuery } from "../../src/store/Api/quotesApi"; // Import your API hook
+import {
+  useGetQuoetsByIDQuery,
+  useGetQuotesQuery,
+} from "../../src/store/Api/quotesApi"; // Import your API hook
 import { useRouter, useSearchParams } from "next/navigation";
 
 const QuoteForm: React.FC = () => {
@@ -35,8 +38,9 @@ const QuoteForm: React.FC = () => {
     isLoading,
     isError,
     error,
-  } = useGetQuotesQuery(quoteId);
+  } = useGetQuoetsByIDQuery(quoteId);
 
+  console.log(quoteData);
   // Check if the quote data has loaded
   useEffect(() => {
     if (quoteData) {
