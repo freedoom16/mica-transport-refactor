@@ -1,8 +1,10 @@
-import * as React from "react";
 import { Suspense } from "react";
+
+import * as React from "react";
 import QouetFormTwo from "@/component/quotesFromTwo";
-import QouetFormThree from "@/component/quotesFromThree";
-import ViewQuoteForm from "@/component/driverFormQoutes";
+import ViewQuoteForm from "@/component/driverForm";
+import ViewQuoteForm1 from "@/component/driverFormQoutes";
+import ImageUpload from "@/component/driverUploadImage";
 
 export interface IAppProps {}
 
@@ -10,8 +12,9 @@ function App(props: IAppProps) {
   return (
     <>
       <Suspense>
+        <ViewQuoteForm1 />
         <ViewQuoteForm />
-        <QouetFormThree />
+        <ImageUpload />
       </Suspense>
     </>
   );

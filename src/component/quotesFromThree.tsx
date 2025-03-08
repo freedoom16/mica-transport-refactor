@@ -1,3 +1,4 @@
+"use client";
 import { useUpdateQuoetsMutation } from "@/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
 import React, { useState } from "react";
