@@ -1,80 +1,66 @@
-import React, { useState } from "react";
+import React from "react";
 
 interface ImageUploadProps {
   currentStep: number;
+  handleImageSelect: (step: string, image: File) => void;
+  selectedImages: any;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ currentStep }) => {
-  const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [isUploaded, setIsUploaded] = useState<boolean>(false);
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  currentStep,
+  handleImageSelect,
+  selectedImages,
+}) => {
+  const stepLabels = [
+    "front",
+    "back",
+    "left",
+    "right",
+    "top",
+    "dashboard",
+    "motor",
+    "behindDriver",
+  ];
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const stepLabel = stepLabels[currentStep];
+  const currentImage = selectedImages[stepLabel];
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setImage(file);
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
+      handleImageSelect(stepLabel, file);
     }
-  };
-
-  const handleUpload = () => {
-    if (image) {
-      setIsUploaded(true);
-      alert("Image uploaded successfully!");
-    } else {
-      alert("Please select an image before uploading.");
-    }
-  };
-
-  const getStepLabel = () => {
-    const stepLabels = [
-      "Front View",
-      "Back View",
-      "Left Side View",
-      "Right Side View",
-      "Top View",
-      "Dashboard",
-      "Motor",
-      "Behind Driver",
-    ];
-    return stepLabels[currentStep];
   };
 
   return (
     <div className="mb-6">
-      <div className="flex justify-center mb-4">
-        {imagePreview ? (
-          <img
-            src={imagePreview}
-            alt="Preview"
-            className="w-32 h-32 object-cover rounded-lg"
-          />
-        ) : (
-          <div className="w-32 h-32 bg-gray-500 flex items-center justify-center rounded-lg text-white">
-            No Preview
-          </div>
-        )}
-      </div>
       <div className="text-white text-center mb-4">
-        <h3 className="font-semibold">{getStepLabel()}</h3>
+        <h3 className="font-semibold">
+          Upload {stepLabel.charAt(0).toUpperCase() + stepLabel.slice(1)} View
+        </h3>
       </div>
       <input
         type="file"
         accept="image/*"
-        onChange={handleImageChange}
+        onChange={handleFileChange}
         className="block mb-4 w-full text-sm text-white bg-transparent border-2 border-gray-500 p-2 rounded-lg"
       />
-      {isUploaded ? (
-        <div className="text-green-500 mb-4">Image uploaded!</div>
-      ) : (
-        <button
-          onClick={handleUpload}
-          className="py-2 px-4 bg-blue-500 text-white font-bold rounded-lg w-full"
-        >
-          Upload {getStepLabel()}
-        </button>
+      {currentImage && (
+        <div className="flex justify-center mb-4">
+          <img
+            src={URL.createObjectURL(currentImage)}
+            alt={stepLabel}
+            className="w-32 h-32 object-cover rounded-lg"
+          />
+        </div>
       )}
+      <div className="text-white text-center">
+        {currentImage ? (
+          <p className="text-green-500">Image selected!</p>
+        ) : (
+          <p className="text-red-500">Please select an image</p>
+        )}
+      </div>
     </div>
   );
 };
