@@ -11,8 +11,7 @@ export default function Home(props: IHomeProps) {
         id="section-1"
         className="relative block w-full h-[762px] mx-auto bg-black bg-opacity-70  bg-center bg-cover bg-no-repeat"
         style={{
-          backgroundImage:
-            "url(https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/8e6cf7b9-bg_1000000000000000000028.png)",
+          backgroundImage: "url(img/truck2.jpg)",
         }}
       >
         {/* Overlay */}
@@ -22,7 +21,7 @@ export default function Home(props: IHomeProps) {
         ></div> */}
         <div
           id="lp-pom-block-12-color-overlay"
-          className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/10 opacity-70 lg:opacity-20"
+          className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/90 to-black/50 opacity-70 lg:opacity-40"
         ></div>
 
         {/* Content */}

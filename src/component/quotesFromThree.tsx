@@ -5,10 +5,16 @@ import { useDispatch } from "react-redux";
 
 const MultiStepTransportationForm = () => {
   const [step, setStep] = useState(1);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+
   const [updateQuoets] = useUpdateQuoetsMutation();
   const searchParams: any = useSearchParams();
   const userId = searchParams.get("id");
   console.log("user ID " + userId);
+
+  const API_KEY = "f20bdd1c4a7b4139b83d4901b95d6dc4"; // Replace with your OpenCage API key
+  const API_URL = "https://api.opencagedata.com/geocode/v1/json";
 
   const [formData, setFormData] = useState<any>({
     pickupName: "",
@@ -36,6 +42,35 @@ const MultiStepTransportationForm = () => {
       ...prevState,
       [name]: value,
     }));
+
+    if (name === "pickupAddress" && value.length > 2) {
+      console.log(value);
+      fetchSuggestions(value);
+    } else if (name === "pickupAddress") {
+      setSuggestions([]);
+    }
+  };
+
+  const fetchSuggestions = async (query: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        `${API_URL}?key=${API_KEY}&q=${encodeURIComponent(
+          query
+        )}&pretty=1&no_annotations=1&limit=5`
+      );
+      const data = await response.json();
+      setSuggestions(data.results.map((result: any) => result.formatted));
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSuggestionClick = (address: string) => {
+    setFormData((prev: any) => ({ ...prev, pickupAddress: address }));
+    setSuggestions([]);
   };
 
   const handleNext = () => {
@@ -89,6 +124,21 @@ const MultiStepTransportationForm = () => {
                     .replace(/([A-Z])/g, " $1")
                     .replace(/^\w/, (c) => c.toUpperCase())}
                 </label>
+
+                {/* Suggestion Dropdown for pickupAddress */}
+                {key === "pickupAddress" && suggestions.length > 0 && (
+                  <div className="relative z-10 w-full mt-2 bg-gray-800 border border-gray-300 rounded-lg shadow-lg">
+                    {suggestions.map((suggestion, index) => (
+                      <div
+                        key={index}
+                        onClick={() => handleSuggestionClick(suggestion)}
+                        className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-white"
+                      >
+                        {suggestion}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
