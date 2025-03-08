@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import QouetForm from "./quoetForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -69,6 +70,14 @@ const SectionOne = () => {
     <section id="about-us">
       <div className="w-full bg-gray-900 py-24">
         <div className="container mx-auto relative mt-16">
+          <section id="/#quote">
+            <div className="bg-gray-900 px-6 rounded-xl shadow-lg max-w-md w-full  md:mt-0 block md:hidden">
+              <p className="text-[20px]   font-bold  font-montserrat text-center">
+                Shipping Quote Calculator
+              </p>
+              <QouetForm />
+            </div>
+          </section>
           <div className="flex flex-col lg:flex-row items-center relative">
             {/* Image Section */}
             <div className="flex flex-col w-full lg:w-1/2 px-4">
