@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { useAddQuoetsMutation } from "../../src/store/Api/quotesApi"; // Import your API hook
 

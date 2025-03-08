@@ -1,5 +1,3 @@
-"use client";
-
 import SectionOne from "@/component/aboutUs";
 import Footer from "@/component/footer";
 import Home from "@/component/home";
