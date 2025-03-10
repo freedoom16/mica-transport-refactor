@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetQuoetsByIDQuery } from "../../src/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
+import DIsplayFormSkeleton from "./displayFormSkeleton";
 
 const QuoteForm: React.FC = () => {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -22,13 +23,14 @@ const QuoteForm: React.FC = () => {
   const quoteId = searchParams.get("id");
 
   // Fetch the quote data using `useGetQuotesQuery`
-  const { data: data, isLoading, isError } = useGetQuoetsByIDQuery(quoteId);
+  const {
+    data: data,
+    isLoading,
+    isError,
+    error,
+  } = useGetQuoetsByIDQuery(quoteId);
 
-  // const {
-  //   data: quoteData,
-  //   isLoading,
-  //   isError,
-  // } = useGetQuoetsByIDQuery(quoteId);
+  const Error: any = error;
 
   const quoteData = {
     pickupLocation: "123 Main St, Cityville, NY",
@@ -64,7 +66,12 @@ const QuoteForm: React.FC = () => {
   }, [quoteData]);
 
   if (isLoading) {
-    return <div className="mt-16 p-6 text-center">Loading...</div>;
+    return (
+      <div className="mt-12">
+        {" "}
+        <DIsplayFormSkeleton />;
+      </div>
+    );
   }
 
   //   if (errorMessage) {
@@ -79,6 +86,8 @@ const QuoteForm: React.FC = () => {
           <h2 className="text-lg font-bold text-white mb-4">
             Shipment Details
           </h2>
+          {/* <div>{Error.data}</div> */}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
             {/* Pickup Location */}
             <div className="flex justify-between items-center">
@@ -162,7 +171,7 @@ const QuoteForm: React.FC = () => {
             <p className="w-2/3">{paymentMethod}</p>
           </div>
 
-          {paymentLink && (
+          {/* {paymentLink && (
             <div className="mt-4">
               <a
                 href={paymentLink}
@@ -173,7 +182,7 @@ const QuoteForm: React.FC = () => {
                 Proceed to Payment
               </a>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Error Handling */}

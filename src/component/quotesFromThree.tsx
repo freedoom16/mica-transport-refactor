@@ -98,14 +98,9 @@ const MultiStepTransportationForm = () => {
     switch (step) {
       case 1:
         return (
-          <div className="bg-gray-800 p-6">
+          <div className="bg-gray-800 p-6 ">
             <h3 className="text-lg font-medium mb-4">Pickup Information</h3>
-            {[
-              "pickupName",
-              "pickupAddress",
-              "pickupCityState",
-              "pickupPhone",
-            ].map((key) => (
+            {["pickupAddress", "pickupCityState", "pickupPhone"].map((key) => (
               <div className="relative z-0 w-full group mb-4" key={key}>
                 <input
                   type="text"
@@ -148,33 +143,43 @@ const MultiStepTransportationForm = () => {
         return (
           <div className="bg-gray-800 p-6">
             <h3 className="text-lg font-medium mb-4">Delivery Information</h3>
-            {[
-              "deliveryName",
-              "deliveryAddress",
-              "deliveryCityState",
-              "deliveryPhone",
-            ].map((key) => (
-              <div className="relative z-0 w-full group mb-4" key={key}>
-                <input
-                  type="text"
-                  name={key}
-                  id={key}
-                  value={formData[key]}
-                  onChange={handleInputChange}
-                  className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-                  placeholder=" "
-                  required
-                />
-                <label
-                  htmlFor={key}
-                  className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-                >
-                  {key
-                    .replace(/([A-Z])/g, " $1")
-                    .replace(/^\w/, (c) => c.toUpperCase())}
-                </label>
-              </div>
-            ))}
+            {["deliveryAddress", "deliveryCityState", "deliveryPhone"].map(
+              (key) => (
+                <div className="relative z-0 w-full group mb-4" key={key}>
+                  <input
+                    type="text"
+                    name={key}
+                    id={key}
+                    value={formData[key]}
+                    onChange={handleInputChange}
+                    className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                    placeholder=" "
+                    required
+                  />
+                  <label
+                    htmlFor={key}
+                    className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
+                  >
+                    {key
+                      .replace(/([A-Z])/g, " $1")
+                      .replace(/^\w/, (c) => c.toUpperCase())}
+                  </label>
+                  {key === "deliveryAddress" && suggestions.length > 0 && (
+                    <div className="relative z-10 w-full mt-2 bg-gray-800 border border-gray-300 rounded-lg shadow-lg">
+                      {suggestions.map((suggestion, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleSuggestionClick(suggestion)}
+                          className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-white"
+                        >
+                          {suggestion}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            )}
           </div>
         );
       case 3:
@@ -229,15 +234,6 @@ const MultiStepTransportationForm = () => {
     >
       {renderStepContent()}
       <div className="flex flex-col space-y-4">
-        {step > 1 && (
-          <button
-            type="button"
-            onClick={handleBack}
-            className="bg-gray-500 text-white px-4 py-2 rounded-lg"
-          >
-            Back
-          </button>
-        )}
         {step < 3 ? (
           <button
             type="button"
@@ -252,6 +248,15 @@ const MultiStepTransportationForm = () => {
             className="bg-green-500 text-white px-4 py-2 rounded-lg"
           >
             Submit
+          </button>
+        )}
+        {step > 1 && (
+          <button
+            type="button"
+            onClick={handleBack}
+            className="bg-gray-500 text-white px-4 py-2 rounded-lg"
+          >
+            Back
           </button>
         )}
       </div>
