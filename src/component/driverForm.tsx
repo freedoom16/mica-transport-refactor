@@ -2,6 +2,9 @@
 import { useGetQuoetsByIDQuery } from "@/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton"; // Import the skeleton library
+import "react-loading-skeleton/dist/skeleton.css"; // Import skeleton styles
+import DIsplayFormSkeleton from "./displayFormSkeleton";
 
 const ViewQuoteForm = () => {
   const searchParams: any = useSearchParams();
@@ -55,7 +58,7 @@ const ViewQuoteForm = () => {
   }, [isLoading, error]);
 
   if (isLoading) {
-    return <div className="p-4 text-center">Loading...</div>;
+    return <DIsplayFormSkeleton />;
   }
 
   //   if (errorMessage) {
@@ -79,12 +82,10 @@ const ViewQuoteForm = () => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4 text-gray-300">
           {/* Flexbox layout for aligning Pickup Name */}
-          <div className="flex justify-between items-center">
+          {/* <div className="flex justify-between items-center">
             <p className="font-semibold w-1/3">Pickup Name:</p>{" "}
-            {/* Fixed width for left side */}
             <p className="w-2/3">{formData?.pickupName}</p>{" "}
-            {/* Flexible width for right side */}
-          </div>
+          </div> */}
           <div className="flex justify-between items-center">
             <p className="font-semibold w-1/3">Pickup Address:</p>
             <p className="w-2/3">{formData?.pickupAddress}</p>
@@ -106,10 +107,10 @@ const ViewQuoteForm = () => {
           Delivery Information
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-1 gap-4 text-gray-300">
-          <div className="flex justify-between items-center">
+          {/* <div className="flex justify-between items-center">
             <p className="font-semibold w-1/3">Delivery Name:</p>
             <p className="w-2/3">{formData?.deliveryName}</p>
-          </div>
+          </div> */}
           <div className="flex justify-between items-center">
             <p className="font-semibold w-1/3">Delivery Address:</p>
             <p className="w-2/3">{formData?.deliveryAddress}</p>

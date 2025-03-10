@@ -143,7 +143,12 @@ export default function NavBar(props: INavBarProps) {
               href="tel:+1234567890"
               className=" text-base font-normal font-montserrat hover:text-gray-200"
             >
-              <FontAwesomeIcon icon={faPhone} className="px-2" />
+              <FontAwesomeIcon
+                icon={faPhone}
+                className="px-2"
+                width={16}
+                height={16}
+              />
               (855) 480-2466
             </a>
           </div>
@@ -152,7 +157,13 @@ export default function NavBar(props: INavBarProps) {
               href="/#quote"
               className=" text-base font-bold font-montserrat hover:text-blue-600"
             >
-              <FontAwesomeIcon icon={faCar} className="px-2" /> Request a quote
+              <FontAwesomeIcon
+                icon={faCar}
+                className="px-2"
+                width={16}
+                height={16}
+              />{" "}
+              Request a quote
             </a>
           </div>
         </div>
