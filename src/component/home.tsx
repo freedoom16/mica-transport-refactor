@@ -44,7 +44,7 @@ export default function Home(props: IHomeProps) {
           </div>
 
           {/* Right Section: Form */}
-          <div className="bg-gray-800 p-6 rounded-xl shadow-lg max-w-md w-full mt-6 md:mt-0 hidden md:block">
+          <div className=" z-[150] bg-gray-800 p-4 rounded-xl shadow-lg max-w-lg w-full mt-6 md:mt-12 hidden md:block">
             <p className="text-[20px]  font-bold  font-montserrat text-center">
               Shipping Quote Calculator
             </p>
