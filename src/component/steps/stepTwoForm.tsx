@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 interface StepTwoProps {
   vehicleYear: string;
@@ -7,9 +7,6 @@ interface StepTwoProps {
   setVehicleModel: (value: string) => void;
   vehicleType: string;
   setVehicleType: (value: string) => void;
-  //   isStep2Valid: boolean;
-  //   nextStep: () => void;
-  //   prevStep: () => void;
 }
 
 const StepTwoComponent: React.FC<StepTwoProps> = ({
@@ -19,10 +16,51 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
   setVehicleModel,
   vehicleType,
   setVehicleType,
-  //   isStep2Valid,
-  //   nextStep,
-  //   prevStep,
 }) => {
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  const fetchSuggestions = async (query: string) => {
+    if (!query) {
+      setSuggestions([]);
+      return;
+    }
+
+    const url = `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?year=${query}`;
+    const options = {
+      method: "GET",
+      headers: {
+        "x-rapidapi-key": "80471b82f0msh3d171e0e1eab061p151a64jsn399989732cbc",
+        "x-rapidapi-host": "cars-by-api-ninjas.p.rapidapi.com",
+      },
+    };
+
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const result: Array<{ model: string }> = await response.json();
+      console.log(result);
+
+      // Extract unique models from the API response
+      const models = Array.from(new Set(result.map((car) => car.model)));
+      setSuggestions(models);
+    } catch (error) {
+      console.error("Error fetching suggestions:", error);
+      setSuggestions([]); // Clear suggestions if an error occurs
+    }
+  };
+
+  // Fetch suggestions when the user types in the model input
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      fetchSuggestions(vehicleModel);
+    }, 300); // Add debounce to limit API calls
+
+    return () => clearTimeout(debounce);
+  }, [vehicleModel]);
+
   return (
     <div>
       <h2 className="text-lg font-bold text-white mb-4">Vehicle Info</h2>
@@ -55,8 +93,16 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
           onChange={(e) => setVehicleModel(e.target.value)}
           className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
           placeholder=" "
+          list="model-suggestions"
           required
         />
+        <datalist id="model-suggestions">
+          {suggestions.map((model, index) => (
+            <option key={index} value={model}>
+              {model}
+            </option>
+          ))}
+        </datalist>
         <label
           htmlFor="vehicle_model"
           className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
@@ -89,26 +135,6 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
           Vehicle Type
         </label>
       </div>
-
-      {/* <button
-        type="button"
-        onClick={nextStep}
-        disabled={!isStep2Valid}
-        className={`w-full px-4 py-2 mt-4 text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-          isStep2Valid
-            ? "bg-blue-600 text-white hover:bg-blue-700"
-            : "bg-gray-600 text-gray-400 cursor-not-allowed"
-        }`}
-      >
-        Next
-      </button>
-      <button
-        type="button"
-        onClick={prevStep}
-        className="w-full px-4 py-2 mt-2 text-sm font-medium text-blue-600 hover:text-blue-800"
-      >
-        Back
-      </button> */}
     </div>
   );
 };
