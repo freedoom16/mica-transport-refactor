@@ -204,6 +204,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
   return (
     <div className="space-y-6">
       {/* Pick Up Date */}
+      <div className=" text-center p-1 ">pickup date information</div>
       <div className="relative z-0 w-full mb-5 group">
         <label htmlFor="pick_up_date_option" className="text-sm text-gray-400">
           Pick Up Date
@@ -262,6 +263,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
           setPickUpTimeRangeEnd
         )}
       </div>
+
+      <div className=" text-center p-1 ">delivery date information</div>
 
       {/* Delivery Date */}
       <div className="relative z-0 w-full mb-5 group">
