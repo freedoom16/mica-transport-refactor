@@ -50,19 +50,18 @@ const StepOne: React.FC<StepOneProps> = ({
   dropoffContactPhone,
   setDropoffContactPhone,
 }) => {
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
+  const [deliverySuggestions, setDeliverySuggestions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   const API_KEY = "f20bdd1c4a7b4139b83d4901b95d6dc4";
   const API_URL = "https://api.opencagedata.com/geocode/v1/json";
 
-  const fetchSuggestions = async (query: string) => {
+  const fetchSuggestions = async (query: string, setSuggestions: Function) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `${API_URL}?key=${API_KEY}&q=${encodeURIComponent(
-          query
-        )}&pretty=1&no_annotations=1&limit=5`
+        `${API_URL}?key=${API_KEY}&q=${encodeURIComponent(query)}&limit=5`
       );
       const data = await response.json();
       setSuggestions(data.results.map((result: any) => result.formatted));
@@ -73,37 +72,37 @@ const StepOne: React.FC<StepOneProps> = ({
     }
   };
 
-  const handleSuggestionClick = (suggestion: string) => {
-    setPickupLocation(suggestion);
-    setSuggestions([]);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePickupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPickupLocation(value);
-
     if (value.length > 2) {
-      fetchSuggestions(value);
+      fetchSuggestions(value, setPickupSuggestions);
     } else {
-      setSuggestions([]);
+      setPickupSuggestions([]);
     }
   };
 
+  const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDeliveryLocation(value);
+    if (value.length > 2) {
+      fetchSuggestions(value, setDeliverySuggestions);
+    } else {
+      setDeliverySuggestions([]);
+    }
+  };
   return (
     <div>
       {/* Render all the inputs and elements related to Step One here */}
 
       <div>
-        {/* <h2 className="text-lg font-bold text-white mb-4">
-              Shipment Details
-            </h2> */}
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="text"
             name="pickup_location"
             id="pickup_location"
             value={pickupLocation}
-            onChange={handleInputChange}
+            onChange={handlePickupChange}
             className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
             placeholder=" "
             required
@@ -114,12 +113,15 @@ const StepOne: React.FC<StepOneProps> = ({
           >
             Pickup Location
           </label>
-          {suggestions.length > 0 && (
+          {pickupSuggestions.length > 0 && (
             <div className="relative z-10 w-full mt-2 bg-gray-800 border border-gray-300 rounded-lg shadow-lg">
-              {suggestions.map((suggestion, index) => (
+              {pickupSuggestions.map((suggestion, index) => (
                 <div
                   key={index}
-                  onClick={() => handleSuggestionClick(suggestion)}
+                  onClick={() => {
+                    setPickupLocation(suggestion);
+                    setPickupSuggestions([]);
+                  }}
                   className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-white"
                 >
                   {suggestion}
@@ -157,7 +159,7 @@ const StepOne: React.FC<StepOneProps> = ({
             name="delivery_location"
             id="delivery_location"
             value={deliveryLocation}
-            onChange={(e) => setDeliveryLocation(e.target.value)}
+            onChange={handleDeliveryChange}
             className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
             placeholder=" "
             required
@@ -168,6 +170,22 @@ const StepOne: React.FC<StepOneProps> = ({
           >
             Delivery Location
           </label>
+          {deliverySuggestions.length > 0 && (
+            <div className="relative z-10 w-full mt-2 bg-gray-800 border border-gray-300 rounded-lg shadow-lg">
+              {deliverySuggestions.map((suggestion, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    setDeliveryLocation(suggestion);
+                    setDeliverySuggestions([]);
+                  }}
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-white"
+                >
+                  {suggestion}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="relative z-0 w-full mb-5 group">

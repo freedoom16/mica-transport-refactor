@@ -5,6 +5,7 @@ import StepOne from "./steps/stepOneForm";
 import StepNavigation from "./steps/stepNavigation";
 import StepTwoComponent from "./steps/stepTwoForm";
 import StepThreeComponent from "./steps/stepThreeForm";
+import StepForDate from "./steps/stepDateForm";
 
 const QouetForm: React.FC = () => {
   const [step, setStep] = useState(1);
@@ -45,6 +46,29 @@ const QouetForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
+  // step date fields
+  // Pick Up Date and Time states
+  const [pickUpDateOption, setPickUpDateOption] = useState<string>("");
+  const [pickUpDate, setPickUpDate] = useState<string>("");
+  const [pickUpDateRangeStart, setPickUpDateRangeStart] = useState<string>("");
+  const [pickUpDateRangeEnd, setPickUpDateRangeEnd] = useState<string>("");
+  const [pickUpTimeOption, setPickUpTimeOption] = useState<string>("");
+  const [pickUpTime, setPickUpTime] = useState<string>("");
+  const [pickUpTimeRangeStart, setPickUpTimeRangeStart] = useState<string>("");
+  const [pickUpTimeRangeEnd, setPickUpTimeRangeEnd] = useState<string>("");
+
+  // Delivery Date and Time states
+  const [deliveryDateOption, setDeliveryDateOption] = useState<string>("");
+  const [deliveryDate, setDeliveryDate] = useState<string>("");
+  const [deliveryDateRangeStart, setDeliveryDateRangeStart] =
+    useState<string>("");
+  const [deliveryDateRangeEnd, setDeliveryDateRangeEnd] = useState<string>("");
+  const [deliveryTimeOption, setDeliveryTimeOption] = useState<string>("");
+  const [deliveryTime, setDeliveryTime] = useState<string>("");
+  const [deliveryTimeRangeStart, setDeliveryTimeRangeStart] =
+    useState<string>("");
+  const [deliveryTimeRangeEnd, setDeliveryTimeRangeEnd] = useState<string>("");
+
   // Validation logic for each step
   const isStep1Valid =
     pickupLocation &&
@@ -54,6 +78,7 @@ const QouetForm: React.FC = () => {
     isDerivable;
   const isStep2Valid = vehicleYear && vehicleModel && vehicleType;
   const isStep3Valid = firstName && lastName && email && phone;
+  const isStep4Valid = pickUpDate && deliveryDate && pickUpTime && deliveryTime;
 
   // Use the mutation hook
   const [addQuote, { isLoading, isSuccess, isError, error }] =
@@ -123,7 +148,7 @@ const QouetForm: React.FC = () => {
         )}
 
         {/* Step 2: Vehicle Info */}
-        {step === 2 && (
+        {step === 3 && (
           <StepTwoComponent
             vehicleYear={vehicleYear}
             setVehicleYear={setVehicleYear}
@@ -138,7 +163,7 @@ const QouetForm: React.FC = () => {
         )}
 
         {/* Step 3: Contact Info */}
-        {step === 3 && (
+        {step === 4 && (
           <StepThreeComponent
             firstName={firstName}
             setFirstName={setFirstName}
@@ -155,6 +180,46 @@ const QouetForm: React.FC = () => {
           />
         )}
 
+        {step === 2 && (
+          <StepForDate
+            // Pick Up Date and Time props
+            pickUpDateOption={pickUpDateOption}
+            setPickUpDateOption={setPickUpDateOption}
+            pickUpDate={pickUpDate}
+            setPickUpDate={setPickUpDate}
+            pickUpDateRangeStart={pickUpDateRangeStart}
+            setPickUpDateRangeStart={setPickUpDateRangeStart}
+            pickUpDateRangeEnd={pickUpDateRangeEnd}
+            setPickUpDateRangeEnd={setPickUpDateRangeEnd}
+            pickUpTimeOption={pickUpTimeOption}
+            setPickUpTimeOption={setPickUpTimeOption}
+            pickUpTime={pickUpTime}
+            setPickUpTime={setPickUpTime}
+            pickUpTimeRangeStart={pickUpTimeRangeStart}
+            setPickUpTimeRangeStart={setPickUpTimeRangeStart}
+            pickUpTimeRangeEnd={pickUpTimeRangeEnd}
+            setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
+            // Delivery Date and Time props
+            deliveryDateOption={deliveryDateOption}
+            setDeliveryDateOption={setDeliveryDateOption}
+            deliveryDate={deliveryDate}
+            setDeliveryDate={setDeliveryDate}
+            deliveryDateRangeStart={deliveryDateRangeStart}
+            setDeliveryDateRangeStart={setDeliveryDateRangeStart}
+            deliveryDateRangeEnd={deliveryDateRangeEnd}
+            setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
+            deliveryTimeOption={deliveryTimeOption}
+            setDeliveryTimeOption={setDeliveryTimeOption}
+            deliveryTime={deliveryTime}
+            setDeliveryTime={setDeliveryTime}
+            deliveryTimeRangeStart={deliveryTimeRangeStart}
+            setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
+            deliveryTimeRangeEnd={deliveryTimeRangeEnd}
+            setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
+          />
+          // </div>
+        )}
+
         <StepNavigation
           currentStep={step}
           totalSteps={totalSteps}
@@ -162,8 +227,9 @@ const QouetForm: React.FC = () => {
           onPrev={prevStep}
           isNextEnabled={
             (step === 1 && isStep1Valid) ||
-            (step === 2 && isStep2Valid) ||
-            (step === 3 && isStep3Valid)
+            (step === 2 && isStep4Valid) ||
+            (step === 3 && isStep2Valid) ||
+            (step === 4 && isStep3Valid)
           }
         />
       </form>
