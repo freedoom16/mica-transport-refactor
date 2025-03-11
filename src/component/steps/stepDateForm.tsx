@@ -275,7 +275,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
           id="delivery_date_option"
           value={deliveryDateOption}
           onChange={(e) => setDeliveryDateOption(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          className="block py-2.5 px-0 w-full text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
           required
         >
           <option value="">Select Option</option>
@@ -315,7 +315,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
           id="delivery_time_option"
           value={deliveryTimeOption}
           onChange={(e) => setDeliveryTimeOption(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          className="block py-2.5 px-0 w-full text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
           required
         >
           <option value="">Select Option</option>

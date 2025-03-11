@@ -10,7 +10,7 @@ import StepForDate from "./steps/stepDateForm";
 const QouetForm: React.FC = () => {
   const [step, setStep] = useState(1);
 
-  const totalSteps = 3; // Total number of steps
+  const totalSteps = 4; // Total number of steps
 
   const nextStep = () => {
     if (step < totalSteps) setStep(step + 1);
@@ -78,7 +78,11 @@ const QouetForm: React.FC = () => {
     isDerivable;
   const isStep2Valid = vehicleYear && vehicleModel && vehicleType;
   const isStep3Valid = firstName && lastName && email && phone;
-  const isStep4Valid = pickUpDate && deliveryDate && pickUpTime && deliveryTime;
+  const isStep4Valid =
+    (pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd) &&
+    (deliveryDate || deliveryDateRangeStart || deliveryDateRangeEnd) &&
+    (pickUpTime || pickUpTimeRangeStart || pickUpTimeRangeEnd) &&
+    (deliveryTime || deliveryTimeRangeEnd || deliveryTimeRangeStart);
 
   // Use the mutation hook
   const [addQuote, { isLoading, isSuccess, isError, error }] =
