@@ -30,21 +30,22 @@ export default function Home(props: IHomeProps) {
           <div className="text-white max-w-[600px]">
             <div id="lp-pom-text-481" className="mb-3 px-6 py-6">
               <p className="text-[35px] md:text-[52px] font-extrabold leading-[50px]  md:leading-[77px] font-montserrat text-left md:text-left">
-                ENCLOSED AUTO TRANSPORT
+                {/* enclosed or open, always professional.  */}
+                ENCLOSED OR OPEN, ALWAYS PROFESSIONAL.
               </p>
             </div>
             <div id="lp-pom-text-482" className="mt-2 px-6 ">
               <p className="text-[20px] md:text-[17px] font-semibold leading-[29px] font-montserrat text-left">
-                We will ensure your exotic or classic automobile is transported
-                in an enclosed car hauler with soft straps over the tires and
-                handled with the utmost care.
+                Mica Transportation LLC – Family-owned, insured, and
+                customer-focused. We safely transport luxury, classic, and
+                exotic vehicles for individuals, dealerships, and auction houses
               </p>
             </div>
             <FeaturesBox />
           </div>
 
           {/* Right Section: Form */}
-          <div className="bg-gray-800 p-6 rounded-xl shadow-lg max-w-md w-full mt-6 md:mt-0 hidden md:block">
+          <div className=" z-[150] bg-gray-800 p-4 rounded-xl shadow-lg max-w-lg w-full mt-6 md:mt-12 hidden md:block">
             <p className="text-[20px]  font-bold  font-montserrat text-center">
               Shipping Quote Calculator
             </p>

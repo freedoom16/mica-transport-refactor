@@ -1,10 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useGetQuoetsByIDQuery } from "../../src/store/Api/quotesApi";
+import { useGetQuoetsByIDQuery } from "../../../src/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
-import DIsplayFormSkeleton from "./displayFormSkeleton";
+import DIsplayFormSkeleton from "../displayFormSkeleton";
 
-const QuoteForm: React.FC = () => {
+const QuoteFormDisplayOne: React.FC = () => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [deliveryLocation, setDeliveryLocation] = useState("");
   const [shipmentDate, setShipmentDate] = useState("");
@@ -292,4 +292,4 @@ const QuoteForm: React.FC = () => {
   );
 };
 
-export default QuoteForm;
+export default QuoteFormDisplayOne;

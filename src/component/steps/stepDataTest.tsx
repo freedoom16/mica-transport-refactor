@@ -1,0 +1,338 @@
+import React, { useState } from "react";
+
+interface StepFourProps {
+  // Pick Up Date and Time states
+  pickUpDateOption: string;
+  setPickUpDateOption: (value: string) => void;
+  pickUpDate: string;
+  setPickUpDate: (value: string) => void;
+  pickUpDateRangeStart: string;
+  setPickUpDateRangeStart: (value: string) => void;
+  pickUpDateRangeEnd: string;
+  setPickUpDateRangeEnd: (value: string) => void;
+  pickUpTimeOption: string;
+  setPickUpTimeOption: (value: string) => void;
+  pickUpTime: string;
+  setPickUpTime: (value: string) => void;
+  pickUpTimeRangeStart: string;
+  setPickUpTimeRangeStart: (value: string) => void;
+  pickUpTimeRangeEnd: string;
+  setPickUpTimeRangeEnd: (value: string) => void;
+
+  // Delivery Date and Time states
+  deliveryDateOption: string;
+  setDeliveryDateOption: (value: string) => void;
+  deliveryDate: string;
+  setDeliveryDate: (value: string) => void;
+  deliveryDateRangeStart: string;
+  setDeliveryDateRangeStart: (value: string) => void;
+  deliveryDateRangeEnd: string;
+  setDeliveryDateRangeEnd: (value: string) => void;
+  deliveryTimeOption: string;
+  setDeliveryTimeOption: (value: string) => void;
+  deliveryTime: string;
+  setDeliveryTime: (value: string) => void;
+  deliveryTimeRangeStart: string;
+  setDeliveryTimeRangeStart: (value: string) => void;
+  deliveryTimeRangeEnd: string;
+  setDeliveryTimeRangeEnd: (value: string) => void;
+}
+
+const StepDataTest: React.FC<StepFourProps> = ({
+  // Pick Up Date and Time props
+  pickUpDateOption,
+  setPickUpDateOption,
+  pickUpDate,
+  setPickUpDate,
+  pickUpDateRangeStart,
+  setPickUpDateRangeStart,
+  pickUpDateRangeEnd,
+  setPickUpDateRangeEnd,
+  pickUpTimeOption,
+  setPickUpTimeOption,
+  pickUpTime,
+  setPickUpTime,
+  pickUpTimeRangeStart,
+  setPickUpTimeRangeStart,
+  pickUpTimeRangeEnd,
+  setPickUpTimeRangeEnd,
+
+  // Delivery Date and Time props
+  deliveryDateOption,
+  setDeliveryDateOption,
+  deliveryDate,
+  setDeliveryDate,
+  deliveryDateRangeStart,
+  setDeliveryDateRangeStart,
+  deliveryDateRangeEnd,
+  setDeliveryDateRangeEnd,
+  deliveryTimeOption,
+  setDeliveryTimeOption,
+  deliveryTime,
+  setDeliveryTime,
+  deliveryTimeRangeStart,
+  setDeliveryTimeRangeStart,
+  deliveryTimeRangeEnd,
+  setDeliveryTimeRangeEnd,
+}) => {
+  const renderDatePicker = (
+    option: string,
+    date: string,
+    setDate: (value: string) => void,
+    dateRangeStart: string,
+    setDateRangeStart: (value: string) => void,
+    dateRangeEnd: string,
+    setDateRangeEnd: (value: string) => void,
+    minDate: string
+  ) => {
+    const today = new Date().toISOString().split("T")[0];
+
+    if (option === "between") {
+      return (
+        <div className="mt-4 space-y-4">
+          <div className="flex space-x-4">
+            <div className="w-1/2">
+              <label className="text-sm text-gray-400">From Date</label>
+              <input
+                type="date"
+                value={dateRangeStart}
+                onChange={(e) => setDateRangeStart(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                min={minDate || today} // Disable dates before today
+                required
+              />
+            </div>
+            <div className="w-1/2">
+              <label className="text-sm text-gray-400">To Date</label>
+              <input
+                type="date"
+                value={dateRangeEnd}
+                onChange={(e) => setDateRangeEnd(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                // min={today} // Disable dates before today
+                min={
+                  dateRangeStart
+                    ? new Date(
+                        new Date(dateRangeStart).getTime() + 24 * 60 * 60 * 1000
+                      )
+                        .toISOString()
+                        .split("T")[0]
+                    : minDate || today
+                } // Disable dates before 1 day after "From Date"
+                required
+              />
+            </div>
+          </div>
+          {pickUpDateRangeStart &&
+            pickUpDateRangeEnd &&
+            pickUpDateRangeEnd <= pickUpDateRangeStart && (
+              <p className="text-sm text-red-500">
+                To Date must be greater than From Date.
+              </p>
+            )}
+        </div>
+      );
+    } else {
+      return (
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          min={minDate || today} // Disable dates before today
+          required
+        />
+      );
+    }
+  };
+
+  const renderTimePicker = (
+    option: string,
+    time: string,
+    setTime: (value: string) => void,
+    timeRangeStart: string,
+    setTimeRangeStart: (value: string) => void,
+    timeRangeEnd: string,
+    setTimeRangeEnd: (value: string) => void
+  ) => {
+    if (option === "between") {
+      return (
+        <div className="mt-4 space-y-4">
+          <div className="flex space-x-4">
+            <div className="w-1/2">
+              <label className="text-sm text-gray-400">From Time</label>
+              <input
+                type="time"
+                value={timeRangeStart}
+                onChange={(e) => setTimeRangeStart(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                required
+              />
+            </div>
+            <div className="w-1/2">
+              <label className="text-sm text-gray-400">To Time</label>
+              <input
+                type="time"
+                value={timeRangeEnd}
+                onChange={(e) => setTimeRangeEnd(e.target.value)}
+                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                min={timeRangeStart || "00:00"}
+                required
+              />
+            </div>
+          </div>
+          {timeRangeStart && timeRangeEnd && timeRangeEnd <= timeRangeStart && (
+            <p className="text-sm text-red-500">
+              To Time must be later than From Time.
+            </p>
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <input
+          type="time"
+          value={time}
+          onChange={(e) => setTime(e.target.value)}
+          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          required
+        />
+      );
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Pick Up Date */}
+      <div className="relative z-0 w-full mb-5 group">
+        <label htmlFor="pick_up_date_option" className="text-sm text-gray-400">
+          Pick Up Date
+        </label>
+        <select
+          id="pick_up_date_option"
+          value={pickUpDateOption}
+          onChange={(e) => setPickUpDateOption(e.target.value)}
+          className="block py-2.5 px-0 w-full text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          required
+        >
+          <option value="">Select Option</option>
+          <option value="before">Before</option>
+          <option value="after">After</option>
+          <option value="on">On</option>
+          <option value="between">Between</option>
+        </select>
+        {renderDatePicker(
+          pickUpDateOption,
+          pickUpDate,
+          setPickUpDate,
+          pickUpDateRangeStart,
+          setPickUpDateRangeStart,
+          pickUpDateRangeEnd,
+          setPickUpDateRangeEnd,
+          ""
+        )}
+      </div>
+
+      {/* Pick Up Time */}
+      <div className="relative z-0 w-full mb-5 group">
+        <label htmlFor="pick_up_time_option" className="text-sm text-gray-400">
+          Pick Up Time
+        </label>
+        <select
+          id="pick_up_time_option"
+          value={pickUpTimeOption}
+          onChange={(e) => setPickUpTimeOption(e.target.value)}
+          //   className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          className="block py-2.5 px-0 w-full text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          required
+        >
+          <option value="">Select Option</option>
+          <option value="before">Before</option>
+          <option value="after">After</option>
+          <option value="on">On</option>
+          <option value="between">Between</option>
+        </select>
+        {renderTimePicker(
+          pickUpTimeOption,
+          pickUpTime,
+          setPickUpTime,
+          pickUpTimeRangeStart,
+          setPickUpTimeRangeStart,
+          pickUpTimeRangeEnd,
+          setPickUpTimeRangeEnd
+        )}
+      </div>
+
+      {/* Delivery Date */}
+      <div className="relative z-0 w-full mb-5 group">
+        <label htmlFor="delivery_date_option" className="text-sm text-gray-400">
+          Delivery Date
+        </label>
+        <select
+          id="delivery_date_option"
+          value={deliveryDateOption}
+          onChange={(e) => setDeliveryDateOption(e.target.value)}
+          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          required
+        >
+          <option value="">Select Option</option>
+          <option value="before">Before</option>
+          <option value="after">After</option>
+          <option value="on">On</option>
+          <option value="between">Between</option>
+        </select>
+        {renderDatePicker(
+          deliveryDateOption,
+          deliveryDate,
+          setDeliveryDate,
+          deliveryDateRangeStart,
+          setDeliveryDateRangeStart,
+          deliveryDateRangeEnd,
+          setDeliveryDateRangeEnd,
+          pickUpDateOption === "between" && pickUpDateRangeEnd
+            ? new Date(
+                new Date(pickUpDateRangeEnd).getTime() + 24 * 60 * 60 * 1000
+              )
+                .toISOString()
+                .split("T")[0]
+            : pickUpDate
+            ? new Date(new Date(pickUpDate).getTime() + 24 * 60 * 60 * 1000)
+                .toISOString()
+                .split("T")[0]
+            : ""
+        )}
+      </div>
+
+      {/* Delivery Time */}
+      <div className="relative z-0 w-full mb-5 group">
+        <label htmlFor="delivery_time_option" className="text-sm text-gray-400">
+          Delivery Time
+        </label>
+        <select
+          id="delivery_time_option"
+          value={deliveryTimeOption}
+          onChange={(e) => setDeliveryTimeOption(e.target.value)}
+          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+          required
+        >
+          <option value="">Select Option</option>
+          <option value="before">Before</option>
+          <option value="after">After</option>
+          <option value="on">On</option>
+          <option value="between">Between</option>
+        </select>
+        {renderTimePicker(
+          deliveryTimeOption,
+          deliveryTime,
+          setDeliveryTime,
+          deliveryTimeRangeStart,
+          setDeliveryTimeRangeStart,
+          deliveryTimeRangeEnd,
+          setDeliveryTimeRangeEnd
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default StepDataTest;

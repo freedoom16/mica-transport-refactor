@@ -22,47 +22,24 @@ const SectionOne = () => {
 
   const stepContents = [
     {
-      title: "Booking an order is easy. You are always kept in the loop.",
-      // icon: (
-      //   <FontAwesomeIcon
-      //     icon={faCheckCircle}
-      //     className="text-green-500 w-6 h-6 mr-3"
-      //   />
-      // ),
+      title: "Booking made easy",
       points: [
-        "Agree to your order electronically",
-        "Know when your carrier is confirmed",
-        "All orders are confirmed via email",
-        "Only charged when a shipping partner is confirmed",
-        "All major credit and debit cards are accepted",
-        "Pay online or over the phone",
+        "Create your order and submit it",
+        "Receive a call from us",
+        "Agree electronically",
+        "Make payment online or over the phone",
+        "We get the job done with no hassle",
       ],
     },
     {
-      title: "You choose how you would like to communicate with us:",
-      // icon: (
-      //   <FontAwesomeIcon
-      //     icon={faPhone}
-      //     className="text-blue-500 w-6 h-6 mr-3"
-      //   />
-      // ),
-      points: [
-        "Available 24hrs a day, 7 days a week",
-        "Phone",
-        "Live Chat",
-        "Email",
-      ],
+      title: "Communication",
+      points: ["24/7 on-call support", "Support via email", "Support via text"],
     },
     {
       title:
         "We take the guesswork and verification out of your hands. This is supposed to be hassle and stress-free.",
-      // icon: (
-      //   <FontAwesomeIcon
-      //     icon={faShieldAlt}
-      //     className="text-yellow-500 w-6 h-6 mr-3"
-      //   />
-      // ),
-      points: ["Licensed", "Bonded", "Insured"],
+
+      points: ["Licensed", "Insured"],
     },
   ];
 
@@ -113,7 +90,10 @@ const SectionOne = () => {
                   className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300"
                   key={currentStep}
                 >
-                  <div className="des-text mb-8 w-full text-white flex items-center">
+                  <div
+                    className="des-text mb-8 w-full text-white flex items-center font-bold text-lg"
+                    style={{ lineHeight: "36px", fontFamily: "Spectral" }}
+                  >
                     {stepContents[currentStep - 1].title}
                   </div>
 
