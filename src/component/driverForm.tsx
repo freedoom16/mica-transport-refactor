@@ -32,7 +32,7 @@ const ViewQuoteForm = () => {
     deliveryPhone: "(555) 987-6543",
     vehicleMileage: "25,000 miles",
     plateNumber: "XYZ 1234",
-    vinNumber: "1HGBH41JXMN109186",
+    vinNumber: "XMN10918",
     inspectionConditions: "Good condition, no visible damage",
     transportFee: "$300.00",
     prePaid: "$150.00",
@@ -116,49 +116,6 @@ const ViewQuoteForm = () => {
             <p className="w-2/3">{formData?.paymentMadeIn}</p>
           </div> */}
         </div>
-      </div>
-
-      <div className=" bg-gray-800 p-6 mb-4">
-        <h2 className="text-lg font-bold text-white mb-4">
-          By Type your name confirm contract{" "}
-        </h2>
-        <div className="relative z-0 w-full mb-5 group">
-          <input
-            type="text"
-            name="driver_name"
-            id="driver_name"
-            value={driverName}
-            onChange={(e) => setDriverName(e.target.value)}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-            placeholder=" "
-            required
-            disabled={isLoading || isError}
-          />
-          <label
-            htmlFor="driver_name"
-            className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-          >
-            Driver Name
-          </label>
-        </div>
-        {/* Step 6: Contract Confirmation */}
-        <div className="bg-gray-800 p-6 mb-4 text-center">
-          <button
-            type="submit"
-            onClick={handleSubmit}
-            className="py-2 px-4 bg-blue-500 text-white font-bold rounded-lg"
-          >
-            Confirm Contract
-          </button>
-        </div>
-
-        {/* Error Handling */}
-        {isError ||
-          (false && (
-            <div className="text-red-500 text-sm mb-4">
-              Failed to load quote data. Please try again later.
-            </div>
-          ))}
       </div>
     </div>
   );

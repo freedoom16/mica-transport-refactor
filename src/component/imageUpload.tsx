@@ -38,6 +38,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         <h3 className="font-semibold">
           Upload {stepLabel.charAt(0).toUpperCase() + stepLabel.slice(1)} View
         </h3>
+        <img
+          // src="/file.svg"
+          src={`/step${currentStep + 1}.svg`}
+          alt="Car Icon"
+          className="w-full h-24 bg-white text-black"
+        />
       </div>
       <input
         type="file"
