@@ -64,7 +64,23 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         {currentImage ? (
           <p className="text-green-500">Image selected!</p>
         ) : (
-          <p className="text-red-500">Please select an image</p>
+          <div>
+            <p className="text-red-500">Please select an image</p>
+            <div>If image is not taken please add reason</div>
+            <input
+              type="text"
+              name="driver_name"
+              id="driver_name"
+              // value={driverName}
+              // onChange={}
+              className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+              placeholder=" "
+              // required
+              // disabled={
+              //   currentStep === steps.length - 1 ? false : true
+              // }
+            />
+          </div>
         )}
       </div>
     </div>

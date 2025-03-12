@@ -91,6 +91,7 @@ const ViewQuoteForm = () => {
             <p className="font-semibold w-1/3">VIN Number:</p>
             <p className="w-2/3">{formData?.vinNumber}</p>
           </div>
+
           {/* <div className="flex justify-between items-center">
             <p className="font-semibold w-1/3">Inspection Conditions:</p>
             <p className="w-2/3">{formData?.inspectionConditions}</p>

@@ -271,6 +271,13 @@ const QuoteForm: React.FC = () => {
               <p className="font-semibold w-1/3">Vehicle Type:</p>
               <p className="w-2/3">{vehicleType}</p>
             </div>
+
+            <div className="flex justify-between items-center">
+              {/* <p className="font-semibold w-1/3">Vehicle Type:</p> */}
+              <p className="w-2/3 font-bold bg-gray-700 p-2 rounded-lg">
+                Drivable
+              </p>
+            </div>
           </div>
         </div>
 
