@@ -78,7 +78,7 @@ const QouetForm: React.FC = () => {
     addressTypeForDeliver &&
     addressTypeForPickup &&
     isDerivable;
-  const isStep2Valid = vehicleYear && vehicleModel && vehicleType;
+  const isStep2Valid = vehicleYear && vehicleModel && vehicleYear;
   const isStep3Valid = firstName && lastName && email && phone;
   const isStep4Valid =
     (pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd) &&
