@@ -23,8 +23,8 @@ const VehicleImageUpload: React.FC = () => {
     left: "step3", // left.svg
     right: "step4", // right.svg
     top: "step5", // interior.svg
-    dashboard: "dashboard", // exterior.svg
-    motor: "motor", // engine.svg
+    dashboard: "step7", // exterior.svg
+    motor: "step6", // engine.svg
     behindDriver: "behindDriver", // wheels.svg
   };
 
@@ -35,8 +35,8 @@ const VehicleImageUpload: React.FC = () => {
     "Upload Right Side View",
     "Upload Top View",
     "Upload Dashboard",
-    "Upload Motor",
-    "Upload Behind Driver",
+    "Upload Interior",
+    "Upload Trunk",
     "Final Upload",
   ];
 
@@ -111,11 +111,11 @@ const VehicleImageUpload: React.FC = () => {
                       </div>
                     ) : (
                       <div className="text-white flex flex-row">
-                        <div className="text-white w-1/2">
+                        <div className="text-white w-1/2 mr-4">
                           <img
                             src={`/${iconName}.svg`} // Using the mapped icon name
                             alt={`${iconName} icon`}
-                            className="w-full h-auto mr-4"
+                            className="w-full h-auto mr-4 bg-white"
                           />
                         </div>
                         <div className="text-red-500 w-1/2">
