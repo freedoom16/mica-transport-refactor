@@ -1,148 +1,239 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useAddQuoetsMutation } from "../../../src/store/Api/quotesApi";
+import StepOne from "../../component/steps/stepOneForm";
+import StepNavigation from "../../component/steps/stepNavigation";
+import StepTwoComponent from "../../component/steps/stepTwoForm";
+import StepThreeComponent from "../../component/steps/stepThreeForm";
+import StepFour from "../../component/steps/stepDateForm";
+import StepDataTest from "../../component/steps/stepDataTest";
 
-const CarQuery = () => {
-  const [makeSuggestions, setMakeSuggestions] = useState<string[]>([]);
-  const [modelSuggestions, setModelSuggestions] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState("");
+const QouetForm: React.FC = () => {
+  const [step, setStep] = useState(1);
 
-  useEffect(() => {
-    const loadCarQuery = () => {
-      const script = document.createElement("script");
-      script.src = "https://www.carqueryapi.com/js/carquery.0.3.4.js";
-      console.log(script.src);
-      script.async = true;
-      script.onload = () => {
-        const carquery: any = new (window as any).CarQuery();
+  const totalSteps = 3; // Total number of steps
 
-        // Initialize CarQuery
-        carquery.init();
+  const nextStep = () => {
+    if (step < totalSteps) setStep(step + 1);
+  };
 
-        // Set filters for US models
-        carquery.setFilters({ sold_in_us: true });
+  const prevStep = () => {
+    if (step > 1) setStep(step - 1);
+  };
 
-        // Optional: Set up dropdowns
-        carquery.initYearMakeModelTrim(
-          "car-years",
-          "car-makes",
-          "car-models",
-          "car-model-trims"
-        );
+  // Step 1 fields
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [deliveryLocation, setDeliveryLocation] = useState("");
+  const [shipmentDate, setShipmentDate] = useState("");
+  const [addressTypeForPickup, setAddressTypeForPickup] = useState("");
+  const [addressTypeForDeliver, setAddressTypeForDeliver] = useState("");
+  const [isDerivable, setIsDrivable] = useState<boolean | null>(null);
+  const [isPickupContact, setIsPickupContact] = useState<string>(""); // "true" or "false"
+  const [isDropoffContact, setIsDropoffContact] = useState<string>(""); // "true" or "false"
 
-        // Set minimum and maximum years
-        carquery.year_select_min = 1990;
-        carquery.year_select_max = 2025;
-      };
+  const [pickupContactName, setPickupContactName] = useState("");
+  const [pickupContactPhone, setPickupContactPhone] = useState("");
+  const [dropoffContactName, setDropoffContactName] = useState("");
+  const [dropoffContactPhone, setDropoffContactPhone] = useState("");
 
-      document.body.appendChild(script);
+  // Step 2 fields
+  const [vehicleYear, setVehicleYear] = useState("");
+  const [vehicleModel, setVehicleModel] = useState("");
+  const [vehicleType, setVehicleType] = useState("");
+
+  // Step 3 fields
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // step date fields
+  // Pick Up Date and Time states
+  const [pickUpDateOption, setPickUpDateOption] = useState<string>("");
+  const [pickUpDate, setPickUpDate] = useState<string>("");
+  const [pickUpDateRangeStart, setPickUpDateRangeStart] = useState<string>("");
+  const [pickUpDateRangeEnd, setPickUpDateRangeEnd] = useState<string>("");
+  const [pickUpTimeOption, setPickUpTimeOption] = useState<string>("");
+  const [pickUpTime, setPickUpTime] = useState<string>("");
+  const [pickUpTimeRangeStart, setPickUpTimeRangeStart] = useState<string>("");
+  const [pickUpTimeRangeEnd, setPickUpTimeRangeEnd] = useState<string>("");
+
+  // Delivery Date and Time states
+  const [deliveryDateOption, setDeliveryDateOption] = useState<string>("");
+  const [deliveryDate, setDeliveryDate] = useState<string>("");
+  const [deliveryDateRangeStart, setDeliveryDateRangeStart] =
+    useState<string>("");
+  const [deliveryDateRangeEnd, setDeliveryDateRangeEnd] = useState<string>("");
+  const [deliveryTimeOption, setDeliveryTimeOption] = useState<string>("");
+  const [deliveryTime, setDeliveryTime] = useState<string>("");
+  const [deliveryTimeRangeStart, setDeliveryTimeRangeStart] =
+    useState<string>("");
+  const [deliveryTimeRangeEnd, setDeliveryTimeRangeEnd] = useState<string>("");
+
+  // Validation logic for each step
+  const isStep1Valid =
+    pickupLocation &&
+    deliveryLocation &&
+    addressTypeForDeliver &&
+    addressTypeForPickup &&
+    isDerivable;
+  const isStep2Valid = vehicleYear && vehicleModel && vehicleType;
+  const isStep3Valid = firstName && lastName && email && phone;
+
+  // Use the mutation hook
+  const [addQuote, { isLoading, isSuccess, isError, error }] =
+    useAddQuoetsMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const quoteData = {
+      pickup: pickupLocation,
+      delivery: deliveryLocation,
+      addressTypeForDeliver: addressTypeForDeliver,
+      addressTypeForPickup: addressTypeForPickup,
+      firstName: firstName,
+      isDerivable: isDerivable,
+      email: email,
+      phoneNumber: phone,
+      vehicleYear: parseInt(vehicleYear),
+      vehicleMake: vehicleModel, // Assuming the vehicle model is being sent as "make"
+      vehicleModel: vehicleModel,
+      transportType: vehicleType,
+      status: "pending", // Assuming 'pending' is a default status
     };
 
-    loadCarQuery();
+    try {
+      await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
 
-    return () => {
-      const existingScript = document.querySelector(
-        "script[src='https://www.carqueryapi.com/js/carquery.0.3.4.js']"
-      );
-      existingScript?.remove();
-    };
-  }, []);
-
-  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const query = e.target.value;
-    setInputValue(query);
-
-    // Fetch suggestions dynamically from CarQuery API
-    if (query.length > 1) {
-      const response = await fetch(
-        `https://www.carqueryapi.com/api/0.3/?callback=?&cmd=getMakes&keyword=${query}`
-      );
-      const jsonpResponse = await response.text();
-
-      // Parse JSONP response
-      const jsonResponse = JSON.parse(
-        jsonpResponse.replace(/^[^\{]*\{/, "{").replace(/\}[^}]*$/, "}")
-      );
-
-      if (jsonResponse.Makes) {
-        setMakeSuggestions(
-          jsonResponse.Makes.map((make: any) => make.make_display)
-        );
-      }
-    } else {
-      setMakeSuggestions([]);
+      // Reset the form or navigate to a confirmation page on success
+      setStep(1); // Optional: Reset form after submission
+    } catch (err) {
+      console.error("Error:", err);
     }
   };
 
-  const handleMakeSelect = (make: string) => {
-    setInputValue(make);
-    setMakeSuggestions([]);
-    // Optionally fetch models for the selected make
-  };
-
   return (
-    <div className="p-4 max-w-2xl mx-auto">
-      <h1 className="text-xl font-bold mb-4">
-        CarQuery API Example with Suggest
-      </h1>
+    <section id="quote">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-xl mx-auto  bg-gray-800 p-6 rounded-lg shadow-lg"
+      >
+        {/* Step 1: Pickup, Delivery, and Shipment Date */}
+        {/* {step === 1 && (
+          <StepOne
+            pickupLocation={pickupLocation}
+            setPickupLocation={setPickupLocation}
+            deliveryLocation={deliveryLocation}
+            setDeliveryLocation={setDeliveryLocation}
+            addressTypeForPickup={addressTypeForPickup}
+            setAddressTypeForPickup={setAddressTypeForPickup}
+            addressTypeForDeliver={addressTypeForDeliver}
+            setAddressTypeForDeliver={setAddressTypeForDeliver}
+            isDerivable={isDerivable}
+            setIsDerivable={setIsDrivable}
+            isPickupContact={isPickupContact}
+            setIsPickupContact={setIsPickupContact}
+            pickupContactName={pickupContactName}
+            setPickupContactName={setPickupContactName}
+            pickupContactPhone={pickupContactPhone}
+            setPickupContactPhone={setPickupContactPhone}
+            isDropoffContact={isDropoffContact}
+            setIsDropoffContact={setIsDropoffContact}
+            dropoffContactName={dropoffContactName}
+            setDropoffContactName={setDropoffContactName}
+            dropoffContactPhone={dropoffContactPhone}
+            setDropoffContactPhone={setDropoffContactPhone}
+          />
+        )} */}
 
-      <div>
-        <label htmlFor="car-makes" className="block text-sm font-medium">
-          Make
-        </label>
-        <input
-          type="text"
-          id="car-makes"
-          value={inputValue}
-          onChange={handleInputChange}
-          className="mt-1 block w-full border rounded p-2"
-          placeholder="Start typing a car make..."
-        />
-        {makeSuggestions.length > 0 && (
-          <ul className="border rounded mt-1 bg-white">
-            {makeSuggestions.map((make, index) => (
-              <li
-                key={index}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                onClick={() => handleMakeSelect(make)}
-              >
-                {make}
-              </li>
-            ))}
-          </ul>
+        {/* Step 2: Vehicle Info */}
+        {step === 2 && (
+          <StepTwoComponent
+            vehicleYear={vehicleYear}
+            setVehicleYear={setVehicleYear}
+            vehicleModel={vehicleModel}
+            setVehicleModel={setVehicleModel}
+            vehicleType={vehicleType}
+            setVehicleType={setVehicleType}
+            // isStep2Valid={isStep2Valid}
+            // nextStep={nextStep}
+            // prevStep={prevStep}
+          />
         )}
-      </div>
 
-      <div>
-        <label htmlFor="car-models" className="block text-sm font-medium mt-4">
-          Model
-        </label>
-        <select
-          id="car-models"
-          className="mt-1 block w-full border rounded p-2"
-        >
-          <option value="">Select Model</option>
-          {modelSuggestions.map((model, index) => (
-            <option key={index} value={model}>
-              {model}
-            </option>
-          ))}
-        </select>
-      </div>
+        {/* Step 3: Contact Info */}
+        {step === 3 && (
+          <StepThreeComponent
+            firstName={firstName}
+            setFirstName={setFirstName}
+            lastName={lastName}
+            setLastName={setLastName}
+            email={email}
+            setEmail={setEmail}
+            phone={phone}
+            setPhone={setPhone}
+            // isStep3Valid={isStep3Valid}
+            isLoading={isLoading}
+            isSuccess={isSuccess}
+            isError={isError}
+          />
+        )}
 
-      {/* Button to display data */}
-      <input
-        id="cq-show-data"
-        type="button"
-        value="Show Data"
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
-      />
+        {step === 1 && (
+          <StepDataTest
+            // Pick Up Date and Time props
+            pickUpDateOption={pickUpDateOption}
+            setPickUpDateOption={setPickUpDateOption}
+            pickUpDate={pickUpDate}
+            setPickUpDate={setPickUpDate}
+            pickUpDateRangeStart={pickUpDateRangeStart}
+            setPickUpDateRangeStart={setPickUpDateRangeStart}
+            pickUpDateRangeEnd={pickUpDateRangeEnd}
+            setPickUpDateRangeEnd={setPickUpDateRangeEnd}
+            pickUpTimeOption={pickUpTimeOption}
+            setPickUpTimeOption={setPickUpTimeOption}
+            pickUpTime={pickUpTime}
+            setPickUpTime={setPickUpTime}
+            pickUpTimeRangeStart={pickUpTimeRangeStart}
+            setPickUpTimeRangeStart={setPickUpTimeRangeStart}
+            pickUpTimeRangeEnd={pickUpTimeRangeEnd}
+            setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
+            // Delivery Date and Time props
+            deliveryDateOption={deliveryDateOption}
+            setDeliveryDateOption={setDeliveryDateOption}
+            deliveryDate={deliveryDate}
+            setDeliveryDate={setDeliveryDate}
+            deliveryDateRangeStart={deliveryDateRangeStart}
+            setDeliveryDateRangeStart={setDeliveryDateRangeStart}
+            deliveryDateRangeEnd={deliveryDateRangeEnd}
+            setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
+            deliveryTimeOption={deliveryTimeOption}
+            setDeliveryTimeOption={setDeliveryTimeOption}
+            deliveryTime={deliveryTime}
+            setDeliveryTime={setDeliveryTime}
+            deliveryTimeRangeStart={deliveryTimeRangeStart}
+            setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
+            deliveryTimeRangeEnd={deliveryTimeRangeEnd}
+            setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
+          />
+          // </div>
+        )}
 
-      {/* Display selected car data */}
-      <div id="car-model-data" className="mt-4 border p-4 rounded bg-gray-100">
-        <p>Select a car to see its details here.</p>
-      </div>
-    </div>
+        <StepNavigation
+          currentStep={step}
+          totalSteps={totalSteps}
+          onNext={nextStep}
+          onPrev={prevStep}
+          isNextEnabled={
+            (step === 1 && isStep1Valid) ||
+            (step === 2 && isStep2Valid) ||
+            (step === 3 && isStep3Valid)
+          }
+        />
+      </form>
+    </section>
   );
 };
 
-export default CarQuery;
+export default QouetForm;

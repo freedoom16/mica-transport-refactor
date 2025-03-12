@@ -33,7 +33,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   };
 
   return (
-    <div className="mb-6">
+    <div className="mb-6 bg-gray-800 p-6">
       <div className="text-white text-center mb-4">
         <h3 className="font-semibold">
           Upload {stepLabel.charAt(0).toUpperCase() + stepLabel.slice(1)} View

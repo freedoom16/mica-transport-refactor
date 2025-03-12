@@ -38,6 +38,8 @@ const QouetForm: React.FC = () => {
   // Step 2 fields
   const [vehicleYear, setVehicleYear] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
+  const [vehicleMaker, setVehicleMaker] = useState("");
+
   const [vehicleType, setVehicleType] = useState("");
 
   // Step 3 fields
@@ -160,6 +162,8 @@ const QouetForm: React.FC = () => {
             setVehicleModel={setVehicleModel}
             vehicleType={vehicleType}
             setVehicleType={setVehicleType}
+            vehicleMaker={vehicleMaker}
+            setVehicleMaker={setVehicleMaker}
             // isStep2Valid={isStep2Valid}
             // nextStep={nextStep}
             // prevStep={prevStep}
