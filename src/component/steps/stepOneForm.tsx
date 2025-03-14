@@ -151,6 +151,12 @@ const StepOne: React.FC<StepOneProps> = ({
               Auction Yard
             </option>
           </select>
+          <label
+            htmlFor="delivery_location"
+            className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
+          >
+            Pickup Address Type
+          </label>
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
@@ -208,35 +214,14 @@ const StepOne: React.FC<StepOneProps> = ({
               Auction Yard
             </option>
           </select>
+          <label
+            htmlFor="delivery_location"
+            className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
+          >
+            Delivery Address Type
+          </label>
         </div>
 
-        <div className="relative z-0 w-full mb-5 group flex flex-row">
-          <label className="block text-sm font-medium text-white mr-2">
-            Is this load drivable? <span className="text-red-500">*</span>
-          </label>
-          <div className="flex items-center justify-center space-x-6">
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="is_drivable"
-                value="true"
-                onChange={(e: any) => setIsDerivable(e.target.value === "true")}
-                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
-              />
-              <span className="text-sm text-white">Yes</span>
-            </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="is_drivable"
-                value="false"
-                onChange={(e) => setIsDerivable(e.target.value === "false")}
-                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
-              />
-              <span className="text-sm text-white">No</span>
-            </label>
-          </div>
-        </div>
         <div className="space-y-4">
           {/* Pickup Location Point of Contact */}
           <div className="flex flex-row">

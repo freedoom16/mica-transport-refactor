@@ -32,12 +32,11 @@ const SectionOne = () => {
       ],
     },
     {
-      title: "Communication",
+      title: "24/7 Communication",
       points: ["24/7 on-call support", "Support via email", "Support via text"],
     },
     {
-      title:
-        "We take the guesswork and verification out of your hands. This is supposed to be hassle and stress-free.",
+      title: "Ensured",
 
       points: ["Licensed", "Insured"],
     },
@@ -91,7 +90,7 @@ const SectionOne = () => {
                   key={currentStep}
                 >
                   <div
-                    className="des-text mb-8 w-full text-white flex items-center font-bold text-lg"
+                    className="des-text mb-4 md:mb-8 w-full text-white flex items-center font-bold text-lg"
                     style={{ lineHeight: "36px", fontFamily: "Spectral" }}
                   >
                     {stepContents[currentStep - 1].title}
