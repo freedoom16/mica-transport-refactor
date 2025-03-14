@@ -35,10 +35,11 @@ export default function Home(props: IHomeProps) {
               </p>
             </div>
             <div id="lp-pom-text-482" className="mt-2 px-6 ">
-              <p className="text-[20px] md:text-[17px] font-semibold leading-[29px] font-montserrat text-left">
+              <p className="text-[20px] md:text-[20px] font-semibold leading-[29px] font-montserrat text-left">
                 Mica Transportation LLC – Family-owned, insured, and
-                customer-focused. We safely transport luxury, classic, and
-                exotic vehicles for individuals, dealerships, and auction houses
+                customer-focused.
+                <br></br> We safely transport for classic, exotic vehicles for
+                individuals, dealerships, and auction houses.
               </p>
             </div>
             <FeaturesBox />

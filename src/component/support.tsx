@@ -9,9 +9,14 @@ const CustomContentSection = () => {
       {/* Left Column: Title */}
       <div
         id="lp-pom-text-233"
-        className="text-white w-full md:w-1/3 font-spectral font-bold text-[25px] md:text-[45px] leading-[77px] md:mr-8 md:px-12"
+        className="text-white w-full md:w-1/3 font-spectral font-bold text-[25px] md:text-[30px] md:mr-8 md:px-12"
       >
-        Ready to transport your car with Shiplux?
+        Looking for a reliable way to transport your car?
+        <br></br>
+        <span className=" text-[25px] font-semibold">
+          {" "}
+          Mica Transportion is here to make it effortless!
+        </span>
       </div>
 
       {/* Right Column: Description and Button */}
@@ -21,14 +26,14 @@ const CustomContentSection = () => {
           id="lp-pom-text-236"
           className="text-white font-montserrat font-normal text-[16px] leading-[24px]"
         >
-          Our car shipping advisors are available to answer all your questions
-          by calling{" "}
+          Our car transport experts are ready to assist you?
+          <br></br>call us now
           <a
             href="tel:+18555401266"
             className="text-white underline"
             target="_self"
           >
-            (855) 540-1266
+            (404) 988-4505
           </a>{" "}
           or request a quote below.
         </div>
@@ -37,7 +42,7 @@ const CustomContentSection = () => {
         <div>
           <a
             id="lp-pom-button-237"
-            href="#lp-pom-block-12"
+            href="#aboutus"
             className="bg-[rgba(217,166,130,1)] text-black text-[14px] leading-[17px] font-normal font-montserrat py-3 px-6 rounded-[32px] shadow-none"
           >
             REQUEST A QUOTE

@@ -105,10 +105,15 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
           type="text"
           value={makerSearch || vehicleMaker} // Show makerSearch when typing; otherwise, vehicleMaker
           onChange={(e) => handleMakerInputChange(e.target.value)} // Handle input changes
-          placeholder="Search Maker"
-          className="block py-2.5 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder=""
+          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
         />
-
+        <label
+          htmlFor="vehicle_year"
+          className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
+        >
+          Vehicle Maker
+        </label>
         {makerSearch && (
           <ul className="absolute z-5 w-full mt-2 bg-gray-800 border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
             {makers.length > 0 ? (
@@ -134,10 +139,15 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
           type="text"
           value={modelSearch || vehicleModel} // Show modelSearch when typing; otherwise, vehicleModel
           onChange={(e) => handleModelInputChange(e.target.value)} // Handle input changes
-          placeholder="Search Model"
-          className="block py-2.5 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder=""
+          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
         />
-
+        <label
+          htmlFor="vehicle_year"
+          className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
+        >
+          Vehicle Model
+        </label>
         {modelSearch && (
           <ul className="absolute z-4 w-full mt-2 bg-gray-800 border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
             {models.length > 0 ? (
@@ -181,6 +191,34 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
         >
           Vehicle Year
         </label>
+      </div>
+
+      <div className="relative z-0 w-full mb-5 group flex flex-row">
+        <label className="block text-sm font-medium text-white mr-2">
+          Is this load drivable? <span className="text-red-500">*</span>
+        </label>
+        <div className="flex items-center justify-center space-x-6">
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="is_drivable"
+              value="true"
+              // onChange={(e: any) => setIsDerivable(e.target.value === "true")}
+              className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+            />
+            <span className="text-sm text-white">Yes</span>
+          </label>
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="is_drivable"
+              value="false"
+              // onChange={(e) => setIsDerivable(e.target.value === "false")}
+              className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+            />
+            <span className="text-sm text-white">No</span>
+          </label>
+        </div>
       </div>
     </div>
   );
