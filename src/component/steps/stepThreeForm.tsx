@@ -1,4 +1,5 @@
-import React from "react";
+"uses client";
+import React, { useState } from "react";
 
 interface StepThreeProps {
   firstName: string;
@@ -29,6 +30,50 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
   isSuccess,
   isError,
 }) => {
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+
+  const validatePhone = (phone: string) => {
+    const phoneDigits = phone.replace(/\D/g, ""); // Remove all non-digit characters
+    const phoneFormat = /^\(\d{3}\) \d{3}-\d{4}$/; // RegEx to match (xxx) xxx-xxxx format
+
+    if (phoneDigits.length !== 10) {
+      setPhoneError("Phone number must be 10 digits.");
+      return false;
+    }
+
+    if (!phoneFormat.test(phone)) {
+      setPhoneError(
+        "Phone number format is incorrect. Please use (xxx) xxx-xxxx."
+      );
+      return false;
+    }
+
+    setPhoneError(null); // No errors
+    return true;
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value;
+
+    // Remove non-digit characters
+    value = value.replace(/\D/g, "");
+
+    // Format phone number as (xxx) xxx-xxxx
+    if (value.length <= 3) {
+      value = `(${value}`;
+    } else if (value.length <= 6) {
+      value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else {
+      value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
+        6,
+        10
+      )}`;
+    }
+
+    setPhone(value);
+    validatePhone(value);
+  };
+
   return (
     <div>
       <h2 className="text-lg font-bold text-white mb-4">Contact Info</h2>
@@ -96,7 +141,8 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           name="phone"
           id="phone"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          // onChange={(e) => setPhone(e.target.value)}
+          onChange={handlePhoneChange}
           className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
           placeholder=" "
           required
@@ -107,6 +153,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         >
           Phone Number
         </label>
+        {phoneError && <div className="mt-2 text-red-500">{phoneError}</div>}
       </div>
 
       {/* <button

@@ -39,7 +39,7 @@ const FeaturesBox = () => {
       <div className="flex flex-col items-center justify-center">
         <FontAwesomeIcon icon={faCar} className="w-16 h-16 text-blue-900" />{" "}
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
-          Door-to-Door
+          Enclosed/Open
         </p>
         <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-black">
           service
