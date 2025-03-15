@@ -7,6 +7,14 @@ import StepTwoComponent from "./steps/stepTwoForm";
 import StepThreeComponent from "./steps/stepThreeForm";
 import StepForDate from "./steps/stepDateForm";
 
+interface Vehicle {
+  vehicleYear: string;
+  vehicleModel: string;
+  vehicleMaker: string;
+  filteredMakers: string[];
+  filteredModels: string[];
+}
+
 const QouetForm: React.FC = () => {
   const [step, setStep] = useState(1);
 
@@ -44,7 +52,15 @@ const QouetForm: React.FC = () => {
   const [vehicleYear, setVehicleYear] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
   const [vehicleMaker, setVehicleMaker] = useState("");
-
+  const [vehicles, setVehicles] = useState<Vehicle[]>([
+    {
+      vehicleYear: "",
+      vehicleModel: "",
+      vehicleMaker: "",
+      filteredMakers: [],
+      filteredModels: [],
+    },
+  ]);
   const [vehicleType, setVehicleType] = useState("");
 
   // Step 3 fields
@@ -76,13 +92,21 @@ const QouetForm: React.FC = () => {
     useState<string>("");
   const [deliveryTimeRangeEnd, setDeliveryTimeRangeEnd] = useState<string>("");
 
+  console.log("main ", vehicles);
+  console.log("main maker", vehicles[0]?.vehicleMaker);
+
   // Validation logic for each step
   const isStep1Valid =
     pickupLocation &&
     deliveryLocation &&
     addressTypeForDeliver &&
     addressTypeForPickup;
-  const isStep2Valid = vehicleMaker && vehicleModel && vehicleYear;
+
+  const isStep2Valid =
+    vehicles[0]?.vehicleMaker &&
+    vehicles[0]?.vehicleModel &&
+    vehicles[0]?.vehicleYear;
+
   const isStep3Valid = firstName && lastName && email && phone;
   const isStep4Valid =
     (pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd) &&
@@ -215,14 +239,8 @@ const QouetForm: React.FC = () => {
                 {/* Step 2: Vehicle Info */}
                 {step === 1 && (
                   <StepTwoComponent
-                    vehicleYear={vehicleYear}
-                    setVehicleYear={setVehicleYear}
-                    vehicleModel={vehicleModel}
-                    setVehicleModel={setVehicleModel}
-                    vehicleType={vehicleType}
-                    setVehicleType={setVehicleType}
-                    vehicleMaker={vehicleMaker}
-                    setVehicleMaker={setVehicleMaker}
+                    vehicles={vehicles}
+                    setVehicles={setVehicles}
                     // isStep2Valid={isStep2Valid}
                     // nextStep={nextStep}
                     // prevStep={prevStep}
@@ -336,14 +354,8 @@ const QouetForm: React.FC = () => {
             {/* Step 2: Vehicle Info */}
             {step === 1 && (
               <StepTwoComponent
-                vehicleYear={vehicleYear}
-                setVehicleYear={setVehicleYear}
-                vehicleModel={vehicleModel}
-                setVehicleModel={setVehicleModel}
-                vehicleType={vehicleType}
-                setVehicleType={setVehicleType}
-                vehicleMaker={vehicleMaker}
-                setVehicleMaker={setVehicleMaker}
+                vehicles={vehicles}
+                setVehicles={setVehicles}
                 // isStep2Valid={isStep2Valid}
                 // nextStep={nextStep}
                 // prevStep={prevStep}
