@@ -109,26 +109,33 @@ const MultiStepTransportationForm = () => {
             <div className="mb-4">
               <p className="text-sm text-gray-400">Payment Type:</p>
               <div className="flex space-x-4  flex-wrap">
-                {["Billing", "COP", "COD", "Credit Card", "Bank Transfer"].map(
-                  (paymentOption) => (
-                    <label
-                      key={paymentOption}
-                      className="flex items-center space-x-2"
-                    >
-                      <input
-                        type="radio"
-                        name="paymentType"
-                        value={paymentOption}
-                        checked={formData.paymentType === paymentOption}
-                        onChange={handlePaymentTypeChange}
-                        className="form-radio text-blue-500 w-6 h-6"
-                      />
-                      <span className="text-sm text-white p-2">
-                        {paymentOption}
-                      </span>
-                    </label>
-                  )
-                )}
+                {[
+                  "COP",
+                  "COD",
+                  "Check",
+                  "Zelle",
+                  "Certified",
+                  "Cash app",
+                  "Creditcard",
+                  "ACH",
+                ].map((paymentOption) => (
+                  <label
+                    key={paymentOption}
+                    className="flex items-center space-x-2"
+                  >
+                    <input
+                      type="radio"
+                      name="paymentType"
+                      value={paymentOption}
+                      checked={formData.paymentType === paymentOption}
+                      onChange={handlePaymentTypeChange}
+                      className="form-radio text-blue-500 w-6 h-6"
+                    />
+                    <span className="text-sm text-white p-2">
+                      {paymentOption}
+                    </span>
+                  </label>
+                ))}
               </div>
             </div>
             {["transportFee", "prePaid", "totalAmount"].map((key) => (

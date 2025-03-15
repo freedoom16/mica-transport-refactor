@@ -1,15 +1,17 @@
-import React from "react";
-
+"use client";
+import React, { useState, useEffect } from "react";
 interface ImageUploadProps {
   currentStep: number;
   handleImageSelect: (step: string, image: File) => void;
   selectedImages: any;
+  handleDamageTypeSelect: (step: string, damageType: string) => void;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
   currentStep,
   handleImageSelect,
   selectedImages,
+  handleDamageTypeSelect,
 }) => {
   const stepLabels = [
     "front",
@@ -23,13 +25,31 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   ];
 
   const stepLabel = stepLabels[currentStep];
-  const currentImage = selectedImages[stepLabel];
+  // const currentImage = selectedImages[stepLabel];
+  const currentImage = selectedImages[stepLabel].image;
+  const currentDamageType = selectedImages[stepLabel].damageType;
+
+  // const [selectedDamageType, setSelectedDamageType] = useState<string>("");
+
+  const [selectedDamageType, setSelectedDamageType] = useState<string>(
+    currentDamageType || ""
+  );
+
+  // Update the local state when the damage type changes
+  useEffect(() => {
+    setSelectedDamageType(currentDamageType || "");
+  }, [currentDamageType]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       handleImageSelect(stepLabel, file);
     }
+  };
+
+  const handleDamageChange = (step: string, damageType: string) => {
+    setSelectedDamageType(damageType); // Optionally store the damage type locally for display
+    handleDamageTypeSelect(step, damageType); // Pass damage type up to the parent component
   };
 
   return (
@@ -65,21 +85,39 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           <p className="text-green-500">Image selected!</p>
         ) : (
           <div>
-            <p className="text-red-500">Please select an image</p>
-            <div>If image is not taken please add reason</div>
-            <input
-              type="text"
-              name="driver_name"
-              id="driver_name"
-              // value={driverName}
-              // onChange={}
-              className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-              placeholder=" "
-              // required
-              // disabled={
-              //   currentStep === steps.length - 1 ? false : true
-              // }
-            />
+            <label
+              htmlFor="damage_type"
+              className="block mb-2 text-sm font-medium text-white"
+            >
+              Select Damage Type
+            </label>
+            <select
+              id="damage_type"
+              name="damage_type"
+              // onChange={handleDamageChange}
+              value={selectedDamageType}
+              onChange={(e) =>
+                handleDamageChange(stepLabels[currentStep], e.target.value)
+              }
+              className="block w-full py-2.5 px-0 text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            >
+              <option value="" disabled selected>
+                Select an option
+              </option>
+              <option value="Bent">Bent</option>
+              <option value="Torn">Torn</option>
+              <option value="Broken">Broken</option>
+              <option value="Chipped">Chipped</option>
+              <option value="Dent">Dent</option>
+              <option value="Missing">Missing</option>
+              <option value="Scratched">Scratched</option>
+              <option value="Glass Cracked">Glass Cracked</option>
+            </select>
+          </div>
+        )}
+        {selectedDamageType && (
+          <div className="text-yellow-500 mt-2">
+            Selected Damage Type: {selectedDamageType}
           </div>
         )}
       </div>

@@ -5,16 +5,28 @@ import ImageUpload from "./imageUpload";
 const VehicleImageUpload: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [driverName, setDriverName] = useState(""); // New state for driver's name
+  const [damageType, setDamageType] = useState<string | null>(null);
+
+  // const [selectedImages, setSelectedImages] = useState<any>({
+  //   front: null,
+  //   back: null,
+  //   left: null,
+  //   right: null,
+  //   top: null,
+  //   dashboard: null,
+  //   motor: null,
+  //   behindDriver: null,
+  // });
 
   const [selectedImages, setSelectedImages] = useState<any>({
-    front: null,
-    back: null,
-    left: null,
-    right: null,
-    top: null,
-    dashboard: null,
-    motor: null,
-    behindDriver: null,
+    front: { image: null, damageType: null },
+    back: { image: null, damageType: null },
+    left: { image: null, damageType: null },
+    right: { image: null, damageType: null },
+    top: { image: null, damageType: null },
+    dashboard: { image: null, damageType: null },
+    motor: { image: null, damageType: null },
+    behindDriver: { image: null, damageType: null },
   });
 
   const iconMapping: { [key: string]: string } = {
@@ -52,22 +64,54 @@ const VehicleImageUpload: React.FC = () => {
     }
   };
 
-  const handleImageSelect = (step: string, image: File) => {
+  // const handleDamageTypeSelect = (step: string, damageType: string) => {
+  //   // setSelectedImages({
+  //   //   ...selectedImages,
+  //   //   [step]: { ...selectedImages[step], damageType },
+  //   // });
+  // };
+
+  // const handleImageSelect = (step: string, image: File) => {
+  //   setSelectedImages({
+  //     ...selectedImages,
+  //     [step]: image,
+  //   });
+  // };
+
+  const handleDamageTypeSelect = (step: string, damageType: string) => {
     setSelectedImages({
       ...selectedImages,
-      [step]: image,
+      [step]: {
+        ...selectedImages[step], // Preserve the image already selected (if any)
+        damageType, // Update the damage type for this step
+      },
     });
   };
 
+  const handleImageSelect = (step: string, image: File) => {
+    setSelectedImages({
+      ...selectedImages,
+      [step]: {
+        image, // Store the selected image
+        damageType: selectedImages[step]?.damageType || null, // Keep the existing damage type or set null if not present
+      },
+    });
+  };
   const handleFinalUpload = () => {
     alert("All images have been uploaded!");
     // You can now handle the final upload logic (e.g., send the images to your server or blockchain)
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmitContract = async (e: React.FormEvent) => {
     e.preventDefault();
     // Add logic to submit form or handle confirmation
     alert("Contract Confirmed! Driver: " + driverName); // Example confirmation
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // Add logic to submit form or handle confirmation
+    alert("Contract submitted!"); // Example confirmation
   };
 
   return (
@@ -80,53 +124,64 @@ const VehicleImageUpload: React.FC = () => {
             </h2>
             <h3 className="text-white mb-4">Review and upload all images:</h3>
             <div className="mb-6 text-white">
-              {Object.entries(selectedImages).map(([key, value]: any) => {
-                const iconName = iconMapping[key]; // Use the iconMapping for numeric keys
-                return (
-                  <div key={key} className="mb-6">
-                    {value ? (
-                      <div className="">
-                        <h4 className="text-white">{` ${
-                          key.charAt(0).toUpperCase() + key.slice(1)
-                        } View`}</h4>
-                        <div className="flex flex-row ">
-                          <div className="flex w-1/2 mr-4 space-x-6">
-                            {iconName && (
+              {Object.entries(selectedImages).map(
+                ([step, { image, damageType }]: any) => {
+                  const iconName = iconMapping[step]; // Use the iconMapping for numeric keys
+
+                  return (
+                    <div key={step} className="mb-6">
+                      {image ? (
+                        <div className="">
+                          <h4 className="text-white">{`${
+                            step.charAt(0).toUpperCase() + step.slice(1)
+                          } View`}</h4>
+                          <div className="flex flex-row">
+                            <div className="flex w-1/2 mr-4 space-x-6">
+                              {iconName && (
+                                <img
+                                  src={`/${iconName}.svg`} // Using the mapped icon name
+                                  alt={`${iconName} icon`}
+                                  className="w-full h-auto lg:h-48 bg-white mr-4"
+                                />
+                              )}
+                            </div>
+                            <div className="flex w-1/2">
                               <img
-                                src={`/${iconName}.svg`} // Using the mapped icon name
-                                alt={`${iconName} icon`}
-                                className="w-full h-auto lg:h-48 bg-white mr-4"
+                                src={URL.createObjectURL(image)} // Create object URL for the selected image
+                                alt={step}
+                                className="w-full h-auto lg:h-48 object-cover rounded-lg"
                               />
-                            )}
+                            </div>
                           </div>
-                          <div className="flex w-1/2">
-                            {" "}
+                        </div>
+                      ) : (
+                        <div className="text-white flex flex-row">
+                          <div className="text-white w-1/2 mr-4">
                             <img
-                              src={URL.createObjectURL(value)}
-                              alt={key}
-                              className="w-full h-auto lg:h-48 object-cover rounded-lg "
+                              src={`/${iconName}.svg`} // Using the mapped icon name
+                              alt={`${iconName} icon`}
+                              className="w-full h-auto mr-4 bg-white"
                             />
                           </div>
+
+                          {damageType ? (
+                            <div className="text-red-500 mt-2">
+                              <strong>Damage Type: </strong>
+                              {damageType}
+                            </div>
+                          ) : (
+                            <div className="text-red-500 w-1/2">
+                              No image selected
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    ) : (
-                      <div className="text-white flex flex-row">
-                        <div className="text-white w-1/2 mr-4">
-                          <img
-                            src={`/${iconName}.svg`} // Using the mapped icon name
-                            alt={`${iconName} icon`}
-                            className="w-full h-auto mr-4 bg-white"
-                          />
-                        </div>
-                        <div className="text-red-500 w-1/2">
-                          No image selected
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+                      )}
+                    </div>
+                  );
+                }
+              )}
             </div>
+
             <button
               onClick={handleFinalUpload}
               className="py-2 px-4 bg-green-500 text-white font-bold rounded-lg"
@@ -139,6 +194,8 @@ const VehicleImageUpload: React.FC = () => {
             currentStep={currentStep}
             handleImageSelect={handleImageSelect}
             selectedImages={selectedImages}
+            // setDamageType={damageType}
+            handleDamageTypeSelect={handleDamageTypeSelect}
           />
         )}
         {currentStep === steps.length - 1 ? (
@@ -207,7 +264,7 @@ const VehicleImageUpload: React.FC = () => {
             htmlFor="driver_name"
             className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
           >
-            Driver Name
+            Client Name
           </label>
         </div>
 
@@ -215,7 +272,7 @@ const VehicleImageUpload: React.FC = () => {
         <div className="bg-gray-800 p-6 mb-4 text-center">
           <button
             type="submit"
-            onClick={handleSubmit}
+            onClick={handleSubmitContract}
             className={`${
               currentStep === steps.length - 1 ? "bg-blue-500" : "bg-gray-500"
             } py-2 px-4  text-white font-bold rounded-lg`}
@@ -232,6 +289,16 @@ const VehicleImageUpload: React.FC = () => {
               Failed to load quote data. Please try again later.
             </div>
           ))} */}
+      </div>
+
+      <div className="bg-gray-800 p-6 mb-4 text-center">
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className={`bg-blue-500 py-2 px-4  text-white font-bold rounded-lg`}
+        >
+          Submit Contract
+        </button>
       </div>
     </div>
   );

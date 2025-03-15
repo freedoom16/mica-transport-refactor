@@ -92,30 +92,10 @@ const ViewQuoteForm = () => {
             <p className="w-2/3">{formData?.vinNumber}</p>
           </div>
 
-          {/* <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Inspection Conditions:</p>
-            <p className="w-2/3">{formData?.inspectionConditions}</p>
-          </div> */}
-          {/* <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Transport Fee:</p>
-            <p className="w-2/3">{formData?.transportFee}</p>
-          </div> */}
-          {/* <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Pre-paid:</p>
-            <p className="w-2/3">{formData?.prePaid}</p>
-          </div> */}
           <div className="flex justify-between items-center">
             <p className="font-semibold w-1/3">Total COD:</p>
             <p className="w-2/3">{formData?.totalCOD}</p>
           </div>
-          {/* <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Payment Type:</p>
-            <p className="w-2/3">{formData?.paymentType}</p>
-          </div> */}
-          {/* <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Payment Made In:</p>
-            <p className="w-2/3">{formData?.paymentMadeIn}</p>
-          </div> */}
         </div>
       </div>
     </div>
