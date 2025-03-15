@@ -12,12 +12,6 @@ const ServicesSection = () => {
         <h2 className="text-[40px] font-bold font-spectral leading-[58px] mb-4">
           Our Services
         </h2>
-        {/* Subtitle */}
-        <p className="text-base font-montserrat leading-[29px] mb-12 max-w-2xl mx-auto p-8 text-[20px] text-left">
-          Every customer receives premium service.
-          <br></br> Have a special request? Call, email, or text with us
-          <br></br>we’re here to meet all your transport needs.
-        </p>
 
         <div className="text-base font-montserrat leading-[29px] mb-12 max-w-2xl mx-auto p-8 text-[20px] text-left">
           <p>Every customer receives premium service.</p>
