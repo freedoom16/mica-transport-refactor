@@ -221,6 +221,34 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
             </label>
           </div>
 
+          <div className="relative z-0 w-full mb-5 group flex flex-row">
+            <label className="block text-sm font-medium text-white mr-2">
+              Is this load drivable? <span className="text-red-500">*</span>
+            </label>
+            <div className="flex items-center justify-center space-x-6">
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  name="is_drivable"
+                  value="true"
+                  // onChange={(e: any) => setIsDerivable(e.target.value === "true")}
+                  className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+                />
+                <span className="text-sm text-white">Yes</span>
+              </label>
+              <label className="flex items-center space-x-2">
+                <input
+                  type="radio"
+                  name="is_drivable"
+                  value="false"
+                  // onChange={(e) => setIsDerivable(e.target.value === "false")}
+                  className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+                />
+                <span className="text-sm text-white">No</span>
+              </label>
+            </div>
+          </div>
+
           {/* Remove Vehicle Button */}
           {vehicles.length > 1 && (
             <button
