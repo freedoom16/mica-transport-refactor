@@ -18,15 +18,12 @@ const FeaturesBox = () => {
 
       {/* Transport Icon */}
       <div className="flex flex-col items-center justify-center">
-        {/* <img
-          src="//d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/68d5cca8-ico-transport.svg"
-          alt="Transport Icon"
-          className="w-16 h-16"
-        /> */}
-        <FontAwesomeIcon
-          icon={faTruckMoving}
-          className="w-16 h-16 text-blue-900"
+        <img
+          src="truck-icon2.svg"
+          alt="Support Icon"
+          className="w-16 h-16 font-bold text-blue-900"
         />
+
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
           Professional Service
         </p>
@@ -37,7 +34,11 @@ const FeaturesBox = () => {
 
       {/* Car Icon */}
       <div className="flex flex-col items-center justify-center">
-        <FontAwesomeIcon icon={faCar} className="w-16 h-16 text-blue-900" />{" "}
+        <img
+          src="car-icon.svg"
+          alt="Support Icon"
+          className="w-16 h-16 font-bold text-blue-900"
+        />
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
           Enclosed/Open
         </p>
