@@ -37,7 +37,7 @@ const SectionOne = () => {
             <div className="w-full  bg-white rounded-2xl shadow-lg md:relative mt-12">
               <div className=" p-8">
                 <h2 className="text-center mb-8 text-gray-900">
-                  <span className="text-[30px] font-bold">
+                  <span className="text-[40px] font-bold">
                     {stepContent.title}
                   </span>
                 </h2>

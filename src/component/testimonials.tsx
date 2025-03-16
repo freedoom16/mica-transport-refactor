@@ -32,16 +32,16 @@ const Testimonials = () => {
   ];
 
   return (
-    <section id="reviews" className="py-20  lg:py-20 px-10 bg-gray-900">
+    <section id="reviews" className="py-20  lg:py-20 px-10 bg-white">
       <div className="container mx-auto">
-        <p className="uppercase tracking-wider mb-8 text-white text-center">
+        <p className="uppercase tracking-wider mb-8 text-gray-900 text-center text-[30px] font-bold">
           What customers are saying
         </p>
         <div className="flex flex-col md:flex-row md:-mx-3">
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className="flex-1 px-3 p-4">
               <div
-                className="p-12 rounded-lg border border-solid border-gray-200 mb-8"
+                className="p-12 rounded-lg border border-solid border-gray-200 mb-8 text-gray-900"
                 style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
               >
                 <p className="text-xl font-semibold">{testimonial.title}</p>
