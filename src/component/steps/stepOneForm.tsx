@@ -155,7 +155,7 @@ const StepOne: React.FC<StepOneProps> = ({
             htmlFor="delivery_location"
             className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
           >
-            Pickup Address Type
+            Select Address Type
           </label>
         </div>
 
@@ -218,7 +218,7 @@ const StepOne: React.FC<StepOneProps> = ({
             htmlFor="delivery_location"
             className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
           >
-            Delivery Address Type
+            Select Address Type
           </label>
         </div>
 

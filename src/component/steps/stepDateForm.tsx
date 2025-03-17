@@ -83,7 +83,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
     setDateRangeStart: (value: string) => void,
     dateRangeEnd: string,
     setDateRangeEnd: (value: string) => void,
-    minDate: string
+    minDate: string,
+    label: string
   ) => {
     const today = new Date().toISOString().split("T")[0];
 
@@ -134,14 +135,18 @@ const StepDataTest: React.FC<StepFourProps> = ({
       );
     } else {
       return (
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          min={minDate || today} // Disable dates before today
-          required
-        />
+        <div>
+          <label className="text-sm text-gray-400">{label}</label>
+
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            min={minDate || today} // Disable dates before today
+            required
+          />
+        </div>
       );
     }
   };
@@ -153,7 +158,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
     timeRangeStart: string,
     setTimeRangeStart: (value: string) => void,
     timeRangeEnd: string,
-    setTimeRangeEnd: (value: string) => void
+    setTimeRangeEnd: (value: string) => void,
+    label: string
   ) => {
     if (option === "between") {
       return (
@@ -190,13 +196,17 @@ const StepDataTest: React.FC<StepFourProps> = ({
       );
     } else {
       return (
-        <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          required
-        />
+        <div>
+          <label className="text-sm text-gray-400">{label}</label>
+
+          <input
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            required
+          />
+        </div>
       );
     }
   };
@@ -231,7 +241,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
           setPickUpDateRangeStart,
           pickUpDateRangeEnd,
           setPickUpDateRangeEnd,
-          ""
+          "",
+          "Pick Up Date"
         )}
       </div>
 
@@ -261,7 +272,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
           pickUpTimeRangeStart,
           setPickUpTimeRangeStart,
           pickUpTimeRangeEnd,
-          setPickUpTimeRangeEnd
+          setPickUpTimeRangeEnd,
+          "Pick Up Time"
         )}
       </div>
 
@@ -303,7 +315,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
             ? new Date(new Date(pickUpDate).getTime() + 24 * 60 * 60 * 1000)
                 .toISOString()
                 .split("T")[0]
-            : ""
+            : "",
+          "Delivery Date"
         )}
       </div>
 
@@ -332,7 +345,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
           deliveryTimeRangeStart,
           setDeliveryTimeRangeStart,
           deliveryTimeRangeEnd,
-          setDeliveryTimeRangeEnd
+          setDeliveryTimeRangeEnd,
+          "Delivery Time"
         )}
       </div>
     </div>
