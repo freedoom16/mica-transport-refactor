@@ -26,6 +26,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [filteredMakers, setFilteredMakers] = useState<string[]>([]);
   const [filteredModels, setFilteredModels] = useState<any[]>([]);
   const [selectedMaker, setSelectedMaker] = useState<string>("");
+  const [categoryInput, setCategoryInput] = useState<string>("");
+
+  const [showCategoryOptions, setShowCategoryOptions] =
+    useState<boolean>(false);
+  const categories = ["SUV", "Sedan", "Truck", "Hatchback", "Convertible"];
 
   useEffect(() => {
     // Fetch data from the API
@@ -256,6 +261,30 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             Vehicle Year
           </label>
         </div> */}
+
+        {/* Static Category */}
+        <div className="mb-5">
+          {/* Category Dropdown */}
+          <select
+            value={categoryInput}
+            onChange={(e) => {
+              setCategoryInput(e.target.value);
+              // setShowCategoryOptions(false); // Close options after selection
+            }}
+            // onFocus={handleCategoryFocus}
+            // onBlur={handleCategoryBlur}
+            className="block py-2 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="" disabled>
+              Select Category
+            </option>
+            {categories.map((category, idx) => (
+              <option key={idx} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="relative z-0 w-full mb-5 group flex flex-row">
           <label className="block text-sm font-medium text-white mr-2">
