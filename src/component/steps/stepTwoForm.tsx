@@ -18,89 +18,37 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
   setVehicles,
   vehicles,
 }) => {
-  // const [vehicles, setVehicles] = useState<Vehicle[]>([
-  //   {
-  //     vehicleYear: "",
-  //     vehicleModel: "",
-  //     vehicleMaker: "",
-  //     filteredMakers: [],
-  //     filteredModels: [],
-  //   },
-  // ]);
-
-  console.log("step two ", vehicles);
-  const [allVehicles, setAllVehicles] = useState<
-    Array<{ title: string; start_production?: number }>
-  >([]);
-  const [makers, setMakers] = useState<string[]>([]);
-
-  const fetchVehicles = async () => {
-    try {
-      const response = await fetch("/car.json"); // Update this path to your JSON file
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-      const result: Array<{ title: string; start_production?: number }> =
-        await response.json();
-      setAllVehicles(result);
-
-      // Extract unique makers
-      const uniqueMakers = Array.from(
-        new Set(result.map((vehicle) => vehicle.title.split(" ")[0]))
-      );
-      setMakers(uniqueMakers);
-    } catch (error) {
-      console.error("Error fetching vehicles:", error);
-    }
-  };
+  const [makes, setMakes] = useState<string[]>([]);
+  const [carsByMake, setCarsByMake] = useState<Record<string, any[]>>({});
+  const [makerInput, setMakerInput] = useState<string>("");
+  const [modelInput, setModelInput] = useState<string>("");
+  const [filteredMakers, setFilteredMakers] = useState<string[]>([]);
+  const [filteredModels, setFilteredModels] = useState<any[]>([]);
+  const [selectedMaker, setSelectedMaker] = useState<string>("");
 
   useEffect(() => {
-    fetchVehicles();
+    // Fetch data from the API
+    fetch("/api/cars")
+      .then((res) => res.json())
+      .then((data) => {
+        setMakes(data.makes);
+        setCarsByMake(data.carsByMake);
+      });
   }, []);
-
-  const handleMakerChange = (index: number, maker: string) => {
-    const newVehicles = [...vehicles];
-    newVehicles[index].vehicleMaker = maker;
-    newVehicles[index].vehicleModel = ""; // Clear model when maker changes
-    newVehicles[index].vehicleYear = ""; // Clear year when maker changes
-
-    // Clear suggestions after selection
-    newVehicles[index].filteredMakers = [];
-    newVehicles[index].filteredModels = [];
-
-    // Filter models based on the selected maker
-    const models = allVehicles
-      .filter((vehicle) => vehicle.title.startsWith(maker))
-      .map((vehicle) => vehicle.title);
-    newVehicles[index].filteredModels = models;
-
-    setVehicles(newVehicles);
-  };
-
-  const handleModelChange = (index: number, model: string) => {
-    const newVehicles = [...vehicles];
-    newVehicles[index].vehicleModel = model;
-
-    const vehicle = allVehicles.find((v) => v.title === model);
-    newVehicles[index].vehicleYear = vehicle?.start_production
-      ? vehicle.start_production.toString()
-      : "";
-
-    // Clear model suggestions after selection
-    newVehicles[index].filteredModels = [];
-
-    setVehicles(newVehicles);
-  };
 
   const handleMakerInputChange = (index: number, value: string) => {
     const newVehicles = [...vehicles];
     newVehicles[index].vehicleMaker = value;
-
+    setMakerInput(value);
     // Filter makers based on input
-    const suggestions = makers.filter((maker) =>
-      maker.toLowerCase().includes(value.toLowerCase())
+    setFilteredMakers(
+      makes
+        .filter((make) =>
+          make.toLowerCase().startsWith(makerInput.toLowerCase())
+        )
+        .slice(0, 5)
     );
-    newVehicles[index].filteredMakers = suggestions;
+    newVehicles[index].filteredMakers = filteredMakers;
 
     setVehicles(newVehicles);
   };
@@ -108,18 +56,58 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
   const handleModelInputChange = (index: number, value: string) => {
     const newVehicles = [...vehicles];
     newVehicles[index].vehicleModel = value;
-
+    setModelInput(value);
     // Filter models based on input and selected maker
-    const suggestions = allVehicles
-      .filter(
-        (vehicle) =>
-          vehicle.title.startsWith(newVehicles[index].vehicleMaker) &&
-          vehicle.title.toLowerCase().includes(value.toLowerCase())
-      )
-      .map((vehicle) => vehicle.title);
-    newVehicles[index].filteredModels = suggestions;
+    if (selectedMaker && modelInput) {
+      const carsForMaker = carsByMake[selectedMaker] || [];
+      const uniqueModels = carsForMaker
+        .filter((car) =>
+          car.Model.toLowerCase().startsWith(modelInput.toLowerCase())
+        )
+        .reduce<any[]>((unique, car) => {
+          if (!unique.some((c) => c.Model === car.Model)) {
+            unique.push(car);
+          }
+          return unique;
+        }, [])
+        .slice(0, 5);
+      setFilteredModels(uniqueModels);
+    }
+    newVehicles[index].filteredModels = filteredModels;
 
     setVehicles(newVehicles);
+  };
+
+  const handleMakerSelect = (index: number, make: string) => {
+    setMakerInput(make); // Clear the maker input
+    setSelectedMaker(make); // Set the selected maker
+    setFilteredMakers([]); // Clear the maker suggestions
+
+    const newVehicles = [...vehicles];
+    newVehicles[index].vehicleMaker = make;
+    newVehicles[index].vehicleModel = ""; // Reset model when maker changes
+    newVehicles[index].vehicleYear = ""; // Reset year when maker changes
+    newVehicles[index].filteredMakers = []; // Clear filtered makers
+    newVehicles[index].filteredModels = []; // Clear filtered models
+
+    setVehicles(newVehicles);
+    setFilteredMakers([]); // Clear the maker suggestions
+  };
+
+  const handleModelSelect = (index: number, model: string) => {
+    setModelInput(model);
+
+    const newVehicles = [...vehicles];
+    newVehicles[index].vehicleModel = model;
+
+    const car = carsByMake[selectedMaker]?.find((c) => c.Model === model);
+    newVehicles[index].vehicleYear = car?.start_production
+      ? car.start_production.toString()
+      : "";
+
+    newVehicles[index].filteredModels = [];
+    setVehicles(newVehicles);
+    setFilteredModels([]);
   };
 
   const handleAddVehicle = () => {
@@ -149,7 +137,9 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
           <div className="relative z-5 w-full mb-5 group">
             <input
               type="text"
+              // value={makerInput}
               value={vehicle.vehicleMaker}
+              // onChange={(e) => setMakerInput(e.target.value)}
               onChange={(e) => handleMakerInputChange(index, e.target.value)}
               placeholder=""
               className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
@@ -157,15 +147,15 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
             <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500">
               Vehicle Maker
             </label>
-            {vehicle.filteredMakers.length > 0 && (
+            {filteredMakers.length > 0 && (
               <ul className="absolute z-5 w-full mt-2 bg-gray-800 border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
-                {vehicle.filteredMakers.map((maker, idx) => (
+                {filteredMakers.map((make, idx) => (
                   <li
                     key={idx}
-                    onClick={() => handleMakerChange(index, maker)}
+                    onClick={() => handleMakerSelect(index, make)}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-700"
                   >
-                    {maker}
+                    {make}
                   </li>
                 ))}
               </ul>
@@ -176,91 +166,31 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
           <div className="relative z-4 w-full mb-5 group">
             <input
               type="text"
+              // value={modelInput}
+              // onChange={(e) => setModelInput(e.target.value)}
               value={vehicle.vehicleModel}
               onChange={(e) => handleModelInputChange(index, e.target.value)}
-              placeholder=""
+              placeholder={""}
+              disabled={!selectedMaker}
               className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
             />
             <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500">
-              Vehicle Model
+              {selectedMaker ? "Vehicle Model" : "Select a maker first"}
             </label>
-            {vehicle.filteredModels.length > 0 && (
+            {filteredModels.length > 0 && (
               <ul className="absolute z-4 w-full mt-2 bg-gray-800 border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
-                {vehicle.filteredModels.map((model, idx) => (
+                {filteredModels.map((model, idx) => (
                   <li
                     key={idx}
-                    onClick={() => handleModelChange(index, model)}
+                    onClick={() => handleModelSelect(index, model.Model)}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-700"
                   >
-                    {model}
+                    {model.Model}
                   </li>
                 ))}
               </ul>
             )}
           </div>
-
-          {/* Vehicle Year */}
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="text"
-              value={vehicle.vehicleYear}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (/^\d{0,4}$/.test(value)) {
-                  // Allow only numeric input up to 4 digits
-                  const newVehicles = [...vehicles];
-                  newVehicles[index].vehicleYear = value;
-                  setVehicles(newVehicles);
-                }
-              }}
-              className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-              placeholder=""
-            />
-            <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              Vehicle Year
-            </label>
-          </div>
-
-          <div className="relative z-0 w-full mb-5 group flex flex-row">
-            <label className="block text-sm font-medium text-white mr-2">
-              Is this load drivable? <span className="text-red-500">*</span>
-            </label>
-            <div className="flex items-center justify-center space-x-6">
-              <label className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  name="is_drivable"
-                  value="true"
-                  // onChange={(e: any) => setIsDerivable(e.target.value === "true")}
-                  className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
-                />
-                <span className="text-sm text-white">Yes</span>
-              </label>
-              <label className="flex items-center space-x-2">
-                <input
-                  type="radio"
-                  name="is_drivable"
-                  value="false"
-                  // onChange={(e) => setIsDerivable(e.target.value === "false")}
-                  className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
-                />
-                <span className="text-sm text-white">No</span>
-              </label>
-            </div>
-          </div>
-
-          {/* Remove Vehicle Button */}
-          {vehicles.length > 1 && (
-            <button
-              type="button"
-              className={`text-red-500 ${
-                vehicles.length > 1 ? "block" : "hidden "
-              }`}
-              onClick={() => handleRemoveVehicle(index)}
-            >
-              Remove Vehicle
-            </button>
-          )}
         </div>
       ))}
 
