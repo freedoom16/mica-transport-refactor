@@ -276,7 +276,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             className="block py-2 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="" disabled>
-              Select Category
+              --- Select Vehicle Category --
             </option>
             {categories.map((category, idx) => (
               <option key={idx} value={category}>
