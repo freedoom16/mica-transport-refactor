@@ -9,32 +9,32 @@ export default function Home(props: IHomeProps) {
     <section id="home">
       <div
         id="section-1"
-        className="relative block w-full h-[762px] mx-auto bg-black bg-opacity-70  bg-center bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: "url(img/truck2.jpg)",
-        }}
+        className="relative block w-full h-[762px] mx-auto bg-gray-50 bg-opacity-70  bg-center bg-cover bg-no-repeat"
+        // style={{
+        //   backgroundImage: "url(img/truck2.jpg)",
+        // }}
       >
         {/* Overlay */}
         {/* <div
           id="lp-pom-block-12-color-overlay"
           className="absolute inset-0"
         ></div> */}
-        <div
+        {/* <div
           id="lp-pom-block-12-color-overlay"
           className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/90 to-black/50 opacity-70 lg:opacity-40"
-        ></div>
+        ></div> */}
 
         {/* Content */}
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between py-16 px-4 h-full">
           {/* Left Section */}
-          <div className="text-white max-w-[600px]">
+          <div className="text-gray-900 max-w-[600px]">
             <div id="lp-pom-text-481" className="mb-3 px-6 py-6">
               <p className="text-[35px] md:text-[52px] font-extrabold leading-[50px]  md:leading-[77px] font-montserrat text-left md:text-left">
                 {/* enclosed or open, always professional.  */}
                 ENCLOSED OR OPEN, ALWAYS PROFESSIONAL.
               </p>
             </div>
-            <div id="lp-pom-text-482" className="mt-2 px-6 ">
+            <div id="lp-pom-text-482" className="mt-2 px-6">
               <p className="text-[20px] md:text-[20px] font-semibold leading-[29px] font-montserrat text-left">
                 Mica Transportation LLC – Family-owned, insured, and
                 customer-focused.

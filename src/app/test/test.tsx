@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import CarsPageTest from "./test";
 
 interface Car {
   Year: number;
@@ -9,7 +8,7 @@ interface Car {
   Category: string;
 }
 
-const CarsPage: React.FC = () => {
+const CarsPageTest: React.FC = () => {
   const [makes, setMakes] = useState<string[]>([]);
   const [carsByMake, setCarsByMake] = useState<Record<string, Car[]>>({});
   const [makerInput, setMakerInput] = useState<string>("");
@@ -141,9 +140,8 @@ const CarsPage: React.FC = () => {
           </ul>
         )}
       </div>
-      {/* <CarsPageTest /> */}
     </div>
   );
 };
 
-export default CarsPage;
+export default CarsPageTest;

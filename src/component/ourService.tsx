@@ -4,7 +4,7 @@ const ServicesSection = () => {
   return (
     <section
       id="our-service"
-      className="relative bg-gray-900 text-white py-16 "
+      className="relative bg-white text-gray-900 py-16 "
     >
       {/* Section Container */}
       <div className="container mx-auto text-center">
@@ -46,7 +46,10 @@ const ServicesSection = () => {
         {/* Service Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-16 p-8">
           {/* Enclosed Car Shipping */}
-          <div className="flex flex-col items-center bg-gray-800 rounded-2xl p-4">
+          <div
+            className="flex flex-col items-center bg-white rounded-2xl shadow-xl p-4"
+            style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
+          >
             <img
               src="opentruck.svg"
               alt="Enclosed Car Shipping"
@@ -59,7 +62,10 @@ const ServicesSection = () => {
           </div>
 
           {/* Open Car Shipping */}
-          <div className="flex flex-col items-center bg-gray-800 rounded-2xl p-4">
+          <div
+            className="flex flex-col items-center bg-white rounded-2xl p-4 shadow-xl"
+            style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
+          >
             <img
               src="opentruck.svg"
               alt="Open Car Shipping"
@@ -72,7 +78,10 @@ const ServicesSection = () => {
           </div>
 
           {/* Canada Shipping */}
-          <div className="flex flex-col items-center bg-gray-800 rounded-2xl p-4">
+          <div
+            className="flex flex-col items-center bg-white rounded-2xl p-4 shadow-xl"
+            style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
+          >
             <img
               src="location.svg"
               alt="Canada Shipping"
@@ -87,7 +96,7 @@ const ServicesSection = () => {
           </div>
 
           {/* Hawaii Shipping */}
-          {/* <div className="flex flex-col items-center bg-gray-800 rounded-2xl p-4">
+          {/* <div className="flex flex-col items-center bg-white rounded-2xl p-4">
             <img
               src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/5c62caf4-hawaii.svg"
               alt="Hawaii Shipping"

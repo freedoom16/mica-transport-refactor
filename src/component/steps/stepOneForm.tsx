@@ -64,13 +64,48 @@ const StepOne: React.FC<StepOneProps> = ({
         `${API_URL}?key=${API_KEY}&q=${encodeURIComponent(query)}&limit=5`
       );
       const data = await response.json();
-      setSuggestions(data.results.map((result: any) => result.formatted));
+      console.log(data);
+      const usaResults = data.results.filter(
+        (result: any) => result.components.country_code === "us"
+      );
+      console.log(usaResults);
+
+      setSuggestions(usaResults.map((result: any) => result.formatted));
+      // setSuggestions(data.results.map((result: any) => result.formatted));
     } catch (error) {
       console.error("Error fetching suggestions:", error);
     } finally {
       setLoading(false);
     }
   };
+
+  // const API_KEY = "AIzaSyBTklQmwDrHzunpPxUs1xoyNMG-tPpY_XI"; // Replace with your actual API key
+  // const API_URL = "https://maps.googleapis.com/maps/api/geocode/json";
+
+  // const fetchSuggestions = async (query: string, setSuggestions: Function) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await fetch(
+  //       `${API_URL}?address=${encodeURIComponent(query)}&key=${API_KEY}`
+  //     );
+  //     const data = await response.json();
+
+  //     // Filter results to only include those in the USA
+  //     const usaResults = data.results.filter((result: any) =>
+  //       result.address_components.some(
+  //         (component: any) => component.short_name === "US"
+  //       )
+  //     );
+
+  //     console.log(data);
+  //     // Set the suggestions
+  //     setSuggestions(usaResults.map((result: any) => result.formatted_address));
+  //   } catch (error) {
+  //     console.error("Error fetching suggestions:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handlePickupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -155,7 +190,7 @@ const StepOne: React.FC<StepOneProps> = ({
             htmlFor="delivery_location"
             className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
           >
-            Pickup Address Type
+            Select Address Type
           </label>
         </div>
 
@@ -218,7 +253,7 @@ const StepOne: React.FC<StepOneProps> = ({
             htmlFor="delivery_location"
             className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
           >
-            Delivery Address Type
+            Select Address Type
           </label>
         </div>
 
