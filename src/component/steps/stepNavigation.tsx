@@ -21,10 +21,10 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
       {currentStep > 1 && (
         <button
           type="button"
-          className="px-4 py-2  text-gray-900 rounded-full "
+          className="px-4 py-2 bg-[#6DB8D1] text-gray-900 rounded-full "
           onClick={onPrev}
         >
-          <div className="bg-[#6DB8D1]">Previous</div>
+          <div className="">Previous</div>
         </button>
       )}
       <div className="flex-grow"></div>

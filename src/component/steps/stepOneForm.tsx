@@ -132,24 +132,25 @@ const StepOne: React.FC<StepOneProps> = ({
 
       <div>
         <div className="relative z-0 w-full mb-5 group">
+          <label
+            htmlFor="pickup_location"
+            className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          >
+            Pickup Location
+          </label>
+
           <input
             type="text"
             name="pickup_location"
             id="pickup_location"
             value={pickupLocation}
             onChange={handlePickupChange}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-            placeholder=" "
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            placeholder="Pickup Location"
             required
           />
-          <label
-            htmlFor="pickup_location"
-            className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-          >
-            Pickup Location
-          </label>
           {pickupSuggestions.length > 0 && (
-            <div className="relative z-10 w-full mt-2 bg-gray-800 border border-gray-300 rounded-lg shadow-lg">
+            <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
               {pickupSuggestions.map((suggestion, index) => (
                 <div
                   key={index}
@@ -157,7 +158,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     setPickupLocation(suggestion);
                     setPickupSuggestions([]);
                   }}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-white"
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-gray-900"
                 >
                   {suggestion}
                 </div>
@@ -167,52 +168,53 @@ const StepOne: React.FC<StepOneProps> = ({
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
+          <label
+            htmlFor="delivery_location"
+            className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          >
+            Select Address Type
+          </label>
           <select
             name="address_type"
             id="address_type"
             value={addressTypeForPickup}
             onChange={(e) => setAddressTypeForPickup(e.target.value)}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
             required
           >
             <option value="">Select Address Type</option>
-            <option value="residential" className="text-white">
+            <option value="residential" className="text-gray-900">
               Residential
             </option>
-            <option value="business" className="text-white">
+            <option value="business" className="text-gray-900">
               Business
             </option>
-            <option value="auction_yard" className="text-white">
+            <option value="auction_yard" className="text-gray-900">
               Auction Yard
             </option>
           </select>
-          <label
-            htmlFor="delivery_location"
-            className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-          >
-            Select Address Type
-          </label>
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
+          <label
+            htmlFor="delivery_location"
+            className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          >
+            Delivery Location
+          </label>
           <input
             type="text"
             name="delivery_location"
             id="delivery_location"
             value={deliveryLocation}
             onChange={handleDeliveryChange}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-            placeholder=" "
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            placeholder="Delivery Location"
             required
           />
-          <label
-            htmlFor="delivery_location"
-            className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-          >
-            Delivery Location
-          </label>
+
           {deliverySuggestions.length > 0 && (
-            <div className="relative z-10 w-full mt-2 bg-gray-800 border border-gray-300 rounded-lg shadow-lg">
+            <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
               {deliverySuggestions.map((suggestion, index) => (
                 <div
                   key={index}
@@ -220,7 +222,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     setDeliveryLocation(suggestion);
                     setDeliverySuggestions([]);
                   }}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-white"
+                  className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-gray-900"
                 >
                   {suggestion}
                 </div>
@@ -230,37 +232,37 @@ const StepOne: React.FC<StepOneProps> = ({
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
+          <label
+            htmlFor="delivery_location"
+            className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          >
+            Select Address Type
+          </label>
           <select
             name="address_type"
             id="address_type"
             value={addressTypeForDeliver}
             onChange={(e) => setAddressTypeForDeliver(e.target.value)}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
             required
           >
             <option value="">Select Address Type</option>
-            <option value="residential" className="text-white">
+            <option value="residential" className="text-gray-900">
               Residential
             </option>
-            <option value="business" className="text-white">
+            <option value="business" className="text-gray-900">
               Business
             </option>
-            <option value="auction_yard" className="text-white">
+            <option value="auction_yard" className="text-gray-900">
               Auction Yard
             </option>
           </select>
-          <label
-            htmlFor="delivery_location"
-            className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 mb-2 z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-          >
-            Select Address Type
-          </label>
         </div>
 
         <div className="space-y-4">
           {/* Pickup Location Point of Contact */}
           <div className="flex flex-row">
-            <label className="block text-sm font-medium text-white  md:mr-2 md:mb-0">
+            <label className="block text-sm font-medium text-gray-900  md:mr-2 md:mb-0">
               Are you the point of contact at the pickup location?{" "}
             </label>
             <div className="flex items-center space-x-4">
@@ -273,7 +275,7 @@ const StepOne: React.FC<StepOneProps> = ({
                   checked={isPickupContact === "true"}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
                 />
-                <span className="text-sm text-white">Yes</span>
+                <span className="text-sm text-gray-900">Yes</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -284,7 +286,7 @@ const StepOne: React.FC<StepOneProps> = ({
                   checked={isPickupContact === "false"}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
-                <span className="text-sm text-white">No</span>
+                <span className="text-sm text-gray-900">No</span>
               </label>
             </div>
           </div>
@@ -292,47 +294,48 @@ const StepOne: React.FC<StepOneProps> = ({
           {isPickupContact === "false" && (
             <div>
               <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="pickup_contact_name"
+                  className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                >
+                  Pickup Contact Name
+                </label>
+
                 <input
                   type="text"
                   name="pickup_contact_name"
                   id="pickup_contact_name"
                   value={pickupContactName}
                   onChange={(e) => setPickupContactName(e.target.value)}
-                  className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-                  placeholder=" "
+                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  placeholder="Pickup Contact Name"
                   required
                 />
-                <label
-                  htmlFor="pickup_contact_name"
-                  className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-                >
-                  Pickup Contact Name
-                </label>
               </div>
               <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="pickup_contact_phone"
+                  className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                >
+                  Pickup Contact Phone Number
+                </label>
                 <input
                   type="text"
                   name="pickup_contact_phone"
                   id="pickup_contact_phone"
                   value={pickupContactPhone}
                   onChange={(e) => setPickupContactPhone(e.target.value)}
-                  className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-                  placeholder=" "
+                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  placeholder="Pickup Contact Phone Number"
                   required
                 />
-                <label
-                  htmlFor="pickup_contact_phone"
-                  className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-                >
-                  Pickup Contact Phone Number
-                </label>
               </div>
             </div>
           )}
 
           {/* Dropoff Location Point of Contact */}
           <div className="flex flex-row">
-            <label className="block text-sm font-medium text-white mb-2">
+            <label className="block text-sm font-medium text-gray-900 mb-2">
               Are you the point of contact at the drop-off location?{" "}
             </label>
             <div className="flex items-center space-x-4">
@@ -345,7 +348,7 @@ const StepOne: React.FC<StepOneProps> = ({
                   checked={isDropoffContact === "true"}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
-                <span className="text-sm text-white">Yes</span>
+                <span className="text-sm text-gray-900">Yes</span>
               </label>
               <label className="flex items-center space-x-2">
                 <input
@@ -356,7 +359,7 @@ const StepOne: React.FC<StepOneProps> = ({
                   checked={isDropoffContact === "false"}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
-                <span className="text-sm text-white">No</span>
+                <span className="text-sm text-gray-900">No</span>
               </label>
             </div>
           </div>
@@ -364,40 +367,41 @@ const StepOne: React.FC<StepOneProps> = ({
           {isDropoffContact === "false" && (
             <div>
               <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="dropoff_contact_name"
+                  className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                >
+                  Dropoff Contact Name
+                </label>
+
                 <input
                   type="text"
                   name="dropoff_contact_name"
                   id="dropoff_contact_name"
                   value={dropoffContactName}
                   onChange={(e) => setDropoffContactName(e.target.value)}
-                  className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-                  placeholder=" "
+                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  placeholder="Dropoff Contact Name"
                   required
                 />
-                <label
-                  htmlFor="dropoff_contact_name"
-                  className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-                >
-                  Dropoff Contact Name
-                </label>
               </div>
               <div className="relative z-0 w-full mb-5 group">
+                <label
+                  htmlFor="dropoff_contact_phone"
+                  className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                >
+                  Dropoff Contact Phone Number
+                </label>
                 <input
                   type="text"
                   name="dropoff_contact_phone"
                   id="dropoff_contact_phone"
                   value={dropoffContactPhone}
                   onChange={(e) => setDropoffContactPhone(e.target.value)}
-                  className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-                  placeholder=" "
+                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  placeholder="Dropoff Contact Phone Number"
                   required
                 />
-                <label
-                  htmlFor="dropoff_contact_phone"
-                  className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-                >
-                  Dropoff Contact Phone Number
-                </label>
               </div>
             </div>
           )}
@@ -410,7 +414,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 id="shipment_date"
                 value={shipmentDate}
                 onChange={(e) => setShipmentDate(e.target.value)}
-                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
                 required
               />
               <label
@@ -427,7 +431,7 @@ const StepOne: React.FC<StepOneProps> = ({
           disabled={!isStep1Valid}
           className={`w-full px-4 py-2 mt-4 text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
             isStep1Valid
-              ? "bg-blue-600 text-white hover:bg-blue-700"
+              ? "bg-blue-600 text-gray-900 hover:bg-blue-700"
               : "bg-gray-600 text-gray-400 cursor-not-allowed"
           }`}
         >
