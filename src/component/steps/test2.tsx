@@ -124,8 +124,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           </h2>
 
           {vehicles.map((vehicle, index) => (
-            <div key={index} className="flex space-y-2 ">
-              <div className=" flex flex-row space-x-2 bg-gray-700 mb-2 p-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full">
+            <div key={index} className="flex flex-row space-y-2 ">
+              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 w-full">
                 <div className="flex flex-col">
                   <strong>Maker</strong> {vehicle.vehicleMaker}
                 </div>
