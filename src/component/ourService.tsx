@@ -41,10 +41,10 @@ const Services = () => {
       <div className="container mx-auto flex space-x-6 flex-col md:flex-row">
         {/* Left Section */}
         <div className="w-full lg:w-[45%] bg-white rounded-[28px] p-8 flex flex-col">
-          <p className=" uppercase rounded-[100px] text-center px-6 py-[10px] mb-6">
+          <p className=" uppercase text-[30px] rounded-[100px] text-center px-6 py-[10px] mb-6">
             services
           </p>
-          <h2 className="text-[35px] md:text-[45px] font-medium leading-[120%] mb-8">
+          <h2 className="text-[20px] md:text-[45px] font-medium leading-[120%] mb-8">
             Experience the convenience of world-class auto transport at an
             affordable price
           </h2>
