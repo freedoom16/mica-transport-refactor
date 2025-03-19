@@ -1,3 +1,4 @@
+import AboutPage from "@/component/aboutPage2";
 import SectionOne from "@/component/aboutUs";
 import Footer from "@/component/footer";
 import Home from "@/component/home";
@@ -18,6 +19,8 @@ const BlockComponent: React.FC = () => {
 
       {/* Section 2 */}
       <SectionOne />
+
+      <AboutPage />
 
       {/* Section 3 */}
       <ServicesSection />

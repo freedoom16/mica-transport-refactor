@@ -1,117 +1,81 @@
-import React from "react";
+"use client";
+import { useState } from "react";
 
-const ServicesSection = () => {
+const ServiceComponent = () => {
+  // State to track the expanded state for each service
+  const [expandedService, setExpandedService] = useState(null);
+
+  // Function to toggle the expanded state for each service
+  const handleExpand = (serviceName: any) => {
+    setExpandedService((prev) => (prev === serviceName ? null : serviceName));
+  };
+
+  // Service data
+  const services = [
+    {
+      name: "Enclosed car",
+      description: "This is a detailed description of Enclosed Car Shipping.",
+    },
+    {
+      name: "Open car shipping",
+      description: "This is a detailed description of Open Car Shipping.",
+    },
+    {
+      name: "Usa",
+      description:
+        "This is a detailed description for Canada & Hawaii shipping services.",
+    },
+  ];
+
   return (
     <section
       id="our-service"
-      className="relative bg-[#D3D3D3] text-gray-900 py-16 "
+      className="relative bg-[#D3D3D3] text-gray-900 py-16 p-6 "
     >
-      {/* Section Container */}
-      <div className="container mx-auto text-center">
-        {/* Title */}
-        <h2 className="text-[40px] font-bold font-spectral leading-[58px] mb-4">
-          Our Services
+      <div className="container mx-auto text-center rounded-[32px]  shadow-2xl bg-white p-6">
+        <p className=" uppercase rounded-[100px] text-[35px] px-6 py-[10px] mb-6">
+          services
+        </p>
+        <h2 className="text-[35px] md:text-[45px] font-medium leading-[120%] mb-8">
+          Experience the convenience of world-class auto transport at an
+          affordable price
         </h2>
 
-        <div className="text-base font-montserrat leading-[29px] mb-12 max-w-2xl mx-auto p-8 text-[20px] text-left">
-          <p>Every customer receives premium service.</p>
-          <p>
-            Have a special request?{" "}
-            <a
-              href="tel:+1234567890"
-              className="text-blue-500 hover:text-blue-700 underline transition duration-200"
+        {services.map((service, index) => (
+          <div key={index}>
+            <div
+              className="flex mx-auto bg-white p-12 flex-row  justify-between border-t border-t-[#D0CAED] cursor-pointer py-4"
+              onClick={() => handleExpand(service.name)}
             >
-              Call
-            </a>
-            ,{" "}
-            <a
-              href="mailto:example@example.com"
-              className="text-blue-500 hover:text-blue-700 underline transition duration-200"
-            >
-              email
-            </a>
-            , or{" "}
-            <a
-              href="sms:+1234567890"
-              className="text-blue-500 hover:text-blue-700 underline transition duration-200"
-            >
-              text
-            </a>{" "}
-            us
-            <br></br>
-            we’re here to meet all your transport needs.
-          </p>
-        </div>
+              <p className="capitalize text-gray-900 font-medium text-[20px]">
+                {service.name}
+              </p>
+              <p className="p-[10px] bg-[#EDEEF4] rounded-[100%]">
+                <img
+                  alt="arrow"
+                  src="/arrow_forward.38aa47a7.svg"
+                  width="24"
+                  height="24"
+                  decoding="async"
+                  className={
+                    expandedService === service.name ? "rotate-90" : ""
+                  }
+                  style={{ transition: "transform 0.3s ease" }}
+                />
+              </p>
+            </div>
 
-        {/* Service Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-16 p-8">
-          {/* Enclosed Car Shipping */}
-          <div
-            className="flex flex-col items-center bg-white rounded-2xl shadow-xl p-4"
-            style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
-          >
-            <img
-              src="opentruck.svg"
-              alt="Enclosed Car Shipping"
-              className="w-32 h-32 mb-2"
-            />
-            <p className="text-sm font-bold font-montserrat leading-6">
-              Enclosed <br />
-              <span className="font-normal">Car Shipping</span>
-            </p>
+            {/* Show description if the service is expanded */}
+            {expandedService === service.name && (
+              <div className="py-4 px-8 bg-white  ">
+                <p className="text-black">{service.description}</p>
+              </div>
+            )}
           </div>
-
-          {/* Open Car Shipping */}
-          <div
-            className="flex flex-col items-center bg-white rounded-2xl p-4 shadow-xl"
-            style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
-          >
-            <img
-              src="opentruck.svg"
-              alt="Open Car Shipping"
-              className="w-32 h-32 mb-2"
-            />
-            <p className="text-sm font-bold font-montserrat leading-6">
-              Open <br />
-              <span className="font-normal">Car Shipping</span>
-            </p>
-          </div>
-
-          {/* Canada Shipping */}
-          <div
-            className="flex flex-col items-center bg-white rounded-2xl p-4 shadow-xl"
-            style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
-          >
-            <img
-              src="location.svg"
-              alt="Canada Shipping"
-              className="w-24 h-32 mb-2"
-            />
-
-            <p className="text-sm font-bold font-montserrat leading-6">
-              USA
-              <br />
-              <span className="font-normal">Car Shipping</span>
-            </p>
-          </div>
-
-          {/* Hawaii Shipping */}
-          {/* <div className="flex flex-col items-center bg-white rounded-2xl p-4">
-            <img
-              src="https://d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/5c62caf4-hawaii.svg"
-              alt="Hawaii Shipping"
-              className="w-16 h-16 mb-2"
-            />
-            <p className="text-sm font-bold font-montserrat leading-6">
-              Hawaii
-              <br />
-              <span className="font-normal">Car Shipping</span>
-            </p>
-          </div> */}
-        </div>
+        ))}
       </div>
     </section>
   );
 };
 
-export default ServicesSection;
+export default ServiceComponent;

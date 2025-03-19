@@ -2,11 +2,12 @@
 import React from "react";
 import QouetForm from "./quoetForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faStar } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const SectionOne = () => {
   const stepContent = {
-    title: "About Us",
+    title: "Why Us",
     points: [
       "Create your order and submit it",
       "Receive a call from us",
@@ -21,6 +22,32 @@ const SectionOne = () => {
     ],
   };
 
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 4;
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(stepContent.points.length / itemsPerPage);
+
+  // Slice the points array based on the current page
+  const currentItems = stepContent.points.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
+  // Handle the "Next" button click
+  const handleNext = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Handle the "Previous" button click
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <section id="about-us">
       <div className="w-full bg-[#D3D3D3] py-24">
@@ -31,33 +58,44 @@ const SectionOne = () => {
             </div>
           </section>
           <div className="flex flex-col p-6 md:p-0 lg:flex-row items-center relative">
-            <div className="w-full  bg-white rounded-2xl shadow-lg md:relative mt-12">
-              <div className=" p-8">
+            <div className="w-full bg-white rounded-[32px] shadow-lg md:relative mt-12">
+              <div className="p-8">
                 <h2 className="text-center mb-8 text-gray-900">
-                  <span className="text-[40px] font-bold">
+                  <span className="text-[35px] font-bold">
                     {stepContent.title}
                   </span>
                 </h2>
                 <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
-                  {/* <div
-                    className="des-text mb-4 md:mb-8 w-full text-gray-900 flex items-center font-bold text-lg"
-                    style={{ lineHeight: "36px", fontFamily: "Spectral" }}
-                  >
-                    Follow these steps to get started:
-                  </div> */}
                   <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {stepContent.points.map((point, index) => (
+                    {currentItems.map((point, index) => (
                       <div
                         key={index}
                         className="p mb-4 text-gray-900 flex items-center"
                       >
                         <FontAwesomeIcon
-                          icon={faCheckCircle}
-                          className="text-green-500 w-4 h-4 mr-2"
+                          icon={faStar}
+                          className="text-yellow-500 w-4 h-4 mr-2"
                         />
                         <span className="text-[20px]">{point}</span>
                       </div>
                     ))}
+                  </div>
+                  {/* Pagination buttons with justify-between */}
+                  <div className="flex w-full justify-between mt-4">
+                    <button
+                      onClick={handlePrevious}
+                      disabled={currentPage === 0}
+                      className="px-4 py-2 bg-[#6DB8D1] text-white rounded-full disabled:bg-gray-300"
+                    >
+                      Previous
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      disabled={currentPage === totalPages - 1}
+                      className="px-6 py-2 bg-[#6DB8D1] text-white rounded-full disabled:bg-gray-300"
+                    >
+                      Next
+                    </button>
                   </div>
                 </div>
               </div>
