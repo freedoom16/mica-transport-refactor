@@ -4,7 +4,7 @@ const ServicesSection = () => {
   return (
     <section
       id="our-service"
-      className="relative bg-gray-300 text-gray-900 py-16 "
+      className="relative bg-[#D3D3D3] text-gray-900 py-16 "
     >
       {/* Section Container */}
       <div className="container mx-auto text-center">

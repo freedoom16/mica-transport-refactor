@@ -160,7 +160,8 @@ const QouetForm: React.FC = () => {
                 <h2 className="text-lg font-bold mb-4">{`Step ${step}`}</h2> */}
         <form
           onSubmit={handleSubmit}
-          className="max-w-xl mx-auto  bg-gray-800 p-2 md:p-6 rounded-lg shadow-lg "
+          className="max-w-xl mx-auto  bg-white p-2 md:p-6 rounded-xl  "
+          style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
           {/* Step 1: Pickup, Delivery, and Shipment Date */}
           {step === 3 && (

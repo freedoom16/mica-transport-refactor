@@ -23,10 +23,10 @@ const SectionOne = () => {
 
   return (
     <section id="about-us">
-      <div className="w-full bg-gray-300 py-24">
+      <div className="w-full bg-[#D3D3D3] py-24">
         <div className="container mx-auto relative mt-16">
-          <section id="/#quote">
-            <div className="bg-white px-6 rounded-xl shadow-lg max-w-md w-full block md:hidden">
+          <section id="/#quote" className="px-6">
+            <div className="bg-white  rounded-xl shadow-lg max-w-md w-full block md:hidden">
               <p className="text-[20px] text-gray-900 font-bold font-montserrat text-center">
                 Shipping Quote Calculator
               </p>
