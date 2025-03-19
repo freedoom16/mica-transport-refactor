@@ -50,7 +50,7 @@ const SectionOne = () => {
 
   return (
     <section id="about-us">
-      <div className="w-full bg-[#D3D3D3] py-24">
+      <div className="w-full bg-[#D3D3D3] py-24 p-6">
         <div className="container mx-auto relative mt-16">
           <section id="/#quote" className="px-6">
             <div className=" max-w-md w-full block md:hidden">
@@ -61,9 +61,7 @@ const SectionOne = () => {
             <div className="w-full bg-white rounded-[32px] shadow-lg md:relative mt-12">
               <div className="p-8">
                 <h2 className="text-center mb-8 text-gray-900">
-                  <span className="text-[35px] font-bold">
-                    {stepContent.title}
-                  </span>
+                  <span className="text-[35px] ">{stepContent.title}</span>
                 </h2>
                 <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
                   <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">

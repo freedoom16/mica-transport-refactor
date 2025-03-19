@@ -9,10 +9,10 @@ const AboutPage = () => {
   };
 
   return (
-    <section className="bg-[#D3D3D3] p-6">
-      <div className="max-w-4xl mx-auto p-6 rounded-[32px] bg-white text-black">
+    <section className=" relative bg-[#D3D3D3] p-6 ">
+      <div className=" w-full container mx-auto p-6 rounded-[32px] bg-white text-black">
         <h2 className="text-center mb-8 text-gray-900">
-          <span className="text-[35px] font-bold">About Us</span>
+          <span className="text-[35px] ">About Us</span>
         </h2>
         <div className="text-lg text-gray-700 space-y-4">
           <p>
