@@ -22,7 +22,7 @@ export default function Home(props: IHomeProps) {
               </p>
             </div>
             <div id="lp-pom-text-482" className="mt-2 px-6">
-              <p className="text-[20px] md:text-[20px] font-semibold leading-[29px] font-montserrat text-left">
+              <p className="text-[20px] md:text-[20px] font-base leading-[29px] font-montserrat text-left">
                 Safely transporting all personnel, business, classic and exotic
                 vehicles for individuals, dealerships, and auction houses with
                 care and reliability.
