@@ -36,7 +36,7 @@ export default function NavBar(props: INavBarProps) {
   return (
     <div>
       <nav
-        className={`fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center z-20 transition-colors duration-300 bg-[#D3D3D3] shadow-md`}
+        className={`fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center z-20 transition-colors duration-300 bg-[#ECECEC] shadow-md`}
       >
         {/* Brand Logo */}
         <div

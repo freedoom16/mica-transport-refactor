@@ -9,7 +9,7 @@ const AboutPage = () => {
   };
 
   return (
-    <section className=" relative bg-[#D3D3D3] p-6 ">
+    <section className=" relative bg-[#ECECEC] p-6 ">
       <div className=" w-full container mx-auto p-6 rounded-[32px] bg-white text-black">
         <h2 className="text-center mb-8 text-gray-900">
           <span className="text-[35px] ">About Us</span>

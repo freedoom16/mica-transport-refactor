@@ -50,7 +50,7 @@ const SectionOne = () => {
 
   return (
     <section id="about-us">
-      <div className="w-full bg-[#D3D3D3] py-24 p-6">
+      <div className="w-full bg-[#ECECEC] py-24 p-6">
         <div className="container mx-auto relative mt-16">
           <section id="/#quote" className="px-6">
             <div className=" max-w-md w-full block md:hidden">

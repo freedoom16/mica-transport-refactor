@@ -30,7 +30,7 @@ const ServiceComponent = () => {
   return (
     <section
       id="our-service"
-      className="relative bg-[#D3D3D3] text-gray-900 py-16 p-6 "
+      className="relative bg-[#ECECEC] text-gray-900 py-16 p-6 "
     >
       <div className="container mx-auto text-center rounded-[32px]  shadow-2xl bg-white p-6">
         <p className="   text-[35px] px-6 py-[10px] mb-6">Services</p>
