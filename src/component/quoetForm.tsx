@@ -38,23 +38,81 @@ const QouetForm: React.FC = () => {
     setErrorMessage(""); // Reset the error message
 
     if (step === 3 && !isStep1Valid) {
-      setErrorMessage("All fields are required for Step 1.");
-      return;
+      // setErrorMessage("All fields are required for Step 1.");
+      // return;
+      if (!pickupLocation) {
+        setErrorMessage("Pickup Location is required.");
+        return;
+      }
+      if (!deliveryLocation) {
+        setErrorMessage("Delivery Location is required.");
+        return;
+      }
+      if (!addressTypeForDeliver) {
+        setErrorMessage("Address Type For Deliver is required.");
+        return;
+      }
+      if (!addressTypeForPickup) {
+        setErrorMessage("Address Type For Pickup is required.");
+        return;
+      }
     }
 
     if (step === 1 && !isStep2Valid) {
-      setErrorMessage("All fields are required for Step 2.");
-      return;
+      // setErrorMessage("All fields are required for Step 2.");
+      // return;
+      if (!vehicleMaker) {
+        setErrorMessage("Vehicle maker is required.");
+        return;
+      }
+      if (!vehicleModel) {
+        setErrorMessage("Vehicle model is required.");
+        return;
+      }
+      if (!vehicleYear) {
+        setErrorMessage("Vehicle year is required.");
+        return;
+      }
     }
 
     if (step === 4 && !isStep3Valid) {
-      setErrorMessage("All fields are required for Step 3.");
-      return;
+      if (!firstName) {
+        setErrorMessage("First name is required.");
+        return;
+      }
+      if (!lastName) {
+        setErrorMessage("Last name is required.");
+        return;
+      }
+      if (!email) {
+        setErrorMessage("Email is required.");
+        return;
+      }
+      if (!phone) {
+        setErrorMessage("Phone number is required.");
+        return;
+      }
     }
 
     if (step === 2 && !isStep4Valid) {
-      setErrorMessage("All fields are required for Step 4.");
-      return;
+      // setErrorMessage("All fields are required for Step 4.");
+      // return;
+      if (!(pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd)) {
+        setErrorMessage("Pickup location is required.");
+        return;
+      }
+      if (!(deliveryDate || deliveryDateRangeStart || deliveryDateRangeEnd)) {
+        setErrorMessage("Delivery location is required.");
+        return;
+      }
+      if (!(pickUpTime || pickUpTimeRangeStart || pickUpTimeRangeEnd)) {
+        setErrorMessage("Pickup Time is required.");
+        return;
+      }
+      if (!(deliveryTime || deliveryTimeRangeEnd || deliveryTimeRangeStart)) {
+        setErrorMessage("Delivery Time is required.");
+        return;
+      }
     }
 
     // if (step < totalSteps) {

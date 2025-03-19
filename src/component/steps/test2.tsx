@@ -195,7 +195,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 setYearInput(e.target.value);
               }
             }}
-            placeholder="type a year"
+            placeholder="Year"
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           />
         </div>
@@ -210,7 +210,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             // type="text"
             value={makerInput}
             onChange={(e) => handleMakerInputChange(e.target.value)}
-            placeholder="type a make"
+            placeholder="Make"
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           />
           {filteredMakers.length > 0 && (
@@ -238,7 +238,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             type="text"
             value={modelInput}
             onChange={(e) => handleModelInputChange(e.target.value)}
-            placeholder={selectedMaker ? "type a model" : "type a model"}
+            placeholder={selectedMaker ? "Model" : "Model"}
             // disabled={!selectedMaker}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           />
@@ -313,7 +313,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       {/* Add Vehicle Button */}
       <button
         type="button"
-        className="bg-[#6DB8D1] text-gray-900 py-2 px-4 rounded-full"
+        className="bg-[#6DB8D1] text-white py-2 px-4 rounded-full"
         onClick={handleAddVehicle}
       >
         Add Vehicle
