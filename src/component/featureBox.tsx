@@ -10,7 +10,7 @@ const FeaturesBox = () => {
     >
       {/* Support Icon */}
       <div className="flex flex-col items-center justify-center">
-        <img src="24phone.svg" alt="Support Icon" className="w-16 h-16" />
+        <img src="24phone.svg" alt="Support Icon" className="w-16 h-8" />
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
           24 hour
         </p>
@@ -24,7 +24,7 @@ const FeaturesBox = () => {
         <img
           src="truck-icon2.svg"
           alt="Support Icon"
-          className="w-16 h-16 font-bold text-blue-900"
+          className="w-16 h-8 font-bold text-blue-900"
         />
 
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
@@ -37,11 +37,19 @@ const FeaturesBox = () => {
 
       {/* Car Icon */}
       <div className="flex flex-col items-center justify-center">
-        <img
-          src="car-icon.svg"
-          alt="Support Icon"
-          className="w-16 h-16 font-bold text-blue-900"
-        />
+        <div className="flex flex-col md:flex-row">
+          <img
+            src="car-icon.svg"
+            alt="Support Icon"
+            className="w-16 h-8 font-bold text-blue-900"
+          />
+          <img
+            src="car-icon.svg"
+            alt="Support Icon"
+            className="w-16 h-8 font-bold text-blue-900"
+          />
+        </div>
+
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
           Enclosed/Open
         </p>

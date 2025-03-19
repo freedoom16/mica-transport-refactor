@@ -21,20 +21,20 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
       {currentStep > 1 && (
         <button
           type="button"
-          className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+          className="px-4 py-2  text-gray-900 rounded-full "
           onClick={onPrev}
         >
-          Previous
+          <div className="bg-[#6DB8D1]">Previous</div>
         </button>
       )}
       <div className="flex-grow"></div>
       {currentStep < totalSteps ? (
         <button
           type="button"
-          className={`px-4 py-2 rounded-lg ${
+          className={`px-8 py-2 rounded-full ${
             isNextEnabled
-              ? "bg-blue-600 text-white hover:bg-blue-700"
-              : "bg-gray-400 text-gray-700 cursor-not-allowed"
+              ? "bg-[#6DB8D1]  text-gray-900 "
+              : "bg-[#6DB8D1]  text-gray-900 cursor-not-allowed"
           }`}
           onClick={onNext}
           disabled={!isNextEnabled}
@@ -44,7 +44,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
       ) : (
         <button
           type="submit"
-          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+          className="px-4 py-2 bg-[#6DB8D1]  text-gray-900 rounded-full "
         >
           Submit
         </button>

@@ -312,6 +312,30 @@ const StepDataTest: React.FC<StepFourProps> = ({
     <div className=" space-y-3 md:space-y-6">
       {/* Pick Up Date */}
       <div className=" text-center p-1 ">pickup date information</div>
+
+      {/* ------------------  templete   ---------------*/}
+      <div className="w-full">
+        <div>
+          <div className="w-full">
+            <div className="mb-4 relative top-0">
+              <label
+                //for="origin_postal_code"
+                className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+              >
+                Pickup
+              </label>
+              <input
+                required
+                // autocomplete="off"
+                className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                placeholder="Origin Zip or City"
+                name="origin_postal_code"
+                id="origin_postal_code"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="relative z-10 w-full mb-5 group">
         <label htmlFor="pick_up_date_option" className="text-sm text-gray-400">
           Pick Up Date

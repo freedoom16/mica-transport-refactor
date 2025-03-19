@@ -119,7 +119,7 @@ export default function NavBar(props: INavBarProps) {
               (404) 988-4505
             </a>
           </div>
-          <div>
+          <button>
             <a
               href="/#quote"
               className=" text-base bg-[#6DB8D1] py-2 px-4 rounded-full font-bold font-montserrat hover:text-gray-700"
@@ -132,7 +132,7 @@ export default function NavBar(props: INavBarProps) {
               />{" "}
               Request a quote
             </a>
-          </div>
+          </button>
         </div>
       </nav>
 

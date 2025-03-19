@@ -30,7 +30,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const [showCategoryOptions, setShowCategoryOptions] =
     useState<boolean>(false);
-  const categories = ["SUV", "Sedan", "Truck", "Hatchback", "Convertible"];
+  const categories = ["SUV", "Sedan", "Truck"];
 
   useEffect(() => {
     // Fetch data from the API
@@ -113,27 +113,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-white mb-4">Vehicle Info</h2>
-      {/* {vehicles.length > 0 && (
-        <div className="mb-6">
-          <h3 className="text-white font-semibold mb-3">Saved Vehicles:</h3>
-          <ul className="space-y-2">
-            {vehicles.map((vehicle, index) => (
-              <li
-                key={index}
-                className="text-sm text-white bg-gray-800 p-2 rounded"
-              >
-                <strong>Maker:</strong> {vehicle.vehicleMaker},{" "}
-                <strong>Model:</strong> {vehicle.vehicleModel},{" "}
-                <strong>Year:</strong> {vehicle.vehicleYear}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )} */}
+      <h2 className="text-lg font-bold text-gray-900 mb-4">Vehicle Info</h2>
+
       {vehicles.length > 0 && (
         <div className="mb-2">
-          <h2 className="text-lg font-bold text-white mb-4">
+          <h2 className="text-lg font-bold text-gray-900 mb-4">
             Saved Vehicle Info
           </h2>
 
@@ -165,19 +149,70 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       {/* Vehicle input form */}
       <div className="mb-6">
         {/* Vehicle Maker */}
-        <div className="relative z-5 w-full mb-5 group">
+        <div className="w-full flex flex-col gap-1 mb-4">
+          <div className="w-full flex gap-4 text-gray-900">
+            <div className="w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border border-[#938f99]">
+              <input
+                type="radio"
+                id="open"
+                name="selection"
+                required
+                value="Open"
+              />
+              <p>Open</p>
+            </div>
+            <div className="w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border border-[#938f99]">
+              <input
+                type="radio"
+                name="selection"
+                id="enclosed"
+                required
+                value="Enclosed"
+              />
+              <p>Enclosed</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Vehicle Year */}
+        <div className="relative z-3 w-full mb-5 group">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            {" "}
+            Vehicle Year
+          </label>
           <input
             type="text"
-            value={makerInput}
-            onChange={(e) => handleMakerInputChange(e.target.value)}
-            placeholder=""
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            value={yearInput}
+            // onChange={(e) => setYearInput(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (/^\d{0,4}$/.test(value)) {
+                // Allow only numeric input up to 4 digits
+                const newVehicles = [...vehicles];
+                // newVehicles[index].vehicleYear = value;
+                setYearInput(e.target.value);
+              }
+            }}
+            placeholder="type a year"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           />
-          <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500">
+        </div>
+
+        <div className="relative  mb-5  top-0">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            {" "}
             Vehicle Maker
           </label>
+
+          <input
+            // type="text"
+            value={makerInput}
+            onChange={(e) => handleMakerInputChange(e.target.value)}
+            placeholder="type a make"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          />
           {filteredMakers.length > 0 && (
-            <ul className="absolute z-5 w-full mt-2 bg-gray-800 border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
+            <ul className="absolute z-5 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
               {filteredMakers.map((make, idx) => (
                 <li
                   key={idx}
@@ -193,19 +228,21 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
         {/* Vehicle Model */}
         <div className="relative z-4 w-full mb-5 group">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            {" "}
+            {selectedMaker ? "Vehicle Model" : "Select a maker first"}
+          </label>
           <input
             type="text"
             value={modelInput}
             onChange={(e) => handleModelInputChange(e.target.value)}
-            placeholder=""
+            placeholder={selectedMaker ? "type a model" : "type a model"}
             disabled={!selectedMaker}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           />
-          <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500">
-            {selectedMaker ? "Vehicle Model" : "Select a maker first"}
-          </label>
+
           {filteredModels.length > 0 && (
-            <ul className="absolute z-4 w-full mt-2 bg-gray-800 border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
+            <ul className="absolute z-4 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
               {filteredModels.map((model, idx) => (
                 <li
                   key={idx}
@@ -219,65 +256,22 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           )}
         </div>
 
-        {/* Vehicle Year */}
-        <div className="relative z-3 w-full mb-5 group">
-          <input
-            type="text"
-            value={yearInput}
-            // onChange={(e) => setYearInput(e.target.value)}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^\d{0,4}$/.test(value)) {
-                // Allow only numeric input up to 4 digits
-                const newVehicles = [...vehicles];
-                // newVehicles[index].vehicleYear = value;
-                setYearInput(e.target.value);
-              }
-            }}
-            placeholder=""
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          />
-          <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500">
-            Vehicle Year
-          </label>
-        </div>
-        {/* <div className="relative z-0 w-full mb-5 group">
-          <input
-            type="text"
-            value={vehicle.vehicleYear}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^\d{0,4}$/.test(value)) {
-                // Allow only numeric input up to 4 digits
-                const newVehicles = [...vehicles];
-                newVehicles[index].vehicleYear = value;
-                setVehicles(newVehicles);
-              }
-            }}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-            placeholder=""
-          />
-          <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-            Vehicle Year
-          </label>
-        </div> */}
-
         {/* Static Category */}
         <div className="mb-5">
-          {/* Category Dropdown */}
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            {" "}
+            Vehicle Type
+          </label>
           <select
             value={categoryInput}
             onChange={(e) => {
               setCategoryInput(e.target.value);
-              // setShowCategoryOptions(false); // Close options after selection
             }}
-            // onFocus={handleCategoryFocus}
-            // onBlur={handleCategoryBlur}
-            className="block py-2 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           >
-            <option value="" disabled>
+            {/* <option value="" disabled>
               --- Select Vehicle Category --
-            </option>
+            </option> */}
             {categories.map((category, idx) => (
               <option key={idx} value={category}>
                 {category}
@@ -287,7 +281,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
 
         <div className="relative z-0 w-full mb-5 group flex flex-row">
-          <label className="block text-sm font-medium text-white mr-2">
+          <label className="block text-sm font-medium text-gray-900 mr-2">
             Is this load drivable? <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center justify-center space-x-6">
@@ -299,7 +293,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 // onChange={(e: any) => setIsDerivable(e.target.value === "true")}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
-              <span className="text-sm text-white">Yes</span>
+              <span className="text-sm text-gray-900">Yes</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -309,7 +303,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 // onChange={(e) => setIsDerivable(e.target.value === "false")}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
-              <span className="text-sm text-white">No</span>
+              <span className="text-sm text-gray-900">No</span>
             </label>
           </div>
         </div>
@@ -317,7 +311,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       {/* Add Vehicle Button */}
       <button
         type="button"
-        className="bg-blue-500 text-white py-2 px-4 rounded"
+        className="bg-[#6DB8D1] text-gray-900 py-2 px-4 rounded-full"
         onClick={handleAddVehicle}
       >
         Add Vehicle
