@@ -4,7 +4,10 @@ import { faCar, faTruckMoving } from "@fortawesome/free-solid-svg-icons";
 
 const FeaturesBox = () => {
   return (
-    <div className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[90%] xl:w-[80%] h-[179px] bg-white rounded-[32px] shadow-xl flex items-center justify-around p-4">
+    <div
+      className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[90%] xl:w-[80%] h-[179px] bg-white rounded-[32px]  flex items-center justify-around p-4"
+      style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
+    >
       {/* Support Icon */}
       <div className="flex flex-col items-center justify-center">
         <img src="24phone.svg" alt="Support Icon" className="w-16 h-16" />
