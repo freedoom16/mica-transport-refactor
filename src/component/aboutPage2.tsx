@@ -11,7 +11,7 @@ const AboutPage = () => {
   return (
     <section className=" relative bg-[#ECECEC] p-6 ">
       <div className=" w-full container mx-auto rounded-[32px] bg-white text-black">
-        <h2 className="text-center mb-8 text-gray-900">
+        <h2 className="text-center mb-6 text-gray-900 mt-4 pt-6">
           <span className="text-[35px] ">About Us</span>
         </h2>
         <div className="text-lg text-gray-700 text-justify space-y-4 p-4">

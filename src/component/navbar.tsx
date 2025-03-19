@@ -153,7 +153,7 @@ export default function NavBar(props: INavBarProps) {
               </button>
 
               {/* Centered Logo */}
-              <div className="absolute left-2/3 transform -translate-x-1/2 text-gray-900 text-2xl font-bold font-montserrat w-2/3">
+              <div className="absolute left-2/3 transform -translate-x-1/2 text-gray-900 text-2xl font-bold font-montserrat w-2/3 whitespace-nowrap ">
                 Mica Transportion
               </div>
             </div>
@@ -188,7 +188,7 @@ export default function NavBar(props: INavBarProps) {
             </a>
             <div className="p-4 flex flex-col space-y-4">
               <a
-                href="tel:(855) 480-2466"
+                href="tel:(404) 988-4505"
                 className="text-gray-900 text-base mx-auto font-normal font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
@@ -198,7 +198,7 @@ export default function NavBar(props: INavBarProps) {
                   width={16}
                   height={16}
                 />
-                (855) 480-2466
+                (404) 988-4505
               </a>
 
               <a
