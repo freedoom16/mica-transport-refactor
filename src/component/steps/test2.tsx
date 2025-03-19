@@ -43,10 +43,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   }, []);
 
   const handleAddVehicle = () => {
-    if (!makerInput || !modelInput || yearInput) {
-      alert("Please fill in all fields before adding a vehicle.");
-      return;
-    }
+    // if (!makerInput || !modelInput || yearInput) {
+    //   alert("Please fill in all fields before adding a vehicle.");
+    //   return;
+    // }
 
     // Add the current form data to the vehicles list
     setVehicles([
@@ -239,7 +239,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             value={modelInput}
             onChange={(e) => handleModelInputChange(e.target.value)}
             placeholder={selectedMaker ? "type a model" : "type a model"}
-            disabled={!selectedMaker}
+            // disabled={!selectedMaker}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           />
 

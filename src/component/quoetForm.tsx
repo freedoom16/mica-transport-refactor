@@ -26,7 +26,40 @@ const QouetForm: React.FC = () => {
   const openModal = () => setIsModalOpen(step >= 2);
   const closeModal = () => setIsModalOpen(false);
 
+  // const nextStep = () => {
+  //   if (step < totalSteps) setStep(step + 1);
+  //   setIsModalOpen(true);
+  // };
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const nextStep = () => {
+    console.log("nextStep cleicked", isStep2Valid);
+    setErrorMessage(""); // Reset the error message
+
+    if (step === 3 && !isStep1Valid) {
+      setErrorMessage("All fields are required for Step 1.");
+      return;
+    }
+
+    if (step === 1 && !isStep2Valid) {
+      setErrorMessage("All fields are required for Step 2.");
+      return;
+    }
+
+    if (step === 4 && !isStep3Valid) {
+      setErrorMessage("All fields are required for Step 3.");
+      return;
+    }
+
+    if (step === 2 && !isStep4Valid) {
+      setErrorMessage("All fields are required for Step 4.");
+      return;
+    }
+
+    // if (step < totalSteps) {
+    //   setStep((prevStep) => prevStep + 1);
+    // }
     if (step < totalSteps) setStep(step + 1);
     setIsModalOpen(true);
   };
@@ -100,25 +133,33 @@ const QouetForm: React.FC = () => {
     useState<string>("");
   const [deliveryTimeRangeEnd, setDeliveryTimeRangeEnd] = useState<string>("");
 
+  const [isFormValid, setIsFormValid] = useState(true);
+
   console.log("main ", vehicles);
   console.log("main maker", vehicles[0]?.vehicleMaker);
 
   // Validation logic for each step
-  const isStep1Valid =
+  const isStep1Valid = !!(
     pickupLocation &&
     deliveryLocation &&
     addressTypeForDeliver &&
-    addressTypeForPickup;
+    addressTypeForPickup
+  );
 
   const isStep2Valid = true;
-  // vehicles[0]?.vehicleMaker && vehicles[0]?.vehicleModel;
+  // !!(
+  //   vehicles[0]?.vehicleMaker && vehicles[0]?.vehicleModel
+  // );
 
-  const isStep3Valid = firstName && lastName && email && phone;
-  const isStep4Valid =
+  console.log("vvvvvvvvvvvvv ", vehicles);
+  const isStep3Valid = !!(firstName && lastName && email && phone);
+
+  const isStep4Valid = !!(
     (pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd) &&
     (deliveryDate || deliveryDateRangeStart || deliveryDateRangeEnd) &&
     (pickUpTime || pickUpTimeRangeStart || pickUpTimeRangeEnd) &&
-    (deliveryTime || deliveryTimeRangeEnd || deliveryTimeRangeStart);
+    (deliveryTime || deliveryTimeRangeEnd || deliveryTimeRangeStart)
+  );
 
   // Use the mutation hook
   const [addQuote, { isLoading, isSuccess, isError, error }] =
@@ -265,6 +306,11 @@ const QouetForm: React.FC = () => {
             />
             // </div>
           )}{" "}
+          {errorMessage && (
+            <p className="text-red-500 text-sm mt-4 text-center">
+              {errorMessage}
+            </p>
+          )}
           <StepNavigation
             currentStep={step}
             totalSteps={totalSteps}
