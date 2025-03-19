@@ -165,8 +165,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
         <div className="mt-4 space-y-4">
           <div className="flex space-x-4">
             <div className="w-1/2">
-              <label className="text-sm text-gray-400">From Date</label>
-
+              <label className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"></label>
               <DatePicker
                 selected={dateRangeStart}
                 onChange={(date) => setDateRangeStart(date)}
@@ -175,29 +174,13 @@ const StepDataTest: React.FC<StepFourProps> = ({
                 ref={rangeStartRef}
                 // maxDate={new Date(maxDate)}
                 // className="py-2 px-4 text-white rounded-md border border-gray-400 "
-                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                withPortal={true}
+                className="w-full  h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                 required
               />
             </div>
             <div className="w-1/2">
-              <label className="text-sm text-gray-400">To Date</label>
-              {/* <input
-                type="date"
-                value={dateRangeEnd}
-                onChange={(e) => setDateRangeEnd(e.target.value)}
-                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-                // min={today} // Disable dates before today
-                min={
-                  dateRangeStart
-                    ? new Date(
-                        new Date(dateRangeStart).getTime() + 24 * 60 * 60 * 1000
-                      )
-                        .toISOString()
-                        .split("T")[0]
-                    : minDate || today
-                } // Disable dates before 1 day after "From Date"
-                required
-              /> */}
+              <label className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"></label>
               <DatePicker
                 selected={dateRangeEnd}
                 onChange={(date) => setDateRangeEnd(date)}
@@ -211,7 +194,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
                 placeholderText={"select to date"}
                 // maxDate={new Date(maxDate)}
                 // className="py-2 px-4 text-white rounded-md border border-gray-400 "
-                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                withPortal={true}
+                className="w-full  h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                 required
               />
             </div>
@@ -228,17 +212,24 @@ const StepDataTest: React.FC<StepFourProps> = ({
     } else if (option) {
       return (
         <div className="w-full">
-          <h2 className="text-gray-400 mt-2">{label}</h2>{" "}
-          <DatePicker
-            selected={date}
-            onChange={(date) => setDate(date)}
-            minDate={minDate || new Date()}
-            placeholderText={"select " + label}
-            ref={singleRef}
-            // maxDate={new Date(maxDate)}
-            // className="py-2 px-4 text-white rounded-md border border-gray-400 "
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          />
+          <div className="mb-4 relative top-0 mt-4">
+            <label
+              //for="origin_postal_code"
+              className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+            >
+              {label}
+            </label>
+
+            <DatePicker
+              selected={date}
+              onChange={(date) => setDate(date)}
+              minDate={minDate || new Date()}
+              placeholderText={"select " + label}
+              ref={singleRef}
+              withPortal={true}
+              className="w-full h-14 z-50 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            />
+          </div>
         </div>
       );
     }
@@ -261,23 +252,29 @@ const StepDataTest: React.FC<StepFourProps> = ({
         <div className="mt-4 space-y-4">
           <div className="flex space-x-4">
             <div className="w-1/2">
-              <label className="text-sm text-gray-400">From Time</label>
+              <label className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+                {" "}
+                From Time
+              </label>
               <input
                 type="time"
                 value={timeRangeStart}
                 onChange={(e) => setTimeRangeStart(e.target.value)}
-                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                 ref={rangeStartRef}
                 required
               />
             </div>
             <div className="w-1/2">
-              <label className="text-sm text-gray-400">To Time</label>
+              <label className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+                {" "}
+                To Time
+              </label>
               <input
                 type="time"
                 value={timeRangeEnd}
                 onChange={(e) => setTimeRangeEnd(e.target.value)}
-                className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+                className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                 min={timeRangeStart || "00:00"}
                 required
               />
@@ -292,14 +289,17 @@ const StepDataTest: React.FC<StepFourProps> = ({
       );
     } else if (option) {
       return (
-        <div>
-          <label className="text-sm text-gray-400">{label}</label>
+        <div className="mt-4">
+          <label className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            {" "}
+            {label}
+          </label>
 
           <input
             type="time"
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
             ref={singleRef}
             required
           />
@@ -311,9 +311,16 @@ const StepDataTest: React.FC<StepFourProps> = ({
   return (
     <div className=" space-y-3 md:space-y-6">
       {/* Pick Up Date */}
-      <div className=" text-center p-1 ">pickup date information</div>
+      <div className=" text-center text-gray-900 p-1 ">
+        pickup date information
+      </div>
+
       <div className="relative z-10 w-full mb-5 group">
-        <label htmlFor="pick_up_date_option" className="text-sm text-gray-400">
+        <label
+          htmlFor="pick_up_date_option"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
+          {" "}
           Pick Up Date
         </label>
 
@@ -321,7 +328,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
           id="pick_up_date_option"
           value={pickUpDateOption}
           onChange={(e) => setPickUpDateOption(e.target.value)}
-          className="block py-2 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           aria-label="Select pick-up time option"
           required
         >
@@ -350,28 +357,19 @@ const StepDataTest: React.FC<StepFourProps> = ({
 
       {/* Pick Up Time */}
       <div className="relative z-8 w-full mb-5 group">
-        <label htmlFor="pick_up_time_option" className="text-sm text-gray-400">
+        <label
+          htmlFor="pick_up_time_option"
+          className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
+          {" "}
           Pick Up Time
         </label>
-        {/* <select
-          id="pick_up_time_option"
-          value={pickUpTimeOption}
-          onChange={(e) => setPickUpTimeOption(e.target.value)}
-          //   className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          className="block py-2.5 px-0 w-full text-sm text-white bg-gray-800 border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          required
-        >
-          <option value="">Select Option</option>
-          <option value="before">Before</option>
-          <option value="after">After</option>
-          <option value="on">On</option>
-          <option value="between">Between</option>
-        </select> */}
+
         <select
           id="pick_up_time_option"
           value={pickUpTimeOption}
           onChange={(e) => setPickUpTimeOption(e.target.value)}
-          className="block py-2 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           aria-label="Select pick-up time option"
           required
         >
@@ -397,18 +395,23 @@ const StepDataTest: React.FC<StepFourProps> = ({
         )}
       </div>
 
-      <div className=" text-center p-1 ">delivery date information</div>
+      <div className=" text-center text-gray-900 p-1 ">
+        delivery date information
+      </div>
 
       {/* Delivery Date */}
-      <div className="relative z-9 w-full mb-5 group">
-        <label htmlFor="delivery_date_option" className="text-sm text-gray-400">
+      <div className="relative z-10 w-full mb-5 group">
+        <label
+          htmlFor="delivery_date_option"
+          className="absolute px-3 py-2 z-10 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
           Delivery Date
         </label>
         <select
           id="delivery_date_option"
           value={deliveryDateOption}
           onChange={(e) => setDeliveryDateOption(e.target.value)}
-          className="block py-2 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           aria-label="Select pick-up time option"
           required
         >
@@ -447,14 +450,17 @@ const StepDataTest: React.FC<StepFourProps> = ({
 
       {/* Delivery Time */}
       <div className="relative z-8 w-full mb-5 group">
-        <label htmlFor="delivery_time_option" className="text-sm text-gray-400">
+        <label
+          htmlFor="delivery_time_option"
+          className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
           Delivery Time
         </label>
         <select
           id="delivery_time_option"
           value={deliveryTimeOption}
           onChange={(e) => setDeliveryTimeOption(e.target.value)}
-          className="block py-2 px-4 w-full text-sm text-white bg-gray-800 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           aria-label="Select pick-up time option"
           required
         >

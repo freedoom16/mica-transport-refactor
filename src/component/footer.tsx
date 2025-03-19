@@ -10,7 +10,7 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-white ">
+    <footer className="bg-[#D3D3D3] ">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -92,14 +92,14 @@ const Footer: React.FC = () => {
             >
               <FontAwesomeIcon icon={faFacebookF} className="w-8 h-8" />
             </a>
-            <a
+            {/* <a
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-900 hover:text-gray-900 "
             >
               <FontAwesomeIcon icon={faTwitter} className="w-8 h-8" />
-            </a>
+            </a> */}
             <a
               href="https://instagram.com"
               target="_blank"
@@ -108,22 +108,22 @@ const Footer: React.FC = () => {
             >
               <FontAwesomeIcon icon={faInstagram} className="w-8 h-8" />
             </a>
-            <a
+            {/* <a
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-900 hover:text-gray-900 "
             >
               <FontAwesomeIcon icon={faLinkedin} className="w-8 h-8" />
-            </a>
-            <a
+            </a> */}
+            {/* <a
               href="https://youtube.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-900 hover:text-gray-900 "
             >
               <FontAwesomeIcon icon={faYoutube} className="w-8 h-8" />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

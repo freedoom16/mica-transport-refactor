@@ -7,6 +7,7 @@ import StepTwoComponent from "./steps/stepTwoForm";
 import StepThreeComponent from "./steps/stepThreeForm";
 import StepForDate from "./steps/stepDateForm";
 import StepTwoComponentTest from "./steps/test2";
+import TestTest from "./test";
 
 interface Vehicle {
   vehicleYear: string;
@@ -152,15 +153,24 @@ const QouetForm: React.FC = () => {
     }
   };
   return (
-    <section id="quote">
+    <section
+      id="quote"
+      className=" bg-white rounded-[32px]"
+      // style={{ boxShadow: "25px 25px 25px 25px rgba(0, 0, 0, 0.1)" }}
+      style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
+    >
       <div>
         {/* {isModalOpen && (
             <div className="fixed inset-0 bg-transparent bg-black bg-opacity-50  flex items-center justify-center z-50">
               <div className="bg-white w-full max-w-lg p-6 rounded-lg">
                 <h2 className="text-lg font-bold mb-4">{`Step ${step}`}</h2> */}
+        <p className="text-[20px] text-gray-900 font-bold  text-center">
+          Shipping Quote Calculator
+        </p>
         <form
           onSubmit={handleSubmit}
-          className="max-w-xl mx-auto  bg-gray-800 p-2 md:p-6 rounded-lg shadow-lg "
+          className="max-w-xl mx-auto  bg-white p-4 md:p-6 rounded-[32px] "
+          style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
           {/* Step 1: Pickup, Delivery, and Shipment Date */}
           {step === 3 && (
@@ -197,6 +207,7 @@ const QouetForm: React.FC = () => {
               // nextStep={nextStep}
               // prevStep={prevStep}
             />
+            // <TestTest />
           )}
           {/* Step 3: Contact Info */}
           {step === 4 && (

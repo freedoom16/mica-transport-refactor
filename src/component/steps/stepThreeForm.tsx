@@ -79,63 +79,72 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       <h2 className="text-lg font-bold text-white mb-4">Contact Info</h2>
 
       <div className="relative z-0 w-full mb-5 group">
+        <label
+          htmlFor="first_name"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
+          First Name
+        </label>
         <input
           type="text"
           name="first_name"
           id="first_name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          placeholder=" "
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          placeholder=" First Name"
           required
         />
-        <label
-          htmlFor="first_name"
-          className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-        >
-          First Name
-        </label>
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
+        <label
+          htmlFor="last_name"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
+          Last Name
+        </label>
+
         <input
           type="text"
           name="last_name"
           id="last_name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          placeholder=" "
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          placeholder=" Last Name"
           required
         />
-        <label
-          htmlFor="last_name"
-          className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-        >
-          Last Name
-        </label>
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
+        <label
+          htmlFor="email"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
+          Email Address
+        </label>
+
         <input
           type="email"
           name="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          placeholder=" "
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          placeholder=" Email Address"
           required
         />
-        <label
-          htmlFor="email"
-          className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-        >
-          Email Address
-        </label>
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
+        <label
+          htmlFor="phone"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+        >
+          Phone Number
+        </label>
+
         <input
           type="text"
           name="phone"
@@ -143,19 +152,40 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           value={phone}
           // onChange={(e) => setPhone(e.target.value)}
           onChange={handlePhoneChange}
-          className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-          placeholder=" "
+          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          placeholder=" Phone Number"
           required
         />
-        <label
-          htmlFor="phone"
-          className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-        >
-          Phone Number
-        </label>
         {phoneError && <div className="mt-2 text-red-500">{phoneError}</div>}
       </div>
 
+      <div className="relative z-0 w-full mb-5 group flex flex-row">
+        <label className="block text-sm font-medium text-gray-900 mr-2">
+          Start immediately? <span className="text-red-500">*</span>
+        </label>
+        <div className="flex items-center justify-center space-x-6">
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="is_drivable"
+              value="true"
+              // onChange={(e: any) => setIsDerivable(e.target.value === "true")}
+              className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+            />
+            <span className="text-sm text-gray-900">Yes</span>
+          </label>
+          <label className="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="is_drivable"
+              value="false"
+              // onChange={(e) => setIsDerivable(e.target.value === "false")}
+              className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+            />
+            <span className="text-sm text-gray-900">No</span>
+          </label>
+        </div>
+      </div>
       {/* <button
         type="submit"
         disabled={!isStep3Valid}

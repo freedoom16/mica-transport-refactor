@@ -36,7 +36,7 @@ export default function NavBar(props: INavBarProps) {
   return (
     <div>
       <nav
-        className={`fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center z-20 transition-colors duration-300 bg-white shadow-md`}
+        className={`fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center z-20 transition-colors duration-300 bg-[#D3D3D3] shadow-md`}
       >
         {/* Brand Logo */}
         <div
@@ -116,13 +116,13 @@ export default function NavBar(props: INavBarProps) {
                 width={16}
                 height={16}
               />
-              (855) 480-2466
+              (404) 988-4505
             </a>
           </div>
-          <div>
+          <button>
             <a
               href="/#quote"
-              className=" text-base font-bold font-montserrat hover:text-gray-700"
+              className=" text-base bg-[#6DB8D1] py-2 px-4 rounded-full font-bold font-montserrat hover:text-gray-700"
             >
               <FontAwesomeIcon
                 icon={faCar}
@@ -132,86 +132,89 @@ export default function NavBar(props: INavBarProps) {
               />{" "}
               Request a quote
             </a>
-          </div>
+          </button>
         </div>
       </nav>
 
       {/* Mobile Menu (Overlay Style) */}
       {isMenuOpen && (
-        <div
-          className="w-[75%] p-4 h-screen flex flex-col fixed left-0 top-[7px] bg-gray-50 shadow-2xl bg-[#302D38] z-30"
-          ref={menuRef}
-        >
-          <div className="flex justify-between items-center w-full px-2">
-            {/* Close Button */}
-            <button
-              onClick={toggleMenu}
-              className="text-gray-900 text-4xl font-bold"
-            >
-              &times;
-            </button>
+        <div className="fixed inset-0 z-20  bg-black/20 ">
+          <div
+            className="w-[75%] p-4 h-screen flex flex-col fixed left-0  bg-white shadow-2xl  z-30"
+            ref={menuRef}
+          >
+            <div className="flex justify-between items-center w-full px-2">
+              {/* Close Button */}
+              <button
+                onClick={toggleMenu}
+                className="text-gray-900 text-4xl font-bold"
+              >
+                &times;
+              </button>
 
-            {/* Centered Logo */}
-            <div className="absolute left-2/3 transform -translate-x-1/2 text-gray-900 text-2xl font-bold font-montserrat w-2/3">
-              Mica Transportion
+              {/* Centered Logo */}
+              <div className="absolute left-2/3 transform -translate-x-1/2 text-gray-900 text-2xl font-bold font-montserrat w-2/3">
+                Mica Transportion
+              </div>
             </div>
-          </div>
-          <a
-            href="/#about-us"
-            className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
-            onClick={toggleMenu}
-          >
-            About Us
-          </a>
-          <a
-            href="/#our-service"
-            className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
-            onClick={toggleMenu}
-          >
-            Our Service
-          </a>
-          <a
-            href="/#support"
-            className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
-            onClick={toggleMenu}
-          >
-            Support{" "}
-          </a>
-
-          <a
-            href="/#review"
-            className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
-            onClick={toggleMenu}
-          >
-            Review
-          </a>
-          <div className="p-4 flex flex-col space-y-4">
-            <a
-              href="tel:+18554802466"
-              className="text-gray-900 text-base font-normal font-montserrat hover:text-gray-300"
-              onClick={toggleMenu}
-            >
-              <FontAwesomeIcon
-                icon={faPhone}
-                className="px-2"
-                width={16}
-                height={16}
-              />
-              (855) 480-2466
-            </a>
             <a
               href="/#about-us"
-              className="text-blue-900 text-sm font-semibold font-montserrat hover:text-gray-300"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
               onClick={toggleMenu}
             >
-              <FontAwesomeIcon
-                icon={faCar}
-                className="px-2"
-                width={16}
-                height={16}
-              />{" "}
-              Request a quote
+              About Us
             </a>
+            <a
+              href="/#our-service"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
+              onClick={toggleMenu}
+            >
+              Our Service
+            </a>
+            <a
+              href="/#support"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
+              onClick={toggleMenu}
+            >
+              Support{" "}
+            </a>
+
+            <a
+              href="/#review"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
+              onClick={toggleMenu}
+            >
+              Review
+            </a>
+            <div className="p-4 flex flex-col space-y-4">
+              <a
+                href="tel:+18554802466"
+                className="text-gray-900 text-base mx-auto font-normal font-montserrat hover:text-gray-300"
+                onClick={toggleMenu}
+              >
+                <FontAwesomeIcon
+                  icon={faPhone}
+                  className="px-2"
+                  width={16}
+                  height={16}
+                />
+                (855) 480-2466
+              </a>
+
+              <a
+                href="/#about-us"
+                className="text-blue-900 bg-[#6DB8D1] mx-auto p-2 px-4 rounded-full text-sm font-semibold font-montserrat hover:text-gray-300"
+                onClick={toggleMenu}
+              >
+                <FontAwesomeIcon
+                  icon={faCar}
+                  className="px-2"
+                  width={16}
+                  height={16}
+                />{" "}
+                Request a quote
+              </a>
+            </div>
           </div>
         </div>
       )}
