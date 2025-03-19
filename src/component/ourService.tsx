@@ -23,7 +23,7 @@ const Services = () => {
       title: "USA",
       bg: "bg-[#EDEEF4]",
       description:
-        "Ship your vehicle seamlessly to or from Canada and Hawaii with our dedicated and reliable services.",
+        "Ship your vehicle seamlessly to or from USA with our dedicated and reliable services.",
     },
     // {
     //   title: "Special request",
@@ -58,7 +58,7 @@ const Services = () => {
                   )
                 }
               >
-                <p className="capitalize text-[#000E5E] font-medium text-[24px]">
+                <p className="capitalize text-[#000E5E] font-medium text-[24px] whitespace-nowrap">
                   {service.title}
                 </p>
                 <p className={`p-[10px] ${service.bg} rounded-[100%]`}>
