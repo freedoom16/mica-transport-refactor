@@ -131,6 +131,9 @@ const StepOne: React.FC<StepOneProps> = ({
       {/* Render all the inputs and elements related to Step One here */}
 
       <div>
+        <p className="text-gray-900 mb-4 text-center font-bold">
+          Address Information
+        </p>
         <div className="relative z-0 w-full mb-5 group">
           <label
             htmlFor="pickup_location"

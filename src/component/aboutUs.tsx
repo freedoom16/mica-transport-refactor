@@ -52,12 +52,15 @@ const SectionOne = () => {
     <section id="about-us">
       <div className="w-full bg-[#ECECEC] py-24 p-6">
         <div className="container mx-auto relative mt-16">
-          <section id="/#quote" className="px-6">
+          <section id="/#quote" className="">
+            <p className="text-[20px] text-gray-900 font-bold mb-2 text-center">
+              Shipping Quote Calculator
+            </p>
             <div className=" max-w-md w-full block md:hidden">
               <QouetForm />
             </div>
           </section>
-          <div className="flex flex-col p-6 md:p-0 lg:flex-row items-center relative">
+          <div className="flex flex-col  md:p-0 lg:flex-row items-center relative">
             <div className="w-full bg-white rounded-[32px] shadow-lg md:relative mt-12">
               <div className="p-8">
                 <h2 className="text-center mb-8 text-gray-900">

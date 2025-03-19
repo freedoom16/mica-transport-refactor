@@ -37,7 +37,7 @@ const FeaturesBox = () => {
 
       {/* Car Icon */}
       <div className="flex flex-col items-center justify-center">
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-row md:flex-row">
           <img
             src="car-icon.svg"
             alt="Support Icon"

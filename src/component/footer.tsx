@@ -20,8 +20,8 @@ const Footer: React.FC = () => {
                 className="h-8 me-3"
                 alt="FlowBite Logo"
               /> */}
-              <span className="self-center text-2xl font-semibold whitespace-nowrap ">
-                Mica Transport
+              <span className="self-center text-gray-900 text-2xl font-semibold whitespace-nowrap ">
+                Mica Transportion
               </span>
             </a>
           </div>

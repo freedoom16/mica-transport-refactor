@@ -164,7 +164,7 @@ const QouetForm: React.FC = () => {
             <div className="fixed inset-0 bg-transparent bg-black bg-opacity-50  flex items-center justify-center z-50">
               <div className="bg-white w-full max-w-lg p-6 rounded-lg">
                 <h2 className="text-lg font-bold mb-4">{`Step ${step}`}</h2> */}
-        <p className="text-[20px] text-gray-900 font-bold  text-center">
+        <p className="text-[20px] text-gray-900 font-bold hidden md:block  text-center">
           Shipping Quote Calculator
         </p>
         <form

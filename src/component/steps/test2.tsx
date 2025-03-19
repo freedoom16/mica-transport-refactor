@@ -113,7 +113,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-gray-900 mb-4">Vehicle Info</h2>
+      <h2 className="text-lg font-bold text-center text-gray-900 mb-4">
+        Vehicle Information
+      </h2>
 
       {vehicles.length > 0 && (
         <div className="mb-2">

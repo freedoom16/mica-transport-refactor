@@ -122,7 +122,7 @@ export default function NavBar(props: INavBarProps) {
           <button>
             <a
               href="/#quote"
-              className=" text-base bg-[#6DB8D1] py-2 px-4 rounded-full font-bold font-montserrat hover:text-gray-700"
+              className=" text-base text-white bg-[#6DB8D1] py-2 px-4 rounded-full font-bold font-montserrat hover:text-gray-700"
             >
               <FontAwesomeIcon
                 icon={faCar}
@@ -138,7 +138,7 @@ export default function NavBar(props: INavBarProps) {
 
       {/* Mobile Menu (Overlay Style) */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-20  bg-black/20 ">
+        <div className="fixed inset-0 z-20  bg-black/40 ">
           <div
             className="w-[75%] p-4 h-screen flex flex-col fixed left-0  bg-white shadow-2xl  z-30"
             ref={menuRef}
@@ -188,7 +188,7 @@ export default function NavBar(props: INavBarProps) {
             </a>
             <div className="p-4 flex flex-col space-y-4">
               <a
-                href="tel:+18554802466"
+                href="tel:(855) 480-2466"
                 className="text-gray-900 text-base mx-auto font-normal font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
@@ -203,7 +203,7 @@ export default function NavBar(props: INavBarProps) {
 
               <a
                 href="/#about-us"
-                className="text-blue-900 bg-[#6DB8D1] mx-auto p-2 px-4 rounded-full text-sm font-semibold font-montserrat hover:text-gray-300"
+                className="text-white font-bold bg-[#6DB8D1] mx-auto p-2 px-4 rounded-full text-sm font-semibold font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
                 <FontAwesomeIcon
