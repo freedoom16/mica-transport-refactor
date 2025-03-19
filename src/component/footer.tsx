@@ -10,7 +10,7 @@ import {
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#D3D3D3] ">
+    <footer className="bg-[#ECECEC] ">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -20,8 +20,8 @@ const Footer: React.FC = () => {
                 className="h-8 me-3"
                 alt="FlowBite Logo"
               /> */}
-              <span className="self-center text-2xl font-semibold whitespace-nowrap ">
-                Mica Transport
+              <span className="self-center text-gray-900 text-2xl font-semibold whitespace-nowrap ">
+                Mica Transportion
               </span>
             </a>
           </div>

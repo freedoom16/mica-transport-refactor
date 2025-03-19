@@ -31,13 +31,9 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
       {currentStep < totalSteps ? (
         <button
           type="button"
-          className={`px-8 py-2 rounded-full ${
-            isNextEnabled
-              ? "bg-[#6DB8D1]  text-gray-900 "
-              : "bg-[#6DB8D1]  text-gray-900 cursor-not-allowed"
-          }`}
+          className={`px-8 py-2 rounded-full bg-[#6DB8D1]  text-gray-900 `}
           onClick={onNext}
-          disabled={!isNextEnabled}
+          // disabled={!isNextEnabled}
         >
           Next
         </button>

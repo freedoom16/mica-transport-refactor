@@ -43,7 +43,7 @@ const CustomContentSection = () => {
           <a
             id="lp-pom-button-237"
             href="#aboutus"
-            className="bg-blue-900 text-white text-[14px] leading-[17px] font-normal font-montserrat py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-[#6DB8D1] text-white font-bold text-[14px] leading-[17px] font-normal font-montserrat py-3 px-6 rounded-[32px] shadow-none"
           >
             REQUEST A QUOTE
           </a>

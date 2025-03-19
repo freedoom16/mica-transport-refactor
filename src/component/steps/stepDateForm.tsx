@@ -311,8 +311,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
   return (
     <div className=" space-y-3 md:space-y-6">
       {/* Pick Up Date */}
-      <div className=" text-center text-gray-900 p-1 ">
-        pickup date information
+      <div className=" text-center text-gray-900 p-1 font-bold">
+        Pickup Information
       </div>
 
       <div className="relative z-10 w-full mb-5 group">
@@ -395,8 +395,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
         )}
       </div>
 
-      <div className=" text-center text-gray-900 p-1 ">
-        delivery date information
+      <div className=" text-center text-gray-900 p-1 font-bold">
+        Delivery Information
       </div>
 
       {/* Delivery Date */}

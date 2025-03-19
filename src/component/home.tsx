@@ -9,13 +9,13 @@ export default function Home(props: IHomeProps) {
     <section id="home">
       <div
         id="section-1"
-        className="relative block w-full h-[762px] mx-auto bg-gray-100 bg-opacity-70  bg-center bg-cover bg-no-repeat"
+        className="relative block w-full h-[762px] mx-auto bg-white bg-opacity-70  bg-center bg-cover bg-no-repeat"
       >
         {/* Content */}
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between py-16 px-4 h-full">
           {/* Left Section */}
           <div className="text-gray-900 max-w-[600px]">
-            <div id="lp-pom-text-481" className="mb-3 px-6 py-20 md:py-6">
+            <div id="lp-pom-text-481" className="mb-3 px-6 pt-20 pb-10 md:py-6">
               <p className="text-[35px] md:text-[52px] font-extrabold leading-[50px]  md:leading-[77px] font-montserrat text-left md:text-left">
                 {/* enclosed or open, always professional.  */}
                 ENCLOSED OR OPEN AUTO TRANSPORT.{" "}

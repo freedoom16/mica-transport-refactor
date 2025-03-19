@@ -76,7 +76,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-white mb-4">Contact Info</h2>
+      <h2 className="text-lg font-bold text-center text-gray-900 mb-4">
+        Contact Information
+      </h2>
 
       <div className="relative z-0 w-full mb-5 group">
         <label

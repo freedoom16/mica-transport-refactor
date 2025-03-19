@@ -9,12 +9,12 @@ const AboutPage = () => {
   };
 
   return (
-    <section className=" relative bg-[#D3D3D3] p-6 ">
-      <div className=" w-full container mx-auto p-6 rounded-[32px] bg-white text-black">
+    <section className=" relative bg-[#ECECEC] p-6 ">
+      <div className=" w-full container mx-auto rounded-[32px] bg-white text-black">
         <h2 className="text-center mb-8 text-gray-900">
           <span className="text-[35px] ">About Us</span>
         </h2>
-        <div className="text-lg text-gray-700 space-y-4">
+        <div className="text-lg text-gray-700 text-justify space-y-4 p-4">
           <p>
             Mica Transportation LLC is a family-owned, insured, and
             customer-focused company dedicated to the safe, reliable, and

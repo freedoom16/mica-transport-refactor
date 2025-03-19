@@ -35,7 +35,7 @@ const Testimonials = () => {
       name: "Jane Doe",
       position: "Director of Research and Data",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing",
+      title: "Lorem ipsum dolor sit amet",
       description:
         "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
     },
@@ -44,7 +44,7 @@ const Testimonials = () => {
       name: "John Doe",
       position: "Director of Research and Data",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing",
+      title: "Lorem ipsum dolor sit amet",
       description:
         "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
     },
@@ -53,12 +53,11 @@ const Testimonials = () => {
       name: "Jane Smith",
       position: "Director of Research and Data",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing",
+      title: "Lorem ipsum dolor sit amet",
       description:
         "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
     },
   ];
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -74,7 +73,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="reviews" className="py-20 lg:py-20 px-10 bg-[#D3D3D3]">
+    <section id="reviews" className="py-20 px-6 bg-[#ECECEC]">
       <div className="container mx-auto">
         <p className="uppercase tracking-wider mb-8 text-gray-900 text-center text-[30px] font-bold">
           What customers are saying
@@ -89,14 +88,14 @@ const Testimonials = () => {
               {testimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className="flex-none w-full md:w-1/3 px-3 p-4 "
+                  className="flex-none w-full md:w-1/3 px-2"
                 >
                   <div
-                    className=" p-6 md:p-12 rounded-lg border bg-white border-solid border-gray-200 mb-8 text-gray-900"
+                    className="p-6 md:p-12 rounded-lg border bg-white border-gray-200 mb-8 text-gray-900"
                     style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
                   >
                     <p className="text-xl font-semibold">{testimonial.title}</p>
-                    <p className="mt-6 flex">{testimonial.description}</p>
+                    <p className="mt-4 p-2 flex">{testimonial.description}</p>
                     <div className="flex items-center mt-8">
                       <img
                         className="w-12 h-12 mr-4 rounded-full"
@@ -104,7 +103,7 @@ const Testimonials = () => {
                         alt={testimonial.name}
                       />
                       <div>
-                        <p>{testimonial.name}</p>
+                        <p className="font-medium">{testimonial.name}</p>
                         <p className="text-sm text-gray-600">
                           {testimonial.position}
                         </p>
@@ -119,13 +118,13 @@ const Testimonials = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 text-black bg-white shadow-xl p-3 rounded-full"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
           >
             &#8249;
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 text-black bg-white p-3 shadow-xl rounded-full"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 text-black bg-white p-4 shadow-xl rounded-full"
           >
             &#8250;
           </button>
