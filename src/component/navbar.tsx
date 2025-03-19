@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation"; // For detecting the current route
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCar, faPhone } from "@fortawesome/free-solid-svg-icons";
 
@@ -9,8 +8,9 @@ export interface INavBarProps {}
 
 export default function NavBar(props: INavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [isSticky, setIsSticky] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const navbarRef = useRef<HTMLDivElement | null>(null);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -33,10 +33,55 @@ export default function NavBar(props: INavBarProps) {
     };
   }, [isMenuOpen]);
 
+  // Sticky Navbar logic
+  useEffect(() => {
+    const handleScroll = () => {
+      if (navbarRef.current) {
+        if (window.scrollY > 30) {
+          // When scrolled down 80px or more
+          setIsSticky(true);
+        } else {
+          setIsSticky(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div>
+      {/* Scrollable Phone Info Header */}
+      <div className="w-full bg-[#302D38] text-center py-2 z-10 md:hidden">
+        <span className="text-lg font-medium text-gray-900 text-white">
+          Call Us Now:{" "}
+          <a
+            href="tel:+1234567890"
+            className=" text-base font-normal font-montserrat hover:text-gray-700"
+          >
+            <FontAwesomeIcon
+              icon={faPhone}
+              className="px-2"
+              width={16}
+              height={16}
+            />
+            +1 (404) 988-4505
+          </a>
+        </span>
+      </div>
+
+      {/* Navbar */}
       <nav
-        className={`fixed top-0 left-0 w-full px-8 py-4 flex justify-between items-center z-20 transition-colors duration-300 bg-[#ECECEC] shadow-md`}
+        ref={navbarRef}
+        className={`md:fixed ${
+          isSticky
+            ? "fixed top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
+            : "relative top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
+        } px-8 py-4 flex justify-between items-center transition-colors duration-300`}
       >
         {/* Brand Logo */}
         <div
