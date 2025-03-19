@@ -33,10 +33,8 @@ const ServiceComponent = () => {
       className="relative bg-[#D3D3D3] text-gray-900 py-16 p-6 "
     >
       <div className="container mx-auto text-center rounded-[32px]  shadow-2xl bg-white p-6">
-        <p className=" uppercase rounded-[100px] text-[35px] px-6 py-[10px] mb-6">
-          services
-        </p>
-        <h2 className="text-[35px] md:text-[45px] font-medium leading-[120%] mb-8">
+        <p className="   text-[35px] px-6 py-[10px] mb-6">Services</p>
+        <h2 className="text-[25px] text-left md:text-[25px] font-medium  mb-8">
           Experience the convenience of world-class auto transport at an
           affordable price
         </h2>
