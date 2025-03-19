@@ -27,7 +27,7 @@ const CustomContentSection = () => {
           className="text-gray-900 font-montserrat font-normal text-[16px] leading-[24px]"
         >
           Our car transport experts are ready to assist you?
-          <br></br>call us now
+          <br></br>call us now{" "}
           <a
             href="tel:+18555401266"
             className="text-gray-900 underline"
