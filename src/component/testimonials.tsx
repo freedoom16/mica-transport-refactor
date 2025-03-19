@@ -30,6 +30,33 @@ const Testimonials = () => {
       description:
         "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
     },
+    {
+      id: 4,
+      name: "Jane Doe",
+      position: "Director of Research and Data",
+      image: "https://placeimg.com/150/150/people",
+      title: "Lorem ipsum dolor sit amet",
+      description:
+        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+    },
+    {
+      id: 5,
+      name: "John Doe",
+      position: "Director of Research and Data",
+      image: "https://placeimg.com/150/150/people",
+      title: "Lorem ipsum dolor sit amet",
+      description:
+        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+    },
+    {
+      id: 6,
+      name: "Jane Smith",
+      position: "Director of Research and Data",
+      image: "https://placeimg.com/150/150/people",
+      title: "Lorem ipsum dolor sit amet",
+      description:
+        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+    },
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
