@@ -213,6 +213,12 @@ const QouetForm: React.FC = () => {
           className="max-w-xl mx-auto  bg-white p-4 md:p-6 rounded-[32px] "
           style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
+          {/* Progress Indicator */}
+          <div className=" text-gray-900 text-end mb-6">
+            <p className="text-lg font-bold">
+              Step {step} of {totalSteps}
+            </p>
+          </div>
           {/* Step 1: Pickup, Delivery, and Shipment Date */}
           {step === 3 && (
             <StepOne
