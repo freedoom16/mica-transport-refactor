@@ -5,6 +5,9 @@ interface Vehicle {
   vehicleYear: string;
   vehicleModel: string;
   vehicleMaker: string;
+  type: string; // "Open" or "Enclosed"
+  isDrivable: boolean | null;
+  category: string;
 }
 
 interface StepTwoProps {
@@ -30,12 +33,16 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [filteredMakers, setFilteredMakers] = useState<string[]>([]);
   const [filteredModels, setFilteredModels] = useState<any[]>([]);
   const [selectedMaker, setSelectedMaker] = useState<string>("");
-  const [categoryInput, setCategoryInput] = useState<string>("");
+  const [categoryInput, setCategoryInput] = useState<string>("Open");
   const [message, setMessage] = useState<string>("");
+
+  const [type, setType] = useState<string>("Open"); // Default to "Open"
+  const [isDrivable, setIsDrivable] = useState<boolean | null>(null);
+  // const [categoryInput, setCategoryInput] = useState<string>(categories[0]); // Default to the first category
 
   const [showCategoryOptions, setShowCategoryOptions] =
     useState<boolean>(false);
-  const categories = ["SUV", "Sedan", "Truck"];
+  const categories = ["Van", "SUV", "Sedan", "Truck"];
 
   useEffect(() => {
     // Fetch data from the API
@@ -47,24 +54,54 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       });
   }, []);
 
-  const updateVehicleField = (field: keyof Vehicle, value: string) => {
+  const updateVehicleField = (field: string, value: any) => {
+    // Create a copy of the vehicles array
     const updatedVehicles = [...vehicles];
+
     if (!updatedVehicles[currentVehicleIndex]) {
       updatedVehicles[currentVehicleIndex] = {
         vehicleMaker: "",
         vehicleModel: "",
         vehicleYear: "",
+        type: "",
+        isDrivable: null,
+        category: "",
       };
     }
-    updatedVehicles[currentVehicleIndex][field] = value;
+    // Update the current vehicle at the specified index
+    const currentVehicle = updatedVehicles[currentVehicleIndex];
+
+    // Update the field in the current vehicle object
+    switch (field) {
+      case "vehicleMaker":
+        currentVehicle.vehicleMaker = value;
+        break;
+      case "vehicleModel":
+        currentVehicle.vehicleModel = value;
+        break;
+      case "vehicleYear":
+        currentVehicle.vehicleYear = value;
+        break;
+      case "type":
+        currentVehicle.type = value;
+        break;
+      case "isDrivable":
+        currentVehicle.isDrivable = value;
+        break;
+      case "category":
+        currentVehicle.category = value;
+        break;
+      default:
+        break;
+    }
+
+    // Save the updated vehicles array back to the state
     setVehicles(updatedVehicles);
   };
 
   const handleAddVehicle = () => {
-    if (!makerInput || !modelInput || !yearInput) {
-      setMessage(
-        "Please fill all fields: Maker, Model, and Year before adding a vehicle."
-      );
+    if (!makerInput || !modelInput || !yearInput || isDrivable === null) {
+      setMessage("Please fill all fields before adding a vehicle.");
       return;
     }
 
@@ -75,6 +112,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       vehicleMaker: makerInput,
       vehicleModel: modelInput,
       vehicleYear: yearInput,
+      type: type,
+      isDrivable: isDrivable,
+      category: categoryInput,
     };
 
     setVehicles(updatedVehicles);
@@ -83,6 +123,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setMakerInput("");
     setModelInput("");
     setYearInput("");
+    setCategoryInput("Open");
+    setType("");
+    setCategoryInput("Van");
+    setIsDrivable(null);
     setFilteredMakers([]);
     setFilteredModels([]);
     setSelectedMaker("");
@@ -141,6 +185,24 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     updateVehicleField("vehicleModel", value);
   };
 
+  // For Open/Enclosed toggle
+  const handleTypeChange = (newType: string) => {
+    setType(newType); // Update the local state for type
+    updateVehicleField("type", newType); // Update the field in the vehicle at the current index
+  };
+
+  // For Drivable status
+  const handleDrivableChange = (isDrivable: boolean) => {
+    setIsDrivable(isDrivable); // Update the local state for drivable status
+    updateVehicleField("isDrivable", isDrivable); // Update the field in the vehicle at the current index
+  };
+
+  // For category selection
+  const handleCategoryChange = (newCategory: string) => {
+    setCategoryInput(newCategory); // Update the local state for category
+    updateVehicleField("category", newCategory); // Update the field in the vehicle at the current index
+  };
+
   return (
     <div>
       <h2 className="text-lg font-bold text-center text-gray-900 mb-4">
@@ -184,28 +246,36 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           {message && <p className="text-sm text-red-500 mb-4">{message}</p>}
         </div>
         {/* Vehicle Maker */}
-        <div className="w-full flex flex-col gap-1 mb-4">
-          <div className="w-full flex gap-4 text-gray-900">
-            <div className="w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border border-[#938f99]">
-              <input
-                type="radio"
-                id="open"
-                name="selection"
-                required
-                value="Open"
-              />
-              <p>Open</p>
-            </div>
-            <div className="w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border border-[#938f99]">
-              <input
-                type="radio"
-                name="selection"
-                id="enclosed"
-                required
-                value="Enclosed"
-              />
-              <p>Enclosed</p>
-            </div>
+        <div className="w-full flex gap-4 text-gray-900 mb-4">
+          <div
+            className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+              type === "Open" ? "border-blue-500" : "border-gray-300"
+            }`}
+            onClick={() => handleTypeChange("Open")}
+          >
+            <input
+              type="radio"
+              name="type"
+              value="Open"
+              checked={type === "Open"}
+              onChange={() => handleTypeChange("Open")}
+            />
+            <p>Open</p>
+          </div>
+          <div
+            className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+              type === "Enclosed" ? "border-blue-500" : "border-gray-300"
+            }`}
+            onClick={() => handleTypeChange("Enclosed")}
+          >
+            <input
+              type="radio"
+              name="type"
+              value="Enclosed"
+              checked={type === "Enclosed"}
+              onChange={() => handleTypeChange("Enclosed")}
+            />
+            <p>Enclosed</p>
           </div>
         </div>
 
@@ -292,22 +362,15 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           )}
         </div>
 
-        {/* Static Category */}
         <div className="mb-5">
-          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-            {" "}
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Type
           </label>
           <select
             value={categoryInput}
-            onChange={(e) => {
-              setCategoryInput(e.target.value);
-            }}
+            onChange={(e) => handleCategoryChange(e.target.value)}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           >
-            {/* <option value="" disabled>
-              --- Select Vehicle Category --
-            </option> */}
             {categories.map((category, idx) => (
               <option key={idx} value={category}>
                 {category}
@@ -324,20 +387,22 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                name="is_drivable"
+                name="isDrivable"
                 value="true"
-                // onChange={(e: any) => setIsDerivable(e.target.value === "true")}
-                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+                checked={isDrivable === true}
+                onChange={() => handleDrivableChange(true)}
+                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
               />
               <span className="text-sm text-gray-900">Yes</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                name="is_drivable"
+                name="isDrivable"
                 value="false"
-                // onChange={(e) => setIsDerivable(e.target.value === "false")}
-                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+                checked={isDrivable === false}
+                onChange={() => handleDrivableChange(false)}
+                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
               />
               <span className="text-sm text-gray-900">No</span>
             </label>
