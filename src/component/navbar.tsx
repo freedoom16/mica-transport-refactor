@@ -60,7 +60,7 @@ export default function NavBar(props: INavBarProps) {
         <span className="text-lg font-medium text-gray-900 text-white">
           Call Us Now:{" "}
           <a
-            href="tel:+1234567890"
+            href="tel:+1 (404) 988-4505"
             className=" text-base font-normal font-montserrat hover:text-gray-700"
           >
             <FontAwesomeIcon
@@ -137,13 +137,16 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile icons display  */}
         <div className={`flex gap-4 items-center lg:hidden text-gray-900 `}>
-          <a href="tel:+18554802466" className="hover:text-gray-300 text-lg">
+          <a
+            href="tel:+1 (404) 988-4505"
+            className="hover:text-gray-300 text-lg"
+          >
             <FontAwesomeIcon
               icon={faPhone}
               className={`w-6 h-6 text-gray-900`}
             />
           </a>
-          <a href="/#about-us" className="hover:text-gray-700 text-lg">
+          <a href="/#quote" className="hover:text-gray-700 text-lg">
             <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-gray-900`} />{" "}
           </a>
         </div>
@@ -152,7 +155,7 @@ export default function NavBar(props: INavBarProps) {
         <div className={`hidden lg:flex gap-6 items-center text-gray-900`}>
           <div>
             <a
-              href="tel:+1234567890"
+              href="tel:+1 (404) 988-4505"
               className=" text-base font-normal font-montserrat hover:text-gray-700"
             >
               <FontAwesomeIcon
@@ -233,7 +236,7 @@ export default function NavBar(props: INavBarProps) {
             </a>
             <div className="p-4 flex flex-col space-y-4">
               <a
-                href="tel:(404) 988-4505"
+                href="tel:+1 (404) 988-4505"
                 className="text-gray-900 text-base mx-auto font-normal font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
