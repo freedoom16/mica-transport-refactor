@@ -8,7 +8,7 @@ const Services = () => {
   const services = [
     {
       title: "Enclosed car shipping",
-      bg: "bg-[#EDEEF4]",
+      bg: "bg-[white]",
       description:
         "Enclosed shipping ensures maximum protection for your vehicle. It's ideal for luxury, exotic, or classic cars requiring extra care.",
     },
@@ -112,7 +112,7 @@ const Services = () => {
             </p>
           </div>
           <div
-            style={{ backgroundColor: "rgb(120, 248, 221)" }}
+            style={{ backgroundColor: "rgb(255, 255, 255)" }}
             className="w-full h-[29%] p-8 rounded-[24px] flex flex-col justify-between overflow-y-scroll styled-scroll"
           >
             {/* <p className="p-[10px] w-fit bg-white rounded-[100%] mb-4">

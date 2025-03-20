@@ -50,16 +50,16 @@ const SectionOne = () => {
 
   return (
     <section id="about-us">
-      <div className="w-full bg-[#ECECEC] py-24 p-6">
-        <div className="container mx-auto relative mt-16">
-          <section id="/#quote" className="">
+      <div className="w-full bg-[#ECECEC] py-12 md:py-6 p-6">
+        <div className="container mx-auto relative ">
+          {/* <section id="quote" className="">
             <p className="text-[20px] md:hidden text-gray-900 font-bold mb-2 text-center p-5">
               Shipping Quote Calculator
             </p>
             <div className=" max-w-md w-full block md:hidden">
               <QouetForm />
             </div>
-          </section>
+          </section> */}
           <div className="flex flex-col  md:p-0 lg:flex-row items-center relative">
             <div className="w-full bg-white rounded-[32px] shadow-lg md:relative mt-12">
               <div className="p-8">
@@ -75,7 +75,7 @@ const SectionOne = () => {
                       >
                         <FontAwesomeIcon
                           icon={faStar}
-                          className="text-yellow-500 w-4 h-4 mr-2"
+                          className="text-gray-900 w-4 h-4 mr-2"
                         />
                         <span className="text-[20px]">{point}</span>
                       </div>
@@ -86,14 +86,14 @@ const SectionOne = () => {
                     <button
                       onClick={handlePrevious}
                       disabled={currentPage === 0}
-                      className="px-4 py-2 bg-[#6DB8D1] text-white rounded-full disabled:bg-gray-300"
+                      className="px-4 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
                     >
                       Previous
                     </button>
                     <button
                       onClick={handleNext}
                       disabled={currentPage === totalPages - 1}
-                      className="px-6 py-2 bg-[#6DB8D1] text-white rounded-full disabled:bg-gray-300"
+                      className="px-6 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
                     >
                       Next
                     </button>

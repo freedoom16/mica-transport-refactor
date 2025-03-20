@@ -1,6 +1,7 @@
 import AboutPage from "@/component/aboutPage2";
 import SectionOne from "@/component/aboutUs";
 import Footer from "@/component/footer";
+import Forms from "@/component/forms";
 import Home from "@/component/home";
 import NavBar from "@/component/navbar";
 import ServicesSection from "@/component/ourService";
@@ -17,8 +18,12 @@ const BlockComponent: React.FC = () => {
       {/* Section 1 */}
       <Home />
 
+      <Forms />
+
       {/* Section 2 */}
       <SectionOne />
+
+      {/* <Forms /> */}
 
       <AboutPage />
 

@@ -83,47 +83,59 @@ const Footer: React.FC = () => {
             . All Rights Reserved.
           </span>
 
-          <div className="flex mt-4 sm:justify-center sm:mt-0 space-x-4">
+          <div className="flex items-center space-x-4">
+            {/* Facebook */}
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/share/1EU19YmKhE/?mibextid=wwXIfr"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-900 hover:text-gray-900 "
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faFacebookF} className="w-8 h-8" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                alt="Facebook"
+                className="w-8 h-8"
+              />
             </a>
-            {/* <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-900 hover:text-gray-900 "
-            >
-              <FontAwesomeIcon icon={faTwitter} className="w-8 h-8" />
-            </a> */}
+            {/* Instagram */}
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/micatransportationllc?igsh=eGcxejMyMWxtcXFy&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-900 hover:text-gray-900 "
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faInstagram} className="w-8 h-8" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                alt="Instagram"
+                className="w-8 h-8"
+              />
             </a>
-            {/* <a
-              href="https://linkedin.com"
+            {/* WhatsApp */}
+            <a
+              href="https://wa.me/+1(404)9884505"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-900 hover:text-gray-900 "
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faLinkedin} className="w-8 h-8" />
-            </a> */}
-            {/* <a
-              href="https://youtube.com"
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="WhatsApp"
+                className="w-12 h-10"
+              />
+            </a>
+            {/* Telegram */}
+            <a
+              href="https://t.me/Michaelfasil"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-900 hover:text-gray-900 "
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faYoutube} className="w-8 h-8" />
-            </a> */}
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"
+                alt="Telegram"
+                className="w-8 h-8"
+              />
+            </a>
           </div>
         </div>
       </div>

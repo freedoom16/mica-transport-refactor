@@ -13,8 +13,11 @@ interface Vehicle {
   vehicleYear: string;
   vehicleModel: string;
   vehicleMaker: string;
-  filteredMakers: string[];
-  filteredModels: string[];
+  // filteredMakers: string[];
+  // filteredModels: string[];
+  type: string; // "Open" or "Enclosed"
+  isDrivable: boolean;
+  category: string;
 }
 
 const QouetForm: React.FC = () => {
@@ -61,16 +64,20 @@ const QouetForm: React.FC = () => {
     if (step === 1 && !isStep2Valid) {
       // setErrorMessage("All fields are required for Step 2.");
       // return;
-      if (!vehicleMaker) {
+      if (!vehicles[currentVehicleIndex]?.vehicleYear) {
+        setErrorMessage("Vehicle year is required.");
+        return;
+      }
+      if (!vehicles[currentVehicleIndex]?.vehicleMaker) {
         setErrorMessage("Vehicle maker is required.");
         return;
       }
-      if (!vehicleModel) {
+      if (!vehicles[currentVehicleIndex]?.vehicleModel) {
         setErrorMessage("Vehicle model is required.");
         return;
       }
-      if (!vehicleYear) {
-        setErrorMessage("Vehicle year is required.");
+      if (vehicles[currentVehicleIndex]?.isDrivable === null) {
+        setErrorMessage("isDrivable field is required.");
         return;
       }
     }
@@ -118,6 +125,10 @@ const QouetForm: React.FC = () => {
     // if (step < totalSteps) {
     //   setStep((prevStep) => prevStep + 1);
     // }
+    if (isStep2Valid) {
+      setCurrentVehicleIndex(currentVehicleIndex + 1);
+    }
+
     if (step < totalSteps) setStep(step + 1);
     setIsModalOpen(true);
   };
@@ -176,6 +187,7 @@ const QouetForm: React.FC = () => {
   const [pickUpTime, setPickUpTime] = useState<string>("");
   const [pickUpTimeRangeStart, setPickUpTimeRangeStart] = useState<string>("");
   const [pickUpTimeRangeEnd, setPickUpTimeRangeEnd] = useState<string>("");
+  const [currentVehicleIndex, setCurrentVehicleIndex] = useState<number>(0);
 
   // Delivery Date and Time states
   const [deliveryDateOption, setDeliveryDateOption] = useState<string>("");
@@ -204,10 +216,14 @@ const QouetForm: React.FC = () => {
     addressTypeForPickup
   );
 
-  const isStep2Valid = true;
-  // !!(
-  //   vehicles[0]?.vehicleMaker && vehicles[0]?.vehicleModel
-  // );
+  const isStep2Valid =
+    // true;
+    !!(
+      vehicles[currentVehicleIndex]?.vehicleMaker &&
+      vehicles[currentVehicleIndex]?.vehicleModel &&
+      vehicles[currentVehicleIndex]?.vehicleYear &&
+      vehicles[currentVehicleIndex]?.isDrivable != null
+    );
 
   console.log("vvvvvvvvvvvvv ", vehicles);
   const isStep3Valid = !!(firstName && lastName && email && phone);
@@ -308,6 +324,8 @@ const QouetForm: React.FC = () => {
             <StepTwoComponentTest
               vehicles={vehicles}
               setVehicles={setVehicles}
+              currentVehicleIndex={currentVehicleIndex}
+              setCurrentVehicleIndex={setCurrentVehicleIndex}
               // isStep2Valid={isStep2Valid}
               // nextStep={nextStep}
               // prevStep={prevStep}

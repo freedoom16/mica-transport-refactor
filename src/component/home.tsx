@@ -18,7 +18,7 @@ export default function Home(props: IHomeProps) {
             <div id="lp-pom-text-481" className="mb-3 px-6 pt-20 pb-10 md:py-6">
               <p className="text-[35px] md:text-[52px] font-extrabold leading-[50px]  md:leading-[77px] font-montserrat text-left md:text-left">
                 {/* enclosed or open, always professional.  */}
-                ENCLOSED OR OPEN AUTO TRANSPORT.{" "}
+                ENCLOSED OR OPEN AUTO TRANSPORT{" "}
               </p>
             </div>
             <div id="lp-pom-text-482" className="mt-2 px-6">
