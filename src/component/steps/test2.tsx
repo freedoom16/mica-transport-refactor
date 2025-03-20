@@ -256,7 +256,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         <div className="w-full flex gap-4 text-gray-900 mb-4">
           <div
             className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
-              type === "Open" ? "border-blue-500" : "border-gray-300"
+              type === "Open" ? "border-[#ECECEC]" : "border-gray-300"
             }`}
             onClick={() => handleTypeChange("Open")}
           >
@@ -266,12 +266,13 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               value="Open"
               checked={type === "Open"}
               onChange={() => handleTypeChange("Open")}
+              className="w-6 h-6 bg-[#ECECEC] text-[#ECECEC]"
             />
             <p>Open</p>
           </div>
           <div
             className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
-              type === "Enclosed" ? "border-blue-500" : "border-gray-300"
+              type === "Enclosed" ? "border-[#ECECEC]" : "border-gray-300"
             }`}
             onClick={() => handleTypeChange("Enclosed")}
           >
@@ -281,6 +282,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               value="Enclosed"
               checked={type === "Enclosed"}
               onChange={() => handleTypeChange("Enclosed")}
+              className="w-6 h-6 bg-[#ECECEC] text-[#ECECEC]"
             />
             <p>Enclosed</p>
           </div>
@@ -398,7 +400,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 value="true"
                 checked={isDrivable === true}
                 onChange={() => handleDrivableChange(true)}
-                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
+                className="form-radio text-[#ECECEC] 0 w-6 h-6 border-2 border-gray-300"
               />
               <span className="text-sm text-gray-900">Yes</span>
             </label>
@@ -409,7 +411,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 value="false"
                 checked={isDrivable === false}
                 onChange={() => handleDrivableChange(false)}
-                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
+                className="form-radio text-[#ECECEC] w-6 h-6 border-2 border-[#ECECEC]"
               />
               <span className="text-sm text-gray-900">No</span>
             </label>

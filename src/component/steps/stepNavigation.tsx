@@ -16,24 +16,29 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
   onPrev,
   isNextEnabled,
 }) => {
-  const scrollToAboutUs = () => {
-    const aboutUsElement = document.getElementById("about-us");
-    if (aboutUsElement) {
-      aboutUsElement.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+  const scrollToQuote = () => {
+    // Use a setTimeout to ensure the DOM is ready before scrolling
+    setTimeout(() => {
+      const quoteElement = document.getElementById("quote");
+      if (quoteElement) {
+        quoteElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        console.log("Could not find the quote section to scroll.");
+      }
+    }, 300); // Adjust the timeout if needed (300ms delay gives time for rendering)
   };
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
       onNext();
-      scrollToAboutUs(); // Scroll to "About Us" section
+      scrollToQuote(); // Scroll to "About Us" section
     }
   };
 
   const handlePrev = () => {
     if (currentStep > 1) {
       onPrev();
-      scrollToAboutUs(); // Scroll to "About Us" section
+      scrollToQuote(); // Scroll to "About Us" section
     }
   };
 

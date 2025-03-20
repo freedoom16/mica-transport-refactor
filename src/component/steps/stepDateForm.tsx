@@ -400,10 +400,10 @@ const StepDataTest: React.FC<StepFourProps> = ({
       </div>
 
       {/* Delivery Date */}
-      <div className="relative z-10 w-full mb-5 group">
+      <div className="relative  w-full mb-5 group">
         <label
           htmlFor="delivery_date_option"
-          className="absolute px-3 py-2 z-10 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           Delivery Date
         </label>
