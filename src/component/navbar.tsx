@@ -100,10 +100,7 @@ export default function NavBar(props: INavBarProps) {
             </a>
           </li>
           <li>
-            <a
-              href="/#our-service"
-              className="hover:text-gray-300 cursor-pointer"
-            >
+            <a href="/#services" className="hover:text-gray-300 cursor-pointer">
               Our Service
             </a>
           </li>
@@ -213,7 +210,7 @@ export default function NavBar(props: INavBarProps) {
               About Us
             </a>
             <a
-              href="/#our-service"
+              href="/#services"
               className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
               onClick={toggleMenu}
             >
@@ -228,7 +225,7 @@ export default function NavBar(props: INavBarProps) {
             </a>
 
             <a
-              href="/#review"
+              href="/#reviews"
               className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
               onClick={toggleMenu}
             >
