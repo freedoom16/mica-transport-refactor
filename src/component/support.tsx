@@ -16,7 +16,7 @@ const CustomContentSection = () => {
         Looking for a reliable way to transport your car?
         <br></br>
         <span className="text-[25px] font-semibold">
-          Mica Transportation is here to make it effortless!
+          We are here to make it effortless!
         </span>
       </div>
 
