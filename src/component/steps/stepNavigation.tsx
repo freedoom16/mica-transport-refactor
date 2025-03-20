@@ -31,14 +31,12 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
   const handleNext = () => {
     if (currentStep < totalSteps) {
       onNext();
-      scrollToQuote(); // Scroll to "About Us" section
     }
   };
 
   const handlePrev = () => {
     if (currentStep > 1) {
       onPrev();
-      scrollToQuote(); // Scroll to "About Us" section
     }
   };
 
@@ -58,7 +56,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
 
   return (
     <div>
-      <div className="hidden md:block flex justify-between mt-6">
+      <div className="hidden md:block md:flex md:justify-between md:mt-6">
         {currentStep > 1 && (
           <button
             type="button"
