@@ -11,11 +11,15 @@ interface StepTwoProps {
   vehicles: Vehicle[];
   //   setVehicles: (vehicles: Vehicle[]) => void;
   setVehicles: React.Dispatch<React.SetStateAction<Vehicle[]>>;
+  currentVehicleIndex: number;
+  setCurrentVehicleIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   setVehicles,
   vehicles,
+  currentVehicleIndex,
+  setCurrentVehicleIndex,
 }) => {
   //   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [makes, setMakes] = useState<string[]>([]);
@@ -27,6 +31,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [filteredModels, setFilteredModels] = useState<any[]>([]);
   const [selectedMaker, setSelectedMaker] = useState<string>("");
   const [categoryInput, setCategoryInput] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
   const [showCategoryOptions, setShowCategoryOptions] =
     useState<boolean>(false);
@@ -42,21 +47,37 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       });
   }, []);
 
-  const handleAddVehicle = () => {
-    // if (!makerInput || !modelInput || yearInput) {
-    //   alert("Please fill in all fields before adding a vehicle.");
-    //   return;
-    // }
+  const updateVehicleField = (field: keyof Vehicle, value: string) => {
+    const updatedVehicles = [...vehicles];
+    if (!updatedVehicles[currentVehicleIndex]) {
+      updatedVehicles[currentVehicleIndex] = {
+        vehicleMaker: "",
+        vehicleModel: "",
+        vehicleYear: "",
+      };
+    }
+    updatedVehicles[currentVehicleIndex][field] = value;
+    setVehicles(updatedVehicles);
+  };
 
-    // Add the current form data to the vehicles list
-    setVehicles([
-      ...vehicles,
-      {
-        vehicleMaker: makerInput,
-        vehicleModel: modelInput,
-        vehicleYear: yearInput,
-      },
-    ]);
+  const handleAddVehicle = () => {
+    if (!makerInput || !modelInput || !yearInput) {
+      setMessage(
+        "Please fill all fields: Maker, Model, and Year before adding a vehicle."
+      );
+      return;
+    }
+
+    const updatedVehicles = [...vehicles];
+
+    // Update the vehicle at the current index or add a new one
+    updatedVehicles[currentVehicleIndex] = {
+      vehicleMaker: makerInput,
+      vehicleModel: modelInput,
+      vehicleYear: yearInput,
+    };
+
+    setVehicles(updatedVehicles);
 
     // Reset the form fields
     setMakerInput("");
@@ -65,17 +86,24 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setFilteredMakers([]);
     setFilteredModels([]);
     setSelectedMaker("");
+
+    // Optionally increment the index for adding new vehicles
+    setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+    setMessage("");
   };
 
   const handleMakerSelect = (make: string) => {
     setMakerInput(make);
     setSelectedMaker(make);
+    updateVehicleField("vehicleMaker", make);
+
     setFilteredMakers([]);
   };
 
   const handleModelSelect = (model: string) => {
     setModelInput(model);
     setFilteredModels([]);
+    updateVehicleField("vehicleModel", model);
   };
 
   const handleMakerInputChange = (value: string) => {
@@ -85,6 +113,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         .filter((make) => make.toLowerCase().startsWith(value.toLowerCase()))
         .slice(0, 5)
     );
+    updateVehicleField("vehicleMaker", value);
   };
 
   const handleRemoveVehicle = (index: number) => {
@@ -109,6 +138,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         .slice(0, 5);
       setFilteredModels(uniqueModels);
     }
+    updateVehicleField("vehicleModel", value);
   };
 
   return (
@@ -123,7 +153,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             Saved Vehicle Info
           </h2>
 
-          {vehicles.map((vehicle, index) => (
+          {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
               <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 w-full">
                 <div className="flex flex-col">
@@ -150,6 +180,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       )}
       {/* Vehicle input form */}
       <div className="mb-6">
+        <div>
+          {message && <p className="text-sm text-red-500 mb-4">{message}</p>}
+        </div>
         {/* Vehicle Maker */}
         <div className="w-full flex flex-col gap-1 mb-4">
           <div className="w-full flex gap-4 text-gray-900">
@@ -193,6 +226,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 const newVehicles = [...vehicles];
                 // newVehicles[index].vehicleYear = value;
                 setYearInput(e.target.value);
+                updateVehicleField("vehicleYear", value);
               }
             }}
             placeholder="Year"

@@ -176,6 +176,7 @@ const QouetForm: React.FC = () => {
   const [pickUpTime, setPickUpTime] = useState<string>("");
   const [pickUpTimeRangeStart, setPickUpTimeRangeStart] = useState<string>("");
   const [pickUpTimeRangeEnd, setPickUpTimeRangeEnd] = useState<string>("");
+  const [currentVehicleIndex, setCurrentVehicleIndex] = useState<number>(0);
 
   // Delivery Date and Time states
   const [deliveryDateOption, setDeliveryDateOption] = useState<string>("");
@@ -308,6 +309,8 @@ const QouetForm: React.FC = () => {
             <StepTwoComponentTest
               vehicles={vehicles}
               setVehicles={setVehicles}
+              currentVehicleIndex={currentVehicleIndex}
+              setCurrentVehicleIndex={setCurrentVehicleIndex}
               // isStep2Valid={isStep2Valid}
               // nextStep={nextStep}
               // prevStep={prevStep}
