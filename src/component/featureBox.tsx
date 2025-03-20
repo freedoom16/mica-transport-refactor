@@ -25,7 +25,7 @@ const FeaturesBox = () => {
           className="w-16 h-8 font-bold text-blue-900"
         />
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
-          Professional Service
+          Professional
         </p>
         <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-black">
           transport
@@ -34,16 +34,16 @@ const FeaturesBox = () => {
 
       {/* Car Icon */}
       <div className="flex flex-col items-center justify-center  p-2 rounded">
-        <div className="flex flex-row space-x-2">
+        <div className="flex flex-row space-x-1 lg:space-x-2">
           <img
-            src="car-icon.svg"
+            src="truckicon.svg"
             alt="Car Icon"
-            className="w-16 h-8 font-bold text-blue-900"
+            className="w-16 h-14 lg:h-16 font-bold text-blue-900"
           />
           <img
-            src="car-icon.svg"
+            src="opentruck.svg"
             alt="Car Icon"
-            className="w-16 h-8 font-bold text-blue-900"
+            className="w-16 h-14 lg:h-16 font-bold text-blue-900"
           />
         </div>
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">

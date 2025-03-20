@@ -75,7 +75,7 @@ const SectionOne = () => {
                       >
                         <FontAwesomeIcon
                           icon={faStar}
-                          className="text-yellow-500 w-4 h-4 mr-2"
+                          className="text-gray-900 w-4 h-4 mr-2"
                         />
                         <span className="text-[20px]">{point}</span>
                       </div>
@@ -86,14 +86,14 @@ const SectionOne = () => {
                     <button
                       onClick={handlePrevious}
                       disabled={currentPage === 0}
-                      className="px-4 py-2 bg-[#6DB8D1] text-white rounded-full disabled:bg-gray-300"
+                      className="px-4 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
                     >
                       Previous
                     </button>
                     <button
                       onClick={handleNext}
                       disabled={currentPage === totalPages - 1}
-                      className="px-6 py-2 bg-[#6DB8D1] text-white rounded-full disabled:bg-gray-300"
+                      className="px-6 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
                     >
                       Next
                     </button>
