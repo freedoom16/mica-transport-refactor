@@ -163,6 +163,13 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const handleRemoveVehicle = (index: number) => {
     const updatedVehicles = vehicles.filter((_, i) => i !== index);
     setVehicles(updatedVehicles);
+
+    // Adjust the currentVehicleIndex if necessary
+    if (index === currentVehicleIndex && currentVehicleIndex > 0) {
+      setCurrentVehicleIndex(currentVehicleIndex - 1);
+    } else if (index < currentVehicleIndex) {
+      setCurrentVehicleIndex(currentVehicleIndex - 1);
+    }
   };
 
   const handleModelInputChange = (value: string) => {
@@ -219,13 +226,13 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <div key={index} className="flex flex-row space-y-2 ">
               <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 w-full">
                 <div className="flex flex-col">
-                  <strong>Maker</strong> {vehicle.vehicleMaker}
+                  <strong>Maker</strong> {vehicle?.vehicleMaker}
                 </div>
                 <div className="flex flex-col">
-                  <strong>Model</strong> {vehicle.vehicleModel}
+                  <strong>Model</strong> {vehicle?.vehicleModel}
                 </div>
                 <div className="flex flex-col">
-                  <strong>Year</strong> {vehicle.vehicleYear}
+                  <strong>Year</strong> {vehicle?.vehicleYear}
                 </div>
                 <div className="flex ">
                   <button

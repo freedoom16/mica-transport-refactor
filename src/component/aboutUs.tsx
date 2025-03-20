@@ -50,16 +50,16 @@ const SectionOne = () => {
 
   return (
     <section id="about-us">
-      <div className="w-full bg-[#ECECEC] py-24 p-6">
-        <div className="container mx-auto relative mt-16">
-          <section id="/#quote" className="">
+      <div className="w-full bg-[#ECECEC] py-12 md:py-6 p-6">
+        <div className="container mx-auto relative ">
+          {/* <section id="quote" className="">
             <p className="text-[20px] md:hidden text-gray-900 font-bold mb-2 text-center p-5">
               Shipping Quote Calculator
             </p>
             <div className=" max-w-md w-full block md:hidden">
               <QouetForm />
             </div>
-          </section>
+          </section> */}
           <div className="flex flex-col  md:p-0 lg:flex-row items-center relative">
             <div className="w-full bg-white rounded-[32px] shadow-lg md:relative mt-12">
               <div className="p-8">
