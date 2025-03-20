@@ -40,10 +40,20 @@ const CustomContentSection = () => {
         </div>
 
         {/* Button */}
-        <div>
+        <div className="block md:hidden">
           <a
             id="lp-pom-button-237"
-            href="/#about-us"
+            href="/#quote-form"
+            className="bg-[#6DB8D1] text-white font-bold text-[14px] leading-[17px] font-normal font-montserrat py-3 px-6 rounded-[32px] shadow-none"
+          >
+            REQUEST A QUOTE
+          </a>
+        </div>
+
+        <div className="hidden md:block">
+          <a
+            id="lp-pom-button-237"
+            href="/#home"
             className="bg-[#6DB8D1] text-white font-bold text-[14px] leading-[17px] font-normal font-montserrat py-3 px-6 rounded-[32px] shadow-none"
           >
             REQUEST A QUOTE

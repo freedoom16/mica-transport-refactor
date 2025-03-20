@@ -146,7 +146,7 @@ export default function NavBar(props: INavBarProps) {
               className={`w-6 h-6 text-gray-900`}
             />
           </a>
-          <a href="/#quote" className="hover:text-gray-700 text-lg">
+          <a href="/#quote-form" className="hover:text-gray-700 text-lg">
             <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-gray-900`} />{" "}
           </a>
         </div>
@@ -169,7 +169,7 @@ export default function NavBar(props: INavBarProps) {
           </div>
           <button>
             <a
-              href="/#quote"
+              href="/#home"
               className=" text-base text-white bg-[#6DB8D1] py-2 px-4 rounded-full font-bold font-montserrat hover:text-gray-700"
             >
               <FontAwesomeIcon
@@ -250,7 +250,7 @@ export default function NavBar(props: INavBarProps) {
               </a>
 
               <a
-                href="/#about-us"
+                href="/#quote-form"
                 className="text-white font-bold bg-[#6DB8D1] mx-auto p-2 px-4 rounded-full text-sm font-semibold font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
