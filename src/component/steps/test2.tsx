@@ -16,6 +16,8 @@ interface StepTwoProps {
   setVehicles: React.Dispatch<React.SetStateAction<Vehicle[]>>;
   currentVehicleIndex: number;
   setCurrentVehicleIndex: React.Dispatch<React.SetStateAction<number>>;
+  errors: any;
+  setErrors: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const StepTwoComponentTest: React.FC<StepTwoProps> = ({
@@ -23,6 +25,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   vehicles,
   currentVehicleIndex,
   setCurrentVehicleIndex,
+  errors,
+  setErrors,
 }) => {
   //   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [makes, setMakes] = useState<string[]>([]);
@@ -97,13 +101,57 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
     // Save the updated vehicles array back to the state
     setVehicles(updatedVehicles);
+    validateField(field, value);
   };
+
+  // const [errors, setErrors] = useState({
+  //   vehicleMaker: "",
+  //   vehicleModel: "",
+  //   vehicleYear: "",
+  //   isDrivable: "",
+  // });
+
+  const validateField = (field: string, value: any) => {
+    const newErrors = { ...errors };
+
+    switch (field) {
+      case "vehicleMaker":
+        newErrors.vehicleMaker = value ? "" : "Vehicle maker is required";
+        break;
+      case "vehicleModel":
+        newErrors.vehicleModel = value ? "" : "Vehicle model is required";
+        break;
+      case "vehicleYear":
+        newErrors.vehicleYear =
+          value && /^\d{4}$/.test(value) ? "" : "Enter a valid year";
+        break;
+      case "isDrivable":
+        newErrors.isDrivable =
+          value !== null ? "" : "Drivable status is required";
+        break;
+      default:
+        break;
+    }
+
+    setErrors(newErrors);
+  };
+
+  console.log(errors);
 
   const handleAddVehicle = () => {
     if (!makerInput || !modelInput || !yearInput || isDrivable === null) {
-      setMessage("Please fill all fields before adding a vehicle.");
+      const newErrors = {
+        vehicleMaker: makerInput ? "" : "Vehicle maker is required",
+        vehicleModel: modelInput ? "" : "Vehicle model is required",
+        vehicleYear: yearInput ? "" : "Vehicle year is required",
+        isDrivable: isDrivable !== null ? "" : "Drivable status is required",
+      };
+
+      setErrors(newErrors);
       return;
     }
+
+    // return Object.values(newErrors).every((error) => !error);
 
     const updatedVehicles = [...vehicles];
 
@@ -123,8 +171,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setMakerInput("");
     setModelInput("");
     setYearInput("");
-    setCategoryInput("Open");
-    setType("");
+    setType("Open");
     setCategoryInput("Van");
     setIsDrivable(null);
     setFilteredMakers([]);
@@ -142,6 +189,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     updateVehicleField("vehicleMaker", make);
 
     setFilteredMakers([]);
+    const newErrors = {
+      vehicleMaker: makerInput ? "" : "Vehicle maker is required",
+    };
   };
 
   const handleModelSelect = (model: string) => {
@@ -205,9 +255,27 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   };
 
   // For category selection
-  const handleCategoryChange = (newCategory: string) => {
-    setCategoryInput(newCategory); // Update the local state for category
-    updateVehicleField("category", newCategory); // Update the field in the vehicle at the current index
+  // const handleCategoryChange = (newCategory: string) => {
+  //   setCategoryInput(newCategory); // Update the local state for category
+  //   updateVehicleField("category", newCategory); // Update the field in the vehicle at the current index
+  // };
+
+  const options = [
+    { value: "Van", img: "car/van.svg" },
+    { value: "SUV", img: "car/suv.svg" },
+    { value: "Sedan", img: "car/sedan.svg" },
+    { value: "Truck", img: "car/truck.svg" },
+  ];
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setCategoryInput(value);
+    setIsOpen(false); // Close the dropdown after selection
   };
 
   return (
@@ -309,8 +377,15 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               }
             }}
             placeholder="Year"
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+              errors.vehicleYear ? "border-red-500" : "border-[#938f99]"
+            } outline-none transition-all focus:border-[#6DB8D1]`}
           />
+          {errors.vehicleYear && (
+            <p className="text-sm text-red-500 mt-1 px-4">
+              {errors.vehicleYear}
+            </p>
+          )}
         </div>
 
         <div className="relative  mb-5  top-0">
@@ -324,7 +399,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             value={makerInput}
             onChange={(e) => handleMakerInputChange(e.target.value)}
             placeholder="Make"
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+              errors.vehicleMaker ? "border-red-500" : "border-[#938f99]"
+            } outline-none transition-all focus:border-[#6DB8D1]`}
           />
           {filteredMakers.length > 0 && (
             <ul className="absolute z-5 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
@@ -338,6 +415,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 </li>
               ))}
             </ul>
+          )}
+          {errors.vehicleMaker && (
+            <p className="text-sm text-red-500 mt-1 px-4">
+              {errors.vehicleMaker}
+            </p>
           )}
         </div>
 
@@ -353,7 +435,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             onChange={(e) => handleModelInputChange(e.target.value)}
             placeholder={selectedMaker ? "Model" : "Model"}
             // disabled={!selectedMaker}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+              errors.vehicleModel ? "border-red-500" : "border-[#938f99]"
+            } outline-none transition-all focus:border-[#6DB8D1]`}
           />
 
           {filteredModels.length > 0 && (
@@ -369,26 +453,46 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               ))}
             </ul>
           )}
+          {errors.vehicleModel && (
+            <p className="text-sm text-red-500 mt-1 px-4">
+              {errors.vehicleModel}
+            </p>
+          )}
         </div>
 
-        <div className="mb-5">
+        <div className="relative mb-4">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Type
           </label>
-          <select
-            value={categoryInput}
-            onChange={(e) => handleCategoryChange(e.target.value)}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+
+          <div
+            onClick={toggleDropdown}
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1] cursor-pointer"
           >
-            {categories.map((category, idx) => (
-              <option key={idx} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
+            {categoryInput ? categoryInput : "Select Vehicle Type"}
+          </div>
+
+          {isOpen && (
+            <div className="absolute top-full text-gray-900 left-0 w-full bg-white border border-[#938f99] rounded-xl shadow-lg z-10 mt-2">
+              {options.map((option, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => handleCategoryChange(option.value)}
+                  className="flex items-center p-3 hover:bg-[#6DB8D1] cursor-pointer"
+                >
+                  <img
+                    src={option.img}
+                    alt={option.value}
+                    className="mr-2 w-5 h-5"
+                  />
+                  {option.value}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="relative z-0 w-full mb-5 group flex flex-row">
+        <div className="relative z-0 w-full mb-2 group flex flex-row">
           <label className="block text-sm font-medium text-gray-900 mr-2">
             Is this load drivable? <span className="text-red-500">*</span>
           </label>
@@ -416,7 +520,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               <span className="text-sm text-gray-900">No</span>
             </label>
           </div>
+          <br></br>
         </div>
+        {errors.isDrivable && (
+          <div className="text-sm text-red-500 px-4">{errors.isDrivable}</div>
+        )}
       </div>
       {/* Add Vehicle Button */}
       <button

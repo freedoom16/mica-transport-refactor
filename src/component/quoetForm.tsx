@@ -35,6 +35,42 @@ const QouetForm: React.FC = () => {
   // };
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [errors, setErrors] = useState({
+    vehicleMaker: "",
+    vehicleModel: "",
+    vehicleYear: "",
+    isDrivable: "",
+  });
+
+  const nextStepOne = () => {
+    const newErrors: any = {};
+
+    if (!vehicles[currentVehicleIndex]?.vehicleMaker) {
+      newErrors.vehicleMaker = "Vehicle maker is required.";
+    }
+    if (!vehicles[currentVehicleIndex]?.vehicleModel) {
+      newErrors.vehicleModel = "Vehicle model is required.";
+    }
+    if (!vehicles[currentVehicleIndex]?.vehicleYear) {
+      newErrors.vehicleYear = "Vehicle year is required.";
+    }
+    if (vehicles[currentVehicleIndex]?.isDrivable === null) {
+      newErrors.isDrivable = "Drivable status is required.";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return; // Stop further execution
+    }
+
+    setErrors({
+      vehicleMaker: "",
+      vehicleModel: "",
+      vehicleYear: "",
+      isDrivable: "",
+    }); // Reset errors
+    if (step < 2) setStep(step + 1); // Proceed to next step (adjust total steps as necessary)
+  };
 
   const nextStep = () => {
     console.log("nextStep cleicked", isStep2Valid);
@@ -64,6 +100,7 @@ const QouetForm: React.FC = () => {
     if (step === 1 && !isStep2Valid) {
       // setErrorMessage("All fields are required for Step 2.");
       // return;
+      nextStepOne();
       if (!vehicles[currentVehicleIndex]?.vehicleYear) {
         setErrorMessage("Vehicle year is required.");
         return;
@@ -326,6 +363,8 @@ const QouetForm: React.FC = () => {
               setVehicles={setVehicles}
               currentVehicleIndex={currentVehicleIndex}
               setCurrentVehicleIndex={setCurrentVehicleIndex}
+              errors={errors}
+              setErrors={setErrors}
               // isStep2Valid={isStep2Valid}
               // nextStep={nextStep}
               // prevStep={prevStep}
