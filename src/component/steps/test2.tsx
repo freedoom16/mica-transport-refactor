@@ -255,9 +255,27 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   };
 
   // For category selection
-  const handleCategoryChange = (newCategory: string) => {
-    setCategoryInput(newCategory); // Update the local state for category
-    updateVehicleField("category", newCategory); // Update the field in the vehicle at the current index
+  // const handleCategoryChange = (newCategory: string) => {
+  //   setCategoryInput(newCategory); // Update the local state for category
+  //   updateVehicleField("category", newCategory); // Update the field in the vehicle at the current index
+  // };
+
+  const options = [
+    { value: "Van", img: "car/van.svg" },
+    { value: "SUV", img: "car/suv.svg" },
+    { value: "Sedan", img: "car/sedan.svg" },
+    { value: "Truck", img: "car/truck.svg" },
+  ];
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setCategoryInput(value);
+    setIsOpen(false); // Close the dropdown after selection
   };
 
   return (
@@ -442,21 +460,36 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           )}
         </div>
 
-        <div className="mb-5">
+        <div className="relative mb-4">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Type
           </label>
-          <select
-            value={categoryInput}
-            onChange={(e) => handleCategoryChange(e.target.value)}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+
+          <div
+            onClick={toggleDropdown}
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1] cursor-pointer"
           >
-            {categories.map((category, idx) => (
-              <option key={idx} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
+            {categoryInput ? categoryInput : "Select Vehicle Type"}
+          </div>
+
+          {isOpen && (
+            <div className="absolute top-full text-gray-900 left-0 w-full bg-white border border-[#938f99] rounded-xl shadow-lg z-10 mt-2">
+              {options.map((option, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => handleCategoryChange(option.value)}
+                  className="flex items-center p-3 hover:bg-[#6DB8D1] cursor-pointer"
+                >
+                  <img
+                    src={option.img}
+                    alt={option.value}
+                    className="mr-2 w-5 h-5"
+                  />
+                  {option.value}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className="relative z-0 w-full mb-2 group flex flex-row">
