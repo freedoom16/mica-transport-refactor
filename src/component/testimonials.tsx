@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -58,6 +58,7 @@ const Testimonials = () => {
         "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
     },
   ];
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -72,6 +73,12 @@ const Testimonials = () => {
     );
   };
 
+  // Auto-slide every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="reviews" className="py-20 px-6 bg-[#ECECEC]">
       <div className="container mx-auto">
@@ -80,9 +87,9 @@ const Testimonials = () => {
         </p>
 
         <div className="relative">
-          <div className="flex overflow-hidden">
+          <div className="overflow-hidden px-2">
             <div
-              className="flex transition-transform duration-500 ease-in-out"
+              className="flex transition-all duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {testimonials.map((testimonial) => (
@@ -118,13 +125,13 @@ const Testimonials = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
+            className="absolute left-0 top-1/2 font-bold  transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
           >
             &#8249;
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2 text-black bg-white p-4 shadow-xl rounded-full"
+            className="absolute right-0 font-bold top-1/2 transform -translate-y-1/2 translate-x-1/2 text-black bg-white p-4 shadow-xl rounded-full"
           >
             &#8250;
           </button>
