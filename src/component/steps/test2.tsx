@@ -16,6 +16,8 @@ interface StepTwoProps {
   setVehicles: React.Dispatch<React.SetStateAction<Vehicle[]>>;
   currentVehicleIndex: number;
   setCurrentVehicleIndex: React.Dispatch<React.SetStateAction<number>>;
+  errors: any;
+  setErrors: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const StepTwoComponentTest: React.FC<StepTwoProps> = ({
@@ -23,6 +25,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   vehicles,
   currentVehicleIndex,
   setCurrentVehicleIndex,
+  errors,
+  setErrors,
 }) => {
   //   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [makes, setMakes] = useState<string[]>([]);
@@ -100,12 +104,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     validateField(field, value);
   };
 
-  const [errors, setErrors] = useState({
-    vehicleMaker: "",
-    vehicleModel: "",
-    vehicleYear: "",
-    isDrivable: "",
-  });
+  // const [errors, setErrors] = useState({
+  //   vehicleMaker: "",
+  //   vehicleModel: "",
+  //   vehicleYear: "",
+  //   isDrivable: "",
+  // });
 
   const validateField = (field: string, value: any) => {
     const newErrors = { ...errors };
