@@ -97,7 +97,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
     // Save the updated vehicles array back to the state
     setVehicles(updatedVehicles);
-    validateFields();
+    validateField(field, value);
   };
 
   const [errors, setErrors] = useState({
@@ -107,29 +107,48 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     isDrivable: "",
   });
 
-  const validateFields = () => {
-    const newErrors = {
-      vehicleMaker: makerInput ? "" : "Vehicle maker is required",
-      vehicleModel: modelInput ? "" : "Vehicle model is required",
-      vehicleYear: yearInput ? "" : "Vehicle year is required",
-      isDrivable: isDrivable !== null ? "" : "Drivable status is required",
-    };
+  const validateField = (field: string, value: any) => {
+    const newErrors = { ...errors };
+
+    switch (field) {
+      case "vehicleMaker":
+        newErrors.vehicleMaker = value ? "" : "Vehicle maker is required";
+        break;
+      case "vehicleModel":
+        newErrors.vehicleModel = value ? "" : "Vehicle model is required";
+        break;
+      case "vehicleYear":
+        newErrors.vehicleYear =
+          value && /^\d{4}$/.test(value) ? "" : "Enter a valid year";
+        break;
+      case "isDrivable":
+        newErrors.isDrivable =
+          value !== null ? "" : "Drivable status is required";
+        break;
+      default:
+        break;
+    }
 
     setErrors(newErrors);
-    return Object.values(newErrors).every((error) => !error);
   };
 
   console.log(errors);
 
   const handleAddVehicle = () => {
-    // if (!makerInput || !modelInput || !yearInput || isDrivable === null) {
-    //   setMessage("Please fill all fields before adding a vehicle.");
-    //   return;
-    // }
+    if (!makerInput || !modelInput || !yearInput || isDrivable === null) {
+      const newErrors = {
+        vehicleMaker: makerInput ? "" : "Vehicle maker is required",
+        vehicleModel: modelInput ? "" : "Vehicle model is required",
+        vehicleYear: yearInput ? "" : "Vehicle year is required",
+        isDrivable: isDrivable !== null ? "" : "Drivable status is required",
+      };
 
-    if (!validateFields()) {
+      setErrors(newErrors);
       return;
     }
+
+    // return Object.values(newErrors).every((error) => !error);
+
     const updatedVehicles = [...vehicles];
 
     // Update the vehicle at the current index or add a new one
@@ -148,8 +167,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setMakerInput("");
     setModelInput("");
     setYearInput("");
-    setCategoryInput("Open");
-    setType("");
+    setType("Open");
     setCategoryInput("Van");
     setIsDrivable(null);
     setFilteredMakers([]);
