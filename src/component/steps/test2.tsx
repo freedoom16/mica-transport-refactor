@@ -1,4 +1,11 @@
 "use client";
+import {
+  faDeleteLeft,
+  faRecycle,
+  faRemove,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 
 interface Vehicle {
@@ -303,16 +310,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
       {vehicles.length > 0 && (
         <div className="mb-2">
-          {currentVehicleIndex > 0 && (
-            <h2 className="text-lg font-bold text-gray-900 mb-4">
-              Saved Vehicle Info
-            </h2>
-          )}
-
           {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
-              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 w-full">
-                <div className="flex flex-col">
+              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg  rounded-full w-full">
+                <div className="flex flex-col pl-2">
                   <strong>Make</strong> {vehicle?.vehicleMaker}
                 </div>
                 <div className="flex flex-col">
@@ -321,12 +322,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 <div className="flex flex-col">
                   <strong>Year</strong> {vehicle?.vehicleYear}
                 </div>
-                <div className="flex ">
+                <div className="flex w-8">
                   <button
                     className="text-red-500 "
                     onClick={() => handleRemoveVehicle(index)}
                   >
-                    Remove
+                    <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>
               </div>
