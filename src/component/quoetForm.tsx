@@ -44,6 +44,18 @@ const QouetForm: React.FC = () => {
     category: "",
   });
 
+  const [errorsDateValidation, setErrorsDateValidation] = useState<{
+    pickUpDate: string | null;
+    pickUpTime: string | null;
+    deliveryDate: string | null;
+    deliveryTime: string | null;
+  }>({
+    pickUpDate: null,
+    pickUpTime: null,
+    deliveryDate: null,
+    deliveryTime: null,
+  });
+
   const nextStepOne = () => {
     const newErrors: any = {};
     console.log(vehicles[currentVehicleIndex]?.isDrivable);
@@ -79,6 +91,46 @@ const QouetForm: React.FC = () => {
       category: "",
     }); // Reset errors
     if (step < 2) setStep(step + 1); // Proceed to next step (adjust total steps as necessary)
+  };
+
+  const validatePickupAndDelivery = () => {
+    const newErrors: any = {};
+
+    // Pickup location check
+    if (!(pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd)) {
+      newErrors.pickUpDate = "Pickup date is required.";
+    }
+
+    // Delivery location check
+    if (!(deliveryDate || deliveryDateRangeStart || deliveryDateRangeEnd)) {
+      newErrors.deliveryDate = "Delivery date is required.";
+    }
+
+    // Pickup time check
+    if (!(pickUpTime || pickUpTimeRangeStart || pickUpTimeRangeEnd)) {
+      newErrors.pickUpTime = "Pickup Time is required.";
+    }
+
+    // Delivery time check
+    if (!(deliveryTime || deliveryTimeRangeStart || deliveryTimeRangeEnd)) {
+      newErrors.deliveryTime = "Delivery Time is required.";
+    }
+
+    // If there are validation errors, set them and return early
+    if (Object.keys(newErrors).length > 0) {
+      setErrorsDateValidation(newErrors);
+      return; // Stop further execution if validation fails
+    }
+
+    // If validation passes, reset errors and proceed (if needed)
+    setErrorsDateValidation({
+      pickUpDate: "",
+      deliveryDate: "",
+      pickUpTime: "",
+      deliveryTime: "",
+    });
+    // if (step < 3) setStep(step + 1);
+    // Optional: You can continue with next steps or additional logic here
   };
 
   const nextStep = () => {
@@ -150,6 +202,7 @@ const QouetForm: React.FC = () => {
     if (step === 2 && !isStep4Valid) {
       // setErrorMessage("All fields are required for Step 4.");
       // return;
+      validatePickupAndDelivery();
       if (!(pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd)) {
         setErrorMessage("Pickup location is required.");
         return;
@@ -273,7 +326,6 @@ const QouetForm: React.FC = () => {
       vehicles[currentVehicleIndex]?.category
     );
 
-  console.log("vvvvvvvvvvvvv ", vehicles);
   const isStep3Valid = !!(firstName && lastName && email && phone);
 
   const isStep4Valid = !!(
@@ -436,6 +488,8 @@ const QouetForm: React.FC = () => {
                 setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
                 deliveryTimeRangeEnd={deliveryTimeRangeEnd}
                 setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
+                setErrorsDateValidation={setErrorsDateValidation}
+                errorsDateValidation={errorsDateValidation}
               />
             )
             // </div>
