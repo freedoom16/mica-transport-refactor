@@ -1,149 +1,56 @@
+// pages/index.tsx
 "use client";
-import React, { useEffect, useState } from "react";
-import CarsPageTest from "./test";
+import React, { useState } from "react";
+import StepOne from "./test";
 
-interface Car {
-  Year: number;
-  Make: string;
-  Model: string;
-  Category: string;
-}
+const Main = () => {
+  const [pickupDate, setPickupDate] = useState<Date | null>(null);
+  const [deliveryDate, setDeliveryDate] = useState<Date | null>(null);
+  const [errors, setErrors] = useState<{
+    pickupDate?: string;
+    deliveryDate?: string;
+  }>({});
 
-const CarsPage: React.FC = () => {
-  const [makes, setMakes] = useState<string[]>([]);
-  const [carsByMake, setCarsByMake] = useState<Record<string, Car[]>>({});
-  const [makerInput, setMakerInput] = useState<string>("");
-  const [filteredMakers, setFilteredMakers] = useState<string[]>([]);
-  const [selectedMaker, setSelectedMaker] = useState<string | null>(null);
-  const [modelInput, setModelInput] = useState<string>("");
-  const [filteredModels, setFilteredModels] = useState<Car[]>([]);
+  const handleNextClick = () => {
+    const validationErrors: { pickupDate?: string; deliveryDate?: string } = {};
 
-  useEffect(() => {
-    // Fetch data from the API
-    fetch("/api/cars")
-      .then((res) => res.json())
-      .then((data) => {
-        setMakes(data.makes);
-        setCarsByMake(data.carsByMake);
-      });
-  }, []);
-
-  useEffect(() => {
-    // Filter makers based on input
-    if (makerInput) {
-      setFilteredMakers(
-        makes
-          .filter((make) =>
-            make.toLowerCase().startsWith(makerInput.toLowerCase())
-          )
-          .slice(0, 5)
-      );
-    } else {
-      setFilteredMakers([]);
+    if (!pickupDate) {
+      validationErrors.pickupDate = "Pickup date is required.";
     }
-  }, [makerInput, makes]);
 
-  useEffect(() => {
-    // Filter models based on selected maker and input
-    if (selectedMaker && modelInput) {
-      const carsForMaker = carsByMake[selectedMaker] || [];
-      const uniqueModels = carsForMaker
-        .filter((car) =>
-          car.Model.toLowerCase().startsWith(modelInput.toLowerCase())
-        )
-        .reduce<Car[]>((unique, car) => {
-          if (!unique.some((c) => c.Model === car.Model)) {
-            unique.push(car);
-          }
-          return unique;
-        }, [])
-        .slice(0, 5);
-      setFilteredModels(uniqueModels);
-    } else {
-      setFilteredModels([]);
+    if (!deliveryDate) {
+      validationErrors.deliveryDate = "Delivery date is required.";
+    } else if (pickupDate && deliveryDate < pickupDate) {
+      validationErrors.deliveryDate =
+        "Delivery date cannot be earlier than pickup date.";
     }
-  }, [modelInput, selectedMaker, carsByMake]);
 
-  const handleMakerSelect = (make: string) => {
-    setMakerInput(make);
-    setSelectedMaker(make);
-    setFilteredMakers([]);
-    setModelInput(""); // Reset model input
-    setFilteredModels([]);
-  };
+    setErrors(validationErrors);
 
-  const handleModelSelect = (model: string) => {
-    setModelInput(model);
-    setFilteredModels([]); // Clear model suggestions
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("Proceed to the next step");
+    }
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Car Makes and Models</h1>
-
-      {/* Maker Input */}
-      <div className="mb-6">
-        <label htmlFor="maker" className="block text-sm font-medium mb-2">
-          Maker:
-        </label>
-        <input
-          type="text"
-          id="maker"
-          className="w-full p-2 border rounded-md"
-          placeholder="Type to search car makers..."
-          value={makerInput}
-          onChange={(e) => setMakerInput(e.target.value)}
-        />
-        {filteredMakers.length > 0 && (
-          <ul className="border mt-2 rounded-md shadow-lg bg-gray-900 max-h-40 overflow-auto">
-            {filteredMakers.map((make, index) => (
-              <li
-                key={index}
-                className="p-2 hover:bg-gray-200 cursor-pointer"
-                onClick={() => handleMakerSelect(make)}
-              >
-                {make}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-
-      {/* Model Input */}
-      <div className="mb-6">
-        <label htmlFor="model" className="block text-sm font-medium mb-2">
-          Model:
-        </label>
-        <input
-          type="text"
-          id="model"
-          className="w-full p-2 border rounded-md"
-          placeholder={
-            selectedMaker
-              ? "Type to search car models..."
-              : "Select a maker first"
-          }
-          value={modelInput}
-          onChange={(e) => setModelInput(e.target.value)}
-          disabled={!selectedMaker}
-        />
-        {filteredModels.length > 0 && (
-          <ul className="border mt-2 rounded-md shadow-lg bg-gray-900 max-h-40 overflow-auto">
-            {filteredModels.map((model, index) => (
-              <li
-                key={index}
-                className="p-2 hover:bg-gray-200 cursor-pointer"
-                onClick={() => handleModelSelect(model.Model)}
-              >
-                {model.Model}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      {/* <CarsPageTest /> */}
+    <div className="max-w-xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Step One</h1>
+      <StepOne
+        pickupDate={pickupDate}
+        setPickupDate={setPickupDate}
+        deliveryDate={deliveryDate}
+        setDeliveryDate={setDeliveryDate}
+        errors={errors}
+        setErrors={setErrors}
+      />
+      <button
+        onClick={handleNextClick}
+        className="mt-4 w-full rounded-md bg-indigo-600 text-white py-2 px-4 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+      >
+        Next
+      </button>
     </div>
   );
 };
 
-export default CarsPage;
+export default Main;

@@ -50,10 +50,10 @@ const QouetForm: React.FC = () => {
     deliveryDate: string | null;
     deliveryTime: string | null;
   }>({
-    pickUpDate: null,
-    pickUpTime: null,
-    deliveryDate: null,
-    deliveryTime: null,
+    pickUpDate: "",
+    pickUpTime: "",
+    deliveryDate: "",
+    deliveryTime: "",
   });
 
   const nextStepOne = () => {
