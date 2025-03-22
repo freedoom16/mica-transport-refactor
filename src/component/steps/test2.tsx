@@ -37,10 +37,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [filteredMakers, setFilteredMakers] = useState<string[]>([]);
   const [filteredModels, setFilteredModels] = useState<any[]>([]);
   const [selectedMaker, setSelectedMaker] = useState<string>("");
-  const [categoryInput, setCategoryInput] = useState<string>("Open");
+  const [categoryInput, setCategoryInput] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
-  const [type, setType] = useState<string>("Open"); // Default to "Open"
+  const [type, setType] = useState<string>(""); // Default to "Open"
   const [isDrivable, setIsDrivable] = useState<boolean | null>(null);
   // const [categoryInput, setCategoryInput] = useState<string>(categories[0]); // Default to the first category
 
@@ -129,6 +129,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         newErrors.isDrivable =
           value !== null ? "" : "Drivable status is required";
         break;
+      case "category":
+        newErrors.category = value ? "" : "Category  is required";
+        break;
+      case "type":
+        newErrors.type = value ? "" : "This field  is required";
+        break;
       default:
         break;
     }
@@ -139,12 +145,22 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   console.log(errors);
 
   const handleAddVehicle = () => {
-    if (!makerInput || !modelInput || !yearInput || isDrivable === null) {
+    console.log("type ", type);
+    if (
+      !makerInput ||
+      !modelInput ||
+      !yearInput ||
+      isDrivable === null ||
+      !type ||
+      !categoryInput
+    ) {
       const newErrors = {
         vehicleMaker: makerInput ? "" : "Vehicle maker is required",
         vehicleModel: modelInput ? "" : "Vehicle model is required",
         vehicleYear: yearInput ? "" : "Vehicle year is required",
         isDrivable: isDrivable !== null ? "" : "Drivable status is required",
+        type: type ? "" : "This field is required",
+        category: categoryInput ? "" : "Vehicle catagory is required",
       };
 
       setErrors(newErrors);
@@ -171,8 +187,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setMakerInput("");
     setModelInput("");
     setYearInput("");
-    setType("Open");
-    setCategoryInput("Van");
+    setType("");
+    setCategoryInput("");
     setIsDrivable(null);
     setFilteredMakers([]);
     setFilteredModels([]);
@@ -276,6 +292,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const handleCategoryChange = (value: string) => {
     setCategoryInput(value);
     setIsOpen(false); // Close the dropdown after selection
+    updateVehicleField("category", value); // Update the field in the vehicle at the current index
   };
 
   return (
@@ -286,15 +303,17 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
       {vehicles.length > 0 && (
         <div className="mb-2">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
-            Saved Vehicle Info
-          </h2>
+          {currentVehicleIndex > 0 && (
+            <h2 className="text-lg font-bold text-gray-900 mb-4">
+              Saved Vehicle Info
+            </h2>
+          )}
 
           {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
               <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 w-full">
                 <div className="flex flex-col">
-                  <strong>Maker</strong> {vehicle?.vehicleMaker}
+                  <strong>Make</strong> {vehicle?.vehicleMaker}
                 </div>
                 <div className="flex flex-col">
                   <strong>Model</strong> {vehicle?.vehicleModel}
@@ -355,6 +374,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <p>Enclosed</p>
           </div>
         </div>
+        {errors.type && (
+          <p className="text-sm text-red-500 mt-1 px-4 mb-3">{errors.type}</p>
+        )}
 
         {/* Vehicle Year */}
         <div className="relative z-3 w-full mb-5 group">
@@ -391,7 +413,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         <div className="relative  mb-5  top-0">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
-            Vehicle Maker
+            Vehicle Make
           </label>
 
           <input
@@ -462,14 +484,14 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
         <div className="relative mb-4">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-            Vehicle Type
+            Vehicle Catagory
           </label>
 
           <div
             onClick={toggleDropdown}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1] cursor-pointer"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 mt-1 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1] cursor-pointer"
           >
-            {categoryInput ? categoryInput : "Select Vehicle Type"}
+            {categoryInput ? categoryInput : "--- Select Vehicle Type ---"}
           </div>
 
           {isOpen && (
@@ -489,6 +511,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 </div>
               ))}
             </div>
+          )}
+          {errors.category && (
+            <p className="text-sm text-red-500 mt-1 px-4">{errors.category}</p>
           )}
         </div>
 

@@ -163,7 +163,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
 
       <div className="relative z-0 w-full mb-5 group flex flex-row">
         <label className="block text-sm font-medium text-gray-900 mr-2">
-          Are you dealer? <span className="text-red-500">*</span>
+          Are you a dealer or business? <span className="text-red-500">*</span>
         </label>
         <div className="flex items-center justify-center space-x-6">
           <label className="flex items-center space-x-2">

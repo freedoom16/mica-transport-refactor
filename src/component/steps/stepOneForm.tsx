@@ -149,7 +149,7 @@ const StepOne: React.FC<StepOneProps> = ({
             value={pickupLocation}
             onChange={handlePickupChange}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
-            placeholder="Pickup Location"
+            placeholder="Address or zipcode"
             required
           />
           {pickupSuggestions.length > 0 && (
@@ -212,7 +212,7 @@ const StepOne: React.FC<StepOneProps> = ({
             value={deliveryLocation}
             onChange={handleDeliveryChange}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
-            placeholder="Delivery Location"
+            placeholder="Address or zipcode"
             required
           />
 

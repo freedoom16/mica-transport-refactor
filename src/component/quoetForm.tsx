@@ -40,11 +40,13 @@ const QouetForm: React.FC = () => {
     vehicleModel: "",
     vehicleYear: "",
     isDrivable: "",
+    type: "",
+    category: "",
   });
 
   const nextStepOne = () => {
     const newErrors: any = {};
-
+    console.log(vehicles[currentVehicleIndex]?.isDrivable);
     if (!vehicles[currentVehicleIndex]?.vehicleMaker) {
       newErrors.vehicleMaker = "Vehicle maker is required.";
     }
@@ -54,10 +56,15 @@ const QouetForm: React.FC = () => {
     if (!vehicles[currentVehicleIndex]?.vehicleYear) {
       newErrors.vehicleYear = "Vehicle year is required.";
     }
-    if (vehicles[currentVehicleIndex]?.isDrivable === null) {
+    if (!vehicles[currentVehicleIndex]?.isDrivable !== null) {
       newErrors.isDrivable = "Drivable status is required.";
     }
-
+    if (!vehicles[currentVehicleIndex]?.type) {
+      newErrors.type = "This field is required.";
+    }
+    if (!vehicles[currentVehicleIndex]?.category) {
+      newErrors.category = "Vehicle Catagory is required.";
+    }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return; // Stop further execution
@@ -68,6 +75,8 @@ const QouetForm: React.FC = () => {
       vehicleModel: "",
       vehicleYear: "",
       isDrivable: "",
+      type: "",
+      category: "",
     }); // Reset errors
     if (step < 2) setStep(step + 1); // Proceed to next step (adjust total steps as necessary)
   };
@@ -109,12 +118,12 @@ const QouetForm: React.FC = () => {
         setErrorMessage("Vehicle maker is required.");
         return;
       }
-      if (!vehicles[currentVehicleIndex]?.vehicleModel) {
-        setErrorMessage("Vehicle model is required.");
+      if (!vehicles[currentVehicleIndex]?.type) {
+        setErrorMessage("This field is required.");
         return;
       }
-      if (vehicles[currentVehicleIndex]?.isDrivable === null) {
-        setErrorMessage("isDrivable field is required.");
+      if (vehicles[currentVehicleIndex]?.category) {
+        setErrorMessage("Vehicle Catagory is required.");
         return;
       }
     }
@@ -259,7 +268,9 @@ const QouetForm: React.FC = () => {
       vehicles[currentVehicleIndex]?.vehicleMaker &&
       vehicles[currentVehicleIndex]?.vehicleModel &&
       vehicles[currentVehicleIndex]?.vehicleYear &&
-      vehicles[currentVehicleIndex]?.isDrivable != null
+      vehicles[currentVehicleIndex]?.isDrivable != null &&
+      vehicles[currentVehicleIndex]?.type &&
+      vehicles[currentVehicleIndex]?.category
     );
 
   console.log("vvvvvvvvvvvvv ", vehicles);
@@ -388,45 +399,47 @@ const QouetForm: React.FC = () => {
               isError={isError}
             />
           )}
-          {step === 2 && (
-            <StepForDate
-              // Pick Up Date and Time props
-              pickUpDateOption={pickUpDateOption}
-              setPickUpDateOption={setPickUpDateOption}
-              pickUpDate={pickUpDate}
-              setPickUpDate={setPickUpDate}
-              pickUpDateRangeStart={pickUpDateRangeStart}
-              setPickUpDateRangeStart={setPickUpDateRangeStart}
-              pickUpDateRangeEnd={pickUpDateRangeEnd}
-              setPickUpDateRangeEnd={setPickUpDateRangeEnd}
-              pickUpTimeOption={pickUpTimeOption}
-              setPickUpTimeOption={setPickUpTimeOption}
-              pickUpTime={pickUpTime}
-              setPickUpTime={setPickUpTime}
-              pickUpTimeRangeStart={pickUpTimeRangeStart}
-              setPickUpTimeRangeStart={setPickUpTimeRangeStart}
-              pickUpTimeRangeEnd={pickUpTimeRangeEnd}
-              setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
-              // Delivery Date and Time props
-              deliveryDateOption={deliveryDateOption}
-              setDeliveryDateOption={setDeliveryDateOption}
-              deliveryDate={deliveryDate}
-              setDeliveryDate={setDeliveryDate}
-              deliveryDateRangeStart={deliveryDateRangeStart}
-              setDeliveryDateRangeStart={setDeliveryDateRangeStart}
-              deliveryDateRangeEnd={deliveryDateRangeEnd}
-              setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
-              deliveryTimeOption={deliveryTimeOption}
-              setDeliveryTimeOption={setDeliveryTimeOption}
-              deliveryTime={deliveryTime}
-              setDeliveryTime={setDeliveryTime}
-              deliveryTimeRangeStart={deliveryTimeRangeStart}
-              setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
-              deliveryTimeRangeEnd={deliveryTimeRangeEnd}
-              setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
-            />
+          {
+            step === 2 && (
+              <StepForDate
+                // Pick Up Date and Time props
+                pickUpDateOption={pickUpDateOption}
+                setPickUpDateOption={setPickUpDateOption}
+                pickUpDate={pickUpDate}
+                setPickUpDate={setPickUpDate}
+                pickUpDateRangeStart={pickUpDateRangeStart}
+                setPickUpDateRangeStart={setPickUpDateRangeStart}
+                pickUpDateRangeEnd={pickUpDateRangeEnd}
+                setPickUpDateRangeEnd={setPickUpDateRangeEnd}
+                pickUpTimeOption={pickUpTimeOption}
+                setPickUpTimeOption={setPickUpTimeOption}
+                pickUpTime={pickUpTime}
+                setPickUpTime={setPickUpTime}
+                pickUpTimeRangeStart={pickUpTimeRangeStart}
+                setPickUpTimeRangeStart={setPickUpTimeRangeStart}
+                pickUpTimeRangeEnd={pickUpTimeRangeEnd}
+                setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
+                // Delivery Date and Time props
+                deliveryDateOption={deliveryDateOption}
+                setDeliveryDateOption={setDeliveryDateOption}
+                deliveryDate={deliveryDate}
+                setDeliveryDate={setDeliveryDate}
+                deliveryDateRangeStart={deliveryDateRangeStart}
+                setDeliveryDateRangeStart={setDeliveryDateRangeStart}
+                deliveryDateRangeEnd={deliveryDateRangeEnd}
+                setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
+                deliveryTimeOption={deliveryTimeOption}
+                setDeliveryTimeOption={setDeliveryTimeOption}
+                deliveryTime={deliveryTime}
+                setDeliveryTime={setDeliveryTime}
+                deliveryTimeRangeStart={deliveryTimeRangeStart}
+                setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
+                deliveryTimeRangeEnd={deliveryTimeRangeEnd}
+                setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
+              />
+            )
             // </div>
-          )}{" "}
+          }{" "}
           {errorMessage && (
             <p className="text-red-500 text-sm mt-4 text-center">
               {errorMessage}
