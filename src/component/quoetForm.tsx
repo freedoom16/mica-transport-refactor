@@ -56,6 +56,18 @@ const QouetForm: React.FC = () => {
     deliveryTime: "",
   });
 
+  const [errorsContact, setErrorsContact] = useState<{
+    firstName: string | null;
+    lastName: string | null;
+    email: string | null;
+    phone: string | null;
+  }>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
+
   const [errorsLocation, setErrorsLocation] = useState<{
     pickupLocation: string;
     deliveryLocation: string;
@@ -224,6 +236,34 @@ const QouetForm: React.FC = () => {
     // if (step < 3) setStep(step + 1);
   };
 
+  const validateContact = () => {
+    const newErrors: any = {};
+
+    // First Name check
+    if (!firstName) {
+      newErrors.firstName = "First name is required.";
+    }
+
+    // Last Name check
+    if (!lastName) {
+      newErrors.lastName = "Last name is required.";
+    }
+
+    // Phone number check
+    const phoneDigits = phone.replace(/\D/g, ""); // Remove non-digit characters
+    if (!phone) {
+      newErrors.phone = "Phone number is required.";
+    } else if (phoneDigits.length !== 10) {
+      newErrors.phone = "Phone number must be 10 digits.";
+    } else if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(phone)) {
+      newErrors.phone =
+        "Phone number format is incorrect. Please use (xxx) xxx-xxxx.";
+    }
+
+    setErrorsContact(newErrors); // Update errors state
+    return newErrors; // Return errors object to be used for form submission validation if needed
+  };
+
   const nextStep = () => {
     console.log("nextStep cleicked", isStep2Valid);
     setErrorMessage(""); // Reset the error message
@@ -280,6 +320,8 @@ const QouetForm: React.FC = () => {
     }
 
     if (step === 4 && !isStep3Valid) {
+      validateContact();
+
       if (!firstName) {
         setErrorMessage("First name is required.");
         return;
@@ -288,10 +330,7 @@ const QouetForm: React.FC = () => {
         setErrorMessage("Last name is required.");
         return;
       }
-      if (!email) {
-        setErrorMessage("Email is required.");
-        return;
-      }
+
       if (!phone) {
         setErrorMessage("Phone number is required.");
         return;
@@ -429,7 +468,7 @@ const QouetForm: React.FC = () => {
       vehicles[currentVehicleIndex]?.category
     );
 
-  const isStep3Valid = !!(firstName && lastName && email && phone);
+  const isStep3Valid = !!(firstName && lastName && phone);
 
   const isStep4Valid = !!(
     (pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd) &&
@@ -444,7 +483,14 @@ const QouetForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isStep3Valid) {
+      validateContact();
 
+      if (!firstName || !lastName || !phone) {
+        setErrorMessage("First name is required.");
+        return;
+      }
+    }
     const quoteData = {
       pickup: pickupLocation,
       delivery: deliveryLocation,
@@ -554,6 +600,8 @@ const QouetForm: React.FC = () => {
               isLoading={isLoading}
               isSuccess={isSuccess}
               isError={isError}
+              setErrorsContact={setErrorsContact}
+              errorsContact={errorsContact}
             />
           )}
           {
@@ -599,11 +647,11 @@ const QouetForm: React.FC = () => {
             )
             // </div>
           }{" "}
-          {errorMessage && (
+          {/* {errorMessage && (
             <p className="text-red-500 text-sm mt-4 text-center">
               {errorMessage}
             </p>
-          )}
+          )} */}
           <StepNavigation
             currentStep={step}
             totalSteps={totalSteps}
