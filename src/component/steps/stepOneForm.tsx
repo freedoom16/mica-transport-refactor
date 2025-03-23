@@ -12,18 +12,20 @@ interface StepOneProps {
   setAddressTypeForDeliver: (value: string) => void;
   isDerivable: boolean | null;
   setIsDerivable: (value: boolean | null) => void;
-  isPickupContact: string;
-  setIsPickupContact: (value: string) => void;
+  isPickupContact: boolean | null;
+  setIsPickupContact: (value: boolean | null) => void;
   pickupContactName: string;
   setPickupContactName: (value: string) => void;
   pickupContactPhone: string;
   setPickupContactPhone: (value: string) => void;
-  isDropoffContact: string;
-  setIsDropoffContact: (value: string) => void;
+  isDropoffContact: boolean | null;
+  setIsDropoffContact: (value: boolean | null) => void;
   dropoffContactName: string;
   setDropoffContactName: (value: string) => void;
   dropoffContactPhone: string;
   setDropoffContactPhone: (value: string) => void;
+  setErrorsLocation: React.Dispatch<React.SetStateAction<any>>;
+  errorsLocation: any;
 }
 
 const StepOne: React.FC<StepOneProps> = ({
@@ -49,6 +51,8 @@ const StepOne: React.FC<StepOneProps> = ({
   setDropoffContactName,
   dropoffContactPhone,
   setDropoffContactPhone,
+  setErrorsLocation,
+  errorsLocation,
 }) => {
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
   const [deliverySuggestions, setDeliverySuggestions] = useState<string[]>([]);
@@ -82,34 +86,62 @@ const StepOne: React.FC<StepOneProps> = ({
   // const API_KEY = "AIzaSyBTklQmwDrHzunpPxUs1xoyNMG-tPpY_XI"; // Replace with your actual API key
   // const API_URL = "https://maps.googleapis.com/maps/api/geocode/json";
 
-  // const fetchSuggestions = async (query: string, setSuggestions: Function) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await fetch(
-  //       `${API_URL}?address=${encodeURIComponent(query)}&key=${API_KEY}`
-  //     );
-  //     const data = await response.json();
+  const validateField = (field: string, value: any) => {
+    const newErrors = { ...errorsLocation };
 
-  //     // Filter results to only include those in the USA
-  //     const usaResults = data.results.filter((result: any) =>
-  //       result.address_components.some(
-  //         (component: any) => component.short_name === "US"
-  //       )
-  //     );
+    switch (field) {
+      case "pickupLocation":
+        newErrors.pickupLocation = value ? "" : "Pickup location is required";
+        break;
+      case "deliveryLocation":
+        newErrors.deliveryLocation = value
+          ? ""
+          : "Delivery location is required";
+        break;
+      case "addressTypeForPickup":
+        newErrors.addressTypeForPickup = value
+          ? ""
+          : "Pickup address type is required";
+        break;
+      case "addressTypeForDeliver":
+        newErrors.addressTypeForDeliver = value
+          ? ""
+          : "Delivery address type is required";
+        break;
+      case "pickupContactName":
+        newErrors.pickupContactName = value
+          ? ""
+          : "Pickup contact name is required";
+        break;
+      case "pickupContactPhone":
+        newErrors.pickupContactPhone =
+          value && /^\d{10}$/.test(value)
+            ? ""
+            : "Enter a valid 10-digit phone number for pickup contact";
+        break;
+      case "dropoffContactName":
+        newErrors.dropoffContactName = value
+          ? ""
+          : "Dropoff contact name is required";
+        break;
+      case "dropoffContactPhone":
+        newErrors.dropoffContactPhone =
+          value && /^\d{10}$/.test(value)
+            ? ""
+            : "Enter a valid 10-digit phone number for dropoff contact";
+        break;
+      default:
+        break;
+    }
 
-  //     console.log(data);
-  //     // Set the suggestions
-  //     setSuggestions(usaResults.map((result: any) => result.formatted_address));
-  //   } catch (error) {
-  //     console.error("Error fetching suggestions:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+    setErrorsLocation(newErrors);
+  };
 
   const handlePickupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPickupLocation(value);
+    validateField("pickupLocation", value);
+
     if (value.length > 2) {
       fetchSuggestions(value, setPickupSuggestions);
     } else {
@@ -120,12 +152,40 @@ const StepOne: React.FC<StepOneProps> = ({
   const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setDeliveryLocation(value);
+    validateField("deliveryLocation", value);
+
     if (value.length > 2) {
       fetchSuggestions(value, setDeliverySuggestions);
     } else {
       setDeliverySuggestions([]);
     }
   };
+
+  const handleInputChange = (name: any, value: any) => {
+    // Dynamically call the corresponding setter based on the field name
+    switch (name) {
+      case "pickupContactName":
+        setPickupContactName(value);
+        break;
+      case "pickupContactPhone":
+        setPickupContactPhone(value);
+        break;
+      case "dropoffContactName":
+        setDropoffContactName(value);
+        break;
+      case "dropoffContactPhone":
+        setDropoffContactPhone(value);
+        break;
+      default:
+        break;
+    }
+
+    // Optional: If you have validation logic, call it here
+    if (validateField) {
+      validateField(name, value);
+    }
+  };
+
   return (
     <div>
       {/* Render all the inputs and elements related to Step One here */}
@@ -168,6 +228,11 @@ const StepOne: React.FC<StepOneProps> = ({
               ))}
             </div>
           )}
+          {errorsLocation.pickupLocation && (
+            <p className="text-sm text-red-500 ml-1 px-4 ">
+              {errorsLocation.pickupLocation}
+            </p>
+          )}
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
@@ -181,7 +246,10 @@ const StepOne: React.FC<StepOneProps> = ({
             name="address_type"
             id="address_type"
             value={addressTypeForPickup}
-            onChange={(e) => setAddressTypeForPickup(e.target.value)}
+            onChange={(e) => {
+              setAddressTypeForPickup(e.target.value);
+              validateField("addressTypeForPickup", e.target.value);
+            }}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
             required
           >
@@ -196,6 +264,11 @@ const StepOne: React.FC<StepOneProps> = ({
               Auction Yard
             </option>
           </select>
+          {errorsLocation.addressTypeForPickup && (
+            <p className="text-sm text-red-500 ml-1 px-4 ">
+              {errorsLocation.addressTypeForPickup}
+            </p>
+          )}
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
@@ -232,6 +305,11 @@ const StepOne: React.FC<StepOneProps> = ({
               ))}
             </div>
           )}
+          {errorsLocation.deliveryLocation && (
+            <p className="text-sm text-red-500 ml-1 px-4 ">
+              {errorsLocation.deliveryLocation}
+            </p>
+          )}
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
@@ -245,7 +323,10 @@ const StepOne: React.FC<StepOneProps> = ({
             name="address_type"
             id="address_type"
             value={addressTypeForDeliver}
-            onChange={(e) => setAddressTypeForDeliver(e.target.value)}
+            onChange={(e) => {
+              setAddressTypeForDeliver(e.target.value);
+              validateField("addressTypeForDeliver", e.target.value);
+            }}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
             required
           >
@@ -260,6 +341,11 @@ const StepOne: React.FC<StepOneProps> = ({
               Auction Yard
             </option>
           </select>
+          {errorsLocation.addressTypeForDeliver && (
+            <p className="text-sm text-red-500 ml-1 px-4 ">
+              {errorsLocation.addressTypeForDeliver}
+            </p>
+          )}
         </div>
 
         <div className="space-y-4">
@@ -274,8 +360,8 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="pickup_contact"
                   value="true"
-                  onChange={(e) => setIsPickupContact(e.target.value)}
-                  checked={isPickupContact === "true"}
+                  onChange={(e) => setIsPickupContact(true)}
+                  checked={isPickupContact === true}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
                 />
                 <span className="text-sm text-gray-900">Yes</span>
@@ -285,8 +371,8 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="pickup_contact"
                   value="false"
-                  onChange={(e) => setIsPickupContact(e.target.value)}
-                  checked={isPickupContact === "false"}
+                  onChange={(e) => setIsPickupContact(false)}
+                  checked={isPickupContact === false}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
                 <span className="text-sm text-gray-900">No</span>
@@ -294,7 +380,7 @@ const StepOne: React.FC<StepOneProps> = ({
             </div>
           </div>
 
-          {isPickupContact === "false" && (
+          {isPickupContact === false && (
             <div>
               <div className="relative z-0 w-full mb-5 group">
                 <label
@@ -309,11 +395,20 @@ const StepOne: React.FC<StepOneProps> = ({
                   name="pickup_contact_name"
                   id="pickup_contact_name"
                   value={pickupContactName}
-                  onChange={(e) => setPickupContactName(e.target.value)}
+                  onChange={(e) => {
+                    !isPickupContact
+                      ? handleInputChange("pickupContactName", e.target.value)
+                      : "";
+                  }}
                   className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                   placeholder="Pickup Contact Name"
                   required
                 />
+                {errorsLocation.pickupContactName && (
+                  <p className="text-sm text-red-500 ml-1 px-4 ">
+                    {errorsLocation.pickupContactName}
+                  </p>
+                )}
               </div>
               <div className="relative z-0 w-full mb-5 group">
                 <label
@@ -327,11 +422,20 @@ const StepOne: React.FC<StepOneProps> = ({
                   name="pickup_contact_phone"
                   id="pickup_contact_phone"
                   value={pickupContactPhone}
-                  onChange={(e) => setPickupContactPhone(e.target.value)}
+                  onChange={(e) => {
+                    !isPickupContact
+                      ? handleInputChange("pickupContactPhone", e.target.value)
+                      : "";
+                  }}
                   className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                   placeholder="Pickup Contact Phone Number"
                   required
                 />
+                {errorsLocation.pickupContactPhone && (
+                  <p className="text-sm text-red-500 ml-1 px-4 ">
+                    {errorsLocation.pickupContactPhone}
+                  </p>
+                )}
               </div>
             </div>
           )}
@@ -347,8 +451,8 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="dropoff_contact"
                   value="true"
-                  onChange={(e) => setIsDropoffContact(e.target.value)}
-                  checked={isDropoffContact === "true"}
+                  onChange={(e) => setIsDropoffContact(true)}
+                  checked={isDropoffContact === true}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
                 <span className="text-sm text-gray-900">Yes</span>
@@ -358,8 +462,8 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="dropoff_contact"
                   value="false"
-                  onChange={(e) => setIsDropoffContact(e.target.value)}
-                  checked={isDropoffContact === "false"}
+                  onChange={(e) => setIsDropoffContact(false)}
+                  checked={isDropoffContact === false}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
                 <span className="text-sm text-gray-900">No</span>
@@ -367,7 +471,7 @@ const StepOne: React.FC<StepOneProps> = ({
             </div>
           </div>
 
-          {isDropoffContact === "false" && (
+          {isDropoffContact === false && (
             <div>
               <div className="relative z-0 w-full mb-5 group">
                 <label
@@ -382,11 +486,20 @@ const StepOne: React.FC<StepOneProps> = ({
                   name="dropoff_contact_name"
                   id="dropoff_contact_name"
                   value={dropoffContactName}
-                  onChange={(e) => setDropoffContactName(e.target.value)}
+                  onChange={(e) => {
+                    !isDropoffContact
+                      ? handleInputChange("dropoffContactName", e.target.value)
+                      : "";
+                  }}
                   className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                   placeholder="Dropoff Contact Name"
                   required
                 />
+                {errorsLocation.dropoffContactName && (
+                  <p className="text-sm text-red-500 ml-1 px-4 ">
+                    {errorsLocation.dropoffContactName}
+                  </p>
+                )}
               </div>
               <div className="relative z-0 w-full mb-5 group">
                 <label
@@ -400,11 +513,20 @@ const StepOne: React.FC<StepOneProps> = ({
                   name="dropoff_contact_phone"
                   id="dropoff_contact_phone"
                   value={dropoffContactPhone}
-                  onChange={(e) => setDropoffContactPhone(e.target.value)}
+                  onChange={(e) => {
+                    !isDropoffContact
+                      ? handleInputChange("dropoffContactPhone", e.target.value)
+                      : "";
+                  }}
                   className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
                   placeholder="Dropoff Contact Phone Number"
                   required
                 />
+                {errorsLocation.dropoffContactPhone && (
+                  <p className="text-sm text-red-500 ml-1 px-4 ">
+                    {errorsLocation.dropoffContactPhone}
+                  </p>
+                )}
               </div>
             </div>
           )}

@@ -56,6 +56,26 @@ const QouetForm: React.FC = () => {
     deliveryTime: "",
   });
 
+  const [errorsLocation, setErrorsLocation] = useState<{
+    pickupLocation: string;
+    deliveryLocation: string;
+    addressTypeForPickup: string;
+    addressTypeForDeliver: string;
+    pickupContactName: string;
+    pickupContactPhone: string;
+    dropoffContactName: string;
+    dropoffContactPhone: string;
+  }>({
+    pickupLocation: "",
+    deliveryLocation: "",
+    addressTypeForPickup: "",
+    addressTypeForDeliver: "",
+    pickupContactName: "",
+    pickupContactPhone: "",
+    dropoffContactName: "",
+    dropoffContactPhone: "",
+  });
+
   const nextStepOne = () => {
     const newErrors: any = {};
     console.log(vehicles[currentVehicleIndex]?.isDrivable);
@@ -133,6 +153,77 @@ const QouetForm: React.FC = () => {
     // Optional: You can continue with next steps or additional logic here
   };
 
+  const validateLocation = () => {
+    const newErrors: any = {};
+
+    // Pickup location check
+    if (!pickupLocation) {
+      newErrors.pickupLocation = "Pickup location is required.";
+    }
+
+    // Delivery location check
+    if (!deliveryLocation) {
+      newErrors.deliveryLocation = "Delivery location is required.";
+    }
+
+    // Address type for Pickup check
+    if (!addressTypeForPickup) {
+      newErrors.addressTypeForPickup = "Pickup address type is required.";
+    }
+
+    // Address type for Delivery check
+    if (!addressTypeForDeliver) {
+      newErrors.addressTypeForDeliver = "Delivery address type is required.";
+    }
+
+    // Pickup contact name and phone check based on isPickupContact
+    console.log("location", !isPickupContact);
+    if (!isPickupContact) {
+      if (!pickupContactName) {
+        newErrors.pickupContactName = "Pickup contact name is required.";
+      }
+
+      if (!pickupContactPhone || !/^\d{10}$/.test(pickupContactPhone)) {
+        newErrors.pickupContactPhone =
+          "Enter a valid 10-digit phone number for pickup contact.";
+      }
+    }
+
+    // Dropoff contact name and phone check based on isDeliveryContact
+    if (!isDropoffContact) {
+      if (!dropoffContactName) {
+        newErrors.dropoffContactName = "Dropoff contact name is required.";
+      }
+
+      if (!dropoffContactPhone || !/^\d{10}$/.test(dropoffContactPhone)) {
+        newErrors.dropoffContactPhone =
+          "Enter a valid 10-digit phone number for dropoff contact.";
+      }
+    }
+
+    console.log(newErrors);
+    // If there are validation errors, set them and return early
+    if (Object.keys(newErrors).length > 0) {
+      setErrorsLocation(newErrors);
+      return; // Stop further execution if validation fails
+    }
+
+    // If validation passes, reset errors and proceed (if needed)
+    setErrorsLocation({
+      pickupLocation: "",
+      deliveryLocation: "",
+      addressTypeForPickup: "",
+      addressTypeForDeliver: "",
+      pickupContactName: "",
+      pickupContactPhone: "",
+      dropoffContactName: "",
+      dropoffContactPhone: "",
+    });
+
+    // Optional: Continue with next steps or additional logic here
+    // if (step < 3) setStep(step + 1);
+  };
+
   const nextStep = () => {
     console.log("nextStep cleicked", isStep2Valid);
     setErrorMessage(""); // Reset the error message
@@ -140,20 +231,25 @@ const QouetForm: React.FC = () => {
     if (step === 3 && !isStep1Valid) {
       // setErrorMessage("All fields are required for Step 1.");
       // return;
-      if (!pickupLocation) {
-        setErrorMessage("Pickup Location is required.");
-        return;
-      }
-      if (!deliveryLocation) {
-        setErrorMessage("Delivery Location is required.");
-        return;
-      }
-      if (!addressTypeForDeliver) {
-        setErrorMessage("Address Type For Deliver is required.");
-        return;
-      }
-      if (!addressTypeForPickup) {
-        setErrorMessage("Address Type For Pickup is required.");
+      validateLocation();
+      console.log(
+        "validate ",
+        !pickupLocation ||
+          !deliveryLocation ||
+          !addressTypeForDeliver ||
+          !addressTypeForPickup ||
+          isPickupContact === false ||
+          isDropoffContact === false
+      );
+      if (
+        !pickupLocation ||
+        !deliveryLocation ||
+        !addressTypeForDeliver ||
+        !addressTypeForPickup
+        // ||
+        // isPickupContact === false ||
+        // isDropoffContact === false
+      ) {
         return;
       }
     }
@@ -243,8 +339,10 @@ const QouetForm: React.FC = () => {
   const [addressTypeForPickup, setAddressTypeForPickup] = useState("");
   const [addressTypeForDeliver, setAddressTypeForDeliver] = useState("");
   const [isDerivable, setIsDrivable] = useState<boolean | null>(null);
-  const [isPickupContact, setIsPickupContact] = useState<string>(""); // "true" or "false"
-  const [isDropoffContact, setIsDropoffContact] = useState<string>(""); // "true" or "false"
+  const [isPickupContact, setIsPickupContact] = useState<boolean | null>(true); // "true" or "false"
+  const [isDropoffContact, setIsDropoffContact] = useState<boolean | null>(
+    true
+  ); // "true" or "false"
 
   const [pickupContactName, setPickupContactName] = useState("");
   const [pickupContactPhone, setPickupContactPhone] = useState("");
@@ -309,10 +407,15 @@ const QouetForm: React.FC = () => {
 
   // Validation logic for each step
   const isStep1Valid = !!(
-    pickupLocation &&
-    deliveryLocation &&
-    addressTypeForDeliver &&
-    addressTypeForPickup
+    (
+      pickupLocation &&
+      deliveryLocation &&
+      addressTypeForDeliver &&
+      addressTypeForPickup
+    )
+    // &&
+    // isPickupContact === false &&
+    // isDropoffContact === false
   );
 
   const isStep2Valid =
@@ -418,6 +521,8 @@ const QouetForm: React.FC = () => {
               setDropoffContactName={setDropoffContactName}
               dropoffContactPhone={dropoffContactPhone}
               setDropoffContactPhone={setDropoffContactPhone}
+              setErrorsLocation={setErrorsLocation}
+              errorsLocation={errorsLocation}
             />
           )}
           {step === 1 && (
