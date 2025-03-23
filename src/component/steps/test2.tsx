@@ -432,7 +432,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 <li
                   key={idx}
                   onClick={() => handleMakerSelect(make)}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-700"
+                  className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1]"
                 >
                   {make}
                 </li>
@@ -469,7 +469,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 <li
                   key={idx}
                   onClick={() => handleModelSelect(model.Model)}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-700"
+                  className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1]"
                 >
                   {model.Model}
                 </li>
