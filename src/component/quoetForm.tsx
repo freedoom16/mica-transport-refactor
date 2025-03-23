@@ -229,26 +229,29 @@ const QouetForm: React.FC = () => {
     setErrorMessage(""); // Reset the error message
 
     if (step === 3 && !isStep1Valid) {
-      // setErrorMessage("All fields are required for Step 1.");
-      // return;
       validateLocation();
-      console.log(
-        "validate ",
-        !pickupLocation ||
-          !deliveryLocation ||
-          !addressTypeForDeliver ||
-          !addressTypeForPickup ||
-          isPickupContact === false ||
-          isDropoffContact === false
-      );
+
       if (
         !pickupLocation ||
         !deliveryLocation ||
         !addressTypeForDeliver ||
         !addressTypeForPickup
-        // ||
-        // isPickupContact === false ||
-        // isDropoffContact === false
+      ) {
+        // Optionally set an error message for better UX
+        return;
+      }
+
+      if (
+        isPickupContact === false &&
+        (!pickupContactName.trim() || !pickupContactPhone.trim())
+      ) {
+        return;
+      }
+
+      // Check if the dropoff contact information is incomplete when not the point of contact
+      if (
+        isDropoffContact === false &&
+        (!dropoffContactName.trim() || !dropoffContactPhone.trim())
       ) {
         return;
       }
@@ -407,15 +410,12 @@ const QouetForm: React.FC = () => {
 
   // Validation logic for each step
   const isStep1Valid = !!(
-    (
-      pickupLocation &&
-      deliveryLocation &&
-      addressTypeForDeliver &&
-      addressTypeForPickup
-    )
-    // &&
-    // isPickupContact === false &&
-    // isDropoffContact === false
+    pickupLocation &&
+    deliveryLocation &&
+    addressTypeForDeliver &&
+    addressTypeForPickup &&
+    (isPickupContact === true || (pickupContactName && pickupContactPhone)) &&
+    (isDropoffContact === true || (dropoffContactName && dropoffContactPhone))
   );
 
   const isStep2Valid =

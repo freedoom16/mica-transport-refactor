@@ -115,7 +115,7 @@ const StepOne: React.FC<StepOneProps> = ({
         break;
       case "pickupContactPhone":
         newErrors.pickupContactPhone =
-          value && /^\d{10}$/.test(value)
+          value && /^\(\d{3}\) \d{3}-\d{4}$/.test(value)
             ? ""
             : "Enter a valid 10-digit phone number for pickup contact";
         break;
@@ -126,7 +126,7 @@ const StepOne: React.FC<StepOneProps> = ({
         break;
       case "dropoffContactPhone":
         newErrors.dropoffContactPhone =
-          value && /^\d{10}$/.test(value)
+          value && /^\(\d{3}\) \d{3}-\d{4}$/.test(value)
             ? ""
             : "Enter a valid 10-digit phone number for dropoff contact";
         break;
@@ -163,6 +163,20 @@ const StepOne: React.FC<StepOneProps> = ({
 
   const handleInputChange = (name: any, value: any) => {
     // Dynamically call the corresponding setter based on the field name
+    // Remove non-digit characters
+    value = value.replace(/\D/g, "");
+
+    // Format phone number as (xxx) xxx-xxxx
+    if (value.length <= 3) {
+      value = `(${value}`;
+    } else if (value.length <= 6) {
+      value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else {
+      value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
+        6,
+        10
+      )}`;
+    }
     switch (name) {
       case "pickupContactName":
         setPickupContactName(value);
@@ -208,7 +222,11 @@ const StepOne: React.FC<StepOneProps> = ({
             id="pickup_location"
             value={pickupLocation}
             onChange={handlePickupChange}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+              errorsLocation.pickupLocation
+                ? "border-red-500"
+                : "border-[#938f99]"
+            } outline-none transition-all focus:border-[#6DB8D1]`}
             placeholder="Address or zipcode"
             required
           />
@@ -221,7 +239,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     setPickupLocation(suggestion);
                     setPickupSuggestions([]);
                   }}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-gray-900"
+                  className="px-4 py-2 cursor-pointer  hover:bg-[#6DB8D1] text-gray-900"
                 >
                   {suggestion}
                 </div>
@@ -250,7 +268,11 @@ const StepOne: React.FC<StepOneProps> = ({
               setAddressTypeForPickup(e.target.value);
               validateField("addressTypeForPickup", e.target.value);
             }}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+              errorsLocation.addressTypeForPickup
+                ? "border-red-500"
+                : "border-[#938f99]"
+            } outline-none transition-all focus:border-[#6DB8D1]`}
             required
           >
             <option value="">Select Address Type</option>
@@ -284,7 +306,11 @@ const StepOne: React.FC<StepOneProps> = ({
             id="delivery_location"
             value={deliveryLocation}
             onChange={handleDeliveryChange}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+              errorsLocation.deliveryLocation
+                ? "border-red-500"
+                : "border-[#938f99]"
+            } outline-none transition-all focus:border-[#6DB8D1]`}
             placeholder="Address or zipcode"
             required
           />
@@ -298,7 +324,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     setDeliveryLocation(suggestion);
                     setDeliverySuggestions([]);
                   }}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-600 text-gray-900"
+                  className="px-4 py-2 cursor-pointer  hover:bg-[#6DB8D1] text-gray-900"
                 >
                   {suggestion}
                 </div>
@@ -327,7 +353,11 @@ const StepOne: React.FC<StepOneProps> = ({
               setAddressTypeForDeliver(e.target.value);
               validateField("addressTypeForDeliver", e.target.value);
             }}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+              errorsLocation.addressTypeForDeliver
+                ? "border-red-500"
+                : "border-[#938f99]"
+            } outline-none transition-all focus:border-[#6DB8D1]`}
             required
           >
             <option value="">Select Address Type</option>
@@ -400,7 +430,11 @@ const StepOne: React.FC<StepOneProps> = ({
                       ? handleInputChange("pickupContactName", e.target.value)
                       : "";
                   }}
-                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    errorsLocation.pickupContactName
+                      ? "border-red-500"
+                      : "border-[#938f99]"
+                  } outline-none transition-all focus:border-[#6DB8D1]`}
                   placeholder="Pickup Contact Name"
                   required
                 />
@@ -427,7 +461,11 @@ const StepOne: React.FC<StepOneProps> = ({
                       ? handleInputChange("pickupContactPhone", e.target.value)
                       : "";
                   }}
-                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    errorsLocation.pickupContactPhone
+                      ? "border-red-500"
+                      : "border-[#938f99]"
+                  } outline-none transition-all focus:border-[#6DB8D1]`}
                   placeholder="Pickup Contact Phone Number"
                   required
                 />
@@ -491,7 +529,11 @@ const StepOne: React.FC<StepOneProps> = ({
                       ? handleInputChange("dropoffContactName", e.target.value)
                       : "";
                   }}
-                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    errorsLocation.dropoffContactName
+                      ? "border-red-500"
+                      : "border-[#938f99]"
+                  } outline-none transition-all focus:border-[#6DB8D1]`}
                   placeholder="Dropoff Contact Name"
                   required
                 />
@@ -518,7 +560,11 @@ const StepOne: React.FC<StepOneProps> = ({
                       ? handleInputChange("dropoffContactPhone", e.target.value)
                       : "";
                   }}
-                  className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                  className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    errorsLocation.dropoffContactPhone
+                      ? "border-red-500"
+                      : "border-[#938f99]"
+                  } outline-none transition-all focus:border-[#6DB8D1]`}
                   placeholder="Dropoff Contact Phone Number"
                   required
                 />
