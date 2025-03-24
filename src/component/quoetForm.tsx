@@ -40,11 +40,57 @@ const QouetForm: React.FC = () => {
     vehicleModel: "",
     vehicleYear: "",
     isDrivable: "",
+    type: "",
+    category: "",
+  });
+
+  const [errorsDateValidation, setErrorsDateValidation] = useState<{
+    pickUpDate: string | null;
+    pickUpTime: string | null;
+    deliveryDate: string | null;
+    deliveryTime: string | null;
+  }>({
+    pickUpDate: "",
+    pickUpTime: "",
+    deliveryDate: "",
+    deliveryTime: "",
+  });
+
+  const [errorsContact, setErrorsContact] = useState<{
+    firstName: string | null;
+    lastName: string | null;
+    email: string | null;
+    phone: string | null;
+  }>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
+
+  const [errorsLocation, setErrorsLocation] = useState<{
+    pickupLocation: string;
+    deliveryLocation: string;
+    addressTypeForPickup: string;
+    addressTypeForDeliver: string;
+    pickupContactName: string;
+    pickupContactPhone: string;
+    dropoffContactName: string;
+    dropoffContactPhone: string;
+  }>({
+    pickupLocation: "",
+    deliveryLocation: "",
+    addressTypeForPickup: "",
+    addressTypeForDeliver: "",
+    pickupContactName: "",
+    pickupContactPhone: "",
+    dropoffContactName: "",
+    dropoffContactPhone: "",
   });
 
   const nextStepOne = () => {
     const newErrors: any = {};
-
+    console.log(vehicles[currentVehicleIndex]?.isDrivable);
     if (!vehicles[currentVehicleIndex]?.vehicleMaker) {
       newErrors.vehicleMaker = "Vehicle maker is required.";
     }
@@ -53,11 +99,29 @@ const QouetForm: React.FC = () => {
     }
     if (!vehicles[currentVehicleIndex]?.vehicleYear) {
       newErrors.vehicleYear = "Vehicle year is required.";
-    }
-    if (vehicles[currentVehicleIndex]?.isDrivable === null) {
-      newErrors.isDrivable = "Drivable status is required.";
+    } else if (!/^\d{4}$/.test(vehicles[currentVehicleIndex]?.vehicleYear)) {
+      newErrors.vehicleYear = "Enter a valid year (4 digits).";
+    } else {
+      const currentYear = new Date().getFullYear();
+      if (
+        vehicles[currentVehicleIndex]?.vehicleYear < 1990 ||
+        vehicles[currentVehicleIndex]?.vehicleYear > currentYear
+      ) {
+        newErrors.vehicleYear = `Enter a valid year between 1990 and ${currentYear}`;
+      } else {
+        newErrors.vehicleYear = ""; // No error if all checks pass
+      }
     }
 
+    if (!vehicles[currentVehicleIndex]?.isDrivable !== null) {
+      newErrors.isDrivable = "Drivable status is required.";
+    }
+    if (!vehicles[currentVehicleIndex]?.type) {
+      newErrors.type = "This field is required.";
+    }
+    if (!vehicles[currentVehicleIndex]?.category) {
+      newErrors.category = "Vehicle Catagory is required.";
+    }
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return; // Stop further execution
@@ -68,8 +132,149 @@ const QouetForm: React.FC = () => {
       vehicleModel: "",
       vehicleYear: "",
       isDrivable: "",
+      type: "",
+      category: "",
     }); // Reset errors
     if (step < 2) setStep(step + 1); // Proceed to next step (adjust total steps as necessary)
+  };
+
+  const validatePickupAndDelivery = () => {
+    const newErrors: any = {};
+
+    // Pickup location check
+    if (!(pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd)) {
+      newErrors.pickUpDate = "Pickup date is required.";
+    }
+
+    // Delivery location check
+    if (!(deliveryDate || deliveryDateRangeStart || deliveryDateRangeEnd)) {
+      newErrors.deliveryDate = "Delivery date is required.";
+    }
+
+    // Pickup time check
+    if (!(pickUpTime || pickUpTimeRangeStart || pickUpTimeRangeEnd)) {
+      newErrors.pickUpTime = "Pickup Time is required.";
+    }
+
+    // Delivery time check
+    if (!(deliveryTime || deliveryTimeRangeStart || deliveryTimeRangeEnd)) {
+      newErrors.deliveryTime = "Delivery Time is required.";
+    }
+
+    // If there are validation errors, set them and return early
+    if (Object.keys(newErrors).length > 0) {
+      setErrorsDateValidation(newErrors);
+      return; // Stop further execution if validation fails
+    }
+
+    // If validation passes, reset errors and proceed (if needed)
+    setErrorsDateValidation({
+      pickUpDate: "",
+      deliveryDate: "",
+      pickUpTime: "",
+      deliveryTime: "",
+    });
+    // if (step < 3) setStep(step + 1);
+    // Optional: You can continue with next steps or additional logic here
+  };
+
+  const validateLocation = () => {
+    const newErrors: any = {};
+
+    // Pickup location check
+    if (!pickupLocation) {
+      newErrors.pickupLocation = "Pickup location is required.";
+    }
+
+    // Delivery location check
+    if (!deliveryLocation) {
+      newErrors.deliveryLocation = "Delivery location is required.";
+    }
+
+    // Address type for Pickup check
+    if (!addressTypeForPickup) {
+      newErrors.addressTypeForPickup = "Pickup address type is required.";
+    }
+
+    // Address type for Delivery check
+    if (!addressTypeForDeliver) {
+      newErrors.addressTypeForDeliver = "Delivery address type is required.";
+    }
+
+    // Pickup contact name and phone check based on isPickupContact
+    console.log("location", !isPickupContact);
+    if (!isPickupContact) {
+      if (!pickupContactName) {
+        newErrors.pickupContactName = "Pickup contact name is required.";
+      }
+
+      if (!pickupContactPhone || !/^\d{10}$/.test(pickupContactPhone)) {
+        newErrors.pickupContactPhone =
+          "Enter a valid 10-digit phone number for pickup contact.";
+      }
+    }
+
+    // Dropoff contact name and phone check based on isDeliveryContact
+    if (!isDropoffContact) {
+      if (!dropoffContactName) {
+        newErrors.dropoffContactName = "Dropoff contact name is required.";
+      }
+
+      if (!dropoffContactPhone || !/^\d{10}$/.test(dropoffContactPhone)) {
+        newErrors.dropoffContactPhone =
+          "Enter a valid 10-digit phone number for dropoff contact.";
+      }
+    }
+
+    console.log(newErrors);
+    // If there are validation errors, set them and return early
+    if (Object.keys(newErrors).length > 0) {
+      setErrorsLocation(newErrors);
+      return; // Stop further execution if validation fails
+    }
+
+    // If validation passes, reset errors and proceed (if needed)
+    setErrorsLocation({
+      pickupLocation: "",
+      deliveryLocation: "",
+      addressTypeForPickup: "",
+      addressTypeForDeliver: "",
+      pickupContactName: "",
+      pickupContactPhone: "",
+      dropoffContactName: "",
+      dropoffContactPhone: "",
+    });
+
+    // Optional: Continue with next steps or additional logic here
+    // if (step < 3) setStep(step + 1);
+  };
+
+  const validateContact = () => {
+    const newErrors: any = {};
+
+    // First Name check
+    if (!firstName) {
+      newErrors.firstName = "First name is required.";
+    }
+
+    // Last Name check
+    if (!lastName) {
+      newErrors.lastName = "Last name is required.";
+    }
+
+    // Phone number check
+    const phoneDigits = phone.replace(/\D/g, ""); // Remove non-digit characters
+    if (!phone) {
+      newErrors.phone = "Phone number is required.";
+    } else if (phoneDigits.length !== 10) {
+      newErrors.phone = "Phone number must be 10 digits.";
+    } else if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(phone)) {
+      newErrors.phone =
+        "Phone number format is incorrect. Please use (xxx) xxx-xxxx.";
+    }
+
+    setErrorsContact(newErrors); // Update errors state
+    return newErrors; // Return errors object to be used for form submission validation if needed
   };
 
   const nextStep = () => {
@@ -77,22 +282,30 @@ const QouetForm: React.FC = () => {
     setErrorMessage(""); // Reset the error message
 
     if (step === 3 && !isStep1Valid) {
-      // setErrorMessage("All fields are required for Step 1.");
-      // return;
-      if (!pickupLocation) {
-        setErrorMessage("Pickup Location is required.");
+      validateLocation();
+
+      if (
+        !pickupLocation ||
+        !deliveryLocation ||
+        !addressTypeForDeliver ||
+        !addressTypeForPickup
+      ) {
+        // Optionally set an error message for better UX
         return;
       }
-      if (!deliveryLocation) {
-        setErrorMessage("Delivery Location is required.");
+
+      if (
+        isPickupContact === false &&
+        (!pickupContactName.trim() || !pickupContactPhone.trim())
+      ) {
         return;
       }
-      if (!addressTypeForDeliver) {
-        setErrorMessage("Address Type For Deliver is required.");
-        return;
-      }
-      if (!addressTypeForPickup) {
-        setErrorMessage("Address Type For Pickup is required.");
+
+      // Check if the dropoff contact information is incomplete when not the point of contact
+      if (
+        isDropoffContact === false &&
+        (!dropoffContactName.trim() || !dropoffContactPhone.trim())
+      ) {
         return;
       }
     }
@@ -109,17 +322,19 @@ const QouetForm: React.FC = () => {
         setErrorMessage("Vehicle maker is required.");
         return;
       }
-      if (!vehicles[currentVehicleIndex]?.vehicleModel) {
-        setErrorMessage("Vehicle model is required.");
+      if (!vehicles[currentVehicleIndex]?.type) {
+        setErrorMessage("This field is required.");
         return;
       }
-      if (vehicles[currentVehicleIndex]?.isDrivable === null) {
-        setErrorMessage("isDrivable field is required.");
+      if (vehicles[currentVehicleIndex]?.category) {
+        setErrorMessage("Vehicle Catagory is required.");
         return;
       }
     }
 
     if (step === 4 && !isStep3Valid) {
+      validateContact();
+
       if (!firstName) {
         setErrorMessage("First name is required.");
         return;
@@ -128,10 +343,7 @@ const QouetForm: React.FC = () => {
         setErrorMessage("Last name is required.");
         return;
       }
-      if (!email) {
-        setErrorMessage("Email is required.");
-        return;
-      }
+
       if (!phone) {
         setErrorMessage("Phone number is required.");
         return;
@@ -141,6 +353,7 @@ const QouetForm: React.FC = () => {
     if (step === 2 && !isStep4Valid) {
       // setErrorMessage("All fields are required for Step 4.");
       // return;
+      validatePickupAndDelivery();
       if (!(pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd)) {
         setErrorMessage("Pickup location is required.");
         return;
@@ -181,8 +394,10 @@ const QouetForm: React.FC = () => {
   const [addressTypeForPickup, setAddressTypeForPickup] = useState("");
   const [addressTypeForDeliver, setAddressTypeForDeliver] = useState("");
   const [isDerivable, setIsDrivable] = useState<boolean | null>(null);
-  const [isPickupContact, setIsPickupContact] = useState<string>(""); // "true" or "false"
-  const [isDropoffContact, setIsDropoffContact] = useState<string>(""); // "true" or "false"
+  const [isPickupContact, setIsPickupContact] = useState<boolean | null>(true); // "true" or "false"
+  const [isDropoffContact, setIsDropoffContact] = useState<boolean | null>(
+    true
+  ); // "true" or "false"
 
   const [pickupContactName, setPickupContactName] = useState("");
   const [pickupContactPhone, setPickupContactPhone] = useState("");
@@ -250,7 +465,9 @@ const QouetForm: React.FC = () => {
     pickupLocation &&
     deliveryLocation &&
     addressTypeForDeliver &&
-    addressTypeForPickup
+    addressTypeForPickup &&
+    (isPickupContact === true || (pickupContactName && pickupContactPhone)) &&
+    (isDropoffContact === true || (dropoffContactName && dropoffContactPhone))
   );
 
   const isStep2Valid =
@@ -259,11 +476,12 @@ const QouetForm: React.FC = () => {
       vehicles[currentVehicleIndex]?.vehicleMaker &&
       vehicles[currentVehicleIndex]?.vehicleModel &&
       vehicles[currentVehicleIndex]?.vehicleYear &&
-      vehicles[currentVehicleIndex]?.isDrivable != null
+      vehicles[currentVehicleIndex]?.isDrivable != null &&
+      vehicles[currentVehicleIndex]?.type &&
+      vehicles[currentVehicleIndex]?.category
     );
 
-  console.log("vvvvvvvvvvvvv ", vehicles);
-  const isStep3Valid = !!(firstName && lastName && email && phone);
+  const isStep3Valid = !!(firstName && lastName && phone);
 
   const isStep4Valid = !!(
     (pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd) &&
@@ -278,23 +496,54 @@ const QouetForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isStep3Valid) {
+      validateContact();
 
+      if (!firstName || !lastName || !phone) {
+        setErrorMessage("First name is required.");
+        return;
+      }
+    }
     const quoteData = {
       pickup: pickupLocation,
       delivery: deliveryLocation,
       addressTypeForDeliver: addressTypeForDeliver,
       addressTypeForPickup: addressTypeForPickup,
       firstName: firstName,
+      lastName: lastName,
       isDerivable: isDerivable,
       email: email,
       phoneNumber: phone,
-      vehicleYear: parseInt(vehicleYear),
-      vehicleMake: vehicleModel, // Assuming the vehicle model is being sent as "make"
-      vehicleModel: vehicleModel,
+      vehicles: vehicles.map((vehicle: any) => ({
+        vehicleYear: parseInt(vehicle.vehicleYear) || null,
+        vehicleMake: vehicle.vehicleMake || "",
+        vehicleModel: vehicle.vehicleModel || "",
+        category: vehicle.category || "",
+        type: vehicle.type || "",
+        isDrivable: vehicle.isDrivable || false,
+      })),
       transportType: vehicleType,
-      status: "pending", // Assuming 'pending' is a default status
+      status: "pending",
+      pickUpDate: pickUpDate?.toISOString() || null,
+      pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
+      pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
+      pickUpTimeOption: pickUpTimeOption,
+      pickUpTime: pickUpTime,
+      pickUpTimeRangeStart: pickUpTimeRangeStart,
+      pickUpTimeRangeEnd: pickUpTimeRangeEnd,
+      deliveryDate: deliveryDate?.toISOString() || null,
+      deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
+      deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
+      deliveryTimeOption: deliveryTimeOption,
+      deliveryTime: deliveryTime,
+      deliveryTimeRangeStart: deliveryTimeRangeStart,
+      deliveryTimeRangeEnd: deliveryTimeRangeEnd,
+      pickupContactName: pickupContactName,
+      pickupContactPhone: pickupContactPhone,
+      dropoffContactName: dropoffContactName,
+      dropoffContactPhone: dropoffContactPhone,
+      shipmentDate: shipmentDate,
     };
-
     try {
       await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
 
@@ -316,16 +565,17 @@ const QouetForm: React.FC = () => {
             <div className="fixed inset-0 bg-transparent bg-black bg-opacity-50  flex items-center justify-center z-50">
               <div className="bg-white w-full max-w-lg p-6 rounded-lg">
                 <h2 className="text-lg font-bold mb-4">{`Step ${step}`}</h2> */}
-        <p className="text-[20px] text-gray-900 font-bold hidden md:block  text-center">
-          Shipping Quote Calculator
-        </p>
+
         <form
           onSubmit={handleSubmit}
-          className="max-w-xl mx-auto  bg-white p-4 md:p-6 rounded-[32px] "
+          className="max-w-xl   bg-white p-4 md:px-4 rounded-[32px] "
           style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
           {/* Progress Indicator */}
-          <div className=" text-gray-900 text-end mb-6">
+          <div className=" text-gray-900 text-end mb-1 flex flex-row justify-between">
+            <p className="text-[20px] text-gray-900 font-bold hidden md:block  text-center ">
+              Shipping Quote Calculator
+            </p>
             <p className="text-lg font-bold">
               Step {step} of {totalSteps}
             </p>
@@ -355,6 +605,8 @@ const QouetForm: React.FC = () => {
               setDropoffContactName={setDropoffContactName}
               dropoffContactPhone={dropoffContactPhone}
               setDropoffContactPhone={setDropoffContactPhone}
+              setErrorsLocation={setErrorsLocation}
+              errorsLocation={errorsLocation}
             />
           )}
           {step === 1 && (
@@ -386,52 +638,59 @@ const QouetForm: React.FC = () => {
               isLoading={isLoading}
               isSuccess={isSuccess}
               isError={isError}
+              setErrorsContact={setErrorsContact}
+              errorsContact={errorsContact}
+              error={error}
             />
           )}
-          {step === 2 && (
-            <StepForDate
-              // Pick Up Date and Time props
-              pickUpDateOption={pickUpDateOption}
-              setPickUpDateOption={setPickUpDateOption}
-              pickUpDate={pickUpDate}
-              setPickUpDate={setPickUpDate}
-              pickUpDateRangeStart={pickUpDateRangeStart}
-              setPickUpDateRangeStart={setPickUpDateRangeStart}
-              pickUpDateRangeEnd={pickUpDateRangeEnd}
-              setPickUpDateRangeEnd={setPickUpDateRangeEnd}
-              pickUpTimeOption={pickUpTimeOption}
-              setPickUpTimeOption={setPickUpTimeOption}
-              pickUpTime={pickUpTime}
-              setPickUpTime={setPickUpTime}
-              pickUpTimeRangeStart={pickUpTimeRangeStart}
-              setPickUpTimeRangeStart={setPickUpTimeRangeStart}
-              pickUpTimeRangeEnd={pickUpTimeRangeEnd}
-              setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
-              // Delivery Date and Time props
-              deliveryDateOption={deliveryDateOption}
-              setDeliveryDateOption={setDeliveryDateOption}
-              deliveryDate={deliveryDate}
-              setDeliveryDate={setDeliveryDate}
-              deliveryDateRangeStart={deliveryDateRangeStart}
-              setDeliveryDateRangeStart={setDeliveryDateRangeStart}
-              deliveryDateRangeEnd={deliveryDateRangeEnd}
-              setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
-              deliveryTimeOption={deliveryTimeOption}
-              setDeliveryTimeOption={setDeliveryTimeOption}
-              deliveryTime={deliveryTime}
-              setDeliveryTime={setDeliveryTime}
-              deliveryTimeRangeStart={deliveryTimeRangeStart}
-              setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
-              deliveryTimeRangeEnd={deliveryTimeRangeEnd}
-              setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
-            />
+          {
+            step === 2 && (
+              <StepForDate
+                // Pick Up Date and Time props
+                pickUpDateOption={pickUpDateOption}
+                setPickUpDateOption={setPickUpDateOption}
+                pickUpDate={pickUpDate}
+                setPickUpDate={setPickUpDate}
+                pickUpDateRangeStart={pickUpDateRangeStart}
+                setPickUpDateRangeStart={setPickUpDateRangeStart}
+                pickUpDateRangeEnd={pickUpDateRangeEnd}
+                setPickUpDateRangeEnd={setPickUpDateRangeEnd}
+                pickUpTimeOption={pickUpTimeOption}
+                setPickUpTimeOption={setPickUpTimeOption}
+                pickUpTime={pickUpTime}
+                setPickUpTime={setPickUpTime}
+                pickUpTimeRangeStart={pickUpTimeRangeStart}
+                setPickUpTimeRangeStart={setPickUpTimeRangeStart}
+                pickUpTimeRangeEnd={pickUpTimeRangeEnd}
+                setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
+                // Delivery Date and Time props
+                deliveryDateOption={deliveryDateOption}
+                setDeliveryDateOption={setDeliveryDateOption}
+                deliveryDate={deliveryDate}
+                setDeliveryDate={setDeliveryDate}
+                deliveryDateRangeStart={deliveryDateRangeStart}
+                setDeliveryDateRangeStart={setDeliveryDateRangeStart}
+                deliveryDateRangeEnd={deliveryDateRangeEnd}
+                setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
+                deliveryTimeOption={deliveryTimeOption}
+                setDeliveryTimeOption={setDeliveryTimeOption}
+                deliveryTime={deliveryTime}
+                setDeliveryTime={setDeliveryTime}
+                deliveryTimeRangeStart={deliveryTimeRangeStart}
+                setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
+                deliveryTimeRangeEnd={deliveryTimeRangeEnd}
+                setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
+                setErrorsDateValidation={setErrorsDateValidation}
+                errorsDateValidation={errorsDateValidation}
+              />
+            )
             // </div>
-          )}{" "}
-          {errorMessage && (
+          }{" "}
+          {/* {errorMessage && (
             <p className="text-red-500 text-sm mt-4 text-center">
               {errorMessage}
             </p>
-          )}
+          )} */}
           <StepNavigation
             currentStep={step}
             totalSteps={totalSteps}

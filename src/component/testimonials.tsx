@@ -5,79 +5,94 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Jane Doe",
-      position: "Director of Research and Data",
+      name: "Alice Johnson",
+      position: "Classic Car Enthusiast",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet",
+      title: "Outstanding Enclosed Transport",
       description:
-        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+        "Their enclosed transport services are fantastic! After dealing with multiple companies that failed to meet my expectations or caused unnecessary delays, this one stood out. The cost was slightly higher than some quotes, but it was completely worth it—no hidden fees or surprises",
     },
     {
       id: 2,
-      name: "John Doe",
-      position: "Director of Research and Data",
+      name: "Michael Smith",
+      position: "Satisfied Customer",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet",
+      title: "Seamless Open Transport Service",
       description:
-        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+        "This company delivered on its promises with open transport! The price was transparent and reasonable. Communication was amazing—I received updates via text and email, and the driver handled my car with care. Everything went smoothly, and my vehicle arrived without a scratch. Highly recommend!",
     },
     {
       id: 3,
-      name: "Jane Smith",
-      position: "Director of Research and Data",
+      name: "Sophia Williams",
+      position: "Frequent Mover",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet",
+      title: "Reliable and Stress-Free",
       description:
-        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+        "I used their services for an interstate move, and it was stress-free from start to finish. The team kept me informed throughout, and the driver was very professional. My car arrived on time and in great condition. It’s hard to find such reliable service these days!",
     },
     {
       id: 4,
-      name: "Jane Doe",
-      position: "Director of Research and Data",
+      name: "James Carter",
+      position: "Business Owner",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet",
+      title: "Great Experience with Open Transport",
       description:
-        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+        "I had my fleet vehicle transported using their open transport service, and it was a great experience. The driver was punctual and followed all my instructions. The entire process was smooth, and my car arrived safely. Excellent service overall!",
     },
     {
       id: 5,
-      name: "John Doe",
-      position: "Director of Research and Data",
+      name: "Emma Brown",
+      position: "Car Enthusiast",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet",
+      title: "Professional Enclosed Transport",
       description:
-        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+        "Their enclosed transport is top-notch! My car was handled with care, and the team provided regular updates. The driver was courteous and made sure everything was secure. I’ll definitely use their services again for my luxury cars!",
     },
     {
       id: 6,
-      name: "Jane Smith",
-      position: "Director of Research and Data",
+      name: "David Wilson",
+      position: "First-Time User",
       image: "https://placeimg.com/150/150/people",
-      title: "Lorem ipsum dolor sit amet",
+      title: "Excellent Communication and Service",
       description:
-        "Eu lobortis elementum nibh tellus molestie nunc non blandit massa. Sit amet consectetur adipiscing elit duis.",
+        "As a first-time user, I was nervous about transporting my car, but they made it easy. The team was responsive, and I appreciated the updates during transit. My vehicle arrived earlier than expected, in perfect condition. Highly recommend!",
     },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  const handleResize = () => {
+    setIsDesktop(window.innerWidth >= 1024);
+  };
+
+  useEffect(() => {
+    // Initial check and resize listener
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const totalSlides = isDesktop
+    ? Math.ceil(testimonials.length / 3)
+    : testimonials.length;
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+      prevIndex === totalSlides - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+      prevIndex === 0 ? totalSlides - 1 : prevIndex - 1
     );
   };
 
-  // Auto-slide every 5 seconds
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isDesktop]);
 
   return (
     <section id="reviews" className="py-20 px-6 bg-[#ECECEC]">
@@ -90,12 +105,16 @@ const Testimonials = () => {
           <div className="overflow-hidden px-2">
             <div
               className="flex transition-all duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+              style={{
+                transform: `translateX(-${
+                  currentIndex * (isDesktop ? 100 : 100)
+                }%)`,
+              }}
             >
               {testimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className="flex-none w-full md:w-1/3 px-2"
+                  className={`flex-none ${isDesktop ? "w-1/3" : "w-full"} px-2`}
                 >
                   <div
                     className="p-6 md:p-12 rounded-lg border bg-white border-gray-200 mb-8 text-gray-900"
@@ -123,18 +142,20 @@ const Testimonials = () => {
           </div>
 
           {/* Navigation Buttons */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 font-bold  transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
-          >
-            &#8249;
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 font-bold top-1/2 transform -translate-y-1/2 translate-x-1/2 text-black bg-white p-4 shadow-xl rounded-full"
-          >
-            &#8250;
-          </button>
+          <div>
+            <button
+              onClick={prevSlide}
+              className="absolute left-0 top-1/2 font-bold  transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
+            >
+              &#8249;
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-0 font-bold top-1/2 transform -translate-y-1/2 translate-x-1/2 text-black bg-white p-4 shadow-xl rounded-full"
+            >
+              &#8250;
+            </button>
+          </div>
         </div>
       </div>
     </section>

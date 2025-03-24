@@ -1,4 +1,11 @@
 "use client";
+import {
+  faDeleteLeft,
+  faRecycle,
+  faRemove,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
 
 interface Vehicle {
@@ -37,10 +44,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [filteredMakers, setFilteredMakers] = useState<string[]>([]);
   const [filteredModels, setFilteredModels] = useState<any[]>([]);
   const [selectedMaker, setSelectedMaker] = useState<string>("");
-  const [categoryInput, setCategoryInput] = useState<string>("Open");
+  const [categoryInput, setCategoryInput] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
-  const [type, setType] = useState<string>("Open"); // Default to "Open"
+  const [type, setType] = useState<string>(""); // Default to "Open"
   const [isDrivable, setIsDrivable] = useState<boolean | null>(null);
   // const [categoryInput, setCategoryInput] = useState<string>(categories[0]); // Default to the first category
 
@@ -122,12 +129,24 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         newErrors.vehicleModel = value ? "" : "Vehicle model is required";
         break;
       case "vehicleYear":
+        const currentYear = new Date().getFullYear();
         newErrors.vehicleYear =
-          value && /^\d{4}$/.test(value) ? "" : "Enter a valid year";
+          value &&
+          /^\d{4}$/.test(value) &&
+          value >= 1990 &&
+          value <= currentYear
+            ? "" // Valid year
+            : "Enter a valid year ";
         break;
       case "isDrivable":
         newErrors.isDrivable =
           value !== null ? "" : "Drivable status is required";
+        break;
+      case "category":
+        newErrors.category = value ? "" : "Category  is required";
+        break;
+      case "type":
+        newErrors.type = value ? "" : "This field  is required";
         break;
       default:
         break;
@@ -139,12 +158,22 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   console.log(errors);
 
   const handleAddVehicle = () => {
-    if (!makerInput || !modelInput || !yearInput || isDrivable === null) {
+    console.log("type ", type);
+    if (
+      !makerInput ||
+      !modelInput ||
+      !yearInput ||
+      isDrivable === null ||
+      !type ||
+      !categoryInput
+    ) {
       const newErrors = {
         vehicleMaker: makerInput ? "" : "Vehicle maker is required",
         vehicleModel: modelInput ? "" : "Vehicle model is required",
         vehicleYear: yearInput ? "" : "Vehicle year is required",
         isDrivable: isDrivable !== null ? "" : "Drivable status is required",
+        type: type ? "" : "This field is required",
+        category: categoryInput ? "" : "Vehicle catagory is required",
       };
 
       setErrors(newErrors);
@@ -171,8 +200,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setMakerInput("");
     setModelInput("");
     setYearInput("");
-    setType("Open");
-    setCategoryInput("Van");
+    setType("");
+    setCategoryInput("");
     setIsDrivable(null);
     setFilteredMakers([]);
     setFilteredModels([]);
@@ -276,25 +305,53 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const handleCategoryChange = (value: string) => {
     setCategoryInput(value);
     setIsOpen(false); // Close the dropdown after selection
+    updateVehicleField("category", value); // Update the field in the vehicle at the current index
+  };
+
+  // const [filteredYears, setFilteredYears] = useState<any>();
+
+  const generateYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = 1990; year <= currentYear; year++) {
+      years.push(year.toString());
+    }
+    return years;
+  };
+  const [filteredYears, setFilteredYears] = useState(generateYearOptions());
+
+  const handleYearInputChange = (value: any) => {
+    setYearInput(value);
+
+    // Filter the year suggestions based on user input
+    const suggestions = generateYearOptions().filter((year) =>
+      year.startsWith(value)
+    );
+    setFilteredYears(suggestions);
+
+    // Update the vehicle field
+    updateVehicleField("vehicleYear", value);
+  };
+
+  const handleYearSelect = (year: any) => {
+    setYearInput(year);
+    updateVehicleField("vehicleYear", year);
+    setFilteredYears([]); // Clear suggestions after selection
   };
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-center text-gray-900 mb-4">
+      <h2 className="text-lg font-bold text-center text-gray-900 mb-2">
         Vehicle Information
       </h2>
 
       {vehicles.length > 0 && (
         <div className="mb-2">
-          <h2 className="text-lg font-bold text-gray-900 mb-4">
-            Saved Vehicle Info
-          </h2>
-
           {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
-              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-4 sm:grid-cols-4 lg:grid-cols-4 w-full">
-                <div className="flex flex-col">
-                  <strong>Maker</strong> {vehicle?.vehicleMaker}
+              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg  rounded-full w-full">
+                <div className="flex flex-col pl-2">
+                  <strong>Make</strong> {vehicle?.vehicleMaker}
                 </div>
                 <div className="flex flex-col">
                   <strong>Model</strong> {vehicle?.vehicleModel}
@@ -302,12 +359,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 <div className="flex flex-col">
                   <strong>Year</strong> {vehicle?.vehicleYear}
                 </div>
-                <div className="flex ">
+                <div className="flex w-8">
                   <button
                     className="text-red-500 "
                     onClick={() => handleRemoveVehicle(index)}
                   >
-                    Remove
+                    <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </div>
               </div>
@@ -316,7 +373,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
       )}
       {/* Vehicle input form */}
-      <div className="mb-6">
+      <div className="mb-2">
         <div>
           {message && <p className="text-sm text-red-500 mb-4">{message}</p>}
         </div>
@@ -355,32 +412,39 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <p>Enclosed</p>
           </div>
         </div>
+        {errors.type && (
+          <p className="text-sm text-red-500 mt-1 px-4 mb-3">{errors.type}</p>
+        )}
 
         {/* Vehicle Year */}
-        <div className="relative z-3 w-full mb-5 group">
-          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-            {" "}
+        <div className="relative mb-4 top-0">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Year
           </label>
+
           <input
-            type="text"
             value={yearInput}
-            // onChange={(e) => setYearInput(e.target.value)}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^\d{0,4}$/.test(value)) {
-                // Allow only numeric input up to 4 digits
-                const newVehicles = [...vehicles];
-                // newVehicles[index].vehicleYear = value;
-                setYearInput(e.target.value);
-                updateVehicleField("vehicleYear", value);
-              }
-            }}
+            onChange={(e) => handleYearInputChange(e.target.value)}
             placeholder="Year"
             className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
               errors.vehicleYear ? "border-red-500" : "border-[#938f99]"
             } outline-none transition-all focus:border-[#6DB8D1]`}
           />
+
+          {yearInput && filteredYears?.length > 0 && (
+            <ul className="absolute z-5 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
+              {filteredYears.slice(0, 5).map((year: any, idx: any) => (
+                <li
+                  key={idx}
+                  onClick={() => handleYearSelect(year)}
+                  className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1]"
+                >
+                  {year}
+                </li>
+              ))}
+            </ul>
+          )}
+
           {errors.vehicleYear && (
             <p className="text-sm text-red-500 mt-1 px-4">
               {errors.vehicleYear}
@@ -388,10 +452,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           )}
         </div>
 
-        <div className="relative  mb-5  top-0">
+        <div className="relative  mb-4  top-0">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
-            Vehicle Maker
+            Vehicle Make
           </label>
 
           <input
@@ -409,7 +473,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 <li
                   key={idx}
                   onClick={() => handleMakerSelect(make)}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-700"
+                  className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1]"
                 >
                   {make}
                 </li>
@@ -424,7 +488,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
 
         {/* Vehicle Model */}
-        <div className="relative z-4 w-full mb-5 group">
+        <div className="relative z-4 w-full mb-4 group">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
             {selectedMaker ? "Vehicle Model" : "Select a maker first"}
@@ -446,7 +510,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 <li
                   key={idx}
                   onClick={() => handleModelSelect(model.Model)}
-                  className="px-4 py-2 cursor-pointer hover:bg-gray-700"
+                  className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1]"
                 >
                   {model.Model}
                 </li>
@@ -462,14 +526,14 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
         <div className="relative mb-4">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-            Vehicle Type
+            Vehicle Catagory
           </label>
 
           <div
             onClick={toggleDropdown}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1] cursor-pointer"
+            className="w-full h-14 px-3 py-2 text-sm text-gray-900 mt-1 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1] cursor-pointer"
           >
-            {categoryInput ? categoryInput : "Select Vehicle Type"}
+            {categoryInput ? categoryInput : "--- Select Vehicle Type ---"}
           </div>
 
           {isOpen && (
@@ -489,6 +553,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 </div>
               ))}
             </div>
+          )}
+          {errors.category && (
+            <p className="text-sm text-red-500 mt-1 px-4">{errors.category}</p>
           )}
         </div>
 

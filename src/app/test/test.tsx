@@ -1,147 +1,113 @@
-"use client";
-import React, { useEffect, useState } from "react";
+// components/StepOne.tsx
+import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-interface Car {
-  Year: number;
-  Make: string;
-  Model: string;
-  Category: string;
+interface StepOneProps {
+  pickupDate: Date | null;
+  setPickupDate: (value: Date | null) => void;
+  deliveryDate: Date | null;
+  setDeliveryDate: (value: Date | null) => void;
+  errors: { pickupDate?: string; deliveryDate?: string };
+  setErrors: (errors: { pickupDate?: string; deliveryDate?: string }) => void;
 }
 
-const CarsPageTest: React.FC = () => {
-  const [makes, setMakes] = useState<string[]>([]);
-  const [carsByMake, setCarsByMake] = useState<Record<string, Car[]>>({});
-  const [makerInput, setMakerInput] = useState<string>("");
-  const [filteredMakers, setFilteredMakers] = useState<string[]>([]);
-  const [selectedMaker, setSelectedMaker] = useState<string | null>(null);
-  const [modelInput, setModelInput] = useState<string>("");
-  const [filteredModels, setFilteredModels] = useState<Car[]>([]);
+const StepOne: React.FC<StepOneProps> = ({
+  pickupDate,
+  setPickupDate,
+  deliveryDate,
+  setDeliveryDate,
+  errors,
+  setErrors,
+}) => {
+  const validateFields = (
+    field: "pickupDate" | "deliveryDate",
+    value: Date | null
+  ) => {
+    const newErrors = { ...errors };
 
-  useEffect(() => {
-    // Fetch data from the API
-    fetch("/api/cars")
-      .then((res) => res.json())
-      .then((data) => {
-        setMakes(data.makes);
-        setCarsByMake(data.carsByMake);
-      });
-  }, []);
-
-  useEffect(() => {
-    // Filter makers based on input
-    if (makerInput) {
-      setFilteredMakers(
-        makes
-          .filter((make) =>
-            make.toLowerCase().startsWith(makerInput.toLowerCase())
-          )
-          .slice(0, 5)
-      );
-    } else {
-      setFilteredMakers([]);
+    if (field === "pickupDate") {
+      if (!value) {
+        newErrors.pickupDate = "Pickup date is required.";
+      } else {
+        delete newErrors.pickupDate;
+      }
+      // Ensure deliveryDate is validated relative to the new pickupDate
+      if (deliveryDate && value && deliveryDate < value) {
+        newErrors.deliveryDate =
+          "Delivery date cannot be earlier than pickup date.";
+      } else {
+        delete newErrors.deliveryDate;
+      }
     }
-  }, [makerInput, makes]);
 
-  useEffect(() => {
-    // Filter models based on selected maker and input
-    if (selectedMaker && modelInput) {
-      const carsForMaker = carsByMake[selectedMaker] || [];
-      const uniqueModels = carsForMaker
-        .filter((car) =>
-          car.Model.toLowerCase().startsWith(modelInput.toLowerCase())
-        )
-        .reduce<Car[]>((unique, car) => {
-          if (!unique.some((c) => c.Model === car.Model)) {
-            unique.push(car);
-          }
-          return unique;
-        }, [])
-        .slice(0, 5);
-      setFilteredModels(uniqueModels);
-    } else {
-      setFilteredModels([]);
+    if (field === "deliveryDate") {
+      if (!value) {
+        newErrors.deliveryDate = "Delivery date is required.";
+      } else if (pickupDate && value < pickupDate) {
+        newErrors.deliveryDate =
+          "Delivery date cannot be earlier than pickup date.";
+      } else {
+        delete newErrors.deliveryDate;
+      }
     }
-  }, [modelInput, selectedMaker, carsByMake]);
 
-  const handleMakerSelect = (make: string) => {
-    setMakerInput(make);
-    setSelectedMaker(make);
-    setFilteredMakers([]);
-    setModelInput(""); // Reset model input
-    setFilteredModels([]);
+    setErrors(newErrors);
   };
 
-  const handleModelSelect = (model: string) => {
-    setModelInput(model);
-    setFilteredModels([]); // Clear model suggestions
+  const handlePickupDateChange = (date: Date | null) => {
+    setPickupDate(date); // Update state first
+    validateFields("pickupDate", date); // Then validate
+  };
+
+  const handleDeliveryDateChange = (date: Date | null) => {
+    setDeliveryDate(date); // Update state first
+    validateFields("deliveryDate", date); // Then validate
   };
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Car Makes and Models</h1>
-
-      {/* Maker Input */}
-      <div className="mb-6">
-        <label htmlFor="maker" className="block text-sm font-medium mb-2">
-          Maker:
-        </label>
-        <input
-          type="text"
-          id="maker"
-          className="w-full p-2 border rounded-md"
-          placeholder="Type to search car makers..."
-          value={makerInput}
-          onChange={(e) => setMakerInput(e.target.value)}
-        />
-        {filteredMakers.length > 0 && (
-          <ul className="border mt-2 rounded-md shadow-lg bg-gray-900 max-h-40 overflow-auto">
-            {filteredMakers.map((make, index) => (
-              <li
-                key={index}
-                className="p-2 hover:bg-gray-200 cursor-pointer"
-                onClick={() => handleMakerSelect(make)}
-              >
-                {make}
-              </li>
-            ))}
-          </ul>
-        )}
+      {/* Pickup Date */}
+      <div className="w-full">
+        <div className="mb-4 relative top-0 mt-4">
+          <label className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            Pickup Date
+          </label>
+          <DatePicker
+            selected={pickupDate}
+            onChange={handlePickupDateChange}
+            minDate={new Date()}
+            placeholderText="Select Pickup Date"
+            withPortal={true}
+            className="w-full h-14 z-50 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          />
+          {errors.pickupDate && (
+            <p className="mt-1 text-sm text-red-600">{errors.pickupDate}</p>
+          )}
+        </div>
       </div>
 
-      {/* Model Input */}
-      <div className="mb-6">
-        <label htmlFor="model" className="block text-sm font-medium mb-2">
-          Model:
-        </label>
-        <input
-          type="text"
-          id="model"
-          className="w-full p-2 border rounded-md"
-          placeholder={
-            selectedMaker
-              ? "Type to search car models..."
-              : "Select a maker first"
-          }
-          value={modelInput}
-          onChange={(e) => setModelInput(e.target.value)}
-          disabled={!selectedMaker}
-        />
-        {filteredModels.length > 0 && (
-          <ul className="border mt-2 rounded-md shadow-lg bg-gray-900 max-h-40 overflow-auto">
-            {filteredModels.map((model, index) => (
-              <li
-                key={index}
-                className="p-2 hover:bg-gray-200 cursor-pointer"
-                onClick={() => handleModelSelect(model.Model)}
-              >
-                {model.Model}
-              </li>
-            ))}
-          </ul>
-        )}
+      {/* Delivery Date */}
+      <div className="w-full">
+        <div className="mb-4 relative top-0 mt-4">
+          <label className="absolute px-3 py-2 z-20 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            Delivery Date
+          </label>
+          <DatePicker
+            selected={deliveryDate}
+            onChange={handleDeliveryDateChange}
+            minDate={pickupDate || new Date()}
+            placeholderText="Select Delivery Date"
+            withPortal={true}
+            className="w-full h-14 z-50 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          />
+          {errors.deliveryDate && (
+            <p className="mt-1 text-sm text-red-600">{errors.deliveryDate}</p>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
-export default CarsPageTest;
+export default StepOne;
