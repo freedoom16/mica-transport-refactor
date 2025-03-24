@@ -639,6 +639,7 @@ const QouetForm: React.FC = () => {
               isError={isError}
               setErrorsContact={setErrorsContact}
               errorsContact={errorsContact}
+              error={error}
             />
           )}
           {
