@@ -64,7 +64,7 @@ const SectionOne = () => {
             id="shiplux"
             className="w-full h-fit flex flex-col-reverse md:flex-row gap-4 mb-[60px]"
           >
-            <div className="hidden md:block flex md:w-[50%] rounded-[32px] h-[500px] relative">
+            <div className="hidden md:block flex md:w-[45%] rounded-[32px] h-[500px] lg:h-auto relative">
               <img
                 alt="destination image"
                 sizes="100vw"
@@ -94,7 +94,7 @@ const SectionOne = () => {
                     <span className="text-[35px] ">{stepContent.title}</span>
                   </h2>
                   <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
-                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="w-full block lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
                       {currentItems.map((point, index) => (
                         <div
                           key={index}
@@ -108,7 +108,25 @@ const SectionOne = () => {
                         </div>
                       ))}
                     </div>
-                    <div className="flex w-full justify-between mt-4">
+
+                    {/* Desktop View: List all items */}
+                    <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300 hidden lg:block">
+                      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {stepContent.points.map((point, index) => (
+                          <div
+                            key={index}
+                            className="p mb-4 text-gray-900 flex items-center"
+                          >
+                            <FontAwesomeIcon
+                              icon={faStar}
+                              className="text-gray-900 w-4 h-4 mr-2"
+                            />
+                            <span className="text-[20px]">{point}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex w-full justify-between block lg:hidden mt-4">
                       <button
                         onClick={handlePrevious}
                         disabled={currentPage === 0}

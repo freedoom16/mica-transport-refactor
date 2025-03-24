@@ -11,12 +11,14 @@ const Services = () => {
       bg: "bg-[white]",
       description:
         "Enclosed shipping ensures maximum protection for your vehicle. It's ideal for luxury, exotic, or classic cars requiring extra care.",
+      img: "/car/imageenclosed2.jpeg",
     },
     {
       title: "Open car shipping",
       bg: "bg-[#EDEEF4] text-white",
       description:
         "An open auto carrier is just that: open on all sides. While it might pick up some dust along the way, ShipLux’s Premium Service ensures superior safety and handling of your vehicle during its shipping journey.",
+      img: "/car/imageOpen2.jpeg",
     },
 
     {
@@ -24,6 +26,7 @@ const Services = () => {
       bg: "bg-[#EDEEF4]",
       description:
         "Ship your vehicle seamlessly to or from USA with our dedicated and reliable services.",
+      img: "/car/imageOpen3.jpeg",
     },
     // {
     //   title: "Special request",
@@ -82,7 +85,7 @@ const Services = () => {
                     <div className="w-full h-full booking-gradient opacity-50 absolute z-10 rounded-[24px]" />
                     <img
                       alt="service image"
-                      src="https://shipluxwp.wpengine.com/wp-content/uploads/2023/10/openCarShipping.png"
+                      src={service.img}
                       className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
                     />
                     <p className="text-white text-[24px] font-medium absolute z-10 bottom-5 left-4 capitalize">
@@ -104,7 +107,10 @@ const Services = () => {
             <div className="w-full h-[252px] lg:h-full booking-gradient opacity-50 absolute z-10 rounded-[24px]" />
             <img
               alt="service image"
-              src="https://shipluxwp.wpengine.com/wp-content/uploads/2023/10/openCarShipping.png"
+              src={
+                services.find((service) => service.title === selectedService)
+                  ?.img || "/car/imageOpen2.jpeg"
+              }
               className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
             />
             <p className="text-white text-[35px] font-medium absolute z-10 bottom-5 left-8 capitalize">
