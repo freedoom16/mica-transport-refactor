@@ -2,6 +2,7 @@
   "name": "micatransport",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://146.190.145.241",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
