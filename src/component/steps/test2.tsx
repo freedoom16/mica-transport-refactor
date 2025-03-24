@@ -129,8 +129,14 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         newErrors.vehicleModel = value ? "" : "Vehicle model is required";
         break;
       case "vehicleYear":
+        const currentYear = new Date().getFullYear();
         newErrors.vehicleYear =
-          value && /^\d{4}$/.test(value) ? "" : "Enter a valid year";
+          value &&
+          /^\d{4}$/.test(value) &&
+          value >= 1990 &&
+          value <= currentYear
+            ? "" // Valid year
+            : "Enter a valid year ";
         break;
       case "isDrivable":
         newErrors.isDrivable =
@@ -302,6 +308,37 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     updateVehicleField("category", value); // Update the field in the vehicle at the current index
   };
 
+  // const [filteredYears, setFilteredYears] = useState<any>();
+
+  const generateYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = 1990; year <= currentYear; year++) {
+      years.push(year.toString());
+    }
+    return years;
+  };
+  const [filteredYears, setFilteredYears] = useState(generateYearOptions());
+
+  const handleYearInputChange = (value: any) => {
+    setYearInput(value);
+
+    // Filter the year suggestions based on user input
+    const suggestions = generateYearOptions().filter((year) =>
+      year.startsWith(value)
+    );
+    setFilteredYears(suggestions);
+
+    // Update the vehicle field
+    updateVehicleField("vehicleYear", value);
+  };
+
+  const handleYearSelect = (year: any) => {
+    setYearInput(year);
+    updateVehicleField("vehicleYear", year);
+    setFilteredYears([]); // Clear suggestions after selection
+  };
+
   return (
     <div>
       <h2 className="text-lg font-bold text-center text-gray-900 mb-4">
@@ -380,30 +417,34 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         )}
 
         {/* Vehicle Year */}
-        <div className="relative z-3 w-full mb-5 group">
-          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-            {" "}
+        <div className="relative mb-5 top-0">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Year
           </label>
+
           <input
-            type="text"
             value={yearInput}
-            // onChange={(e) => setYearInput(e.target.value)}
-            onChange={(e) => {
-              const value = e.target.value;
-              if (/^\d{0,4}$/.test(value)) {
-                // Allow only numeric input up to 4 digits
-                const newVehicles = [...vehicles];
-                // newVehicles[index].vehicleYear = value;
-                setYearInput(e.target.value);
-                updateVehicleField("vehicleYear", value);
-              }
-            }}
+            onChange={(e) => handleYearInputChange(e.target.value)}
             placeholder="Year"
             className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
               errors.vehicleYear ? "border-red-500" : "border-[#938f99]"
             } outline-none transition-all focus:border-[#6DB8D1]`}
           />
+
+          {yearInput && filteredYears?.length > 0 && (
+            <ul className="absolute z-5 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
+              {filteredYears.slice(0, 5).map((year: any, idx: any) => (
+                <li
+                  key={idx}
+                  onClick={() => handleYearSelect(year)}
+                  className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1]"
+                >
+                  {year}
+                </li>
+              ))}
+            </ul>
+          )}
+
           {errors.vehicleYear && (
             <p className="text-sm text-red-500 mt-1 px-4">
               {errors.vehicleYear}

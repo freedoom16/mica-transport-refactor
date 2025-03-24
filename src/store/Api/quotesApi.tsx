@@ -45,7 +45,7 @@ export const usersApi = createApi({
     }),
     addQuoets: builder.mutation<User | any, Partial<User> | any>({
       query: (newQuoets) => ({
-        url: "/quote", // Adjust based on your API
+        url: "/quotes", // Adjust based on your API
         method: "POST",
         body: newQuoets,
       }),

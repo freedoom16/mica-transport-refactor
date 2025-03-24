@@ -99,7 +99,20 @@ const QouetForm: React.FC = () => {
     }
     if (!vehicles[currentVehicleIndex]?.vehicleYear) {
       newErrors.vehicleYear = "Vehicle year is required.";
+    } else if (!/^\d{4}$/.test(vehicles[currentVehicleIndex]?.vehicleYear)) {
+      newErrors.vehicleYear = "Enter a valid year (4 digits).";
+    } else {
+      const currentYear = new Date().getFullYear();
+      if (
+        vehicles[currentVehicleIndex]?.vehicleYear < 1990 ||
+        vehicles[currentVehicleIndex]?.vehicleYear > currentYear
+      ) {
+        newErrors.vehicleYear = `Enter a valid year between 1990 and ${currentYear}`;
+      } else {
+        newErrors.vehicleYear = ""; // No error if all checks pass
+      }
     }
+
     if (!vehicles[currentVehicleIndex]?.isDrivable !== null) {
       newErrors.isDrivable = "Drivable status is required.";
     }
