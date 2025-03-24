@@ -25,7 +25,7 @@ const BlockComponent: React.FC = () => {
 
       {/* <Forms /> */}
 
-      <AboutPage />
+      {/* <AboutPage /> */}
 
       {/* Section 3 */}
       <ServicesSection />

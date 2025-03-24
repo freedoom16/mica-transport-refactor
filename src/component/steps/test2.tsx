@@ -380,8 +380,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         {/* Vehicle Maker */}
         <div className="w-full flex gap-4 text-gray-900 mb-4">
           <div
-            className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
-              type === "Open" ? "border-[#ECECEC]" : "border-gray-300"
+            className={`w-2/4 h-14 flex border-2 items-center text-xl cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+              type === "Open" ? "border-[#6DB8D1]" : "border-gray-300"
             }`}
             onClick={() => handleTypeChange("Open")}
           >
@@ -396,8 +396,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <p>Open</p>
           </div>
           <div
-            className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
-              type === "Enclosed" ? "border-[#ECECEC]" : "border-gray-300"
+            className={`w-2/4 h-14 flex items-center text-xl border-2 cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+              type === "Enclosed" ? "border-[#6DB8D1]" : "border-gray-300"
             }`}
             onClick={() => handleTypeChange("Enclosed")}
           >
@@ -596,7 +596,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       {/* Add Vehicle Button */}
       <button
         type="button"
-        className="bg-[#6DB8D1] text-white py-2 px-4 rounded-full"
+        className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
         onClick={handleAddVehicle}
       >
         Add Vehicle

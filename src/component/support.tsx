@@ -1,17 +1,17 @@
-import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faCar, faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const CustomContentSection = () => {
   return (
     <section
-      className="relative w-full h-auto bg-gray-50 mx-auto flex flex-col md:flex-row items-center justify-center py-20 px-8"
+      className="relative w-full h-auto bg-gray-50 mx-auto flex flex-col lg:flex-row items-center justify-center py-20 px-8"
       id="support"
     >
       {/* Left Column: Title */}
       <div
         id="lp-pom-text-233"
-        className="text-gray-900 w-full md:w-1/3 font-spectral font-bold text-[25px] md:text-[30px] md:mr-8 md:px-12"
+        className="text-gray-900 w-full lg:w-1/3 font-spectral font-bold text-[25px] md:text-[30px] md:mr-8 md:px-12"
       >
         Looking for a reliable way to transport your car?
         <br></br>
@@ -21,17 +21,17 @@ const CustomContentSection = () => {
       </div>
 
       {/* Right Column: Description and Button */}
-      <div className="flex flex-col items-start space-y-8 md:px-12 w-full md:w-1/3">
+      <div className="flex flex-col items-start space-y-8 md:px-8 w-full lg:w-1/3">
         {/* Description */}
         <div
           id="lp-pom-text-236"
-          className="text-gray-900 font-montserrat font-normal text-[16px] leading-[24px]"
+          className="text-gray-900 font-montserrat font-normal text-[20px] font-semibold leading-[24px]"
         >
           Our car transport experts are ready to assist you!
           <br></br>Call us now{" "}
           <a
             href="tel:+(404) 988-4505"
-            className="text-gray-900 underline"
+            className="text-[#6DB8D1] "
             target="_self"
           >
             +1 (404) 988-4505
@@ -40,32 +40,46 @@ const CustomContentSection = () => {
         </div>
 
         {/* Button */}
-        <div className="block md:hidden">
+        <div className="block md:hidden py-2">
           <a
             id="lp-pom-button-237"
             href="/#quote-form"
-            className="bg-[#6DB8D1] text-white font-bold text-[14px] leading-[17px] font-normal font-montserrat py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1]  font-bold text-[14px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
           >
+            <FontAwesomeIcon
+              icon={faCar}
+              className="px-2"
+              width={16}
+              height={16}
+            />{" "}
             REQUEST A QUOTE
           </a>
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden md:block py-2">
           <a
             id="lp-pom-button-237"
             href="/#home"
-            className="bg-[#6DB8D1] text-white font-bold text-[14px] leading-[17px] font-normal font-montserrat py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1] font-bold text-[14px] leading-[17px]  py-3 px-6 rounded-[32px] shadow-none"
           >
+            <FontAwesomeIcon
+              icon={faCar}
+              className="px-2"
+              width={16}
+              height={16}
+            />{" "}
             REQUEST A QUOTE
           </a>
         </div>
       </div>
 
       {/* Contact Us Section */}
-      <div className="w-full md:w-1/3 flex flex-col space-y-6 mt-12 md:mt-0 md:ml-8">
-        <h3 className="text-gray-900 font-bold text-[20px]">Contact Us</h3>
+      <div className="w-full lg:w-1/3 flex flex-col space-y-6 mt-12 md:mt-0 px-6 lg:ml-8">
+        <h3 className="text-gray-900 font-bold text-[20px] md:px-2">
+          Contact Us
+        </h3>
         {/* Email */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 text-[20px]">
           <FontAwesomeIcon
             icon={faEnvelope}
             className="px-2 text-gray-900"
@@ -73,22 +87,22 @@ const CustomContentSection = () => {
             height={16}
           />
           <a
-            href="mailto:info@micatransport.com"
-            className="text-gray-900 underline"
+            href="mailto:booking@micatransportation.com"
+            className="text-gray-900 "
           >
-            info@micatransport.com
+            booking@micatransportation.com
           </a>
         </div>
 
         {/* Phone */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 text-[20px]">
           <FontAwesomeIcon
             icon={faPhone}
             className="px-2 text-gray-900"
             width={16}
             height={16}
           />
-          <a href="tel:+(404) 988-4505" className="text-gray-900 underline">
+          <a href="tel:+(404) 988-4505" className="text-gray-900 ">
             + 1 (404) 988-4505
           </a>
         </div>

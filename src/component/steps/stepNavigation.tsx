@@ -71,7 +71,13 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         {currentStep < totalSteps ? (
           <button
             type="button"
-            className={`px-8 py-2 rounded-full shadow-xl border border-gray-900 bg-white  text-gray-900 `}
+            className={`px-8 py-2 rounded-full shadow-xl   bg-white   
+              ${
+                isNextEnabled
+                  ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
+                  : "border-1 border-gray-900 text-gray-900"
+              }
+            `}
             onClick={handleNext}
           >
             Next
@@ -79,7 +85,11 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         ) : (
           <button
             type="submit"
-            className="px-4 py-2 bg-white shadow-xl border border-gray-900 text-gray-900 rounded-full "
+            className={`px-4 py-2 bg-white shadow-xl border border-gray-900 text-gray-900 rounded-full   ${
+              isNextEnabled
+                ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
+                : " border-1 border-gray-900 text-gray-900"
+            }`}
           >
             Submit
           </button>
@@ -101,7 +111,11 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         {currentStep < totalSteps ? (
           <button
             type="button"
-            className={`px-8 py-2 rounded-full shadow-xl border border-gray-900 bg-white  text-gray-900 `}
+            className={`px-8 py-2 rounded-full shadow-xl border border-gray-900 bg-white  text-gray-900   ${
+              isNextEnabled
+                ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
+                : "border-1 border-gray-900 text-gray-900"
+            }`}
             onClick={handleNextMobaile}
           >
             Next
@@ -109,7 +123,11 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         ) : (
           <button
             type="submit"
-            className="px-4 py-2 bg-white shadow-xl border border-gray-900 text-gray-900 rounded-full "
+            className={`px-4 py-2 bg-white shadow-xl border border-gray-900 text-gray-900 rounded-full   ${
+              isNextEnabled
+                ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
+                : "border-1 border-gray-900 text-gray-900"
+            }`}
           >
             Submit
           </button>
