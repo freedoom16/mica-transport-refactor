@@ -565,16 +565,17 @@ const QouetForm: React.FC = () => {
             <div className="fixed inset-0 bg-transparent bg-black bg-opacity-50  flex items-center justify-center z-50">
               <div className="bg-white w-full max-w-lg p-6 rounded-lg">
                 <h2 className="text-lg font-bold mb-4">{`Step ${step}`}</h2> */}
-        <p className="text-[20px] text-gray-900 font-bold hidden md:block  text-center ">
-          Shipping Quote Calculator
-        </p>
+
         <form
           onSubmit={handleSubmit}
           className="max-w-xl   bg-white p-4 md:px-4 rounded-[32px] "
           style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
           {/* Progress Indicator */}
-          <div className=" text-gray-900 text-end mb-1">
+          <div className=" text-gray-900 text-end mb-1 flex flex-row justify-between">
+            <p className="text-[20px] text-gray-900 font-bold hidden md:block  text-center ">
+              Shipping Quote Calculator
+            </p>
             <p className="text-lg font-bold">
               Step {step} of {totalSteps}
             </p>
