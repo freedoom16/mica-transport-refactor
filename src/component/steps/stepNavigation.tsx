@@ -56,7 +56,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
 
   return (
     <div>
-      <div className="hidden md:block md:flex md:justify-between md:mt-6">
+      <div className="hidden md:block md:flex md:justify-between md:mt-2">
         {currentStep > 1 && (
           <button
             type="button"
@@ -86,7 +86,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         )}
       </div>
 
-      <div className="block md:hidden flex justify-between mt-6 ">
+      <div className="block md:hidden flex justify-between mt-4 ">
         {currentStep > 1 && (
           <button
             type="button"

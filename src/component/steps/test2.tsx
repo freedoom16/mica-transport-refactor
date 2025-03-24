@@ -341,7 +341,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-center text-gray-900 mb-4">
+      <h2 className="text-lg font-bold text-center text-gray-900 mb-2">
         Vehicle Information
       </h2>
 
@@ -373,7 +373,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
       )}
       {/* Vehicle input form */}
-      <div className="mb-6">
+      <div className="mb-2">
         <div>
           {message && <p className="text-sm text-red-500 mb-4">{message}</p>}
         </div>
@@ -417,7 +417,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         )}
 
         {/* Vehicle Year */}
-        <div className="relative mb-5 top-0">
+        <div className="relative mb-4 top-0">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Year
           </label>
@@ -452,7 +452,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           )}
         </div>
 
-        <div className="relative  mb-5  top-0">
+        <div className="relative  mb-4  top-0">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
             Vehicle Make
@@ -488,7 +488,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
 
         {/* Vehicle Model */}
-        <div className="relative z-4 w-full mb-5 group">
+        <div className="relative z-4 w-full mb-4 group">
           <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
             {selectedMaker ? "Vehicle Model" : "Select a maker first"}

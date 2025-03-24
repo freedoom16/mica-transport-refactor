@@ -11,7 +11,7 @@ const Forms = () => {
           <p className="text-[20px] md:hidden text-gray-900 font-bold mb-2 text-center p-5">
             Shipping Quote Calculator
           </p>
-          <div className=" w-full  md:w-full block lg:hidden">
+          <div className="w-full  md:w-full block lg:hidden">
             <QouetForm />
           </div>
         </div>
