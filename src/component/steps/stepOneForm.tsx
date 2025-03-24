@@ -164,18 +164,20 @@ const StepOne: React.FC<StepOneProps> = ({
   const handleInputChange = (name: any, value: any) => {
     // Dynamically call the corresponding setter based on the field name
     // Remove non-digit characters
-    value = value.replace(/\D/g, "");
+    if (name === "pickupContactPhone" || name === "dropoffContactPhone") {
+      value = value.replace(/\D/g, "");
 
-    // Format phone number as (xxx) xxx-xxxx
-    if (value.length <= 3) {
-      value = `(${value}`;
-    } else if (value.length <= 6) {
-      value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-    } else {
-      value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
-        6,
-        10
-      )}`;
+      // Format phone number as (xxx) xxx-xxxx
+      if (value.length <= 3) {
+        value = `(${value}`;
+      } else if (value.length <= 6) {
+        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+      } else {
+        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
+          6,
+          10
+        )}`;
+      }
     }
     switch (name) {
       case "pickupContactName":

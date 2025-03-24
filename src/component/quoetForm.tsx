@@ -497,16 +497,40 @@ const QouetForm: React.FC = () => {
       addressTypeForDeliver: addressTypeForDeliver,
       addressTypeForPickup: addressTypeForPickup,
       firstName: firstName,
+      lastName: lastName,
       isDerivable: isDerivable,
       email: email,
       phoneNumber: phone,
-      vehicleYear: parseInt(vehicleYear),
-      vehicleMake: vehicleModel, // Assuming the vehicle model is being sent as "make"
-      vehicleModel: vehicleModel,
+      vehicles: vehicles.map((vehicle: any) => ({
+        vehicleYear: parseInt(vehicle.vehicleYear) || null,
+        vehicleMake: vehicle.vehicleMake || "",
+        vehicleModel: vehicle.vehicleModel || "",
+        category: vehicle.category || "",
+        type: vehicle.type || "",
+        isDrivable: vehicle.isDrivable || false,
+      })),
       transportType: vehicleType,
-      status: "pending", // Assuming 'pending' is a default status
+      status: "pending",
+      pickUpDate: pickUpDate?.toISOString() || null,
+      pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
+      pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
+      pickUpTimeOption: pickUpTimeOption,
+      pickUpTime: pickUpTime,
+      pickUpTimeRangeStart: pickUpTimeRangeStart,
+      pickUpTimeRangeEnd: pickUpTimeRangeEnd,
+      deliveryDate: deliveryDate?.toISOString() || null,
+      deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
+      deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
+      deliveryTimeOption: deliveryTimeOption,
+      deliveryTime: deliveryTime,
+      deliveryTimeRangeStart: deliveryTimeRangeStart,
+      deliveryTimeRangeEnd: deliveryTimeRangeEnd,
+      pickupContactName: pickupContactName,
+      pickupContactPhone: pickupContactPhone,
+      dropoffContactName: dropoffContactName,
+      dropoffContactPhone: dropoffContactPhone,
+      shipmentDate: shipmentDate,
     };
-
     try {
       await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
 
