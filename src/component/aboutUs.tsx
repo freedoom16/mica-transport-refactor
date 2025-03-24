@@ -60,48 +60,75 @@ const SectionOne = () => {
               <QouetForm />
             </div>
           </section> */}
-          <div className="flex flex-col  md:p-0 lg:flex-row items-center relative">
-            <div className="w-full bg-white rounded-[32px] shadow-lg md:relative mt-12">
-              <div className="p-8">
-                <h2 className="text-center mb-8 text-gray-900">
-                  <span className="text-[35px] ">{stepContent.title}</span>
-                </h2>
-                <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
-                  <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {currentItems.map((point, index) => (
-                      <div
-                        key={index}
-                        className="p mb-4 text-gray-900 flex items-center"
+          <section
+            id="shiplux"
+            className="w-full h-fit flex flex-col-reverse md:flex-row gap-4 mb-[60px]"
+          >
+            <div className="hidden md:block flex md:w-[50%] rounded-[32px] h-[500px] relative">
+              <img
+                alt="destination image"
+                sizes="100vw"
+                srcSet="/car/imageOpen2.jpeg"
+                src="/car/imageOpen2.jpeg"
+                decoding="async"
+                data-nimg="fill"
+                className=" md:w-full rounded-[32px] shadow-lg object-cover h-full"
+                loading="lazy"
+                style={{
+                  position: "absolute",
+                  height: "100%",
+                  width: "100%",
+                  left: 0,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  color: "transparent",
+                }}
+              />
+            </div>
+            <div className="w-full md:w-[55%] bg-white rounded-[32px] shadow-lg mt-12 md:mt-0 ">
+              <div>
+                {" "}
+                <div className="p-8">
+                  <h2 className="text-center mb-8 text-gray-900">
+                    <span className="text-[35px] ">{stepContent.title}</span>
+                  </h2>
+                  <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
+                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {currentItems.map((point, index) => (
+                        <div
+                          key={index}
+                          className="p mb-4 text-gray-900 flex items-center"
+                        >
+                          <FontAwesomeIcon
+                            icon={faStar}
+                            className="text-gray-900 w-4 h-4 mr-2"
+                          />
+                          <span className="text-[20px]">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex w-full justify-between mt-4">
+                      <button
+                        onClick={handlePrevious}
+                        disabled={currentPage === 0}
+                        className="px-4 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
                       >
-                        <FontAwesomeIcon
-                          icon={faStar}
-                          className="text-gray-900 w-4 h-4 mr-2"
-                        />
-                        <span className="text-[20px]">{point}</span>
-                      </div>
-                    ))}
-                  </div>
-                  {/* Pagination buttons with justify-between */}
-                  <div className="flex w-full justify-between mt-4">
-                    <button
-                      onClick={handlePrevious}
-                      disabled={currentPage === 0}
-                      className="px-4 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
-                    >
-                      Previous
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      disabled={currentPage === totalPages - 1}
-                      className="px-6 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
-                    >
-                      Next
-                    </button>
+                        Previous
+                      </button>
+                      <button
+                        onClick={handleNext}
+                        disabled={currentPage === totalPages - 1}
+                        className="px-6 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
+                      >
+                        Next
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </section>

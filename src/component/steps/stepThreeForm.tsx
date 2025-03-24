@@ -14,6 +14,7 @@ interface StepThreeProps {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
+  error: any;
   setErrorsContact: React.Dispatch<React.SetStateAction<any>>;
   errorsContact: any;
 }
@@ -31,6 +32,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
   isLoading,
   isSuccess,
   isError,
+  error,
   setErrorsContact,
   errorsContact,
 }) => {
@@ -73,6 +75,12 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
     }
 
     setErrorsContact(newErrors);
+  };
+
+  const [isDealer, setIsDealer] = useState<boolean | null>(null); // Track if the user is a dealer/business
+
+  const handleRadioChange = (value: any) => {
+    setIsDealer(value === true);
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -209,32 +217,50 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         )}
       </div>
 
-      <div className="relative z-0 w-full mb-5 group flex flex-row">
-        <label className="block text-sm font-medium text-gray-900 mr-2">
-          Are you a dealer or business? <span className="text-red-500">*</span>
-        </label>
-        <div className="flex items-center justify-center space-x-6">
-          <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name="is_drivable"
-              value="true"
-              // onChange={(e: any) => setIsDerivable(e.target.value === "true")}
-              className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
-            />
-            <span className="text-sm text-gray-900">Yes</span>
+      <div>
+        <div className="relative z-0 w-full mb-5 group flex flex-row">
+          <label className="block text-sm font-medium text-gray-900 mr-2">
+            Are you a dealer or business?{" "}
+            <span className="text-red-500">*</span>
           </label>
-          <label className="flex items-center space-x-2">
-            <input
-              type="radio"
-              name="is_drivable"
-              value="false"
-              // onChange={(e) => setIsDerivable(e.target.value === "false")}
-              className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
-            />
-            <span className="text-sm text-gray-900">No</span>
-          </label>
+          <div className="flex items-center justify-center space-x-6">
+            <label className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="is_drivable"
+                value="true"
+                onChange={() => handleRadioChange(true)}
+                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+              />
+              <span className="text-sm text-gray-900">Yes</span>
+            </label>
+            <label className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="is_drivable"
+                value="false"
+                onChange={() => handleRadioChange(false)}
+                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+              />
+              <span className="text-sm text-gray-900">No</span>
+            </label>
+          </div>
         </div>
+
+        {/* Conditional Company Name Input */}
+        {isDealer && (
+          <div className="relative z-0 w-full mb-5 group">
+            <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+              {" "}
+              Company Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your company name"
+              className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
+            />
+          </div>
+        )}
       </div>
       {/* <button
         type="submit"
@@ -251,7 +277,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       {isSuccess && (
         <div className="mt-4 text-green-500">Quote added successfully!</div>
       )}
-      {isError && <div className="mt-4 text-red-500">Error occurred!</div>}
+      {isError && <div className="mt-4 text-red-500">Error occurred! </div>}
     </div>
   );
 };

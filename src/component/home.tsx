@@ -33,7 +33,7 @@ export default function Home(props: IHomeProps) {
 
           {/* Right Section: Form */}
           <div
-            className=" z-[150] p-4 rounded-xl  max-w-lg w-full mt-6 md:mt-12 hidden md:block"
+            className=" z-[150] p-4 rounded-xl  max-w-lg w-full mt-6 md:mt-12 hidden lg:block"
             // style={{ boxShadow: "0 -59px 500px -5px " }}
           >
             {/* <p className="text-[20px]  font-bold  font-montserrat text-center">
