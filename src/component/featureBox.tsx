@@ -1,3 +1,5 @@
+import { faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const FeaturesBox = () => {
@@ -19,10 +21,16 @@ const FeaturesBox = () => {
 
       {/* Transport Icon */}
       <div className="flex flex-col items-center justify-center p-2 rounded">
-        <img
+        {/* <img
           src="truck-icon2.svg"
           alt="Transport Icon"
           className="w-16 h-8 font-bold text-blue-900"
+        /> */}
+        <FontAwesomeIcon
+          icon={faUserTie}
+          width={32}
+          height={16}
+          className="w-8 h-8"
         />
         <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
           Professional
