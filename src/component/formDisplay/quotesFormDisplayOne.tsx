@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetQuoetsByIDQuery } from "../../../src/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
-import DIsplayFormSkeleton from "../displayFormSkeleton";
+import DIsplayFormSkeleton from "./displayFormSkeleton";
 
 const QuoteFormDisplayOne: React.FC = () => {
   const [pickupLocation, setPickupLocation] = useState("");
