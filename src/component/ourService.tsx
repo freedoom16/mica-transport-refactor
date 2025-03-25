@@ -1,9 +1,24 @@
 "use client";
 
 import React, { useState } from "react";
+import Carousel from "./Carousel";
 
 const Services = () => {
-  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [selectedService, setSelectedService] = useState<string | null>(
+    "Enclosed car shipping"
+  );
+  const imagesOpen = [
+    "/car/imageOpen2.jpeg",
+    "/car/imageOpen1.jpeg",
+    "/car/imageOpen3.jpeg",
+  ];
+
+  const imagesEnclosed = [
+    "/car/imageenclosed1.jpeg",
+    "/car/imageenclosed2.jpeg",
+    "/car/imageenclosed3.jpeg",
+    "/car/imageenclosed4.jpeg",
+  ];
 
   const services = [
     {
@@ -43,7 +58,7 @@ const Services = () => {
     >
       <div className="container mx-auto flex space-x-6 flex-col md:flex-row">
         {/* Left Section */}
-        <div className="w-full lg:w-[45%] bg-white rounded-[28px] p-8 flex flex-col">
+        <div className="w-full lg:w-[50%] bg-white rounded-[28px] p-8 flex flex-col">
           <p className="  text-[35px] font-bold rounded-[100px] text-center px-6 py-[10px] mb-6">
             Services
           </p>
@@ -80,15 +95,42 @@ const Services = () => {
               </div>
               {/* Expandable Content for Mobile */}
               {selectedService === service.title && (
-                <div className="w-full block md:hidden flex flex-col gap-4 p-4 bg-[#F9F9F9] rounded-[24px] mt-4">
+                <div className="w-full block md:hidden flex flex-col gap-4  bg-[#F9F9F9] rounded-[24px] mt-4">
                   <div className="w-full h-[252px] relative">
                     <div className="w-full h-full booking-gradient opacity-50 absolute z-10 rounded-[24px]" />
-                    <img
+                    {/* <img
                       alt="service image"
                       src={service.img}
                       className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
-                    />
-                    <p className="text-white text-[24px] font-medium absolute z-10 bottom-5 left-4 capitalize">
+                    /> */}
+                    {selectedService === "Enclosed car shipping" && (
+                      <div>
+                        {" "}
+                        <Carousel images={imagesEnclosed} />
+                      </div>
+                    )}
+                    {selectedService === "Open car shipping" && (
+                      <div>
+                        {" "}
+                        <Carousel images={imagesOpen} />
+                      </div>
+                    )}
+                    {selectedService === "USA" && (
+                      <div>
+                        <img
+                          alt="service image"
+                          src="/car/USAMap.jpg"
+                          className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
+                        />
+                      </div>
+                    )}
+                    {selectedService === null && (
+                      <div>
+                        {" "}
+                        <Carousel images={imagesOpen} />
+                      </div>
+                    )}
+                    <p className="text-[#6DB8D1] text-[24px] font-medium absolute z-10 bottom-5 left-4 capitalize">
                       {service.title}
                     </p>
                   </div>
@@ -102,24 +144,54 @@ const Services = () => {
         </div>
 
         {/* Right Section */}
-        <div className="w-full lg:w-[54%]  hidden md:block flex flex-col gap-0 md:gap-4 md:space-y-4">
-          <div className="w-full h-[252px] lg:h-[70%] relative">
+        <div className="w-full lg:w-[50%]  hidden md:block flex flex-col gap-0 md:gap-4 md:space-y-4">
+          <div className="w-full h-auto lg:h-[70%] relative">
             <div className="w-full h-[252px] lg:h-full booking-gradient opacity-50 absolute z-10 rounded-[24px]" />
-            <img
+            {/* <img
               alt="service image"
               src={
                 services.find((service) => service.title === selectedService)
                   ?.img || "/car/imageOpen2.jpeg"
               }
               className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
-            />
-            <p className="text-white text-[35px] font-medium absolute z-10 bottom-5 left-8 capitalize">
+            /> */}
+            {selectedService === "Enclosed car shipping" && (
+              <div>
+                {" "}
+                <Carousel images={imagesEnclosed} />
+              </div>
+            )}
+            {selectedService === "Open car shipping" && (
+              <div>
+                {" "}
+                <Carousel images={imagesOpen} />
+              </div>
+            )}
+            {selectedService === "USA" && (
+              <div>
+                {" "}
+                <img
+                  alt="service image"
+                  src="/car/USAMap.jpg"
+                  className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
+                />
+              </div>
+            )}
+            {selectedService === null && (
+              <div>
+                {" "}
+                <Carousel images={imagesOpen} />
+              </div>
+            )}
+
+            {/* <Carousel images={imagesEnclosed} /> */}
+            <p className="text-[#6DB8D1] text-[25px] lg:text-[30px] font-medium absolute  z-10 bottom-2 left-8 capitalize">
               {selectedService || "Select a service"}
             </p>
           </div>
           <div
             style={{ backgroundColor: "rgb(255, 255, 255)" }}
-            className="w-full h-[29%] p-8 rounded-[24px] flex flex-col justify-between overflow-y-scroll styled-scroll"
+            className="w-full h-[29%] p-2 rounded-[24px] flex flex-col justify-between overflow-y-scroll styled-scroll"
           >
             {/* <p className="p-[10px] w-fit bg-white rounded-[100%] mb-4">
               <img
@@ -131,7 +203,7 @@ const Services = () => {
               />
             </p> */}
             <div>
-              <p className="text-[24px] font-medium leading-[32px] tracking-[0.1px]">
+              <p className="text-[20px] lg:text-[20px] font-medium leading-[32px] tracking-[0.1px]">
                 {services.find((service) => service.title === selectedService)
                   ?.description || "Please select a service to view details."}
               </p>

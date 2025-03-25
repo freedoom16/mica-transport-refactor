@@ -71,7 +71,7 @@ const SectionOne = () => {
             className="w-full h-fit flex flex-col-reverse md:flex-row gap-4 mb-[60px]"
           >
             <div className="w-full md:w-[50%] bg-white rounded-[32px] shadow-lg mt-12 md:mt-0 ">
-              <h2 className="text-center mb-6 text-black mt-4 pt-6">
+              <h2 className="text-center mb-3 text-black mt-4 pt-6">
                 <span className="text-[35px] font-bold">About Us</span>
               </h2>
               <div className="text-[20px] text-gray-900 text-justify space-y-4 p-4">
@@ -101,7 +101,7 @@ const SectionOne = () => {
                   )}
                 </div>
 
-                <div className="hidden lg:block">
+                <div className="hidden lg:block text-gray-900 ">
                   <p>
                     We understand the value of your vehicle and the importance
                     of on-time, damage-free delivery. Whether you’re a
@@ -155,7 +155,7 @@ const SectionOne = () => {
                           >
                             <FontAwesomeIcon
                               icon={faStar}
-                              className="text-gray-900 w-4 h-4 mr-2"
+                              className="text-gray-900 w-4 h-4 mr-2 border-2 border-[#6DB8D1] rounded-full"
                             />
                             <span className="text-[20px]">{point}</span>
                           </div>
