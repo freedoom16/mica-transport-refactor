@@ -248,11 +248,11 @@ const StepOne: React.FC<StepOneProps> = ({
               ))}
             </div>
           )}
-          {errorsLocation.pickupLocation && (
+          {/* {errorsLocation.pickupLocation && (
             <p className="text-sm text-red-500 ml-1 px-4 ">
               {errorsLocation.pickupLocation}
             </p>
-          )}
+          )} */}
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
@@ -288,11 +288,11 @@ const StepOne: React.FC<StepOneProps> = ({
               Auction Yard
             </option>
           </select>
-          {errorsLocation.addressTypeForPickup && (
+          {/* {errorsLocation.addressTypeForPickup && (
             <p className="text-sm text-red-500 ml-1 px-4 ">
               {errorsLocation.addressTypeForPickup}
             </p>
-          )}
+          )} */}
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
@@ -333,11 +333,11 @@ const StepOne: React.FC<StepOneProps> = ({
               ))}
             </div>
           )}
-          {errorsLocation.deliveryLocation && (
+          {/* {errorsLocation.deliveryLocation && (
             <p className="text-sm text-red-500 ml-1 px-4 ">
               {errorsLocation.deliveryLocation}
             </p>
-          )}
+          )} */}
         </div>
 
         <div className="relative z-0 w-full mb-5 group">
@@ -373,11 +373,11 @@ const StepOne: React.FC<StepOneProps> = ({
               Auction Yard
             </option>
           </select>
-          {errorsLocation.addressTypeForDeliver && (
+          {/* {errorsLocation.addressTypeForDeliver && (
             <p className="text-sm text-red-500 ml-1 px-4 ">
               {errorsLocation.addressTypeForDeliver}
             </p>
-          )}
+          )} */}
         </div>
 
         <div className="space-y-4">
@@ -440,11 +440,11 @@ const StepOne: React.FC<StepOneProps> = ({
                   placeholder="Pickup Contact Name"
                   required
                 />
-                {errorsLocation.pickupContactName && (
+                {/* {errorsLocation.pickupContactName && (
                   <p className="text-sm text-red-500 ml-1 px-4 ">
                     {errorsLocation.pickupContactName}
                   </p>
-                )}
+                )} */}
               </div>
               <div className="relative z-0 w-full mb-5 group">
                 <label
@@ -471,11 +471,11 @@ const StepOne: React.FC<StepOneProps> = ({
                   placeholder="Pickup Contact Phone Number"
                   required
                 />
-                {errorsLocation.pickupContactPhone && (
+                {/* {errorsLocation.pickupContactPhone && (
                   <p className="text-sm text-red-500 ml-1 px-4 ">
                     {errorsLocation.pickupContactPhone}
                   </p>
-                )}
+                )} */}
               </div>
             </div>
           )}
@@ -539,11 +539,11 @@ const StepOne: React.FC<StepOneProps> = ({
                   placeholder="Dropoff Contact Name"
                   required
                 />
-                {errorsLocation.dropoffContactName && (
+                {/* {errorsLocation.dropoffContactName && (
                   <p className="text-sm text-red-500 ml-1 px-4 ">
                     {errorsLocation.dropoffContactName}
                   </p>
-                )}
+                )} */}
               </div>
               <div className="relative z-0 w-full mb-5 group">
                 <label
@@ -570,11 +570,11 @@ const StepOne: React.FC<StepOneProps> = ({
                   placeholder="Dropoff Contact Phone Number"
                   required
                 />
-                {errorsLocation.dropoffContactPhone && (
+                {/* {errorsLocation.dropoffContactPhone && (
                   <p className="text-sm text-red-500 ml-1 px-4 ">
                     {errorsLocation.dropoffContactPhone}
                   </p>
-                )}
+                )} */}
               </div>
             </div>
           )}

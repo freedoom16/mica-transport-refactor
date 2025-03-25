@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -7,8 +8,12 @@ import {
   faLinkedin,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import CareerModal from "./modal/carrier";
+import PartnershipModal from "./modal/partnership";
 
 const Footer: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
   return (
     <footer className="bg-[#ECECEC] ">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -25,7 +30,7 @@ const Footer: React.FC = () => {
               </span>
             </a>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-4">
             <div>
               <ul className="text-gray-900  font-medium">
                 <li className="mb-4">
@@ -51,6 +56,39 @@ const Footer: React.FC = () => {
                   <a href="#" className="hover:underline">
                     Review
                   </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <ul className="text-gray-900  font-medium">
+                <li className="mb-4">
+                  {/* <a href="#" className="hover:underline"> */}
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="  hover:underline "
+                  >
+                    Career
+                  </button>
+                  {/* </a> */}
+                  <CareerModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                  />
+                </li>
+                <li className="mb-4">
+                  {/* <a href="#" className="hover:underline"> */}
+                  <button
+                    onClick={() => setIsPartnershipModalOpen(true)}
+                    className="  hover:underline "
+                  >
+                    Partnership
+                  </button>
+                  {/* </a> */}
+
+                  <PartnershipModal
+                    isOpen={isPartnershipModalOpen}
+                    onClose={() => setIsPartnershipModalOpen(false)}
+                  />
                 </li>
               </ul>
             </div>

@@ -81,7 +81,7 @@ export default function NavBar(props: INavBarProps) {
           isSticky
             ? "fixed top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
             : "relative top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
-        } px-8 py-4 flex justify-between items-center transition-colors duration-300`}
+        } px-16 lg:px-40 py-4 flex justify-between items-center transition-colors duration-300`}
       >
         {/* Brand Logo */}
         <div
@@ -133,7 +133,7 @@ export default function NavBar(props: INavBarProps) {
         </button>
 
         {/* Mobile icons display  */}
-        <div className={`flex gap-4 items-center lg:hidden text-gray-900 `}>
+        <div className={`flex gap-4 items-center xl:hidden text-gray-900 `}>
           <a
             href="tel:+1 (404) 988-4505"
             className="hover:text-gray-300 text-lg"
@@ -149,7 +149,7 @@ export default function NavBar(props: INavBarProps) {
         </div>
 
         {/* Phone Number and Request a Quote (Desktop) */}
-        <div className={`hidden lg:flex gap-6 items-center text-gray-900`}>
+        <div className={`hidden xl:flex gap-6 items-center text-gray-900`}>
           <div>
             <a
               href="tel:+1 (404) 988-4505"
@@ -164,18 +164,18 @@ export default function NavBar(props: INavBarProps) {
               (404) 988-4505
             </a>
           </div>
-          <button>
+          <button className="">
             <a
               href="/#home"
-              className=" text-base text-white bg-[#6DB8D1] py-2 px-4 rounded-full font-bold font-montserrat hover:text-gray-700"
+              className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1]  font-bold text-[14px] leading-[17px]   py-3 px-6 rounded-[32px] shadow-none"
             >
               <FontAwesomeIcon
                 icon={faCar}
-                className="px-2"
+                className=""
                 width={16}
                 height={16}
               />{" "}
-              Request a quote
+              REQUEST A QUOTE
             </a>
           </button>
         </div>

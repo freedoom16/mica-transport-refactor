@@ -133,7 +133,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         newErrors.vehicleYear =
           value &&
           /^\d{4}$/.test(value) &&
-          value >= 1990 &&
+          value >= 1900 &&
           value <= currentYear
             ? "" // Valid year
             : "Enter a valid year ";
@@ -313,7 +313,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const generateYearOptions = () => {
     const currentYear = new Date().getFullYear();
     const years = [];
-    for (let year = 1990; year <= currentYear; year++) {
+    for (let year = 1900; year <= currentYear; year++) {
       years.push(year.toString());
     }
     return years;
@@ -380,9 +380,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         {/* Vehicle Maker */}
         <div className="w-full flex gap-4 text-gray-900 mb-4">
           <div
-            className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
-              type === "Open" ? "border-[#ECECEC]" : "border-gray-300"
-            }`}
+            className={`w-2/4 h-14 flex  items-center text-xl cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+              type === "Open"
+                ? "border-2 border-[#6DB8D1]"
+                : " border-1 border-gray-300"
+            }${errors.type ? " border-1 border-red-500" : ""}`}
             onClick={() => handleTypeChange("Open")}
           >
             <input
@@ -396,9 +398,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <p>Open</p>
           </div>
           <div
-            className={`w-2/4 h-14 flex items-center cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
-              type === "Enclosed" ? "border-[#ECECEC]" : "border-gray-300"
-            }`}
+            className={`w-2/4 h-14 flex items-center text-xl  cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+              type === "Enclosed"
+                ? "border-2 border-[#6DB8D1]"
+                : " border-1 border-gray-300"
+            }${errors.type ? " border-1 border-red-500" : ""}`}
             onClick={() => handleTypeChange("Enclosed")}
           >
             <input
@@ -412,9 +416,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <p>Enclosed</p>
           </div>
         </div>
-        {errors.type && (
+        {/* {errors.type && (
           <p className="text-sm text-red-500 mt-1 px-4 mb-3">{errors.type}</p>
-        )}
+        )} */}
 
         {/* Vehicle Year */}
         <div className="relative mb-4 top-0">
@@ -445,11 +449,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             </ul>
           )}
 
-          {errors.vehicleYear && (
+          {/* {errors.vehicleYear && (
             <p className="text-sm text-red-500 mt-1 px-4">
               {errors.vehicleYear}
             </p>
-          )}
+          )} */}
         </div>
 
         <div className="relative  mb-4  top-0">
@@ -480,11 +484,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               ))}
             </ul>
           )}
-          {errors.vehicleMaker && (
+          {/* {errors.vehicleMaker && (
             <p className="text-sm text-red-500 mt-1 px-4">
               {errors.vehicleMaker}
             </p>
-          )}
+          )} */}
         </div>
 
         {/* Vehicle Model */}
@@ -517,11 +521,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               ))}
             </ul>
           )}
-          {errors.vehicleModel && (
+          {/* {errors.vehicleModel && (
             <p className="text-sm text-red-500 mt-1 px-4">
               {errors.vehicleModel}
             </p>
-          )}
+          )} */}
         </div>
 
         <div className="relative mb-4">
@@ -531,7 +535,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
           <div
             onClick={toggleDropdown}
-            className="w-full h-14 px-3 py-2 text-sm text-gray-900 mt-1 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1] cursor-pointer"
+            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 mt-1 rounded-xl bg-white border-1 ${
+              errors.category ? "border-red-500" : "border-[#938f99]"
+            }`}
           >
             {categoryInput ? categoryInput : "--- Select Vehicle Type ---"}
           </div>
@@ -554,9 +560,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               ))}
             </div>
           )}
-          {errors.category && (
+          {/* {errors.category && (
             <p className="text-sm text-red-500 mt-1 px-4">{errors.category}</p>
-          )}
+          )} */}
         </div>
 
         <div className="relative z-0 w-full mb-2 group flex flex-row">
@@ -594,13 +600,13 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         )}
       </div>
       {/* Add Vehicle Button */}
-      <button
+      {/* <button
         type="button"
-        className="bg-[#6DB8D1] text-white py-2 px-4 rounded-full"
+        className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
         onClick={handleAddVehicle}
       >
         Add Vehicle
-      </button>
+      </button> */}
     </div>
   );
 };

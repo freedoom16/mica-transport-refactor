@@ -5,8 +5,8 @@ import React from "react";
 const FeaturesBox = () => {
   return (
     <div
-      className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[90%] xl:w-[80%] h-[179px] bg-white rounded-[32px] p-4 grid grid-cols-3 md:grid-cols-3 gap-4"
-      style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
+      className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[80%] xl:w-[70%] h-[179px] bg-white rounded-[32px] p-4 grid grid-cols-3 md:grid-cols-3 gap-4"
+      style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.1)" }}
     >
       {/* Support Icon */}
       <div className="flex flex-col items-center justify-center">
