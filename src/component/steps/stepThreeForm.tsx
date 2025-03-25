@@ -10,6 +10,10 @@ interface StepThreeProps {
   setEmail: (value: string) => void;
   phone: string;
   setPhone: (value: string) => void;
+  isDealer: boolean | null;
+  setIsDealer: (value: boolean | null) => void;
+  dealerCompanName: string;
+  setDealerCompanName: (value: string) => void;
   //   isStep3Valid: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -28,6 +32,11 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
   setEmail,
   phone,
   setPhone,
+  isDealer,
+  setIsDealer,
+  dealerCompanName,
+  setDealerCompanName,
+
   //   isStep3Valid,
   isLoading,
   isSuccess,
@@ -76,8 +85,6 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
 
     setErrorsContact(newErrors);
   };
-
-  const [isDealer, setIsDealer] = useState<boolean | null>(null); // Track if the user is a dealer/business
 
   const handleRadioChange = (value: any) => {
     setIsDealer(value === true);
@@ -130,11 +137,11 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" First Name"
         />
-        {errorsContact.firstName && (
+        {/* {errorsContact.firstName && (
           <p className="text-sm text-red-500 ml-1 px-4 ">
             {errorsContact.firstName}
           </p>
-        )}
+        )} */}
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
@@ -157,11 +164,11 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" Last Name"
         />
-        {errorsContact.lastName && (
+        {/* {errorsContact.lastName && (
           <p className="text-sm text-red-500 ml-1 px-4 ">
             {errorsContact.lastName}
           </p>
-        )}
+        )} */}
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
@@ -210,11 +217,11 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           placeholder=" Phone Number"
         />
         {phoneError && <div className="mt-2 text-red-500">{phoneError}</div>}
-        {errorsContact.phone && (
+        {/* {errorsContact.phone && (
           <p className="text-sm text-red-500 ml-1 px-4 ">
             {errorsContact.phone}
           </p>
-        )}
+        )} */}
       </div>
 
       <div>
@@ -257,6 +264,8 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             <input
               type="text"
               placeholder="Enter your company name"
+              value={dealerCompanName}
+              onChange={(e) => setDealerCompanName(e.target.value)}
               className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
             />
           </div>

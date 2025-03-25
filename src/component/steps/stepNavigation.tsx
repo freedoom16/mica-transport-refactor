@@ -6,6 +6,10 @@ interface StepNavigationProps {
   totalSteps: number;
   onNext: () => void;
   onPrev: () => void;
+  vehicles: any[];
+  setErrors: React.Dispatch<React.SetStateAction<any>>;
+  currentVehicleIndex: number;
+
   isNextEnabled: boolean | string;
 }
 
@@ -14,6 +18,9 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
   totalSteps,
   onNext,
   onPrev,
+  vehicles,
+  setErrors,
+  currentVehicleIndex,
   isNextEnabled,
 }) => {
   const scrollToQuote = () => {
@@ -31,6 +38,42 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
   const handleNext = () => {
     if (currentStep < totalSteps) {
       onNext();
+    }
+  };
+
+  const handleAddVehicle = () => {
+    if (
+      !vehicles[currentVehicleIndex].vehicleMaker ||
+      !vehicles[currentVehicleIndex].vehicleModel ||
+      !vehicles[currentVehicleIndex].vehicleYear ||
+      vehicles[currentVehicleIndex].isDrivable === null ||
+      !vehicles[currentVehicleIndex].type ||
+      !vehicles[currentVehicleIndex].category
+    ) {
+      const newErrors = {
+        vehicleMaker: vehicles[currentVehicleIndex].vehicleMaker
+          ? ""
+          : "Vehicle maker is required",
+        vehicleModel: vehicles[currentVehicleIndex].vehicleModel
+          ? ""
+          : "Vehicle model is required",
+        vehicleYear: vehicles[currentVehicleIndex].vehicleYear
+          ? ""
+          : "Vehicle year is required",
+        isDrivable:
+          vehicles[currentVehicleIndex].isDrivable !== null
+            ? ""
+            : "Drivable status is required",
+        type: vehicles[currentVehicleIndex].type
+          ? ""
+          : "This field is required",
+        category: vehicles[currentVehicleIndex].category
+          ? ""
+          : "Vehicle catagory is required",
+      };
+
+      setErrors(newErrors);
+      return;
     }
   };
 
@@ -67,25 +110,36 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             <div className="">Previous</div>
           </button>
         )}
-        <div className="flex-grow"></div>
-        {currentStep < totalSteps ? (
+        {currentStep === 1 && (
           <button
             type="button"
-            className={`px-8 py-2 rounded-full shadow-xl   bg-white   
+            className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1]  text-left font-bold py-2 px-4 rounded-full"
+            onClick={handleNext}
+          >
+            Add Vehicle
+          </button>
+        )}
+        <div className="flex"></div>
+        {currentStep < totalSteps ? (
+          <div>
+            <button
+              type="button"
+              className={`px-8 py-2 rounded-full shadow-xl   bg-white   
               ${
                 isNextEnabled
                   ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
                   : "border-1 border-gray-900 text-gray-900"
               }
             `}
-            onClick={handleNext}
-          >
-            Next
-          </button>
+              onClick={handleNext}
+            >
+              Next
+            </button>
+          </div>
         ) : (
           <button
             type="submit"
-            className={`px-4 py-2 bg-white shadow-xl border border-gray-900 text-gray-900 rounded-full   ${
+            className={`px-4 py-2 bg-white shadow-xl text-gray-900 rounded-full   ${
               isNextEnabled
                 ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
                 : " border-1 border-gray-900 text-gray-900"
@@ -107,11 +161,20 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             <div className="">Previous</div>
           </button>
         )}
+        {currentStep === 1 && (
+          <button
+            type="button"
+            className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1]  text-left font-bold py-2 px-4 rounded-full"
+            onClick={handleNextMobaile}
+          >
+            Add Vehicle
+          </button>
+        )}
         <div className="flex-grow"></div>
         {currentStep < totalSteps ? (
           <button
             type="button"
-            className={`px-8 py-2 rounded-full shadow-xl border border-gray-900 bg-white  text-gray-900   ${
+            className={`px-8 py-2 rounded-full shadow-xl bg-white  text-gray-900   ${
               isNextEnabled
                 ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
                 : "border-1 border-gray-900 text-gray-900"
@@ -123,7 +186,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         ) : (
           <button
             type="submit"
-            className={`px-4 py-2 bg-white shadow-xl border border-gray-900 text-gray-900 rounded-full   ${
+            className={`px-4 py-2 bg-white shadow-xl text-gray-900 rounded-full   ${
               isNextEnabled
                 ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
                 : "border-1 border-gray-900 text-gray-900"

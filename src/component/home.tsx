@@ -13,7 +13,7 @@ export default function Home(props: IHomeProps) {
   useEffect(() => {
     const fetchQuotes = async () => {
       try {
-        const response = await axios.get("https://146.190.145.241/quotes");
+        const response = await axios.get("http://146.190.145.241/quotes");
         setQuotes(response.data);
       } catch (error) {
         console.error("Error fetching quotes:", error);

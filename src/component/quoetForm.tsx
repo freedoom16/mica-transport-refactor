@@ -35,6 +35,8 @@ const QouetForm: React.FC = () => {
   // };
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [addVehicleIsTrue, setAddVehicleIsTrue] = useState("");
+
   const [errors, setErrors] = useState({
     vehicleMaker: "",
     vehicleModel: "",
@@ -104,10 +106,10 @@ const QouetForm: React.FC = () => {
     } else {
       const currentYear = new Date().getFullYear();
       if (
-        vehicles[currentVehicleIndex]?.vehicleYear < 1990 ||
+        vehicles[currentVehicleIndex]?.vehicleYear < 1900 ||
         vehicles[currentVehicleIndex]?.vehicleYear > currentYear
       ) {
-        newErrors.vehicleYear = `Enter a valid year between 1990 and ${currentYear}`;
+        newErrors.vehicleYear = `Enter a valid year between 1900 and ${currentYear}`;
       } else {
         newErrors.vehicleYear = ""; // No error if all checks pass
       }
@@ -280,6 +282,72 @@ const QouetForm: React.FC = () => {
   const nextStep = () => {
     console.log("nextStep cleicked", isStep2Valid);
     setErrorMessage(""); // Reset the error message
+    const quoteDataaa = {
+      vehicles: vehicles.map((vehicle: any) => ({
+        vehicleYear: parseInt(vehicle.vehicleYear) || null,
+        vehicleMake: vehicle.vehicleMake || "",
+        vehicleModel: vehicle.vehicleModel || "",
+        category: vehicle.category || "",
+        type: vehicle.type || "",
+        isDrivable: vehicle.isDrivable || false,
+      })),
+
+      pickUpDateOption: pickUpDateOption,
+      pickUpDate: pickUpDate?.toISOString() || null,
+      pickUpTimeOption: pickUpTimeOption,
+      pickUpTime: pickUpTime,
+
+      deliveryDateOption: deliveryDateOption,
+      deliveryDate: deliveryDate?.toISOString() || null,
+      deliveryTimeOption: deliveryTimeOption,
+      deliveryTime: deliveryTime,
+
+      pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
+      pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
+      pickUpTimeRangeStart: pickUpTimeRangeStart,
+      pickUpTimeRangeEnd: pickUpTimeRangeEnd,
+
+      deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
+      deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
+      deliveryTimeRangeStart: deliveryTimeRangeStart,
+      deliveryTimeRangeEnd: deliveryTimeRangeEnd,
+
+      pickupLocation: pickupLocation,
+      deliveryLocation: deliveryLocation,
+      addressTypeForDeliver: addressTypeForDeliver,
+      addressTypeForPickup: addressTypeForPickup,
+
+      isPickupContact: isPickupContact,
+      isDropoffContact: isDropoffContact,
+      pickupContactName: pickupContactName,
+      pickupContactPhone: pickupContactPhone,
+      dropoffContactName: dropoffContactName,
+      dropoffContactPhone: dropoffContactPhone,
+
+      fullName: firstName + " " + lastName,
+      email: email,
+      phone: phone,
+      isDealer: isDealer || false,
+      dealerCompanName: dealerCompanName,
+
+      status: "pending",
+    };
+    const steptwo = {
+      pickupLocation: pickupLocation,
+      deliveryLocation: deliveryLocation,
+      addressTypeForDeliver: addressTypeForDeliver,
+      addressTypeForPickup: addressTypeForPickup,
+
+      isPickupContact: isPickupContact,
+      isDropoffContact: isDropoffContact,
+      pickupContactName: pickupContactName,
+      pickupContactPhone: pickupContactPhone,
+      dropoffContactName: dropoffContactName,
+      dropoffContactPhone: dropoffContactPhone,
+    };
+    console.log("########################################## ");
+    console.log(quoteDataaa);
+    console.log(steptwo);
 
     if (step === 3 && !isStep1Valid) {
       validateLocation();
@@ -424,6 +492,8 @@ const QouetForm: React.FC = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [isDealer, setIsDealer] = useState<boolean | null>(null);
+  const [dealerCompanName, setDealerCompanName] = useState("");
 
   // step date fields
   // Pick Up Date and Time states
@@ -505,48 +575,58 @@ const QouetForm: React.FC = () => {
       }
     }
     const quoteData = {
-      pickup: pickupLocation,
-      delivery: deliveryLocation,
-      addressTypeForDeliver: addressTypeForDeliver,
-      addressTypeForPickup: addressTypeForPickup,
-      firstName: firstName,
-      lastName: lastName,
-      isDerivable: isDerivable,
-      email: email,
-      phoneNumber: phone,
       vehicles: vehicles.map((vehicle: any) => ({
         vehicleYear: parseInt(vehicle.vehicleYear) || null,
-        vehicleMake: vehicle.vehicleMake || "",
+        vehicleMaker: vehicle.vehicleMaker || "",
         vehicleModel: vehicle.vehicleModel || "",
         category: vehicle.category || "",
         type: vehicle.type || "",
         isDrivable: vehicle.isDrivable || false,
       })),
-      transportType: vehicleType,
-      status: "pending",
+
+      pickUpDateOption: pickUpDateOption,
       pickUpDate: pickUpDate?.toISOString() || null,
-      pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
-      pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
       pickUpTimeOption: pickUpTimeOption,
       pickUpTime: pickUpTime,
-      pickUpTimeRangeStart: pickUpTimeRangeStart,
-      pickUpTimeRangeEnd: pickUpTimeRangeEnd,
+
+      deliveryDateOption: deliveryDateOption,
       deliveryDate: deliveryDate?.toISOString() || null,
-      deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
-      deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
       deliveryTimeOption: deliveryTimeOption,
       deliveryTime: deliveryTime,
+
+      pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
+      pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
+      pickUpTimeRangeStart: pickUpTimeRangeStart,
+      pickUpTimeRangeEnd: pickUpTimeRangeEnd,
+
+      deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
+      deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
       deliveryTimeRangeStart: deliveryTimeRangeStart,
       deliveryTimeRangeEnd: deliveryTimeRangeEnd,
+
+      pickupLocation: pickupLocation,
+      deliveryLocation: deliveryLocation,
+      addressTypeForDeliver: addressTypeForDeliver,
+      addressTypeForPickup: addressTypeForPickup,
+
+      isPickupContact: isPickupContact,
+      isDropoffContact: isDropoffContact,
       pickupContactName: pickupContactName,
       pickupContactPhone: pickupContactPhone,
       dropoffContactName: dropoffContactName,
       dropoffContactPhone: dropoffContactPhone,
-      shipmentDate: shipmentDate,
+
+      fullName: firstName + " " + lastName,
+      email: email,
+      phone: phone,
+      isDealer: isDealer || false,
+      dealerCompanName: dealerCompanName,
+
+      status: "pending",
     };
     try {
       await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
-
+      setVehicles([]);
       // Reset the form or navigate to a confirmation page on success
       setStep(1); // Optional: Reset form after submission
     } catch (err) {
@@ -634,6 +714,10 @@ const QouetForm: React.FC = () => {
               setEmail={setEmail}
               phone={phone}
               setPhone={setPhone}
+              isDealer={isDealer}
+              setIsDealer={setIsDealer}
+              dealerCompanName={dealerCompanName}
+              setDealerCompanName={setDealerCompanName}
               // isStep3Valid={isStep3Valid}
               isLoading={isLoading}
               isSuccess={isSuccess}
@@ -696,6 +780,9 @@ const QouetForm: React.FC = () => {
             totalSteps={totalSteps}
             onNext={nextStep}
             onPrev={prevStep}
+            vehicles={vehicles}
+            setErrors={setErrors}
+            currentVehicleIndex={currentVehicleIndex}
             isNextEnabled={
               (step === 1 && isStep2Valid) ||
               (step === 2 && isStep4Valid) ||
