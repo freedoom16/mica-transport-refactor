@@ -85,7 +85,7 @@ export const usersApi = createApi({
     }),
     getQuoetsByID: builder.query<User | any, string>({
       query: (userId) => ({
-        url: `/bill-of-lading/${userId}`,
+        url: `/quotes/${userId}`,
         method: "GET",
       }),
       providesTags: ["User"],

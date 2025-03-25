@@ -638,7 +638,7 @@ const QouetForm: React.FC = () => {
       id="quote"
       className="w-full bg-white rounded-[32px]"
       // style={{ boxShadow: "25px 25px 25px 25px rgba(0, 0, 0, 0.1)" }}
-      // style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
+      style={{ boxShadow: "25px -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
     >
       <div>
         {/* {isModalOpen && (

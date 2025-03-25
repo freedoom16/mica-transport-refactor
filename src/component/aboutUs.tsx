@@ -68,9 +68,9 @@ const SectionOne = () => {
           </section> */}
           <section
             id="shiplux"
-            className="w-full h-fit flex flex-col-reverse md:flex-row gap-4 mb-[60px]"
+            className="w-full h-fit flex flex-col-reverse  lg:flex-row gap-4 mb-[60px]"
           >
-            <div className="w-full md:w-[50%] bg-white rounded-[32px] shadow-lg mt-12 md:mt-0 ">
+            <div className="w-full lg:w-[50%] bg-white rounded-[32px] shadow-lg mt-12 lg:mt-0 ">
               <h2 className="text-center mb-3 text-black mt-4 pt-6">
                 <span className="text-[35px] font-bold">About Us</span>
               </h2>
@@ -120,7 +120,7 @@ const SectionOne = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full md:w-[50%] bg-white rounded-[32px] shadow-lg mt-12 md:mt-0 ">
+            <div className="w-full lg:w-[50%] bg-white rounded-[32px] shadow-lg mt-12 lg:mt-0 ">
               <div>
                 {" "}
                 <div className="p-8">
