@@ -56,7 +56,7 @@ const CustomContentSection = () => {
           </a>
         </div>
 
-        <div className="hidden md:block py-2">
+        <div className="hidden w-full md:block py-2 ">
           <a
             id="lp-pom-button-237"
             href="/#home"
@@ -64,7 +64,7 @@ const CustomContentSection = () => {
           >
             <FontAwesomeIcon
               icon={faCar}
-              className="px-2"
+              className="lg:px-0 px-2  "
               width={16}
               height={16}
             />{" "}
