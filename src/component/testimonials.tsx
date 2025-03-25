@@ -51,9 +51,9 @@ const Testimonials = () => {
 
     {
       id: 6,
-      name: "Fillimon B",
+      name: "Milikiyas M",
       position: "Car Enthusiast",
-      image: "/review/review2.png",
+      image: "/review/review9.jpg",
       title: "Excellent Communication and Service",
       description:
         "As a first-time user, I was nervous about transporting my car, but they made it easy. The team was responsive, and I appreciated the updates during transit. My vehicle arrived earlier than expected, in perfect condition. Highly recommend!",

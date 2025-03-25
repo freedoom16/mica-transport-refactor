@@ -185,13 +185,13 @@ const Services = () => {
             )}
 
             {/* <Carousel images={imagesEnclosed} /> */}
-            <p className="text-[#6DB8D1] text-[25px] lg:text-[30px] font-medium absolute  z-10 bottom-2 left-8 capitalize">
+            <p className="text-white text-[35px] font-medium absolute z-10 bottom-5 left-8 capitalize">
               {selectedService || "Select a service"}
             </p>
           </div>
           <div
             style={{ backgroundColor: "rgb(255, 255, 255)" }}
-            className="w-full h-[29%] p-2 rounded-[24px] flex flex-col justify-between overflow-y-scroll styled-scroll"
+            className="w-full h-[29%] p-8 rounded-[24px] flex flex-col justify-between overflow-y-scroll styled-scroll"
           >
             {/* <p className="p-[10px] w-fit bg-white rounded-[100%] mb-4">
               <img
@@ -203,7 +203,7 @@ const Services = () => {
               />
             </p> */}
             <div>
-              <p className="text-[20px] lg:text-[20px] font-medium leading-[32px] tracking-[0.1px]">
+              <p className="text-[24px] font-medium leading-[32px] tracking-[0.1px]">
                 {services.find((service) => service.title === selectedService)
                   ?.description || "Please select a service to view details."}
               </p>
