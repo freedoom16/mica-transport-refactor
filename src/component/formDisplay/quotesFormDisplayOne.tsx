@@ -54,33 +54,34 @@ const QuoteFormDisplayOne: React.FC = () => {
 
   const Error: any = error;
 
-  const quoteData = {
-    pickupLocation: "123 Main St, Cityville, NY",
-    pickupLocationName: "test test",
-    pickupLocationPhone: "+12345678998",
-    deliveryLocation: "456 Elm St, Townsville, TX",
-    deliveryLocationName: "freedom m",
-    deliveryLocationPhone: "+12345678998",
-    shipmentDate: "03-15-2025",
-    vehicleYear: "2020",
-    vehicleModel: "Toyota Camry",
-    vehicleType: "open",
-    firstName: "John",
-    lastName: "Doe",
-    email: "johndoe@example.com",
-    phone: "+1 (555) 123-4567",
-    paymentMethod: "down_time",
-    paymentLink: "https://payment.link/your-payment-url",
-    pickupDate: "03-14-2025",
-    deliveryDate: "03-16-2025",
-    pickupTime: "10:00 AM",
-    deliveryTime: "2:00 PM",
-    option: "Before",
-    pickupDateOption: "On", // Set as "on"
-    deliveryDateOption: "Before", // Set as "before"
-    pickupTimeOption: "Between", // Set as "between"
-    deliveryTimeOption: "On", // Set as "on"
-  };
+  const quoteData = data?.data;
+  // {
+  //   pickupLocation: "123 Main St, Cityville, NY",
+  //   pickupLocationName: "test test",
+  //   pickupLocationPhone: "+12345678998",
+  //   deliveryLocation: "456 Elm St, Townsville, TX",
+  //   deliveryLocationName: "freedom m",
+  //   deliveryLocationPhone: "+12345678998",
+  //   shipmentDate: "03-15-2025",
+  //   vehicleYear: "2020",
+  //   vehicleModel: "Toyota Camry",
+  //   vehicleType: "open",
+  //   firstName: "John",
+  //   lastName: "Doe",
+  //   email: "johndoe@example.com",
+  //   phone: "+1 (555) 123-4567",
+  //   paymentMethod: "down_time",
+  //   paymentLink: "https://payment.link/your-payment-url",
+  //   pickupDate: "03-14-2025",
+  //   deliveryDate: "03-16-2025",
+  //   pickupTime: "10:00 AM",
+  //   deliveryTime: "2:00 PM",
+  //   option: "Before",
+  //   pickupDateOption: "On", // Set as "on"
+  //   deliveryDateOption: "Before", // Set as "before"
+  //   pickupTimeOption: "Between", // Set as "between"
+  //   deliveryTimeOption: "On", // Set as "on"
+  // };
 
   // Check if the quote data has loaded
   useEffect(() => {
@@ -96,7 +97,6 @@ const QuoteFormDisplayOne: React.FC = () => {
       setVehicleModel(quoteData.vehicleModel); // This was changed based on the JSON structure
       setVehicleType(quoteData.vehicleType);
       setFirstName(quoteData.firstName);
-      setLastName(quoteData.lastName);
       setEmail(quoteData.email);
       setPhone(quoteData.phone);
       setPaymentMethod(quoteData.paymentMethod);
@@ -124,9 +124,10 @@ const QuoteFormDisplayOne: React.FC = () => {
     );
   }
 
-  //   if (errorMessage) {
-  //     return <div>{errorMessage}</div>;
-  //   }
+  if (isError) {
+    console.log(Error);
+    return <div>{Error?.message}</div>;
+  }
 
   return (
     <section id="quote">
@@ -137,147 +138,273 @@ const QuoteFormDisplayOne: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
             {/* First Name */}
             <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">First Name:</p>
-              <p className="w-2/3">{firstName}</p>
-            </div>
-
-            {/* Last Name */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Last Name:</p>
-              <p className="w-2/3">{lastName}</p>
+              <p className="font-semibold w-1/3">Full Name:</p>
+              <p className="w-2/3">{quoteData.fullName}</p>
             </div>
 
             {/* Email Address */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Email Address:</p>
-              <p className="w-2/3">{email}</p>
-            </div>
+            {quoteData.email && (
+              <div className="flex justify-between items-center">
+                <p className="font-semibold w-1/3">Email Address:</p>
+                <p className="w-2/3">{quoteData.email}</p>
+              </div>
+            )}
 
             {/* Phone Number */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Phone Number:</p>
-              <p className="w-2/3">{phone}</p>
+              <p className="w-2/3">{"+1" + quoteData.phone}</p>
             </div>
+
+            {/* Is Dealer */}
+            {quoteData.isdealer && (
+              <div className="flex justify-between items-center">
+                <p className="font-semibold w-1/3">Is Dealer:</p>
+                <p className="w-2/3">
+                  {quoteData.isdealer ? "Dealer" : "Not Dealer"}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
         {/* Step 1: Pickup, Delivery, and Shipment Date */}
         <div className="bg-gray-800 p-6 mb-4">
           <h2 className="text-lg font-bold text-white mb-4">
-            Shipment Details
+            Pickup and Dropoff Location Details
           </h2>
           {/* <div>{Error.data}</div> */}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-4 text-gray-300">
             {/* Pickup Location */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Pickup Location:</p>
-              <p className="w-2/3">{pickupLocation}</p>
+              <p className="w-2/3">{quoteData.pickupLocation}</p>
             </div>
 
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Pickup Contact Name:</p>
-              <p className="w-2/3">{pickupLocationName}</p>
-            </div>
+            {quoteData.isPickupContact === false ? (
+              <div>
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Pickup Contact Name:</p>
+                  <p className="w-2/3">{quoteData.pickupContactName}</p>
+                </div>
 
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Pickup Contact Phone:</p>
-              <p className="w-2/3">{pickupLocationPhone}</p>
-            </div>
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Pickup Contact Phone:</p>
+                  <p className="w-2/3">{"+1" + quoteData.pickupContactPhone}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-between items-center">
+                <p className="font-semibold w-1/3">At Point of Pickup </p>
+                {/* <p className="w-2/3">{"+1" + quoteData.pickupContactPhone}</p> */}
+              </div>
+            )}
 
             {/* Delivery Location */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Delivery Location:</p>
-              <p className="w-2/3">{deliveryLocation}</p>
+              <p className="w-2/3">{quoteData.deliveryLocation}</p>
             </div>
 
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Delivery Contact Name:</p>
-              <p className="w-2/3">{deliveryLocationName}</p>
-            </div>
+            {quoteData.isDropoffContact === false ? (
+              <div>
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Delivery Contact Name:</p>
+                  <p className="w-2/3">{quoteData.dropoffContactName}</p>
+                </div>
 
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Delivery Contact Phone:</p>
-              <p className="w-2/3">{deliveryLocationPhone}</p>
-            </div>
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Delivery Contact Phone:</p>
+                  <p className="w-2/3">
+                    {"+1" + quoteData.dropoffContactPhone}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-between items-center">
+                <p className="font-semibold w-1/3">At Point of Dropoff </p>
+                {/* <p className="w-2/3">{"+1" + quoteData.pickupContactPhone}</p> */}
+              </div>
+            )}
           </div>
         </div>
 
         {/* Pickup and Delivery Dates */}
         <div className="bg-gray-800 p-6 mb-4">
           <h2 className="text-lg font-bold text-white mb-4">
-            Shipment Date and TIme
+            Shipment Date and Time
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
             {/* Pickup Date */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Pickup Date:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{pickupDateOption}</p>
-                <p>{pickupDate}</p>
+                <p className="pr-2">{quoteData.pickUpDateOption}</p>
+                {/* Conditionally display date range if the option is 'between' */}
+                {quoteData.pickUpDateOption === "between" ? (
+                  <>
+                    <p>
+                      {new Date(
+                        quoteData.pickUpDateRangeStart
+                      ).toLocaleDateString()}{" "}
+                      -{" "}
+                      {new Date(
+                        quoteData.pickUpDateRangeEnd
+                      ).toLocaleDateString()}
+                    </p>
+                  </>
+                ) : (
+                  <p>{new Date(quoteData.pickUpDate).toLocaleDateString()}</p>
+                )}
               </p>
             </div>
             {/* Delivery Date */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Delivery Date:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{deliveryDateOption}</p>
-                <p>{deliveryDate}</p>
+                <p className="pr-2">{quoteData.deliveryDateOption}</p>
+                {/* Conditionally display date range if the option is 'between' */}
+                {quoteData.deliveryDateOption === "between" ? (
+                  <>
+                    <p>
+                      {new Date(
+                        quoteData.deliveryDateRangeStart
+                      ).toLocaleDateString()}{" "}
+                      -{" "}
+                      {new Date(
+                        quoteData.deliveryDateRangeEnd
+                      ).toLocaleDateString()}
+                    </p>
+                  </>
+                ) : (
+                  <p>{new Date(quoteData.deliveryDate).toLocaleDateString()}</p>
+                )}
               </p>
             </div>
             {/* Pickup Time */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Pickup Time:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{pickupTimeOption}</p>
-                <p>{pickupTime}</p>
+                <p className="pr-2">{quoteData.pickUpTimeOption}</p>
+                {/* Conditionally display time range if the option is 'between' */}
+                {quoteData.pickUpTimeOption === "between" ? (
+                  <>
+                    <p>
+                      {new Date(
+                        `1970-01-01T${quoteData.pickUpTimeRangeStart}:00`
+                      ).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}{" "}
+                      -
+                      {new Date(
+                        `1970-01-01T${quoteData.pickUpTimeRangeEnd}:00`
+                      ).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
+                    </p>
+                  </>
+                ) : (
+                  <p>
+                    {new Date(
+                      `1970-01-01T${quoteData.pickUpTime}:00`
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </p>
+                )}
               </p>
             </div>
             {/* Delivery Time */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Delivery Time:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{deliveryTimeOption}</p>
-                <p>{deliveryTime}</p>
+                <p className="pr-2">{quoteData.deliveryTimeOption}</p>
+                {/* Conditionally display time range if the option is 'between' */}
+                {quoteData.deliveryTimeOption === "between" ? (
+                  <>
+                    <p>
+                      {new Date(
+                        `1970-01-01T${quoteData.deliveryTimeRangeStart}:00`
+                      ).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}{" "}
+                      -
+                      {new Date(
+                        `1970-01-01T${quoteData.deliveryTimeRangeEnd}:00`
+                      ).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      })}
+                    </p>
+                  </>
+                ) : (
+                  <p>
+                    {new Date(
+                      `1970-01-01T${quoteData.deliveryTime}:00`
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </p>
+                )}
               </p>
             </div>
           </div>
         </div>
 
         {/* Step 2: Vehicle Info */}
+        {/* Step 2: Vehicle Info */}
         <div className="bg-gray-800 p-6 mb-4">
           <h2 className="text-lg font-bold text-white mb-4">Vehicle Info</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
-            {/* Vehicle Year */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Vehicle Year:</p>
-              <p className="w-2/3">{vehicleYear}</p>
-            </div>
+            {quoteData.vehicleInfo.map((vehicle: any, index: any) => (
+              <div key={vehicle._id} className="space-y-4">
+                {/* Vehicle Year */}
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Vehicle Year:</p>
+                  <p className="w-2/3">{vehicle.vehicleYear}</p>
+                </div>
 
-            {/* Vehicle Model */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Vehicle Maker:</p>
-              <p className="w-2/3">{vehicleModel}</p>
-            </div>
+                {/* Vehicle Maker */}
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Vehicle Maker:</p>
+                  <p className="w-2/3">{vehicle.vehicleMaker}</p>
+                </div>
 
-            {/* Vehicle Model */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Vehicle Model:</p>
-              <p className="w-2/3">{vehicleModel}</p>
-            </div>
+                {/* Vehicle Model */}
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Vehicle Model:</p>
+                  <p className="w-2/3">{vehicle.vehicleModel}</p>
+                </div>
 
-            {/* Vehicle Type */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Vehicle Type:</p>
-              <p className="w-2/3">{vehicleType}</p>
-            </div>
+                {/* Vehicle Type */}
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Vehicle Type:</p>
+                  <p className="w-2/3">{vehicleType}</p>{" "}
+                  {/* vehicleType should be defined elsewhere */}
+                </div>
 
-            <div className="flex justify-between items-center">
-              {/* <p className="font-semibold w-1/3">Vehicle Type:</p> */}
-              <p className="w-2/3 font-bold bg-green-700 p-2 rounded-lg text-center">
-                Drivable
-              </p>
-            </div>
+                {/* Drivable Status */}
+                <div className="flex justify-between items-center">
+                  <p className="w-2/3 font-bold bg-green-700 p-2 rounded-lg text-center">
+                    {vehicle.isDrivable === "true"
+                      ? "Drivable"
+                      : "Not Drivable"}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

@@ -575,7 +575,7 @@ const QouetForm: React.FC = () => {
       }
     }
     const quoteData = {
-      vehicles: vehicles.map((vehicle: any) => ({
+      vehicleInfo: vehicles.map((vehicle: any) => ({
         vehicleYear: parseInt(vehicle.vehicleYear) || null,
         vehicleMaker: vehicle.vehicleMaker || "",
         vehicleModel: vehicle.vehicleModel || "",
