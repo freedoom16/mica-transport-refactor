@@ -11,6 +11,7 @@ const Testimonials = () => {
       title: "Reliable and Stress-Free",
       description:
         "I used their services for an interstate move, and it was stress-free from start to finish. The team kept me informed throughout, and the driver was very professional. My car arrived on time and in great condition. It’s hard to find such reliable service these days!",
+      rating: 5,
     },
     {
       id: 2,
@@ -20,6 +21,7 @@ const Testimonials = () => {
       title: "Great Experience with Open Transport",
       description:
         "I had my fleet vehicle transported using their open transport service, and it was a great experience. The driver was punctual and followed all my instructions. The entire process was smooth, and my car arrived safely. Excellent service overall!",
+      rating: 5,
     },
     {
       id: 3,
@@ -29,6 +31,7 @@ const Testimonials = () => {
       title: "Outstanding Enclosed Transport",
       description:
         "Their enclosed transport services are fantastic! After dealing with multiple companies that failed to meet my expectations or caused unnecessary delays, this one stood out. The cost was slightly higher than some quotes, but it was completely worth it—no hidden fees or surprises",
+      rating: 5,
     },
     {
       id: 4,
@@ -38,6 +41,7 @@ const Testimonials = () => {
       title: "Professional Enclosed Transport",
       description:
         "Their enclosed transport is top-notch! My car was handled with care, and the team provided regular updates. The driver was courteous and made sure everything was secure. I’ll definitely use their services again for my luxury cars!",
+      rating: 5,
     },
     {
       id: 5,
@@ -47,8 +51,8 @@ const Testimonials = () => {
       title: "Seamless Open Transport Service",
       description:
         "This company delivered on its promises with open transport! The price was transparent and reasonable. Communication was amazing—I received updates via text and email, and the driver handled my car with care. Highly recommend!",
+      rating: 5,
     },
-
     {
       id: 6,
       name: "Milikiyas M",
@@ -57,6 +61,7 @@ const Testimonials = () => {
       title: "Excellent Communication and Service",
       description:
         "As a first-time user, I was nervous about transporting my car, but they made it easy. The team was responsive, and I appreciated the updates during transit. My vehicle arrived earlier than expected, in perfect condition. Highly recommend!",
+      rating: 5,
     },
   ];
 
@@ -68,7 +73,6 @@ const Testimonials = () => {
   };
 
   useEffect(() => {
-    // Initial check and resize listener
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -95,6 +99,30 @@ const Testimonials = () => {
     return () => clearInterval(interval);
   }, [isDesktop]);
 
+  const handlePointClick = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const renderStars = (rating: number) => {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <svg
+          key={i}
+          xmlns="http://www.w3.org/2000/svg"
+          fill={i < rating ? "yellow" : "gray"}
+          viewBox="0 0 24 24"
+          className="font-bold"
+          width="16"
+          height="16"
+        >
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+        </svg>
+      );
+    }
+    return stars;
+  };
+
   return (
     <section id="reviews" className="py-20 px-6 bg-[#ECECEC]">
       <div className="container mx-auto">
@@ -118,16 +146,16 @@ const Testimonials = () => {
                   className={`flex-none ${isDesktop ? "w-1/3" : "w-full"} px-2`}
                 >
                   <div
-                    className="p-6  md:p-12 rounded-lg border bg-white border-gray-200 mb-8 text-gray-900 flex flex-col h-full"
+                    className="p-6 md:p-12 rounded-lg border bg-white border-gray-200 mb-8 text-gray-900 flex flex-col h-full"
                     style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
                   >
                     <p className="text-xl font-semibold">{testimonial.title}</p>
-                    <p className="mt-4 p-2 flex-grow ">
+                    <p className="mt-4 p-2 flex-grow">
                       {testimonial.description}
                     </p>
                     <div className="flex items-center mt-2 lg:mt-6">
                       <img
-                        className="w-20 h-20 mr-2  rounded-full"
+                        className="w-20 h-20 mr-2 rounded-full"
                         src={testimonial.image}
                         alt={testimonial.name}
                       />
@@ -137,6 +165,9 @@ const Testimonials = () => {
                           {testimonial.position}
                         </p>
                       </div>
+                    </div>
+                    <div className="mt-2 flex">
+                      {renderStars(testimonial.rating)}
                     </div>
                   </div>
                 </div>
@@ -148,7 +179,7 @@ const Testimonials = () => {
           <div>
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 font-bold  transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
+              className="absolute left-0 top-1/2 font-bold transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
             >
               &#8249;
             </button>
@@ -159,6 +190,20 @@ const Testimonials = () => {
               &#8250;
             </button>
           </div>
+        </div>
+
+        {/* Points Below */}
+
+        <div className="flex justify-center mt-6">
+          {Array.from({ length: totalSlides }).map((_, index) => (
+            <button
+              key={index}
+              onClick={() => handlePointClick(index)}
+              className={`w-3 h-3 mx-1 rounded-full ${
+                currentIndex === index ? "bg-blue-500" : "bg-gray-400"
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>

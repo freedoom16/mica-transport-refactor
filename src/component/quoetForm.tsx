@@ -636,7 +636,7 @@ const QouetForm: React.FC = () => {
   return (
     <section
       id="quote"
-      className=" bg-white rounded-[32px]"
+      className="w-full bg-white rounded-[32px]"
       // style={{ boxShadow: "25px 25px 25px 25px rgba(0, 0, 0, 0.1)" }}
       // style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
     >
@@ -648,8 +648,8 @@ const QouetForm: React.FC = () => {
 
         <form
           onSubmit={handleSubmit}
-          className="max-w-xl   bg-white p-4 md:px-4 rounded-[32px] "
-          style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
+          className="max-w-xl mx-auto  bg-white p-4 md:px-4 rounded-[32px] "
+          // style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
           <p className="text-[20px] text-gray-900 font-bold hidden md:block  text-center ">
             Shipping Quote Calculator

@@ -15,8 +15,8 @@ const PartnershipModal: React.FC<PartnershipModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-transparent bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white p-6 rounded-lg w-96">
+    <div className="fixed inset-0 flex justify-center items-center z-50 bg-black/50">
+      <div className="bg-white p-6 rounded-lg w-96 shadow-lg relative">
         <h2 className="text-gray-900 text-center text-lg mb-4">
           Partnership Form
         </h2>
@@ -51,14 +51,14 @@ const PartnershipModal: React.FC<PartnershipModalProps> = ({
           />
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-between">
           <button
             onClick={onClose}
-            className="bg-red-500 text-white px-4 py-2 rounded-lg mr-2"
+            className="bg-white text-gray-900 border border-gray-900 px-4 py-2 rounded-full mr-2"
           >
             Close
           </button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+          <button className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] px-4 py-2 rounded-full">
             Submit
           </button>
         </div>

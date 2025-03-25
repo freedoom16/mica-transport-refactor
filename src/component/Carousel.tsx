@@ -47,7 +47,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
           >
             <img
               src={image}
-              className="absolute block max-w-full h:auto md:h-[600px] lg:h-auto object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+              className="absolute block max-w-full h:auto md:h-[500px] lg:h-auto object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
               alt={`Slide ${index + 1}`}
             />
           </div>
