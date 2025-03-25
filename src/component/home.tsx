@@ -32,9 +32,9 @@ export default function Home(props: IHomeProps) {
         {/* Content */}
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-start md:justify-between py-12 lg:py-18 px-8 lg:px-34 h-full">
           {/* Left Section */}
-          <div className="text-gray-900 max-w-[900px]">
+          <div className="text-gray-900 max-w-[900px] ">
             <div id="lp-pom-text-481" className="mb-3 px-6 pt-20 pb-10 md:py-6">
-              <p className="text-[35px] lg:text-[60px] font-extrabold leading-[50px] md:leading-[77px] font-montserrat text-left md:text-left">
+              <p className="text-[35px] relative lg:text-[60px] font-extrabold leading-[50px] md:leading-[77px] font-montserrat text-left md:text-left">
                 ENCLOSED OR OPEN AUTO TRANSPORT
               </p>
             </div>
@@ -49,15 +49,19 @@ export default function Home(props: IHomeProps) {
           </div>
 
           {/* Right Section: Form */}
-          <div
-            className=" z-[150] p-4 rounded-xl  max-w-lg w-full mt-6 md:mt-12 hidden lg:block"
-            // style={{ boxShadow: "0 -59px 500px -5px " }}
-          >
-            {/* <p className="text-[20px]  font-bold  font-montserrat text-center">
-              Shipping Quote Calculator
-            </p> */}
+          <div className=" z-[150] px-4 rounded-xl  max-w-lg w-full mt-6 md:mt-12 hidden lg:block min-h-[800px]">
             <HomePageForm />
           </div>
+          {/* <div
+            className="absolute right-8 top-full transform -translate-y-1/2 z-[150] p-4 rounded-xl max-w-lg w-full"
+            style={{
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              height: "400px", // Fixed height
+              overflowY: "auto", // Add scrolling for content
+            }}
+          >
+            <HomePageForm />
+          </div> */}
         </div>
       </div>
     </section>

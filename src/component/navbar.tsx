@@ -164,14 +164,14 @@ export default function NavBar(props: INavBarProps) {
               (404) 988-4505
             </a>
           </div>
-          <button>
+          <button className="">
             <a
               href="/#home"
-              className="bg-white border-2 border-[#6DB8D1] text-[#6DB8D1]   py-3 px-6 rounded-full font-bold font-montserrat "
+              className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1]  font-bold text-[14px] leading-[17px]   py-3 px-6 rounded-[32px] shadow-none"
             >
               <FontAwesomeIcon
                 icon={faCar}
-                className="px-2"
+                className=""
                 width={16}
                 height={16}
               />{" "}

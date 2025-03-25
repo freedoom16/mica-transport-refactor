@@ -44,7 +44,7 @@ const CustomContentSection = () => {
           <a
             id="lp-pom-button-237"
             href="/#quote-form"
-            className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1]  font-bold text-[14px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1]  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}
