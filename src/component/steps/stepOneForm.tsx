@@ -806,7 +806,7 @@ const StepOne: React.FC<StepOneProps> = ({
       </div>
 
       {currentVehicleIndex >= 1 &&
-        currentLocationIndex <= currentVehicleIndex - 1 && (
+        currentLocationIndex < currentVehicleIndex - 1 && (
           <button
             type="button"
             className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
