@@ -1,4 +1,6 @@
 "use client";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
 interface StepOneProps {
@@ -26,6 +28,10 @@ interface StepOneProps {
   setDropoffContactPhone: (value: string) => void;
   setErrorsLocation: React.Dispatch<React.SetStateAction<any>>;
   errorsLocation: any;
+  location: any[];
+  setLocation: React.Dispatch<React.SetStateAction<any[]>>;
+  currentVehicleIndex: number;
+  sameLocation: boolean | null;
 }
 
 const StepOne: React.FC<StepOneProps> = ({
@@ -53,6 +59,10 @@ const StepOne: React.FC<StepOneProps> = ({
   setDropoffContactPhone,
   setErrorsLocation,
   errorsLocation,
+  location,
+  setLocation,
+  currentVehicleIndex,
+  sameLocation,
 }) => {
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
   const [deliverySuggestions, setDeliverySuggestions] = useState<string[]>([]);
@@ -85,6 +95,131 @@ const StepOne: React.FC<StepOneProps> = ({
 
   // const API_KEY = "AIzaSyBTklQmwDrHzunpPxUs1xoyNMG-tPpY_XI"; // Replace with your actual API key
   // const API_URL = "https://maps.googleapis.com/maps/api/geocode/json";
+  const [currentLocationIndex, setCurrentLocationIndex] = useState<number>(0);
+
+  const updateVehicleField = (field: string, value: any) => {
+    // Create a copy of the location array
+    const updateLocation = [...location];
+
+    if (!updateLocation[currentLocationIndex]) {
+      updateLocation[currentLocationIndex] = {
+        pickupLocation: "",
+        deliveryLocation: "",
+        addressTypeForDeliver: "",
+        addressTypeForPickup: "",
+
+        isPickupContact: null,
+        isDropoffContact: null,
+        pickupContactName: "",
+        pickupContactPhone: "",
+        dropoffContactName: "",
+        dropoffContactPhone: "",
+      };
+    }
+
+    // Update the current vehicle at the specified index
+    const currentVehicle = updateLocation[currentLocationIndex];
+
+    // Update the field in the current vehicle object
+    switch (field) {
+      case "pickupLocation":
+        currentVehicle.pickupLocation = value;
+        break;
+      case "deliveryLocation":
+        currentVehicle.deliveryLocation = value;
+        break;
+      case "addressTypeForDeliver":
+        currentVehicle.addressTypeForDeliver = value;
+        break;
+      case "addressTypeForPickup":
+        currentVehicle.addressTypeForPickup = value;
+        break;
+      case "isPickupContact":
+        currentVehicle.isPickupContact = value;
+        break;
+      case "isDropoffContact":
+        currentVehicle.isDropoffContact = value;
+        break;
+      case "pickupContactName":
+        currentVehicle.pickupContactName = value;
+        break;
+      case "pickupContactPhone":
+        currentVehicle.pickupContactPhone = value;
+        break;
+      case "dropoffContactName":
+        currentVehicle.dropoffContactName = value;
+        break;
+      case "dropoffContactPhone":
+        currentVehicle.dropoffContactPhone = value;
+        break;
+      default:
+        break;
+    }
+
+    // Save the updated location array back to the state
+    setLocation(updateLocation);
+    validateField(field, value);
+  };
+
+  const handleNextLocation = () => {
+    console.log("Adding new vehicle details");
+
+    if (
+      !pickupLocation ||
+      !deliveryLocation ||
+      !addressTypeForDeliver ||
+      !addressTypeForPickup
+    ) {
+      return;
+    }
+
+    if (
+      isPickupContact === false &&
+      (!pickupContactName.trim() || !pickupContactPhone.trim())
+    ) {
+      return;
+    }
+
+    // Check if the dropoff contact information is incomplete when not the point of contact
+    if (
+      isDropoffContact === false &&
+      (!dropoffContactName.trim() || !dropoffContactPhone.trim())
+    ) {
+      return;
+    }
+    const updatedVehicles = [...location];
+
+    // Update the vehicle at the current index or add a new one
+    updatedVehicles[currentLocationIndex] = {
+      pickupLocation,
+      deliveryLocation,
+      addressTypeForDeliver,
+      addressTypeForPickup,
+      isPickupContact,
+      isDropoffContact,
+      pickupContactName,
+      pickupContactPhone,
+      dropoffContactName,
+      dropoffContactPhone,
+    };
+
+    setLocation(updatedVehicles);
+
+    // Reset the form fields
+    setPickupLocation("");
+    setDeliveryLocation("");
+    setAddressTypeForDeliver("");
+    setAddressTypeForPickup("");
+    setIsPickupContact(null);
+    setIsDropoffContact(null);
+    setPickupContactName("");
+    setPickupContactPhone("");
+    setDropoffContactName("");
+    setDropoffContactPhone("");
+
+    // Optionally increment the index for adding new vehicles
+    setCurrentLocationIndex((prevIndex) => prevIndex + 1);
+  };
 
   const validateField = (field: string, value: any) => {
     const newErrors = { ...errorsLocation };
@@ -140,6 +275,7 @@ const StepOne: React.FC<StepOneProps> = ({
   const handlePickupChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPickupLocation(value);
+    updateVehicleField("pickupLocation", value);
     validateField("pickupLocation", value);
 
     if (value.length > 2) {
@@ -152,6 +288,9 @@ const StepOne: React.FC<StepOneProps> = ({
   const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setDeliveryLocation(value);
+
+    updateVehicleField("deliveryLocation", value);
+
     validateField("deliveryLocation", value);
 
     if (value.length > 2) {
@@ -179,6 +318,8 @@ const StepOne: React.FC<StepOneProps> = ({
         )}`;
       }
     }
+    updateVehicleField(name, value);
+
     switch (name) {
       case "pickupContactName":
         setPickupContactName(value);
@@ -202,13 +343,79 @@ const StepOne: React.FC<StepOneProps> = ({
     }
   };
 
+  const handleRemoveVehicle = (index: number) => {
+    const updatedVehicles = location.filter((_, i) => i !== index);
+    setLocation(updatedVehicles);
+
+    // Adjust the currentVehicleIndex if necessary
+    if (index === currentLocationIndex && currentLocationIndex > 0) {
+      setCurrentLocationIndex(currentLocationIndex - 1);
+    } else if (index < currentLocationIndex) {
+      setCurrentLocationIndex(currentLocationIndex - 1);
+    }
+  };
+
+  console.log("location");
+  console.log(location);
+  console.log(currentLocationIndex, " ", currentVehicleIndex);
   return (
     <div>
       {/* Render all the inputs and elements related to Step One here */}
+      <div className="mb-2">
+        {location.slice(0, currentLocationIndex).map((vehicle, index) => (
+          <div
+            key={index}
+            className="flex flex-col lg:flex-row space-y-2  shadow-lg rounded-[32px]"
+          >
+            <div className="flex flex-col lg:flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid w-full">
+              {/* lg:grid-cols-[1fr_1fr_1fr_1fr_min-content] */}
+              {/* Pickup Location */}
+              <div className="flex flex-row lg:flex-col pl-2">
+                <strong>Pickup Location</strong> {vehicle?.pickupLocation}
+              </div>
+              {/* Delivery Location */}
+              <div className="flex flex-row lg:flex-col pl-2">
+                <strong>Delivery Location</strong> {vehicle?.deliveryLocation}
+              </div>
+              {/* Address Type for Pickup */}
+              <div className="flex flex-row lg:flex-col pl-2">
+                <strong>Pickup Address Type</strong>{" "}
+                {vehicle?.addressTypeForPickup}
+              </div>
+              {/* Address Type for Delivery */}
+              <div className="flex flex-row lg:flex-col pl-2">
+                <strong>Delivery Address Type</strong>{" "}
+                {vehicle?.addressTypeForDeliver}
+              </div>
+              {/* Pickup Contact */}
+              {/* <div className="flex flex-col">
+                <strong>Pickup Contact</strong> {vehicle?.pickupContactName} -{" "}
+                {vehicle?.pickupContactPhone}
+              </div> */}
+              {/* Dropoff Contact */}
+              {/* <div className="flex flex-col">
+                <strong>Dropoff Contact</strong> {vehicle?.dropoffContactName} -{" "}
+                {vehicle?.dropoffContactPhone}
+              </div> */}
+              {/* Remove Button */}
+              <div className="flex w-8">
+                <button
+                  className="text-red-500"
+                  onClick={() => handleRemoveVehicle(index)}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <div>
         <p className="text-gray-900 mb-4 text-center font-bold">
-          Address Information
+          {sameLocation
+            ? " Address Information"
+            : `Add vehcile ${currentLocationIndex + 1}  information `}
         </p>
         <div className="relative z-0 w-full mb-5 group">
           <label
@@ -239,6 +446,7 @@ const StepOne: React.FC<StepOneProps> = ({
                   key={index}
                   onClick={() => {
                     setPickupLocation(suggestion);
+                    updateVehicleField("pickupLocation", suggestion);
                     setPickupSuggestions([]);
                   }}
                   className="px-4 py-2 cursor-pointer  hover:bg-[#6DB8D1] text-gray-900"
@@ -269,6 +477,7 @@ const StepOne: React.FC<StepOneProps> = ({
             onChange={(e) => {
               setAddressTypeForPickup(e.target.value);
               validateField("addressTypeForPickup", e.target.value);
+              updateVehicleField("addressTypeForPickup", e.target.value);
             }}
             className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
               errorsLocation.addressTypeForPickup
@@ -324,6 +533,8 @@ const StepOne: React.FC<StepOneProps> = ({
                   key={index}
                   onClick={() => {
                     setDeliveryLocation(suggestion);
+                    updateVehicleField("deliveryLocation", suggestion);
+
                     setDeliverySuggestions([]);
                   }}
                   className="px-4 py-2 cursor-pointer  hover:bg-[#6DB8D1] text-gray-900"
@@ -353,6 +564,7 @@ const StepOne: React.FC<StepOneProps> = ({
             value={addressTypeForDeliver}
             onChange={(e) => {
               setAddressTypeForDeliver(e.target.value);
+              updateVehicleField("addressTypeForDeliver", e.target.value);
               validateField("addressTypeForDeliver", e.target.value);
             }}
             className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
@@ -392,7 +604,10 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="pickup_contact"
                   value="true"
-                  onChange={(e) => setIsPickupContact(true)}
+                  onChange={(e) => {
+                    setIsPickupContact(true);
+                    updateVehicleField("isPickupContact", true);
+                  }}
                   checked={isPickupContact === true}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
                 />
@@ -403,7 +618,10 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="pickup_contact"
                   value="false"
-                  onChange={(e) => setIsPickupContact(false)}
+                  onChange={(e) => {
+                    setIsPickupContact(false);
+                    updateVehicleField("isPickupContact", false);
+                  }}
                   checked={isPickupContact === false}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
@@ -491,7 +709,10 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="dropoff_contact"
                   value="true"
-                  onChange={(e) => setIsDropoffContact(true)}
+                  onChange={(e) => {
+                    setIsDropoffContact(true);
+                    updateVehicleField("isDropoffContact", true);
+                  }}
                   checked={isDropoffContact === true}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
@@ -502,7 +723,10 @@ const StepOne: React.FC<StepOneProps> = ({
                   type="radio"
                   name="dropoff_contact"
                   value="false"
-                  onChange={(e) => setIsDropoffContact(false)}
+                  onChange={(e) => {
+                    setIsDropoffContact(false);
+                    updateVehicleField("isDropoffContact", false);
+                  }}
                   checked={isDropoffContact === false}
                   className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
                 />
@@ -579,38 +803,18 @@ const StepOne: React.FC<StepOneProps> = ({
             </div>
           )}
         </div>
-
-        {/* <div className="relative z-0 w-full mb-5 group">
-              <input
-                type="date"
-                name="shipment_date"
-                id="shipment_date"
-                value={shipmentDate}
-                onChange={(e) => setShipmentDate(e.target.value)}
-                className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
-                required
-              />
-              <label
-                htmlFor="shipment_date"
-                className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500"
-              >
-                Shipment Date
-              </label>
-            </div> */}
-
-        {/* <button
-          type="button"
-          onClick={nextStep}
-          disabled={!isStep1Valid}
-          className={`w-full px-4 py-2 mt-4 text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-            isStep1Valid
-              ? "bg-blue-600 text-gray-900 hover:bg-blue-700"
-              : "bg-gray-600 text-gray-400 cursor-not-allowed"
-          }`}
-        >
-          Next
-        </button> */}
       </div>
+
+      {currentVehicleIndex > 1 &&
+        currentLocationIndex < currentVehicleIndex - 1 && (
+          <button
+            type="button"
+            className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
+            onClick={handleNextLocation}
+          >
+            Next Location
+          </button>
+        )}
 
       {/* Include other form fields from step one */}
     </div>

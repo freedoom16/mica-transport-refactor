@@ -385,7 +385,25 @@ const QouetForm: React.FC = () => {
     //   setStep((prevStep) => prevStep + 1);
     // }
     if (isStep2Valid) {
-      setCurrentVehicleIndex(currentVehicleIndex + 1);
+      const updatedVehicles = [...vehicles];
+
+      // Update the vehicle at the current index or add a new one
+      updatedVehicles[currentVehicleIndex] = {
+        vehicleMaker: vehicles.makerInput,
+        vehicleModel: vehicles.modelInput,
+        vehicleYear: vehicles.yearInput,
+        type: vehicles.type,
+        isDrivable: vehicles.isDrivable,
+        category: vehicles.categoryInput,
+      };
+
+      setVehicles(updatedVehicles);
+
+      // Reset the form fields
+
+      // Optionally increment the index for adding new vehicles
+      // setCurrentVehicleIndex((prevIndex) => currentVehicleIndex + 1);
+      // setCurrentVehicleIndex(currentVehicleIndex + 1);
     }
 
     if (step < totalSteps) setStep(step + 1);
@@ -426,7 +444,7 @@ const QouetForm: React.FC = () => {
     //   filteredModels: [],
     // },
   ]);
-  const [vehicleType, setVehicleType] = useState("");
+  const [location, setLocation] = useState<any[]>([]);
 
   // Step 3 fields
   const [firstName, setFirstName] = useState("");
@@ -637,6 +655,10 @@ const QouetForm: React.FC = () => {
               setDropoffContactPhone={setDropoffContactPhone}
               setErrorsLocation={setErrorsLocation}
               errorsLocation={errorsLocation}
+              location={location}
+              setLocation={setLocation}
+              currentVehicleIndex={currentVehicleIndex}
+              sameLocation={sameLocation}
             />
           )}
           {step === 1 && (

@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useEffect } from "react";
+import Modal from "../modal/popup";
 
 interface Vehicle {
   vehicleYear: string;
@@ -15,6 +16,7 @@ interface Vehicle {
   type: string; // "Open" or "Enclosed"
   isDrivable: boolean | null;
   category: string;
+  sameLocation: boolean | null;
 }
 
 interface StepTwoProps {
@@ -46,6 +48,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [selectedMaker, setSelectedMaker] = useState<string>("");
   const [categoryInput, setCategoryInput] = useState<string>("");
   const [message, setMessage] = useState<string>("");
+  const [sameLocation, setSameLocation] = useState<boolean | null>(null);
 
   const [type, setType] = useState<string>(""); // Default to "Open"
   const [isDrivable, setIsDrivable] = useState<boolean | null>(null);
@@ -77,6 +80,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         type: "",
         isDrivable: null,
         category: "",
+        sameLocation: null,
       };
     }
     // Update the current vehicle at the specified index
@@ -158,7 +162,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   console.log(errors);
 
   const handleAddVehicle = () => {
-    console.log("type ", type);
+    console.log("type ");
+
     if (
       !makerInput ||
       !modelInput ||
@@ -192,6 +197,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       type: type,
       isDrivable: isDrivable,
       category: categoryInput,
+      sameLocation: sameLocation,
     };
 
     setVehicles(updatedVehicles);
@@ -202,6 +208,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setYearInput("");
     setType("");
     setCategoryInput("");
+    setSameLocation(null);
     setIsDrivable(null);
     setFilteredMakers([]);
     setFilteredModels([]);
@@ -599,14 +606,15 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           <div className="text-sm text-red-500 px-4">{errors.isDrivable}</div>
         )}
       </div>
+
       {/* Add Vehicle Button */}
-      {/* <button
+      <button
         type="button"
         className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
         onClick={handleAddVehicle}
       >
         Add Vehicle
-      </button> */}
+      </button>
     </div>
   );
 };
