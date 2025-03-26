@@ -25,14 +25,14 @@ const Services = () => {
       title: "Enclosed car shipping",
       bg: "bg-[white]",
       description:
-        "Enclosed shipping ensures maximum protection for your vehicle. It's ideal for luxury, exotic, or classic cars requiring extra care.",
+        "Protect your investment with enclosed shipping—the safest choice for your vehicle. Luxury, exotic, and classic cars that deserve extra care.",
       img: "/car/imageenclosed2.jpeg",
     },
     {
       title: "Open car shipping",
       bg: "bg-[#EDEEF4] text-white",
       description:
-        "An open auto carrier is just that: open on all sides. While it might pick up some dust along the way, ShipLux’s Premium Service ensures superior safety and handling of your vehicle during its shipping journey.",
+        "An open auto carrier is exposed to the elements, but we ensures safe, secure, and reliable delivery.",
       img: "/car/imageOpen2.jpeg",
     },
 
@@ -40,7 +40,7 @@ const Services = () => {
       title: "USA",
       bg: "bg-[#EDEEF4]",
       description:
-        "Ship your vehicle seamlessly to or from USA with our dedicated and reliable services.",
+        "Ship your vehicle smoothly with Mica Transportation LLC—offering dedicated, reliable, and hassle-free transport services.",
       img: "/car/imageOpen3.jpeg",
     },
     // {
@@ -63,8 +63,8 @@ const Services = () => {
             Services
           </p>
           <h2 className="text-[20px] md:text-[30px] font-medium leading-[120%] mb-8">
-            Experience the convenience of world-class auto transport at an
-            affordable price
+            Experience premium auto transport with top-tier service and
+            affordability.
           </h2>
           {services.map((service, index) => (
             <div key={index}>
@@ -130,9 +130,9 @@ const Services = () => {
                         <Carousel images={imagesOpen} />
                       </div>
                     )}
-                    <p className="text-[#6DB8D1] text-[24px] font-medium absolute z-10 bottom-5 left-4 capitalize">
+                    {/* <p className="text-[#6DB8D1] text-[24px] font-medium absolute z-10 bottom-5 left-4 capitalize">
                       {service.title}
-                    </p>
+                    </p> */}
                   </div>
                   <p className="text-[18px] font-medium leading-[24px] text-[#000]">
                     {service.description}
@@ -185,9 +185,9 @@ const Services = () => {
             )}
 
             {/* <Carousel images={imagesEnclosed} /> */}
-            <p className="text-white text-[35px] font-medium absolute z-10 bottom-5 left-8 capitalize">
+            {/* <p className="text-white text-[35px] font-medium absolute z-10 bottom-5 left-8 capitalize">
               {selectedService || "Select a service"}
-            </p>
+            </p> */}
           </div>
           <div
             style={{ backgroundColor: "rgb(255, 255, 255)" }}

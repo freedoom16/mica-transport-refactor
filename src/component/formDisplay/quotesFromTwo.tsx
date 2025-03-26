@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import {
   useGetQuoetsByIDQuery,
   useGetQuotesQuery,
-} from "../../src/store/Api/quotesApi"; // Import your API hook
+} from "../../store/Api/quotesApi"; // Import your API hook
 import { useRouter, useSearchParams } from "next/navigation";
 
 const QuoteForm: React.FC = () => {

@@ -81,7 +81,7 @@ export default function NavBar(props: INavBarProps) {
           isSticky
             ? "fixed top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
             : "relative top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
-        } px-16 lg:px-40 py-4 flex justify-between items-center transition-colors duration-300`}
+        } px-16 xl:px-40 py-4 flex justify-between items-center transition-colors duration-300`}
       >
         {/* Brand Logo */}
         <div

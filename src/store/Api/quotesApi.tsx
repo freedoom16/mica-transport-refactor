@@ -95,7 +95,7 @@ export const usersApi = createApi({
       { userId: string; data: Partial<User> }
     >({
       query: ({ userId, data }) => ({
-        url: `/bill-of-lading/${userId}`,
+        url: `/quotes/${userId}`,
         method: "PUT",
         data,
       }),

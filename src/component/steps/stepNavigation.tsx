@@ -110,7 +110,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             <div className="">Previous</div>
           </button>
         )}
-        {currentStep === 1 && (
+        {/* {currentStep === 1 && (
           <button
             type="button"
             className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1]  text-left font-bold py-2 px-4 rounded-full"
@@ -118,7 +118,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
           >
             Add Vehicle
           </button>
-        )}
+        )} */}
         <div className="flex"></div>
         {currentStep < totalSteps ? (
           <div>
@@ -161,7 +161,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             <div className="">Previous</div>
           </button>
         )}
-        {currentStep === 1 && (
+        {/* {currentStep === 1 && (
           <button
             type="button"
             className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1]  text-left font-bold py-2 px-4 rounded-full"
@@ -169,7 +169,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
           >
             Add Vehicle
           </button>
-        )}
+        )} */}
         <div className="flex-grow"></div>
         {currentStep < totalSteps ? (
           <button

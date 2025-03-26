@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useGetQuoetsByIDQuery } from "../../src/store/Api/quotesApi";
+import { useGetQuoetsByIDQuery } from "../../store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
 import DIsplayFormSkeleton from "./displayFormSkeleton";
 

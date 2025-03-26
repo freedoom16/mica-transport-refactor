@@ -1,6 +1,6 @@
 "use client";
-import QouetFormTwo from "@/component/quotesFromTwo";
-import QouetFormThree from "@/component/quotesFromThree";
+import QouetFormTwo from "@/component/formDisplay/quotesFromTwo";
+import QouetFormThree from "@/component/formDisplay/quotesFromThree";
 
 import * as React from "react";
 
