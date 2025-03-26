@@ -47,6 +47,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
 }) => {
   const [phoneError, setPhoneError] = useState<string | null>(null);
 
+  const [anyNote, setAnyNote] = useState<boolean | null>(null);
+  const [note, setNote] = useState<string>("");
+
   const validateField = (field: string, value: string) => {
     const newErrors = { ...errorsContact };
 
@@ -225,7 +228,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       </div>
 
       <div>
-        <div className="relative z-0 w-full mb-5 group flex flex-row">
+        <div className="relative z-0 w-full mb-5 group flex flex-row  justify-between">
           <label className="block text-sm font-medium text-gray-900 mr-2">
             Are you a dealer or business?{" "}
             <span className="text-red-500">*</span>
@@ -266,6 +269,52 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
               placeholder="Enter your company name"
               value={dealerCompanName}
               onChange={(e) => setDealerCompanName(e.target.value)}
+              className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
+            />
+          </div>
+        )}
+      </div>
+      <div>
+        <div className="relative z-0 w-full mb-5 group flex flex-row justify-between">
+          <label className="block text-sm font-medium text-gray-900 mr-2">
+            Do you have any note? <span className="text-red-500">*</span>
+          </label>
+          <div className="flex items-center justify-center space-x-6">
+            <label className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="is_drivable"
+                value="true"
+                onChange={() => setAnyNote(true)}
+                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+              />
+              <span className="text-sm text-gray-900">Yes</span>
+            </label>
+            <label className="flex items-center space-x-2">
+              <input
+                type="radio"
+                name="is_drivable"
+                value="false"
+                onChange={() => setAnyNote(false)}
+                className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
+              />
+              <span className="text-sm text-gray-900">No</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Conditional Company Name Input */}
+        {anyNote && (
+          <div className="relative z-0 w-full mb-5 group">
+            <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+              {" "}
+              Any Note
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your company name"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
               className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
             />
           </div>
