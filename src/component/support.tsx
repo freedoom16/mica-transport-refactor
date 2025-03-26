@@ -74,7 +74,7 @@ const CustomContentSection = () => {
       </div>
 
       {/* Contact Us Section */}
-      <div className="w-full lg:w-1/3 flex flex-col space-y-6 mt-12 md:mt-0 px-6 lg:ml-8">
+      <div className="w-full lg:w-1/3 flex flex-col space-y-6 mt-12 md:mt-0 px-2 lg:px-6 lg:ml-8">
         <h3 className="text-gray-900 font-bold text-[20px] md:px-2">
           Contact Us
         </h3>
