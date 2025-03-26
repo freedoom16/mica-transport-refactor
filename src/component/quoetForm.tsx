@@ -8,6 +8,8 @@ import StepThreeComponent from "./steps/stepThreeForm";
 import StepForDate from "./steps/stepDateForm";
 import StepTwoComponentTest from "./steps/test2";
 import TestTest from "./test";
+import ToastNotification from "./modal/toast";
+import Modal from "./modal/popup";
 
 interface Vehicle {
   vehicleYear: string;
@@ -282,72 +284,6 @@ const QouetForm: React.FC = () => {
   const nextStep = () => {
     console.log("nextStep cleicked", isStep2Valid);
     setErrorMessage(""); // Reset the error message
-    const quoteDataaa = {
-      vehicles: vehicles.map((vehicle: any) => ({
-        vehicleYear: parseInt(vehicle.vehicleYear) || null,
-        vehicleMake: vehicle.vehicleMake || "",
-        vehicleModel: vehicle.vehicleModel || "",
-        category: vehicle.category || "",
-        type: vehicle.type || "",
-        isDrivable: vehicle.isDrivable || false,
-      })),
-
-      pickUpDateOption: pickUpDateOption,
-      pickUpDate: pickUpDate?.toISOString() || null,
-      pickUpTimeOption: pickUpTimeOption,
-      pickUpTime: pickUpTime,
-
-      deliveryDateOption: deliveryDateOption,
-      deliveryDate: deliveryDate?.toISOString() || null,
-      deliveryTimeOption: deliveryTimeOption,
-      deliveryTime: deliveryTime,
-
-      pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
-      pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
-      pickUpTimeRangeStart: pickUpTimeRangeStart,
-      pickUpTimeRangeEnd: pickUpTimeRangeEnd,
-
-      deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
-      deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
-      deliveryTimeRangeStart: deliveryTimeRangeStart,
-      deliveryTimeRangeEnd: deliveryTimeRangeEnd,
-
-      pickupLocation: pickupLocation,
-      deliveryLocation: deliveryLocation,
-      addressTypeForDeliver: addressTypeForDeliver,
-      addressTypeForPickup: addressTypeForPickup,
-
-      isPickupContact: isPickupContact,
-      isDropoffContact: isDropoffContact,
-      pickupContactName: pickupContactName,
-      pickupContactPhone: pickupContactPhone,
-      dropoffContactName: dropoffContactName,
-      dropoffContactPhone: dropoffContactPhone,
-
-      fullName: firstName + " " + lastName,
-      email: email,
-      phone: phone,
-      isDealer: isDealer || false,
-      dealerCompanName: dealerCompanName,
-
-      status: "pending",
-    };
-    const steptwo = {
-      pickupLocation: pickupLocation,
-      deliveryLocation: deliveryLocation,
-      addressTypeForDeliver: addressTypeForDeliver,
-      addressTypeForPickup: addressTypeForPickup,
-
-      isPickupContact: isPickupContact,
-      isDropoffContact: isDropoffContact,
-      pickupContactName: pickupContactName,
-      pickupContactPhone: pickupContactPhone,
-      dropoffContactName: dropoffContactName,
-      dropoffContactPhone: dropoffContactPhone,
-    };
-    console.log("########################################## ");
-    console.log(quoteDataaa);
-    console.log(steptwo);
 
     if (step === 3 && !isStep1Valid) {
       validateLocation();
@@ -376,6 +312,11 @@ const QouetForm: React.FC = () => {
       ) {
         return;
       }
+    }
+
+    if (currentVehicleIndex > 0 && step === 1 && isStep2Valid) {
+      setModalOpenLocation(true);
+      return;
     }
 
     if (step === 1 && !isStep2Valid) {
@@ -527,6 +468,19 @@ const QouetForm: React.FC = () => {
 
   const [isFormValid, setIsFormValid] = useState(true);
 
+  const [sameLocation, setSameLocation] = useState<boolean | null>(null);
+
+  const [isModalOpenLocation, setModalOpenLocation] = useState(false);
+
+  // Function to handle "Yes" button click
+  const handleConfirm = () => {
+    console.log("User confirmed the message", vehicles);
+    setSameLocation(true);
+    // setSameLocation(null);
+    setStep(step + 1);
+    setModalOpenLocation(false); // Close modal after action
+  };
+
   console.log("main ", vehicles);
   console.log("main maker", vehicles[0]?.vehicleMaker);
 
@@ -574,6 +528,7 @@ const QouetForm: React.FC = () => {
         return;
       }
     }
+
     const quoteData = {
       vehicleInfo: vehicles.map((vehicle: any) => ({
         vehicleYear: parseInt(vehicle.vehicleYear) || null,
@@ -641,11 +596,6 @@ const QouetForm: React.FC = () => {
       style={{ boxShadow: "25px -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
     >
       <div>
-        {/* {isModalOpen && (
-            <div className="fixed inset-0 bg-transparent bg-black bg-opacity-50  flex items-center justify-center z-50">
-              <div className="bg-white w-full max-w-lg p-6 rounded-lg">
-                <h2 className="text-lg font-bold mb-4">{`Step ${step}`}</h2> */}
-
         <form
           onSubmit={handleSubmit}
           className="max-w-xl mx-auto  bg-white p-4 md:px-4 rounded-[32px] "
@@ -727,54 +677,47 @@ const QouetForm: React.FC = () => {
               error={error}
             />
           )}
-          {
-            step === 2 && (
-              <StepForDate
-                // Pick Up Date and Time props
-                pickUpDateOption={pickUpDateOption}
-                setPickUpDateOption={setPickUpDateOption}
-                pickUpDate={pickUpDate}
-                setPickUpDate={setPickUpDate}
-                pickUpDateRangeStart={pickUpDateRangeStart}
-                setPickUpDateRangeStart={setPickUpDateRangeStart}
-                pickUpDateRangeEnd={pickUpDateRangeEnd}
-                setPickUpDateRangeEnd={setPickUpDateRangeEnd}
-                pickUpTimeOption={pickUpTimeOption}
-                setPickUpTimeOption={setPickUpTimeOption}
-                pickUpTime={pickUpTime}
-                setPickUpTime={setPickUpTime}
-                pickUpTimeRangeStart={pickUpTimeRangeStart}
-                setPickUpTimeRangeStart={setPickUpTimeRangeStart}
-                pickUpTimeRangeEnd={pickUpTimeRangeEnd}
-                setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
-                // Delivery Date and Time props
-                deliveryDateOption={deliveryDateOption}
-                setDeliveryDateOption={setDeliveryDateOption}
-                deliveryDate={deliveryDate}
-                setDeliveryDate={setDeliveryDate}
-                deliveryDateRangeStart={deliveryDateRangeStart}
-                setDeliveryDateRangeStart={setDeliveryDateRangeStart}
-                deliveryDateRangeEnd={deliveryDateRangeEnd}
-                setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
-                deliveryTimeOption={deliveryTimeOption}
-                setDeliveryTimeOption={setDeliveryTimeOption}
-                deliveryTime={deliveryTime}
-                setDeliveryTime={setDeliveryTime}
-                deliveryTimeRangeStart={deliveryTimeRangeStart}
-                setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
-                deliveryTimeRangeEnd={deliveryTimeRangeEnd}
-                setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
-                setErrorsDateValidation={setErrorsDateValidation}
-                errorsDateValidation={errorsDateValidation}
-              />
-            )
-            // </div>
-          }{" "}
-          {/* {errorMessage && (
-            <p className="text-red-500 text-sm mt-4 text-center">
-              {errorMessage}
-            </p>
-          )} */}
+          {step === 2 && (
+            <StepForDate
+              // Pick Up Date and Time props
+              pickUpDateOption={pickUpDateOption}
+              setPickUpDateOption={setPickUpDateOption}
+              pickUpDate={pickUpDate}
+              setPickUpDate={setPickUpDate}
+              pickUpDateRangeStart={pickUpDateRangeStart}
+              setPickUpDateRangeStart={setPickUpDateRangeStart}
+              pickUpDateRangeEnd={pickUpDateRangeEnd}
+              setPickUpDateRangeEnd={setPickUpDateRangeEnd}
+              pickUpTimeOption={pickUpTimeOption}
+              setPickUpTimeOption={setPickUpTimeOption}
+              pickUpTime={pickUpTime}
+              setPickUpTime={setPickUpTime}
+              pickUpTimeRangeStart={pickUpTimeRangeStart}
+              setPickUpTimeRangeStart={setPickUpTimeRangeStart}
+              pickUpTimeRangeEnd={pickUpTimeRangeEnd}
+              setPickUpTimeRangeEnd={setPickUpTimeRangeEnd}
+              // Delivery Date and Time props
+              deliveryDateOption={deliveryDateOption}
+              setDeliveryDateOption={setDeliveryDateOption}
+              deliveryDate={deliveryDate}
+              setDeliveryDate={setDeliveryDate}
+              deliveryDateRangeStart={deliveryDateRangeStart}
+              setDeliveryDateRangeStart={setDeliveryDateRangeStart}
+              deliveryDateRangeEnd={deliveryDateRangeEnd}
+              setDeliveryDateRangeEnd={setDeliveryDateRangeEnd}
+              deliveryTimeOption={deliveryTimeOption}
+              setDeliveryTimeOption={setDeliveryTimeOption}
+              deliveryTime={deliveryTime}
+              setDeliveryTime={setDeliveryTime}
+              deliveryTimeRangeStart={deliveryTimeRangeStart}
+              setDeliveryTimeRangeStart={setDeliveryTimeRangeStart}
+              deliveryTimeRangeEnd={deliveryTimeRangeEnd}
+              setDeliveryTimeRangeEnd={setDeliveryTimeRangeEnd}
+              setErrorsDateValidation={setErrorsDateValidation}
+              errorsDateValidation={errorsDateValidation}
+            />
+          )}
+
           <StepNavigation
             currentStep={step}
             totalSteps={totalSteps}
@@ -789,6 +732,18 @@ const QouetForm: React.FC = () => {
               (step === 3 && isStep1Valid) ||
               (step === 4 && isStep3Valid)
             }
+          />
+
+          <ToastNotification isSuccess={isSuccess} />
+          <Modal
+            isOpen={isModalOpenLocation}
+            onClose={() => {
+              setSameLocation(false);
+              setModalOpenLocation(false);
+              setStep(step + 1);
+            }}
+            message=" vehicles are in the same location?"
+            onConfirm={handleConfirm}
           />
         </form>
       </div>
