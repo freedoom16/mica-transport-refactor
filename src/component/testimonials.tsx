@@ -67,6 +67,9 @@ const Testimonials = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | undefined>(
+    undefined
+  ); // For handling interval
 
   const handleResize = () => {
     setIsDesktop(window.innerWidth >= 1024);
@@ -94,13 +97,29 @@ const Testimonials = () => {
     );
   };
 
+  // Start the interval when component mounts
   useEffect(() => {
     const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval);
+    setIntervalId(interval); // Save the interval ID
+    return () => clearInterval(interval); // Clean up on component unmount
   }, [isDesktop]);
 
   const handlePointClick = (index: number) => {
     setCurrentIndex(index);
+    handleMouseEnter();
+  };
+
+  // Stop the interval on hover
+  const handleMouseEnter = () => {
+    if (intervalId) {
+      clearInterval(intervalId); // Stop the interval
+    }
+  };
+
+  // Restart the interval when hover ends
+  const handleMouseLeave = () => {
+    const interval = setInterval(nextSlide, 5000); // Start the interval again
+    setIntervalId(interval);
   };
 
   const renderStars = (rating: number) => {
@@ -110,11 +129,11 @@ const Testimonials = () => {
         <svg
           key={i}
           xmlns="http://www.w3.org/2000/svg"
-          fill={i < rating ? "yellow" : "gray"}
+          fill={i < rating ? "#FFD700" : "gray"}
           viewBox="0 0 24 24"
           className="font-bold"
-          width="16"
-          height="16"
+          width="20"
+          height="20"
         >
           <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
         </svg>
@@ -124,7 +143,12 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="reviews" className="py-20 px-6 bg-[#ECECEC]">
+    <section
+      id="reviews"
+      className="py-20 px-6 bg-[#ECECEC]"
+      onMouseEnter={handleMouseEnter} // Stop sliding on hover
+      onMouseLeave={handleMouseLeave} // Resume sliding after hover
+    >
       <div className="container mx-auto">
         <p className="uppercase tracking-wider mb-8 text-gray-900 text-center text-[30px] font-bold">
           What customers are saying
@@ -154,11 +178,6 @@ const Testimonials = () => {
                       {testimonial.description}
                     </p>
                     <div className="flex items-center mt-2 lg:mt-6">
-                      <img
-                        className="w-20 h-20 mr-2 rounded-full"
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                      />
                       <div>
                         <p className="font-medium">{testimonial.name}</p>
                         <p className="text-sm text-gray-600">
@@ -193,7 +212,6 @@ const Testimonials = () => {
         </div>
 
         {/* Points Below */}
-
         <div className="flex justify-center mt-6">
           {Array.from({ length: totalSlides }).map((_, index) => (
             <button

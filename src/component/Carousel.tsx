@@ -7,6 +7,8 @@ interface CarouselProps {
 
 const Carousel: React.FC<CarouselProps> = ({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+  const [modalImage, setModalImage] = useState<string | null>(null);
 
   const prevSlide = () => {
     setActiveIndex((prevIndex) =>
@@ -27,7 +29,17 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
     }, 3000); // Auto-scroll every 3 seconds
 
     return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [activeIndex]);
+  }, []);
+
+  const openModal = (image: string) => {
+    setModalImage(image); // Set the clicked image for modal
+    setShowModal(true); // Show the modal
+  };
+
+  const closeModal = () => {
+    setShowModal(false); // Hide the modal
+    setModalImage(null); // Reset the image
+  };
 
   return (
     <div
@@ -36,7 +48,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
       data-carousel="slide"
     >
       {/* Carousel wrapper */}
-      <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+      <div className="relative h-56 z-50 overflow-hidden rounded-lg md:h-96">
         {images.map((image, index) => (
           <div
             key={index}
@@ -47,8 +59,9 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
           >
             <img
               src={image}
-              className="absolute block max-w-full h:auto md:h-[500px] lg:h-auto object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+              className="absolute block z-50 max-w-full h:auto md:h-[500px] lg:h-auto object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 cursor-pointer"
               alt={`Slide ${index + 1}`}
+              onClick={() => openModal(image)} // Open modal on image click
             />
           </div>
         ))}
@@ -103,6 +116,46 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
           <span className="sr-only">Next</span>
         </span>
       </button>
+
+      {/* Carousel indicators */}
+      <div className="absolute bottom-4 z-50 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setActiveIndex(index)} // Clicking a dot should change the active image
+            className={`w-3 h-3 rounded-full transition-all ${
+              index === activeIndex
+                ? "bg-[#6DB8D1]" // Active dot color
+                : "bg-white bg-opacity-50" // Inactive dot color
+            }`}
+          ></button>
+        ))}
+      </div>
+
+      {/* Modal for viewing image in larger size */}
+      {showModal && modalImage && (
+        <div
+          className="fixed inset-0 bg-black/50 bg-opacity-50 z-50 flex justify-center items-center"
+          onClick={closeModal} // Close modal when clicking outside the image
+        >
+          <div
+            className="relative"
+            onClick={(e) => e.stopPropagation()} // Prevent modal close when clicking inside the modal content
+          >
+            <img
+              src={modalImage}
+              className="max-w-full max-h-[90vh] rounded-lg"
+              alt="Modal Image"
+            />
+            <button
+              onClick={closeModal}
+              className="absolute top-2 right-2 text-white text-4xl font-extrabold"
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

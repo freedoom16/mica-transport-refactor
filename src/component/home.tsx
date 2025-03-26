@@ -40,9 +40,9 @@ export default function Home(props: IHomeProps) {
             </div>
             <div id="lp-pom-text-482" className="mt-2 px-6">
               <p className="text-[20px] md:text-[30px] font-base leading-[29px] font-montserrat text-left">
-                Safely transporting all personnel, business, classic and exotic
-                vehicles for individuals, dealerships, and auction houses with
-                care and reliability.
+                Trust us for safe, reliable vehicle transport.
+                <br></br>Whether it’s your luxury, classic, or business fleet.
+                <br></br>We handle every car with care.
               </p>
             </div>
             <div className="mt-0 lg:mt-12 xl:mt-0">
