@@ -77,7 +77,7 @@ export default function NavBar(props: INavBarProps) {
       {/* Navbar */}
       <nav
         ref={navbarRef}
-        className={`md:fixed ${
+        className={`md:fixed z-1020 ${
           isSticky
             ? "fixed top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
             : "relative top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
