@@ -228,7 +228,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       </div>
 
       <div>
-        <div className="relative z-0 w-full mb-5 group flex flex-row">
+        <div className="relative z-0 w-full mb-5 group flex flex-row  justify-between">
           <label className="block text-sm font-medium text-gray-900 mr-2">
             Are you a dealer or business?{" "}
             <span className="text-red-500">*</span>
@@ -275,7 +275,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         )}
       </div>
       <div>
-        <div className="relative z-0 w-full mb-5 group flex flex-row">
+        <div className="relative z-0 w-full mb-5 group flex flex-row justify-between">
           <label className="block text-sm font-medium text-gray-900 mr-2">
             Do you have any note? <span className="text-red-500">*</span>
           </label>
