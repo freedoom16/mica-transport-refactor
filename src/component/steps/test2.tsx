@@ -27,6 +27,10 @@ interface StepTwoProps {
   setCurrentVehicleIndex: React.Dispatch<React.SetStateAction<number>>;
   errors: any;
   setErrors: React.Dispatch<React.SetStateAction<any>>;
+  currentStep: number;
+  totalSteps: number;
+  onNext: () => void;
+  isNextEnabled: boolean | string;
 }
 
 const StepTwoComponentTest: React.FC<StepTwoProps> = ({
@@ -36,6 +40,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   setCurrentVehicleIndex,
   errors,
   setErrors,
+  currentStep,
+  totalSteps,
+  onNext,
+  isNextEnabled,
 }) => {
   //   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [makes, setMakes] = useState<string[]>([]);
@@ -160,6 +168,24 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   };
 
   console.log(errors);
+  const scrollToQuote = () => {
+    // Use a setTimeout to ensure the DOM is ready before scrolling
+    setTimeout(() => {
+      const quoteElement = document.getElementById("quote-form");
+      if (quoteElement) {
+        quoteElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        console.log("Could not find the quote section to scroll.");
+      }
+    }, 300); // Adjust the timeout if needed (300ms delay gives time for rendering)
+  };
+
+  const handleNextMobaile = () => {
+    if (currentStep < totalSteps) {
+      onNext();
+      scrollToQuote(); // Scroll to "About Us" section
+    }
+  };
 
   const handleAddVehicle = () => {
     console.log("type ");
@@ -608,13 +634,26 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       </div>
 
       {/* Add Vehicle Button */}
-      <button
-        type="button"
-        className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
-        onClick={handleAddVehicle}
-      >
-        Add Vehicle
-      </button>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
+          onClick={handleAddVehicle}
+        >
+          Add Vehicle
+        </button>
+        <button
+          type="button"
+          className={`px-8 py-2 rounded-full shadow-xl bg-white  text-gray-900   ${
+            isNextEnabled
+              ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
+              : "border-1 border-gray-900 text-gray-900"
+          }`}
+          onClick={handleNextMobaile}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

@@ -38,6 +38,7 @@ const QouetForm: React.FC = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [addVehicleIsTrue, setAddVehicleIsTrue] = useState("");
+  const currentYear = new Date().getFullYear();
 
   const [errors, setErrors] = useState({
     vehicleMaker: "",
@@ -106,7 +107,6 @@ const QouetForm: React.FC = () => {
     } else if (!/^\d{4}$/.test(vehicles[currentVehicleIndex]?.vehicleYear)) {
       newErrors.vehicleYear = "Enter a valid year (4 digits).";
     } else {
-      const currentYear = new Date().getFullYear();
       if (
         vehicles[currentVehicleIndex]?.vehicleYear < 1900 ||
         vehicles[currentVehicleIndex]?.vehicleYear > currentYear
@@ -126,10 +126,12 @@ const QouetForm: React.FC = () => {
     if (!vehicles[currentVehicleIndex]?.category) {
       newErrors.category = "Vehicle Catagory is required.";
     }
+    console.log(Object.keys(newErrors).length > 0);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return; // Stop further execution
     }
+    console.log(Object.keys(newErrors).length > 0);
 
     setErrors({
       vehicleMaker: "",
@@ -253,6 +255,18 @@ const QouetForm: React.FC = () => {
     // if (step < 3) setStep(step + 1);
   };
 
+  const handleRemoveVehicle = (index: number) => {
+    const updatedVehicles = vehicles.filter((_: any, i: any) => i !== index);
+    setVehicles(updatedVehicles);
+
+    // Adjust the currentVehicleIndex if necessary
+    if (index === currentVehicleIndex && currentVehicleIndex > 0) {
+      setCurrentVehicleIndex(currentVehicleIndex - 1);
+    } else if (index < currentVehicleIndex) {
+      setCurrentVehicleIndex(currentVehicleIndex - 1);
+    }
+  };
+
   const validateContact = () => {
     const newErrors: any = {};
 
@@ -319,12 +333,14 @@ const QouetForm: React.FC = () => {
       return;
     }
 
-    if (step === 1 && !isStep2Valid) {
+    if (step === 1 && !isStep2Valid && currentVehicleIndex === 0) {
       // setErrorMessage("All fields are required for Step 2.");
       // return;
       nextStepOne();
+
       if (!vehicles[currentVehicleIndex]?.vehicleYear) {
-        setErrorMessage("Vehicle year is required.");
+        return;
+      } else if (!/^\d{4}$/.test(vehicles[currentVehicleIndex]?.vehicleYear)) {
         return;
       }
       if (!vehicles[currentVehicleIndex]?.vehicleMaker) {
@@ -385,27 +401,13 @@ const QouetForm: React.FC = () => {
     //   setStep((prevStep) => prevStep + 1);
     // }
     if (isStep2Valid) {
-      //   const updatedVehicles = [...vehicles];
-
-      //   // Update the vehicle at the current index or add a new one
-      //   updatedVehicles[currentVehicleIndex] = {
-      //     vehicleMaker: vehicles.makerInput,
-      //     vehicleModel: vehicles.modelInput,
-      //     vehicleYear: vehicles.yearInput,
-      //     type: vehicles.type,
-      //     isDrivable: vehicles.isDrivable,
-      //     category: vehicles.categoryInput,
-      //   };
-
-      //   setVehicles(updatedVehicles);
-
-      //   // Reset the form fields
-
-      //   // Optionally increment the index for adding new vehicles
+      console.log("is step2 valid ", isStep2Valid);
       setCurrentVehicleIndex((prevIndex) => currentVehicleIndex + 1);
       //   // setCurrentVehicleIndex(currentVehicleIndex + 1);
+    } else if (step === 1 && !isStep2Valid) {
+      handleRemoveVehicle(currentVehicleIndex);
+      setCurrentVehicleIndex((prevIndex) => currentVehicleIndex);
     }
-
     if (step < totalSteps) setStep(step + 1);
     setIsModalOpen(true);
   };
@@ -518,6 +520,10 @@ const QouetForm: React.FC = () => {
       vehicles[currentVehicleIndex]?.vehicleMaker &&
       vehicles[currentVehicleIndex]?.vehicleModel &&
       vehicles[currentVehicleIndex]?.vehicleYear &&
+      // !(
+      //   vehicles[currentVehicleIndex]?.vehicleYear < 1900 ||
+      //   vehicles[currentVehicleIndex]?.vehicleYear > currentYear
+      // ) &&
       vehicles[currentVehicleIndex]?.isDrivable != null &&
       vehicles[currentVehicleIndex]?.type &&
       vehicles[currentVehicleIndex]?.category
@@ -606,6 +612,8 @@ const QouetForm: React.FC = () => {
       console.error("Error:", err);
     }
   };
+  console.log("vehicle index ", currentVehicleIndex);
+
   return (
     <section
       id="quote"
@@ -619,7 +627,7 @@ const QouetForm: React.FC = () => {
           className="max-w-xl mx-auto  bg-white p-4 md:px-4 rounded-[32px] "
           // style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
-          <p className="text-[20px] text-gray-900 font-bold hidden md:block  text-center ">
+          <p className="text-[20px] text-gray-900 font-bold    text-center ">
             Shipping Quote Calculator
           </p>
           {/* Progress Indicator */}
@@ -669,6 +677,11 @@ const QouetForm: React.FC = () => {
               setCurrentVehicleIndex={setCurrentVehicleIndex}
               errors={errors}
               setErrors={setErrors}
+              currentStep={step}
+              totalSteps={totalSteps}
+              onNext={nextStep}
+              isNextEnabled={step === 1 && isStep2Valid}
+
               // isStep2Valid={isStep2Valid}
               // nextStep={nextStep}
               // prevStep={prevStep}
@@ -740,21 +753,20 @@ const QouetForm: React.FC = () => {
             />
           )}
 
-          <StepNavigation
-            currentStep={step}
-            totalSteps={totalSteps}
-            onNext={nextStep}
-            onPrev={prevStep}
-            vehicles={vehicles}
-            setErrors={setErrors}
-            currentVehicleIndex={currentVehicleIndex}
-            isNextEnabled={
-              (step === 1 && isStep2Valid) ||
-              (step === 2 && isStep4Valid) ||
-              (step === 3 && isStep1Valid) ||
-              (step === 4 && isStep3Valid)
-            }
-          />
+          {step != 1 && (
+            <StepNavigation
+              currentStep={step}
+              totalSteps={totalSteps}
+              onNext={nextStep}
+              onPrev={prevStep}
+              isNextEnabled={
+                (step === 1 && isStep2Valid) ||
+                (step === 2 && isStep4Valid) ||
+                (step === 3 && isStep1Valid) ||
+                (step === 4 && isStep3Valid)
+              }
+            />
+          )}
 
           <ToastNotification isSuccess={isSuccess} />
           <Modal
