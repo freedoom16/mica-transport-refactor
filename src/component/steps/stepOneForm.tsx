@@ -32,6 +32,9 @@ interface StepOneProps {
   setLocation: React.Dispatch<React.SetStateAction<any[]>>;
   currentVehicleIndex: number;
   sameLocation: boolean | null;
+  vehicles: any[];
+  //   setVehicles: (vehicles: Vehicle[]) => void;
+  setVehicles: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 const StepOne: React.FC<StepOneProps> = ({
@@ -63,6 +66,8 @@ const StepOne: React.FC<StepOneProps> = ({
   setLocation,
   currentVehicleIndex,
   sameLocation,
+  vehicles,
+  setVehicles,
 }) => {
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
   const [deliverySuggestions, setDeliverySuggestions] = useState<string[]>([]);
@@ -300,6 +305,50 @@ const StepOne: React.FC<StepOneProps> = ({
     }
   };
 
+  const handleDeliveryChangeArray = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    vehicleIndex: number
+  ) => {
+    const value = e.target.value;
+
+    // Update the deliveryLocation for the specific vehicle in locations array
+    const updatedLocation = [...location];
+    if (!updatedLocation[vehicleIndex]) {
+      updatedLocation[vehicleIndex] = {}; // Ensure the object exists
+    }
+    updatedLocation[vehicleIndex].deliveryLocation = value; // Set the deliveryLocation value
+
+    setLocation(updatedLocation); // Update location state
+
+    console.log("handle delivery change ");
+    console.log(updatedLocation[vehicleIndex].deliveryLocation);
+    // Assuming updateVehicleField is a function that updates the vehicle field at a higher level
+    updateVehicleField("deliveryLocation", value);
+
+    // Validate the field
+    validateField("deliveryLocation", value);
+
+    // Fetch suggestions if the value is longer than 2 characters
+    if (value.length > 2) {
+      // Ensure suggestions are updated for the correct vehicle index
+      fetchSuggestions(value, (suggestions: string[]) => {
+        const updatedLocationWithSuggestions = [...location];
+        updatedLocationWithSuggestions[vehicleIndex].deliverySuggestions =
+          suggestions;
+        console.log(
+          updatedLocationWithSuggestions[vehicleIndex].deliverySuggestions
+        );
+
+        setLocation(updatedLocationWithSuggestions); // Update the location state with new suggestions
+      });
+    } else {
+      // Clear suggestions if the value is shorter than 3 characters
+      const updatedLocationWithNoSuggestions = [...location];
+      updatedLocationWithNoSuggestions[vehicleIndex].deliverySuggestions = [];
+      setLocation(updatedLocationWithNoSuggestions); // Update the location state to clear suggestions
+    }
+  };
+
   const handleInputChange = (name: any, value: any) => {
     // Dynamically call the corresponding setter based on the field name
     // Remove non-digit characters
@@ -358,9 +407,253 @@ const StepOne: React.FC<StepOneProps> = ({
   console.log("location");
   console.log(location);
   console.log(currentLocationIndex, " ", currentVehicleIndex);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   return (
     <div>
-      {/* Render all the inputs and elements related to Step One here */}
+      {/* /////////////////////////////////////////////////// */}
+      <div className="mb-2">
+        {vehicles.map((vehicle, vehicleIndex) => (
+          <div key={vehicleIndex} className="flex flex-col space-y-2">
+            {/* Vehicle Item */}
+            <div
+              className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg rounded-full w-full cursor-pointer"
+              onClick={() =>
+                setExpandedIndex(
+                  expandedIndex === vehicleIndex ? null : vehicleIndex
+                )
+              }
+            >
+              <div className="flex flex-col pl-2">
+                <strong>Make</strong> {vehicle.vehicleMaker}
+              </div>
+              <div className="flex flex-col">
+                <strong>Model</strong> {vehicle.vehicleModel}
+              </div>
+              <div className="flex flex-col">
+                <strong>Year</strong> {vehicle.vehicleYear}
+              </div>
+              <div className="flex w-8">
+                <button
+                  className="text-red-500"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent expanding when clicking delete
+                    handleRemoveVehicle(vehicleIndex);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </div>
+            </div>
+
+            {/* Expandable Form */}
+            {expandedIndex === vehicleIndex && (
+              <div>
+                <p className="text-gray-900 mb-4 text-center font-bold">
+                  {sameLocation
+                    ? "Address Information"
+                    : `Add vehicle ${vehicleIndex + 1} information `}
+                </p>
+
+                {/* Pickup Location */}
+                <div className="relative z-0 w-full mb-5 group">
+                  <label
+                    htmlFor={`pickup_location_${vehicleIndex}`}
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                  >
+                    Pickup Location
+                  </label>
+                  <input
+                    type="text"
+                    name="pickup_location"
+                    id={`pickup_location_${vehicleIndex}`}
+                    value={location[vehicleIndex]?.pickupLocation || ""} // Safe access with default empty string
+                    onChange={(e) => {
+                      const updatedLocation = [...location];
+                      if (!updatedLocation[vehicleIndex]) {
+                        updatedLocation[vehicleIndex] = {}; // Ensure the object exists
+                      }
+                      updatedLocation[vehicleIndex].pickupLocation =
+                        e.target.value; // Update the pickup location
+                      setLocation(updatedLocation); // Update the location state
+                    }}
+                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                      errorsLocation.pickupLocation
+                        ? "border-red-500"
+                        : "border-[#938f99]"
+                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    placeholder="Address or zipcode"
+                    required
+                  />
+                  {pickupSuggestions.length > 0 && (
+                    <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                      {pickupSuggestions.map((suggestion, index) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            const updatedLocation = [...location];
+                            if (!updatedLocation[vehicleIndex]) {
+                              updatedLocation[vehicleIndex] = {}; // Ensure the object exists
+                            }
+                            updatedLocation[vehicleIndex].pickupLocation =
+                              suggestion; // Set the selected suggestion
+                            setLocation(updatedLocation); // Update the location state
+                            setPickupSuggestions([]); // Clear suggestions
+                          }}
+                          className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1] text-gray-900"
+                        >
+                          {suggestion}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Pickup Address Type */}
+                <div className="relative z-0 w-full mb-5 group">
+                  <label
+                    htmlFor={`address_type_pickup_${vehicleIndex}`}
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                  >
+                    Select Address Type for Pickup
+                  </label>
+                  <select
+                    name="address_type"
+                    id={`address_type_pickup_${vehicleIndex}`}
+                    value={location[vehicleIndex]?.addressTypeForPickup || ""} // Safe access with default empty string
+                    onChange={(e) => {
+                      const updatedLocation = [...location];
+                      if (!updatedLocation[vehicleIndex]) {
+                        updatedLocation[vehicleIndex] = {}; // Ensure the object exists
+                      }
+                      updatedLocation[vehicleIndex].addressTypeForPickup =
+                        e.target.value; // Update the address type for pickup
+                      setLocation(updatedLocation); // Update the location state
+                    }}
+                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                      errorsLocation.addressTypeForPickup
+                        ? "border-red-500"
+                        : "border-[#938f99]"
+                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    required
+                  >
+                    <option value="">Select Address Type</option>
+                    <option value="residential" className="text-gray-900">
+                      Residential
+                    </option>
+                    <option value="business" className="text-gray-900">
+                      Business
+                    </option>
+                    <option value="auction_yard" className="text-gray-900">
+                      Auction Yard
+                    </option>
+                  </select>
+                </div>
+
+                {/* Delivery Location */}
+                <div className="relative z-0 w-full mb-5 group">
+                  <label
+                    htmlFor={`delivery_location_${vehicleIndex}`}
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                  >
+                    Delivery Location
+                  </label>
+                  <input
+                    type="text"
+                    name="delivery_location"
+                    id={`delivery_location_${vehicleIndex}`}
+                    value={location[vehicleIndex]?.deliveryLocation || ""} // Safe access with default empty string
+                    // onChange={(e) => {
+                    //   const updatedLocation = [...location];
+                    //   if (!updatedLocation[vehicleIndex]) {
+                    //     updatedLocation[vehicleIndex] = {}; // Ensure the object exists
+                    //   }
+                    //   updatedLocation[vehicleIndex].deliveryLocation =
+                    //     e.target.value; // Update the delivery location
+                    //   setLocation(updatedLocation); // Update the location state
+                    // }}
+                    onChange={(e: any) =>
+                      handleDeliveryChangeArray(e, vehicleIndex)
+                    }
+                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                      errorsLocation.deliveryLocation
+                        ? "border-red-500"
+                        : "border-[#938f99]"
+                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    placeholder="Address or zipcode"
+                    required
+                  />
+                  {/* {location[vehicleIndex]?.deliverySuggestions.length > 0 && ( */}
+                  <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                    {location[vehicleIndex]?.deliverySuggestions.map(
+                      (suggestion: any, index: any) => (
+                        <div
+                          key={index}
+                          onClick={() => {
+                            const updatedLocation = [...location];
+                            if (!updatedLocation[vehicleIndex]) {
+                              updatedLocation[vehicleIndex] = {}; // Ensure the object exists
+                            }
+                            updatedLocation[vehicleIndex].deliveryLocation =
+                              suggestion; // Set the selected suggestion
+                            setLocation(updatedLocation); // Update the location state
+                            setDeliverySuggestions([]); // Clear suggestions
+                          }}
+                          className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1] text-gray-900"
+                        >
+                          {suggestion}
+                        </div>
+                      )
+                    )}
+                  </div>
+                  {/* )} */}
+                </div>
+
+                {/* Delivery Address Type */}
+                <div className="relative z-0 w-full mb-5 group">
+                  <label
+                    htmlFor={`address_type_deliver_${vehicleIndex}`}
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                  >
+                    Select Address Type for Delivery
+                  </label>
+                  <select
+                    name="address_type"
+                    id={`address_type_deliver_${vehicleIndex}`}
+                    value={location[vehicleIndex]?.addressTypeForDeliver || ""} // Safe access with default empty string
+                    onChange={(e) => {
+                      const updatedLocation = [...location];
+                      if (!updatedLocation[vehicleIndex]) {
+                        updatedLocation[vehicleIndex] = {}; // Ensure the object exists
+                      }
+                      updatedLocation[vehicleIndex].addressTypeForDeliver =
+                        e.target.value; // Update the address type for delivery
+                      setLocation(updatedLocation); // Update the location state
+                    }}
+                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                      errorsLocation.addressTypeForDeliver
+                        ? "border-red-500"
+                        : "border-[#938f99]"
+                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    required
+                  >
+                    <option value="">Select Address Type</option>
+                    <option value="residential" className="text-gray-900">
+                      Residential
+                    </option>
+                    <option value="business" className="text-gray-900">
+                      Business
+                    </option>
+                    <option value="auction_yard" className="text-gray-900">
+                      Auction Yard
+                    </option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      {/* //////////////////////////////////////////////////////// */}
       <div className="mb-2">
         {location.slice(0, currentLocationIndex).map((vehicle, index) => (
           <div

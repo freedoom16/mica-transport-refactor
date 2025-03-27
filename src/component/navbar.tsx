@@ -77,7 +77,7 @@ export default function NavBar(props: INavBarProps) {
       {/* Navbar */}
       <nav
         ref={navbarRef}
-        className={`md:fixed z-1020 ${
+        className={`md:fixed z-60 ${
           isSticky
             ? "fixed top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
             : "relative top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
@@ -183,7 +183,7 @@ export default function NavBar(props: INavBarProps) {
 
       {/* Mobile Menu (Overlay Style) */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-20  bg-black/40 ">
+        <div className="fixed inset-0 z-80  bg-black/40 ">
           <div
             className="w-[75%] p-4 h-screen flex flex-col fixed left-0  bg-white shadow-2xl  z-30"
             ref={menuRef}
