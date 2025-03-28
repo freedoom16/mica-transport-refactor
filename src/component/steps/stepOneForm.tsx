@@ -472,12 +472,13 @@ const StepOne: React.FC<StepOneProps> = ({
               ""
             ) : (
               <div
-                className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg rounded-lg w-full cursor-pointer"
+                className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_1fr] shadow-lg rounded-lg w-full cursor-pointer"
                 onClick={() =>
                   setExpandedIndex(
                     expandedIndex === vehicleIndex ? null : vehicleIndex
                   )
                 }
+                style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.1)" }}
               >
                 <div className="flex flex-col pl-2">
                   <strong>Make</strong> {vehicle.vehicleMaker}
@@ -501,12 +502,27 @@ const StepOne: React.FC<StepOneProps> = ({
                     />
                   </button>
                 </div>
+                <div>
+                  <p className={`p-[10px] bg-white rounded-[100%]`}>
+                    <img
+                      alt="arrow"
+                      src="/arrow_forward.38aa47a7.svg"
+                      width="24"
+                      height="24"
+                      loading="lazy"
+                      className={
+                        expandedIndex === vehicleIndex ? "rotate-90" : ""
+                      }
+                      style={{ transition: "transform 0.3s ease" }}
+                    />
+                  </p>
+                </div>
               </div>
             )}
 
             {/* Expandable Form */}
             {expandedIndex === vehicleIndex && (
-              <div>
+              <div className="bg-white p-4">
                 <p className="text-gray-900 mb-4 text-center font-bold">
                   {sameLocation || currentVehicleIndex === 1
                     ? "Address Information"
