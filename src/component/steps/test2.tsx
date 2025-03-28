@@ -183,7 +183,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const handleNextMobaile = () => {
     if (currentStep < totalSteps) {
       onNext();
-      scrollToQuote(); // Scroll to "About Us" section
+      // scrollToQuote(); // Scroll to "About Us" section
     }
   };
 
@@ -211,6 +211,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       return;
     }
 
+    if (Object.keys(errors).some((key) => errors[key] !== "")) {
+      return; // Stop further execution if there are errors
+    }
     // return Object.values(newErrors).every((error) => !error);
 
     const updatedVehicles = [...vehicles];
@@ -461,6 +464,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
           <input
             value={yearInput}
+            type="number"
             onChange={(e) => handleYearInputChange(e.target.value)}
             placeholder="Year"
             className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${

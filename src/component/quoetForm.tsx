@@ -20,6 +20,12 @@ interface Vehicle {
   type: string; // "Open" or "Enclosed"
   isDrivable: boolean;
   category: string;
+  locations: {
+    pickupLocation: "";
+    addressTypeForPickup: "";
+    deliveryLocation: "";
+    addressTypeForDeliver: "";
+  };
 }
 
 const QouetForm: React.FC = () => {
@@ -73,25 +79,9 @@ const QouetForm: React.FC = () => {
     phone: "",
   });
 
-  const [errorsLocation, setErrorsLocation] = useState<{
-    pickupLocation: string;
-    deliveryLocation: string;
-    addressTypeForPickup: string;
-    addressTypeForDeliver: string;
-    pickupContactName: string;
-    pickupContactPhone: string;
-    dropoffContactName: string;
-    dropoffContactPhone: string;
-  }>({
-    pickupLocation: "",
-    deliveryLocation: "",
-    addressTypeForPickup: "",
-    addressTypeForDeliver: "",
-    pickupContactName: "",
-    pickupContactPhone: "",
-    dropoffContactName: "",
-    dropoffContactPhone: "",
-  });
+  const [errorsLocation, setErrorsLocation] = useState<any[]>(
+    [] // Initialize as an array to handle multiple vehicles
+  );
 
   const nextStepOne = () => {
     const newErrors: any = {};
@@ -112,12 +102,10 @@ const QouetForm: React.FC = () => {
         vehicles[currentVehicleIndex]?.vehicleYear > currentYear
       ) {
         newErrors.vehicleYear = `Enter a valid year between 1900 and ${currentYear}`;
-      } else {
-        newErrors.vehicleYear = ""; // No error if all checks pass
       }
     }
 
-    if (!vehicles[currentVehicleIndex]?.isDrivable !== null) {
+    if (vehicles[currentVehicleIndex]?.isDrivable === null) {
       newErrors.isDrivable = "Drivable status is required.";
     }
     if (!vehicles[currentVehicleIndex]?.type) {
@@ -126,7 +114,11 @@ const QouetForm: React.FC = () => {
     if (!vehicles[currentVehicleIndex]?.category) {
       newErrors.category = "Vehicle Catagory is required.";
     }
-    console.log(Object.keys(newErrors).length > 0);
+    console.log(
+      "eeeeeeeeeeeeeerrrrrrr ",
+      newErrors,
+      Object.keys(newErrors).length
+    );
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return; // Stop further execution
@@ -142,6 +134,8 @@ const QouetForm: React.FC = () => {
       category: "",
     }); // Reset errors
     if (step < 2) setStep(step + 1); // Proceed to next step (adjust total steps as necessary)
+    console.log("stepone nextstepone");
+    setCurrentVehicleIndex(() => currentVehicleIndex + 1);
   };
 
   const validatePickupAndDelivery = () => {
@@ -185,74 +179,83 @@ const QouetForm: React.FC = () => {
   };
 
   const validateLocation = () => {
-    const newErrors: any = {};
+    const newErrors = [...errorsLocation]; // Clone errors array
 
-    // Pickup location check
-    if (!pickupLocation) {
-      newErrors.pickupLocation = "Pickup location is required.";
-    }
-
-    // Delivery location check
-    if (!deliveryLocation) {
-      newErrors.deliveryLocation = "Delivery location is required.";
-    }
-
-    // Address type for Pickup check
-    if (!addressTypeForPickup) {
-      newErrors.addressTypeForPickup = "Pickup address type is required.";
-    }
-
-    // Address type for Delivery check
-    if (!addressTypeForDeliver) {
-      newErrors.addressTypeForDeliver = "Delivery address type is required.";
-    }
-
-    // Pickup contact name and phone check based on isPickupContact
-    console.log("location", !isPickupContact);
-    if (!isPickupContact) {
-      if (!pickupContactName) {
-        newErrors.pickupContactName = "Pickup contact name is required.";
+    // Ensure validation for each vehicle
+    for (let i = 0; i < vehicles.length; i++) {
+      if (!newErrors[i]) {
+        newErrors[i] = {
+          pickupLocation: "",
+          deliveryLocation: "",
+          addressTypeForPickup: "",
+          addressTypeForDeliver: "",
+          pickupContactName: "",
+          pickupContactPhone: "",
+          dropoffContactName: "",
+          dropoffContactPhone: "",
+        };
       }
 
-      if (!pickupContactPhone || !/^\d{10}$/.test(pickupContactPhone)) {
-        newErrors.pickupContactPhone =
-          "Enter a valid 10-digit phone number for pickup contact.";
+      const vehicle = location[i]; // Get current vehicle data
+
+      // Pickup location check
+      newErrors[i].pickupLocation = vehicle?.pickupLocation
+        ? ""
+        : "Pickup location is required.";
+
+      // Delivery location check
+      newErrors[i].deliveryLocation = vehicle?.deliveryLocation
+        ? ""
+        : "Delivery location is required.";
+
+      // Address type for Pickup check
+      newErrors[i].addressTypeForPickup = vehicle?.addressTypeForPickup
+        ? ""
+        : "Pickup address type is required.";
+
+      // Address type for Delivery check
+      newErrors[i].addressTypeForDeliver = vehicle?.addressTypeForDeliver
+        ? ""
+        : "Delivery address type is required.";
+
+      // Pickup contact name and phone check
+      if (vehicle?.isPickupContact === false) {
+        newErrors[i].pickupContactName = vehicle?.pickupContactName
+          ? ""
+          : "Pickup contact name is required.";
+        newErrors[i].pickupContactPhone =
+          vehicle?.pickupContactPhone &&
+          /^\(\d{3}\) \d{3}-\d{4}$/.test(vehicle?.pickupContactPhone)
+            ? ""
+            : "Enter a valid 10-digit phone number for pickup contact.";
+      }
+
+      // Dropoff contact name and phone check
+      if (vehicle?.isDropoffContact === false) {
+        newErrors[i].dropoffContactName = vehicle?.dropoffContactName
+          ? ""
+          : "Dropoff contact name is required.";
+        newErrors[i].dropoffContactPhone =
+          vehicle?.dropoffContactPhone &&
+          /^\(\d{3}\) \d{3}-\d{4}$/.test(vehicle?.dropoffContactPhone)
+            ? ""
+            : "Enter a valid 10-digit phone number for dropoff contact.";
       }
     }
 
-    // Dropoff contact name and phone check based on isDeliveryContact
-    if (!isDropoffContact) {
-      if (!dropoffContactName) {
-        newErrors.dropoffContactName = "Dropoff contact name is required.";
-      }
+    // Check if there are any errors before proceeding
+    const hasErrors = newErrors.some((error) =>
+      Object.values(error).some((val) => val !== "")
+    );
+    setErrorsLocation(newErrors);
 
-      if (!dropoffContactPhone || !/^\d{10}$/.test(dropoffContactPhone)) {
-        newErrors.dropoffContactPhone =
-          "Enter a valid 10-digit phone number for dropoff contact.";
-      }
+    if (hasErrors) {
+      console.log("Validation failed:", newErrors);
+      return false; // Stop further execution
     }
 
-    console.log(newErrors);
-    // If there are validation errors, set them and return early
-    if (Object.keys(newErrors).length > 0) {
-      setErrorsLocation(newErrors);
-      return; // Stop further execution if validation fails
-    }
-
-    // If validation passes, reset errors and proceed (if needed)
-    setErrorsLocation({
-      pickupLocation: "",
-      deliveryLocation: "",
-      addressTypeForPickup: "",
-      addressTypeForDeliver: "",
-      pickupContactName: "",
-      pickupContactPhone: "",
-      dropoffContactName: "",
-      dropoffContactPhone: "",
-    });
-
-    // Optional: Continue with next steps or additional logic here
-    // if (step < 3) setStep(step + 1);
+    console.log("Validation passed!");
+    return true; // Continue to next step if needed
   };
 
   const handleRemoveVehicle = (index: number) => {
@@ -296,34 +299,13 @@ const QouetForm: React.FC = () => {
   };
 
   const nextStep = () => {
-    console.log("nextStep cleicked", isStep2Valid);
     setErrorMessage(""); // Reset the error message
 
-    if (step === 3 && !isStep1Valid) {
-      validateLocation();
+    if (step === 2 && !isStep1Valid) {
+      const isValidLocation = validateLocation();
 
-      if (
-        !pickupLocation ||
-        !deliveryLocation ||
-        !addressTypeForDeliver ||
-        !addressTypeForPickup
-      ) {
-        // Optionally set an error message for better UX
-        return;
-      }
-
-      if (
-        isPickupContact === false &&
-        (!pickupContactName.trim() || !pickupContactPhone.trim())
-      ) {
-        return;
-      }
-
-      // Check if the dropoff contact information is incomplete when not the point of contact
-      if (
-        isDropoffContact === false &&
-        (!dropoffContactName.trim() || !dropoffContactPhone.trim())
-      ) {
+      if (!isValidLocation) {
+        // Stop further execution if validation fails
         return;
       }
     }
@@ -338,22 +320,9 @@ const QouetForm: React.FC = () => {
       // return;
       nextStepOne();
 
-      if (!vehicles[currentVehicleIndex]?.vehicleYear) {
-        return;
-      } else if (!/^\d{4}$/.test(vehicles[currentVehicleIndex]?.vehicleYear)) {
-        return;
-      }
-      if (!vehicles[currentVehicleIndex]?.vehicleMaker) {
-        setErrorMessage("Vehicle maker is required.");
-        return;
-      }
-      if (!vehicles[currentVehicleIndex]?.type) {
-        setErrorMessage("This field is required.");
-        return;
-      }
-      if (vehicles[currentVehicleIndex]?.category) {
-        setErrorMessage("Vehicle Catagory is required.");
-        return;
+      // If there were errors in nextStepOne, stop further execution
+      if (Object.keys(errors).length > 0) {
+        return; // Stop further execution if there are errors
       }
     }
 
@@ -375,7 +344,7 @@ const QouetForm: React.FC = () => {
       }
     }
 
-    if (step === 2 && !isStep4Valid) {
+    if (step === 3 && !isStep4Valid) {
       // setErrorMessage("All fields are required for Step 4.");
       // return;
       validatePickupAndDelivery();
@@ -402,13 +371,27 @@ const QouetForm: React.FC = () => {
     // }
     if (isStep2Valid) {
       console.log("is step2 valid ", isStep2Valid);
+      nextStepOne();
+
+      // If there were errors in nextStepOne, stop further execution
+      if (Object.keys(errors).length > 0) {
+        return; // Stop further execution if there are errors
+      }
       setCurrentVehicleIndex((prevIndex) => currentVehicleIndex + 1);
       //   // setCurrentVehicleIndex(currentVehicleIndex + 1);
     } else if (step === 1 && !isStep2Valid) {
+      console.log("is step2 valid 222 ", isStep2Valid);
       handleRemoveVehicle(currentVehicleIndex);
       setCurrentVehicleIndex((prevIndex) => currentVehicleIndex);
     }
-    if (step < totalSteps) setStep(step + 1);
+    console.log("111111111111111111111111111111111111111");
+
+    if (step < totalSteps) {
+      console.log("step last ");
+      setStep(step + 1);
+    }
+    console.log("111111111111111111111111111111111111111");
+
     setIsModalOpen(true);
   };
 
@@ -497,6 +480,7 @@ const QouetForm: React.FC = () => {
     console.log("User confirmed the message", vehicles);
     setSameLocation(true);
     // setSameLocation(null);
+    setCurrentVehicleIndex(() => currentVehicleIndex + 1);
     setStep(step + 1);
     setModalOpenLocation(false); // Close modal after action
   };
@@ -637,7 +621,7 @@ const QouetForm: React.FC = () => {
             </p>
           </div>
           {/* Step 1: Pickup, Delivery, and Shipment Date */}
-          {step === 3 && (
+          {step === 2 && (
             <StepOne
               pickupLocation={pickupLocation}
               setPickupLocation={setPickupLocation}
@@ -667,6 +651,8 @@ const QouetForm: React.FC = () => {
               setLocation={setLocation}
               currentVehicleIndex={currentVehicleIndex}
               sameLocation={sameLocation}
+              vehicles={vehicles}
+              setVehicles={setVehicles}
             />
           )}
           {step === 1 && (
@@ -712,7 +698,7 @@ const QouetForm: React.FC = () => {
               error={error}
             />
           )}
-          {step === 2 && (
+          {step === 3 && (
             <StepForDate
               // Pick Up Date and Time props
               pickUpDateOption={pickUpDateOption}
@@ -774,6 +760,8 @@ const QouetForm: React.FC = () => {
             onClose={() => {
               setSameLocation(false);
               setModalOpenLocation(false);
+              setCurrentVehicleIndex((prevIndex) => currentVehicleIndex);
+
               setStep(step + 1);
             }}
             message=" vehicles are in the same location?"
