@@ -61,9 +61,9 @@ const ViewQuoteForm = () => {
     return <DIsplayFormSkeleton />;
   }
 
-  //   if (errorMessage) {
-  //     return <div>{errorMessage}</div>;
-  //   }
+  if (errorMessage) {
+    return;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

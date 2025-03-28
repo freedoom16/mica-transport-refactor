@@ -541,7 +541,12 @@ const QouetForm: React.FC = () => {
       vehicles[currentVehicleIndex]?.category
     );
 
-  const isStep3Valid = !!(firstName && lastName && phone);
+  const isStep3Valid = !!(
+    (firstName && lastName && phone)
+    // &&
+    // isDealer != null &&
+    // isClientNote != null
+  );
 
   const isStep4Valid = !!(
     (pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd) &&
@@ -564,8 +569,6 @@ const QouetForm: React.FC = () => {
         return;
       }
     }
-    const generateRandomId = () =>
-      Math.floor(10000 + Math.random() * 90000).toString();
 
     const quoteData = {
       vehicleInfo: vehicles.map((vehicle: any) => ({
@@ -828,6 +831,8 @@ const QouetForm: React.FC = () => {
                 (step === 3 && isStep1Valid) ||
                 (step === 4 && isStep3Valid)
               }
+              isLoading={isLoading}
+              isSuccess={isSuccess}
             />
           )}
 

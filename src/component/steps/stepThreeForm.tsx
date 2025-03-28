@@ -289,7 +289,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                name="is_drivable"
+                name="is_clientNote"
                 value="true"
                 onChange={() => setIsClientNote(true)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
@@ -299,7 +299,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                name="is_drivable"
+                name="is_clientNote"
                 value="false"
                 onChange={() => setIsClientNote(false)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "

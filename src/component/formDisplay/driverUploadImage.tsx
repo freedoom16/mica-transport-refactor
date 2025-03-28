@@ -1,12 +1,23 @@
 "use client";
 import React, { useState } from "react";
 import ImageUpload from "./imageUpload";
+import { useSearchParams } from "next/navigation";
+import { useGetQuoetsByIDQuery } from "@/store/Api/quotesApi";
 
 const VehicleImageUpload: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [driverName, setDriverName] = useState(""); // New state for driver's name
   const [damageType, setDamageType] = useState<string | null>(null);
+  const searchParams: any = useSearchParams();
+  const quoteId = searchParams.get("id");
 
+  // Fetch the quote data using `useGetQuotesQuery`
+  const {
+    data: data,
+    isLoading,
+    isError,
+    error,
+  } = useGetQuoetsByIDQuery(quoteId);
   // const [selectedImages, setSelectedImages] = useState<any>({
   //   front: null,
   //   back: null,
@@ -113,6 +124,11 @@ const VehicleImageUpload: React.FC = () => {
     // Add logic to submit form or handle confirmation
     alert("Contract submitted!"); // Example confirmation
   };
+
+  if (isError) {
+    console.log(Error);
+    return;
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-6 rounded-lg shadow-lg bg-gray-900">
