@@ -17,6 +17,7 @@ interface Vehicle {
   isDrivable: boolean | null;
   category: string;
   sameLocation: boolean | null;
+  vehicleId: string;
 }
 
 interface StepTwoProps {
@@ -27,6 +28,10 @@ interface StepTwoProps {
   setCurrentVehicleIndex: React.Dispatch<React.SetStateAction<number>>;
   errors: any;
   setErrors: React.Dispatch<React.SetStateAction<any>>;
+  currentStep: number;
+  totalSteps: number;
+  onNext: () => void;
+  isNextEnabled: boolean | string;
 }
 
 const StepTwoComponentTest: React.FC<StepTwoProps> = ({
@@ -36,6 +41,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   setCurrentVehicleIndex,
   errors,
   setErrors,
+  currentStep,
+  totalSteps,
+  onNext,
+  isNextEnabled,
 }) => {
   //   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [makes, setMakes] = useState<string[]>([]);
@@ -53,6 +62,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [type, setType] = useState<string>(""); // Default to "Open"
   const [isDrivable, setIsDrivable] = useState<boolean | null>(null);
   // const [categoryInput, setCategoryInput] = useState<string>(categories[0]); // Default to the first category
+
+  const generateRandomId = Math.floor(10000 + Math.random() * 90000).toString();
 
   const [showCategoryOptions, setShowCategoryOptions] =
     useState<boolean>(false);
@@ -81,6 +92,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         isDrivable: null,
         category: "",
         sameLocation: null,
+        vehicleId: generateRandomId,
       };
     }
     // Update the current vehicle at the specified index
@@ -160,6 +172,24 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   };
 
   console.log(errors);
+  const scrollToQuote = () => {
+    // Use a setTimeout to ensure the DOM is ready before scrolling
+    setTimeout(() => {
+      const quoteElement = document.getElementById("quote-form");
+      if (quoteElement) {
+        quoteElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        console.log("Could not find the quote section to scroll.");
+      }
+    }, 300); // Adjust the timeout if needed (300ms delay gives time for rendering)
+  };
+
+  const handleNextMobaile = () => {
+    if (currentStep < totalSteps) {
+      onNext();
+      // scrollToQuote(); // Scroll to "About Us" section
+    }
+  };
 
   const handleAddVehicle = () => {
     console.log("type ");
@@ -185,6 +215,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       return;
     }
 
+    if (Object.keys(errors).some((key) => errors[key] !== "")) {
+      return; // Stop further execution if there are errors
+    }
     // return Object.values(newErrors).every((error) => !error);
 
     const updatedVehicles = [...vehicles];
@@ -198,6 +231,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       isDrivable: isDrivable,
       category: categoryInput,
       sameLocation: sameLocation,
+      vehicleId: generateRandomId,
     };
 
     setVehicles(updatedVehicles);
@@ -356,7 +390,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         <div className="mb-2">
           {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
-              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg  rounded-full w-full">
+              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr__min-content_min-content] shadow-lg  rounded-full w-full">
                 <div className="flex flex-col pl-2">
                   <strong>Make</strong> {vehicle?.vehicleMaker}
                 </div>
@@ -365,6 +399,21 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 </div>
                 <div className="flex flex-col">
                   <strong>Year</strong> {vehicle?.vehicleYear}
+                </div>
+
+                <div className="flex w-8">
+                  <button className="text-red-500">
+                    <img
+                      // src="/motor-svg-green.svg"
+                      src={`${
+                        vehicle.isDrivable
+                          ? "/motor-svg-green.svg"
+                          : "/motor-svg-red.svg"
+                      }`}
+                      width={24}
+                      height={24}
+                    />
+                  </button>
                 </div>
                 <div className="flex w-8">
                   <button
@@ -435,6 +484,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
           <input
             value={yearInput}
+            type="number"
             onChange={(e) => handleYearInputChange(e.target.value)}
             placeholder="Year"
             className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
@@ -608,13 +658,26 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       </div>
 
       {/* Add Vehicle Button */}
-      <button
-        type="button"
-        className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
-        onClick={handleAddVehicle}
-      >
-        Add Vehicle
-      </button>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
+          onClick={handleAddVehicle}
+        >
+          Add Vehicle
+        </button>
+        <button
+          type="button"
+          className={`px-8 py-2 rounded-full shadow-xl bg-white  text-gray-900   ${
+            isNextEnabled
+              ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
+              : "border-1 border-gray-900 text-gray-900"
+          }`}
+          onClick={handleNextMobaile}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

@@ -79,7 +79,7 @@ const CustomContentSection = () => {
           Contact Us
         </h3>
         {/* Email */}
-        <div className="flex items-left md:items-center -ml-2 space-x-2 text-[20px]">
+        <div className="flex items-left md:items-center -ml-2 space-x-2  text-[16px] md:text-[20px]">
           <FontAwesomeIcon
             icon={faEnvelope}
             className="px-2 text-gray-900"
@@ -95,7 +95,7 @@ const CustomContentSection = () => {
         </div>
 
         {/* Phone */}
-        <div className="flex items-center space-x-2 -ml-2 text-[20px]">
+        <div className="flex items-center space-x-2 -ml-2  text-[16px] md:text-[20px]">
           <FontAwesomeIcon
             icon={faPhone}
             className="px-2 text-gray-900"

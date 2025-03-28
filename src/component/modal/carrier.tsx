@@ -26,6 +26,7 @@ const CareerModal: React.FC<CareerModalProps> = ({ isOpen, onClose }) => {
           <input
             type="text"
             value={name}
+            placeholder="Name"
             onChange={(e) => setName(e.target.value)}
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
           />
@@ -39,7 +40,9 @@ const CareerModal: React.FC<CareerModalProps> = ({ isOpen, onClose }) => {
           <input
             type="email"
             value={email}
+            placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
+            required
             className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
           />
         </div>

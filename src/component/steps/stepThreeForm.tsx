@@ -14,6 +14,10 @@ interface StepThreeProps {
   setIsDealer: (value: boolean | null) => void;
   dealerCompanName: string;
   setDealerCompanName: (value: string) => void;
+  isClientNote: boolean | null;
+  setIsClientNote: (value: boolean | null) => void;
+  note: string;
+  setNote: (value: string) => void;
   //   isStep3Valid: boolean;
   isLoading: boolean;
   isSuccess: boolean;
@@ -36,6 +40,10 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
   setIsDealer,
   dealerCompanName,
   setDealerCompanName,
+  isClientNote,
+  setIsClientNote,
+  note,
+  setNote,
 
   //   isStep3Valid,
   isLoading,
@@ -46,9 +54,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
   errorsContact,
 }) => {
   const [phoneError, setPhoneError] = useState<string | null>(null);
-
-  const [anyNote, setAnyNote] = useState<boolean | null>(null);
-  const [note, setNote] = useState<string>("");
+  const [errorField, setErrorField] = useState("");
 
   const validateField = (field: string, value: string) => {
     const newErrors = { ...errorsContact };
@@ -283,9 +289,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                name="is_drivable"
+                name="is_clientNote"
                 value="true"
-                onChange={() => setAnyNote(true)}
+                onChange={() => setIsClientNote(true)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
               <span className="text-sm text-gray-900">Yes</span>
@@ -293,9 +299,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                name="is_drivable"
+                name="is_clientNote"
                 value="false"
-                onChange={() => setAnyNote(false)}
+                onChange={() => setIsClientNote(false)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
               <span className="text-sm text-gray-900">No</span>
@@ -304,19 +310,28 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         </div>
 
         {/* Conditional Company Name Input */}
-        {anyNote && (
+        {isClientNote && (
           <div className="relative z-0 w-full mb-5 group">
-            <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-              {" "}
+            <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
               Any Note
             </label>
-            <input
-              type="text"
-              placeholder="Enter your company name"
+            <textarea
+              placeholder="Enter your note (max 50 words)"
               value={note}
-              onChange={(e) => setNote(e.target.value)}
-              className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
+              onChange={(e) => {
+                const words = e.target.value.trim().split(/\s+/);
+                if (words.length <= 50) {
+                  setNote(e.target.value);
+                  setErrorField(""); // Clear error if within limit
+                } else {
+                  setErrorField("Maximum limit of 50 words reached.");
+                }
+              }}
+              className="w-full h-32 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
             />
+            {errorField && (
+              <p className="text-red-500 text-sm mt-1">{errorField}</p>
+            )}
           </div>
         )}
       </div>

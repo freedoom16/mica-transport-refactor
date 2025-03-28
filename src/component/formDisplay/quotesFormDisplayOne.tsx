@@ -55,6 +55,8 @@ const QuoteFormDisplayOne: React.FC = () => {
   const Error: any = error;
 
   const quoteData = data?.data;
+  console.log(quoteData);
+  // console.log(quoteData.client?.fullName);
   // {
   //   pickupLocation: "123 Main St, Cityville, NY",
   //   pickupLocationName: "test test",
@@ -86,32 +88,50 @@ const QuoteFormDisplayOne: React.FC = () => {
   // Check if the quote data has loaded
   useEffect(() => {
     if (quoteData) {
-      setPickupLocation(quoteData.pickupLocation);
-      setDeliveryLocation(quoteData.deliveryLocation);
-      setPickupLocationName(quoteData.pickupLocationName);
-      setPickupLocationPhone(quoteData.pickupLocationPhone);
-      setdeliveryLocationName(quoteData.deliveryLocationName);
-      setdeliveryLocationPhone(quoteData.deliveryLocationPhone);
-      setShipmentDate(quoteData.shipmentDate);
-      setVehicleYear(quoteData.vehicleYear);
-      setVehicleModel(quoteData.vehicleModel); // This was changed based on the JSON structure
-      setVehicleType(quoteData.vehicleType);
-      setFirstName(quoteData.firstName);
-      setEmail(quoteData.email);
-      setPhone(quoteData.phone);
-      setPaymentMethod(quoteData.paymentMethod);
-      setPaymentLink(quoteData.paymentLink);
-      setPickupDate(quoteData.pickupDate);
-      setDeliveryDate(quoteData.deliveryDate);
-      setPickupTime(quoteData.pickupTime);
-      setDeliveryTime(quoteData.deliveryTime);
-      setOption(quoteData.option);
+      // Setting pickup and delivery locations
+      setPickupLocation(quoteData.locations?.[0]?.pickup?.pickupLocation || "");
+      setDeliveryLocation(
+        quoteData.locations?.[0]?.delivery?.deliveryLocation || ""
+      );
 
-      // Setting the options based on the quote data
-      setPickupDateOption(quoteData.pickupDateOption);
-      setDeliveryDateOption(quoteData.deliveryDateOption);
-      setPickupTimeOption(quoteData.pickupTimeOption);
-      setDeliveryTimeOption(quoteData.deliveryTimeOption);
+      // Setting pickup and delivery contact details
+      setPickupLocationName(
+        quoteData.locations?.[0]?.pickup?.pickupContactName || ""
+      );
+      setPickupLocationPhone(
+        quoteData.locations?.[0]?.pickup?.pickupContactPhone || ""
+      );
+      setdeliveryLocationName(
+        quoteData.locations?.[0]?.delivery?.dropoffContactName || ""
+      );
+      setdeliveryLocationPhone(
+        quoteData.locations?.[0]?.delivery?.dropoffContactPhone || ""
+      );
+
+      // Setting shipment details
+      setPickupDate(quoteData.pickUpTime?.pickUpDate || "");
+      setPickupTime(quoteData.pickUpTime?.pickUpTime || "");
+      setDeliveryDate(quoteData.deliveryTime?.deliveryDate || "");
+      setDeliveryTime(quoteData.deliveryTime?.deliveryTime || "");
+
+      // Setting pickup and delivery options
+      setPickupDateOption(quoteData.pickUpTime?.pickUpDateOption || "");
+      setDeliveryDateOption(quoteData.deliveryTime?.deliveryDateOption || "");
+      setPickupTimeOption(quoteData.pickUpTime?.pickUpTimeOption || "");
+      setDeliveryTimeOption(quoteData.deliveryTime?.deliveryTimeOption || "");
+
+      // Setting vehicle details
+      setVehicleYear(quoteData.vehicleInfo?.[0]?.vehicleYear || "");
+      setVehicleModel(quoteData.vehicleInfo?.[0]?.vehicleModel || "");
+      setVehicleType(quoteData.vehicleInfo?.[0]?.vehicleMaker || ""); // Assuming 'vehicleMaker' is equivalent to vehicle type
+
+      // Setting client details
+      setFirstName(quoteData.client?.fullName || "");
+      setEmail(quoteData.client?.email || "");
+      setPhone(quoteData.client?.phone || "");
+
+      // Setting additional details
+      setOption(quoteData.status || ""); // Assuming 'status' is relevant
     }
   }, [quoteData]);
 
@@ -126,7 +146,11 @@ const QuoteFormDisplayOne: React.FC = () => {
 
   if (isError) {
     console.log(Error);
-    return <div>{Error?.message}</div>;
+    return (
+      <div className="text-red-300 text-center h-[700px] mt-24 p-20">
+        {Error?.message} Failed to load quote data. Please try again later.
+      </div>
+    );
   }
 
   return (
@@ -136,33 +160,46 @@ const QuoteFormDisplayOne: React.FC = () => {
         <div className="bg-gray-800 p-6 mb-4">
           <h2 className="text-lg font-bold text-white mb-4">Contact Info</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
-            {/* First Name */}
+            {/* Full Name */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Full Name:</p>
-              <p className="w-2/3">{quoteData.fullName}</p>
+              <p className="w-2/3">{quoteData.client.fullName}</p>
             </div>
 
             {/* Email Address */}
-            {quoteData.email && (
+            {quoteData.client.email && (
               <div className="flex justify-between items-center">
                 <p className="font-semibold w-1/3">Email Address:</p>
-                <p className="w-2/3">{quoteData.email}</p>
+                <p className="w-2/3">{quoteData.client.email}</p>
               </div>
             )}
 
             {/* Phone Number */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Phone Number:</p>
-              <p className="w-2/3">{"+1" + quoteData.phone}</p>
+              <p className="w-2/3">{quoteData.client.phone}</p>
             </div>
 
             {/* Is Dealer */}
-            {quoteData.isdealer && (
+            {quoteData.client.areYouDealer && (
               <div className="flex justify-between items-center">
                 <p className="font-semibold w-1/3">Is Dealer:</p>
                 <p className="w-2/3">
-                  {quoteData.isdealer ? "Dealer" : "Not Dealer"}
+                  {quoteData.client.areYouDealer ? "Dealer" : "Not Dealer"}
                 </p>
+              </div>
+            )}
+
+            {quoteData.client.areYouDealer === true && (
+              <div className="flex justify-between items-center">
+                <p className="font-semibold w-1/3">Is Dealer:</p>
+                <p className="w-2/3">{quoteData.client?.companyName}</p>
+              </div>
+            )}
+            {quoteData.client.note && (
+              <div className="flex justify-between items-center">
+                <p className="font-semibold w-1/3">Client Note</p>
+                <p className="w-2/3">{quoteData.client.note}</p>
               </div>
             )}
           </div>
@@ -173,60 +210,77 @@ const QuoteFormDisplayOne: React.FC = () => {
           <h2 className="text-lg font-bold text-white mb-4">
             Pickup and Dropoff Location Details
           </h2>
-          {/* <div>{Error.data}</div> */}
-
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-4 text-gray-300">
-            {/* Pickup Location */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Pickup Location:</p>
-              <p className="w-2/3">{quoteData.pickupLocation}</p>
-            </div>
-
-            {quoteData.isPickupContact === false ? (
-              <div>
+          <div className="space-y-4">
+            {quoteData.locations.map((location: any, index: any) => (
+              <div
+                key={index}
+                className="grid grid-cols-1 md:grid-cols-1 gap-4 text-gray-300"
+              >
+                {/* Pickup Location */}
                 <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">Pickup Contact Name:</p>
-                  <p className="w-2/3">{quoteData.pickupContactName}</p>
+                  <p className="font-semibold w-1/3">Pickup Location:</p>
+                  <p className="w-2/3">{location.pickup.pickupLocation}</p>
                 </div>
 
-                <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">Pickup Contact Phone:</p>
-                  <p className="w-2/3">{"+1" + quoteData.pickupContactPhone}</p>
-                </div>
-              </div>
-            ) : (
-              <div className="flex justify-between items-center">
-                <p className="font-semibold w-1/3">At Point of Pickup </p>
-                {/* <p className="w-2/3">{"+1" + quoteData.pickupContactPhone}</p> */}
-              </div>
-            )}
+                {location.pickup.isPickupContact === false ? (
+                  <div>
+                    <div className="flex justify-between items-center">
+                      <p className="font-semibold w-1/3">
+                        Pickup Contact Name:
+                      </p>
+                      <p className="w-2/3">
+                        {location.pickup.pickupContactName}
+                      </p>
+                    </div>
 
-            {/* Delivery Location */}
-            <div className="flex justify-between items-center">
-              <p className="font-semibold w-1/3">Delivery Location:</p>
-              <p className="w-2/3">{quoteData.deliveryLocation}</p>
-            </div>
+                    <div className="flex justify-between items-center">
+                      <p className="font-semibold w-1/3">
+                        Pickup Contact Phone:
+                      </p>
+                      <p className="w-2/3">
+                        {location.pickup.pickupContactPhone}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex justify-between items-center">
+                    <p className="font-semibold w-1/3">At Point of Pickup</p>
+                  </div>
+                )}
 
-            {quoteData.isDropoffContact === false ? (
-              <div>
+                {/* Delivery Location */}
                 <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">Delivery Contact Name:</p>
-                  <p className="w-2/3">{quoteData.dropoffContactName}</p>
+                  <p className="font-semibold w-1/3">Delivery Location:</p>
+                  <p className="w-2/3">{location.delivery.deliveryLocation}</p>
                 </div>
 
-                <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">Delivery Contact Phone:</p>
-                  <p className="w-2/3">
-                    {"+1" + quoteData.dropoffContactPhone}
-                  </p>
-                </div>
+                {location.delivery.isDropoffContact === false ? (
+                  <div>
+                    <div className="flex justify-between items-center">
+                      <p className="font-semibold w-1/3">
+                        Delivery Contact Name:
+                      </p>
+                      <p className="w-2/3">
+                        {location.delivery.dropoffContactName}
+                      </p>
+                    </div>
+
+                    <div className="flex justify-between items-center">
+                      <p className="font-semibold w-1/3">
+                        Delivery Contact Phone:
+                      </p>
+                      <p className="w-2/3">
+                        {location.delivery.dropoffContactPhone}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex justify-between items-center">
+                    <p className="font-semibold w-1/3">At Point of Dropoff</p>
+                  </div>
+                )}
               </div>
-            ) : (
-              <div className="flex justify-between items-center">
-                <p className="font-semibold w-1/3">At Point of Dropoff </p>
-                {/* <p className="w-2/3">{"+1" + quoteData.pickupContactPhone}</p> */}
-              </div>
-            )}
+            ))}
           </div>
         </div>
 
@@ -240,78 +294,81 @@ const QuoteFormDisplayOne: React.FC = () => {
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Pickup Date:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{quoteData.pickUpDateOption}</p>
-                {/* Conditionally display date range if the option is 'between' */}
-                {quoteData.pickUpDateOption === "between" ? (
-                  <>
-                    <p>
-                      {new Date(
-                        quoteData.pickUpDateRangeStart
-                      ).toLocaleDateString()}{" "}
-                      -{" "}
-                      {new Date(
-                        quoteData.pickUpDateRangeEnd
-                      ).toLocaleDateString()}
-                    </p>
-                  </>
+                <p className="pr-2">{quoteData.pickUpTime.pickUpDateOption}</p>
+                {quoteData.pickUpTime.pickUpDateOption === "on" ? (
+                  <p>
+                    {new Date(
+                      quoteData.pickUpTime.pickUpDate
+                    ).toLocaleDateString()}
+                  </p>
                 ) : (
-                  <p>{new Date(quoteData.pickUpDate).toLocaleDateString()}</p>
+                  <p>
+                    {new Date(
+                      quoteData.pickUpTime.pickUpDateRangeStart
+                    ).toLocaleDateString()}{" "}
+                    -{" "}
+                    {new Date(
+                      quoteData.pickUpTime.pickUpDateRangeEnd
+                    ).toLocaleDateString()}
+                  </p>
                 )}
               </p>
             </div>
+
             {/* Delivery Date */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Delivery Date:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{quoteData.deliveryDateOption}</p>
-                {/* Conditionally display date range if the option is 'between' */}
-                {quoteData.deliveryDateOption === "between" ? (
-                  <>
-                    <p>
-                      {new Date(
-                        quoteData.deliveryDateRangeStart
-                      ).toLocaleDateString()}{" "}
-                      -{" "}
-                      {new Date(
-                        quoteData.deliveryDateRangeEnd
-                      ).toLocaleDateString()}
-                    </p>
-                  </>
+                <p className="pr-2">
+                  {quoteData.deliveryTime.deliveryDateOption}
+                </p>
+                {quoteData.deliveryTime.deliveryDateOption === "on" ? (
+                  <p>
+                    {new Date(
+                      quoteData.deliveryTime.deliveryDate
+                    ).toLocaleDateString()}
+                  </p>
                 ) : (
-                  <p>{new Date(quoteData.deliveryDate).toLocaleDateString()}</p>
+                  <p>
+                    {new Date(
+                      quoteData.deliveryTime.deliveryDateRangeStart
+                    ).toLocaleDateString()}{" "}
+                    -{" "}
+                    {new Date(
+                      quoteData.deliveryTime.deliveryDateRangeEnd
+                    ).toLocaleDateString()}
+                  </p>
                 )}
               </p>
             </div>
+
             {/* Pickup Time */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Pickup Time:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{quoteData.pickUpTimeOption}</p>
-                {/* Conditionally display time range if the option is 'between' */}
-                {quoteData.pickUpTimeOption === "between" ? (
-                  <>
-                    <p>
-                      {new Date(
-                        `1970-01-01T${quoteData.pickUpTimeRangeStart}:00`
-                      ).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}{" "}
-                      -
-                      {new Date(
-                        `1970-01-01T${quoteData.pickUpTimeRangeEnd}:00`
-                      ).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
-                    </p>
-                  </>
+                <p className="pr-2">{quoteData.pickUpTime.pickUpTimeOption}</p>
+                {quoteData.pickUpTime.pickUpTimeOption === "on" ? (
+                  <p>
+                    {new Date(
+                      `1970-01-01T${quoteData.pickUpTime.pickUpTime}:00`
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </p>
                 ) : (
                   <p>
                     {new Date(
-                      `1970-01-01T${quoteData.pickUpTime}:00`
+                      `1970-01-01T${quoteData.pickUpTime.pickUpTimeRangeStart}:00`
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}{" "}
+                    -{" "}
+                    {new Date(
+                      `1970-01-01T${quoteData.pickUpTime.pickUpTimeRangeEnd}:00`
                     ).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -321,36 +378,36 @@ const QuoteFormDisplayOne: React.FC = () => {
                 )}
               </p>
             </div>
+
             {/* Delivery Time */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Delivery Time:</p>
               <p className="w-2/3 flex flex-row">
-                <p className="pr-2">{quoteData.deliveryTimeOption}</p>
-                {/* Conditionally display time range if the option is 'between' */}
-                {quoteData.deliveryTimeOption === "between" ? (
-                  <>
-                    <p>
-                      {new Date(
-                        `1970-01-01T${quoteData.deliveryTimeRangeStart}:00`
-                      ).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}{" "}
-                      -
-                      {new Date(
-                        `1970-01-01T${quoteData.deliveryTimeRangeEnd}:00`
-                      ).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                        hour12: true,
-                      })}
-                    </p>
-                  </>
+                <p className="pr-2">
+                  {quoteData.deliveryTime.deliveryTimeOption}
+                </p>
+                {quoteData.deliveryTime.deliveryTimeOption === "on" ? (
+                  <p>
+                    {new Date(
+                      `1970-01-01T${quoteData.deliveryTime.deliveryTime}:00`
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}
+                  </p>
                 ) : (
                   <p>
                     {new Date(
-                      `1970-01-01T${quoteData.deliveryTime}:00`
+                      `1970-01-01T${quoteData.deliveryTime.deliveryTimeRangeStart}:00`
+                    ).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    })}{" "}
+                    -{" "}
+                    {new Date(
+                      `1970-01-01T${quoteData.deliveryTime.deliveryTimeRangeEnd}:00`
                     ).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -364,12 +421,11 @@ const QuoteFormDisplayOne: React.FC = () => {
         </div>
 
         {/* Step 2: Vehicle Info */}
-        {/* Step 2: Vehicle Info */}
         <div className="bg-gray-800 p-6 mb-4">
           <h2 className="text-lg font-bold text-white mb-4">Vehicle Info</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-300">
+          <div className="space-y-4">
             {quoteData.vehicleInfo.map((vehicle: any, index: any) => (
-              <div key={vehicle._id} className="space-y-4">
+              <div key={index} className="space-y-4">
                 {/* Vehicle Year */}
                 <div className="flex justify-between items-center">
                   <p className="font-semibold w-1/3">Vehicle Year:</p>
@@ -388,13 +444,6 @@ const QuoteFormDisplayOne: React.FC = () => {
                   <p className="w-2/3">{vehicle.vehicleModel}</p>
                 </div>
 
-                {/* Vehicle Type */}
-                <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">Vehicle Type:</p>
-                  <p className="w-2/3">{vehicleType}</p>{" "}
-                  {/* vehicleType should be defined elsewhere */}
-                </div>
-
                 {/* Drivable Status */}
                 <div className="flex justify-between items-center">
                   <p className="w-2/3 font-bold bg-green-700 p-2 rounded-lg text-center">
@@ -410,7 +459,7 @@ const QuoteFormDisplayOne: React.FC = () => {
 
         {/* Error Handling */}
         {isError && (
-          <div className="text-red-500 text-sm mb-4">
+          <div className="text-red-500 text-sm mb-4 mt-20 p-16">
             Failed to load quote data. Please try again later.
           </div>
         )}
