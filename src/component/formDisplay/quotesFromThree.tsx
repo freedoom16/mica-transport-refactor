@@ -30,6 +30,7 @@ const MultiStepTransportationForm = () => {
     totalCOD: "",
     paymentType: "",
     paymentMadeIn: "",
+    vehicleDimension: "",
   });
 
   const handleInputChange = (e: any) => {
@@ -75,7 +76,12 @@ const MultiStepTransportationForm = () => {
             <h3 className="text-lg font-medium mb-4">
               Vehicle and Payment Details
             </h3>
-            {["vehicleMileage", "plateNumber", "vinNumber"].map((key) => (
+            {[
+              "vehicleMileage",
+              "plateNumber",
+              "vinNumber",
+              "vehicleDimension",
+            ].map((key) => (
               <div className="relative z-0 w-full  group mb-4" key={key}>
                 <input
                   type="text"
