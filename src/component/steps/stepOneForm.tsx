@@ -1,5 +1,5 @@
 "use client";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCar, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
@@ -317,49 +317,6 @@ const StepOne: React.FC<StepOneProps> = ({
     }
   };
 
-  const handleInputChange = (name: any, value: any) => {
-    // Dynamically call the corresponding setter based on the field name
-    // Remove non-digit characters
-    if (name === "pickupContactPhone" || name === "dropoffContactPhone") {
-      value = value.replace(/\D/g, "");
-
-      // Format phone number as (xxx) xxx-xxxx
-      if (value.length <= 3) {
-        value = `(${value}`;
-      } else if (value.length <= 6) {
-        value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-      } else {
-        value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(
-          6,
-          10
-        )}`;
-      }
-    }
-    updateVehicleField(name, value, value);
-
-    switch (name) {
-      case "pickupContactName":
-        setPickupContactName(value);
-        break;
-      case "pickupContactPhone":
-        setPickupContactPhone(value);
-        break;
-      case "dropoffContactName":
-        setDropoffContactName(value);
-        break;
-      case "dropoffContactPhone":
-        setDropoffContactPhone(value);
-        break;
-      default:
-        break;
-    }
-
-    // Optional: If you have validation logic, call it here
-    if (validateField) {
-      validateField(name, value, value);
-    }
-  };
-
   const handleInputChangeArray = (
     name: string,
     value: string,
@@ -492,7 +449,7 @@ const StepOne: React.FC<StepOneProps> = ({
     updateVehicleField(field, value, vehicleIndex); // Ensure vehicle-specific update
   };
 
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   console.log(
     "location ",
@@ -510,47 +467,56 @@ const StepOne: React.FC<StepOneProps> = ({
         {vehicles.map((vehicle, vehicleIndex) => (
           <div key={vehicleIndex} className="flex flex-col space-y-2">
             {/* Vehicle Item */}
-            <div
-              className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg rounded-full w-full cursor-pointer"
-              onClick={() =>
-                setExpandedIndex(
-                  expandedIndex === vehicleIndex ? null : vehicleIndex
-                )
-              }
-            >
-              <div className="flex flex-col pl-2">
-                <strong>Make</strong> {vehicle.vehicleMaker}
+
+            {sameLocation || currentVehicleIndex === 1 ? (
+              ""
+            ) : (
+              <div
+                className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg rounded-lg w-full cursor-pointer"
+                onClick={() =>
+                  setExpandedIndex(
+                    expandedIndex === vehicleIndex ? null : vehicleIndex
+                  )
+                }
+              >
+                <div className="flex flex-col pl-2">
+                  <strong>Make</strong> {vehicle.vehicleMaker}
+                </div>
+                <div className="flex flex-col">
+                  <strong>Model</strong> {vehicle.vehicleModel}
+                </div>
+                <div className="flex flex-col">
+                  <strong>Year</strong> {vehicle.vehicleYear}
+                </div>
+                <div className="flex w-8">
+                  <button className="text-red-500">
+                    <img
+                      src={`${
+                        vehicle.isDrivable
+                          ? "/motor-svg-green.svg"
+                          : "/motor-svg-red.svg"
+                      }`}
+                      width={24}
+                      height={24}
+                    />
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-col">
-                <strong>Model</strong> {vehicle.vehicleModel}
-              </div>
-              <div className="flex flex-col">
-                <strong>Year</strong> {vehicle.vehicleYear}
-              </div>
-              <div className="flex w-8">
-                <button
-                  className="text-red-500"
-                  onClick={(e) => {
-                    e.stopPropagation(); // Prevent expanding when clicking delete
-                    handleRemoveVehicle(vehicleIndex);
-                  }}
-                >
-                  <FontAwesomeIcon icon={faTrash} />
-                </button>
-              </div>
-            </div>
+            )}
 
             {/* Expandable Form */}
             {expandedIndex === vehicleIndex && (
               <div>
                 <p className="text-gray-900 mb-4 text-center font-bold">
-                  {sameLocation
+                  {sameLocation || currentVehicleIndex === 1
                     ? "Address Information"
-                    : `Add vehicle ${vehicleIndex + 1} information `}
+                    : `Address Information for vehicle ${
+                        vehicleIndex + 1
+                      } information `}
                 </p>
 
                 {/* Pickup Location */}
-                <div className="relative z-0 w-full mb-5 group">
+                <div className="relative z-0 w-full mb-5  ">
                   <label
                     htmlFor={`pickup_location_${vehicleIndex}`}
                     className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
@@ -573,7 +539,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     placeholder="Address or zipcode"
                     required
                   />
-                  <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                  <div className="relative z-10 w-full mt-2 bg-white rounded-lg shadow-lg">
                     {location[vehicleIndex]?.pickupSuggestions?.length > 0 && (
                       <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
                         {location[vehicleIndex]?.pickupSuggestions.map(
@@ -663,7 +629,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     placeholder="Address or zipcode"
                     required
                   />
-                  <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                  <div className="relative z-10 w-full mt-2 bg-white  rounded-lg shadow-lg">
                     {location[vehicleIndex]?.deliverySuggestions?.length >
                       0 && (
                       <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">

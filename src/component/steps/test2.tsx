@@ -17,6 +17,7 @@ interface Vehicle {
   isDrivable: boolean | null;
   category: string;
   sameLocation: boolean | null;
+  vehicleId: string;
 }
 
 interface StepTwoProps {
@@ -62,6 +63,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [isDrivable, setIsDrivable] = useState<boolean | null>(null);
   // const [categoryInput, setCategoryInput] = useState<string>(categories[0]); // Default to the first category
 
+  const generateRandomId = Math.floor(10000 + Math.random() * 90000).toString();
+
   const [showCategoryOptions, setShowCategoryOptions] =
     useState<boolean>(false);
   const categories = ["Van", "SUV", "Sedan", "Truck"];
@@ -89,6 +92,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         isDrivable: null,
         category: "",
         sameLocation: null,
+        vehicleId: generateRandomId,
       };
     }
     // Update the current vehicle at the specified index
@@ -227,6 +231,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       isDrivable: isDrivable,
       category: categoryInput,
       sameLocation: sameLocation,
+      vehicleId: generateRandomId,
     };
 
     setVehicles(updatedVehicles);
@@ -385,7 +390,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         <div className="mb-2">
           {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
-              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content] shadow-lg  rounded-full w-full">
+              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr__min-content_min-content] shadow-lg  rounded-full w-full">
                 <div className="flex flex-col pl-2">
                   <strong>Make</strong> {vehicle?.vehicleMaker}
                 </div>
@@ -394,6 +399,21 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 </div>
                 <div className="flex flex-col">
                   <strong>Year</strong> {vehicle?.vehicleYear}
+                </div>
+
+                <div className="flex w-8">
+                  <button className="text-red-500">
+                    <img
+                      // src="/motor-svg-green.svg"
+                      src={`${
+                        vehicle.isDrivable
+                          ? "/motor-svg-green.svg"
+                          : "/motor-svg-red.svg"
+                      }`}
+                      width={24}
+                      height={24}
+                    />
+                  </button>
                 </div>
                 <div className="flex w-8">
                   <button

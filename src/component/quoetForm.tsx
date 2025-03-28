@@ -301,6 +301,40 @@ const QouetForm: React.FC = () => {
   const nextStep = () => {
     setErrorMessage(""); // Reset the error message
 
+    const generateRandomId = () =>
+      Math.floor(10000 + Math.random() * 90000).toString();
+
+    const quoteData = {
+      vehicleInfo: vehicles.map((vehicle: any) => ({
+        vehicleYear: parseInt(vehicle.vehicleYear) || null,
+        vehicleMaker: vehicle.vehicleMaker || "",
+        vehicleModel: vehicle.vehicleModel || "",
+        category: vehicle.category || "",
+        type: vehicle.type || "",
+        isDrivable: vehicle.isDrivable || false,
+        vehicleId: generateRandomId(),
+      })),
+
+      locations: location.map((locations, index) => ({
+        vehicleId: vehicles[index]?.vehicleId,
+        pickup: {
+          pickupLocation: locations.pickupLocation || "",
+          isPickupContact: locations.isPickupContact || false,
+          pickupContactName: locations.pickupContactName || "",
+          pickupContactPhone: locations.pickupContactPhone || "",
+          addressTypeForPickup: locations.addressTypeForPickup || "",
+        },
+        delivery: {
+          deliveryLocation: locations.deliveryLocation || "",
+          isDropoffContact: locations.isDropoffContact || false,
+          dropoffContactName: locations.dropoffContactName || "",
+          dropoffContactPhone: locations.dropoffContactPhone || "",
+          addressTypeForDeliver: locations.addressTypeForDeliver || "",
+        },
+      })),
+    };
+
+    console.log("quoteData ", quoteData);
     if (step === 2 && !isStep1Valid) {
       const isValidLocation = validateLocation();
 
@@ -420,15 +454,7 @@ const QouetForm: React.FC = () => {
   const [vehicleYear, setVehicleYear] = useState("");
   const [vehicleModel, setVehicleModel] = useState("");
   const [vehicleMaker, setVehicleMaker] = useState("");
-  const [vehicles, setVehicles] = useState<Vehicle[] | any>([
-    // {
-    //   vehicleYear: "",
-    //   vehicleModel: "",
-    //   vehicleMaker: "",
-    //   filteredMakers: [],
-    //   filteredModels: [],
-    // },
-  ]);
+  const [vehicles, setVehicles] = useState<Vehicle[] | any>([]);
   const [location, setLocation] = useState<any[]>([]);
 
   // Step 3 fields
@@ -438,6 +464,8 @@ const QouetForm: React.FC = () => {
   const [phone, setPhone] = useState("");
   const [isDealer, setIsDealer] = useState<boolean | null>(null);
   const [dealerCompanName, setDealerCompanName] = useState("");
+  const [isClientNote, setIsClientNote] = useState<boolean | null>(null);
+  const [note, setNote] = useState<string>("");
 
   // step date fields
   // Pick Up Date and Time states
@@ -536,6 +564,8 @@ const QouetForm: React.FC = () => {
         return;
       }
     }
+    const generateRandomId = () =>
+      Math.floor(10000 + Math.random() * 90000).toString();
 
     const quoteData = {
       vehicleInfo: vehicles.map((vehicle: any) => ({
@@ -545,45 +575,88 @@ const QouetForm: React.FC = () => {
         category: vehicle.category || "",
         type: vehicle.type || "",
         isDrivable: vehicle.isDrivable || false,
+        vehicleId: vehicle.vehicleId,
+      })),
+      // locations: [
+      //   {
+      //     vehicleId: "12345",
+      //     pickup: {
+      //       pickupLocation: pickupLocation,
+      //       isPickupContact: isPickupContact,
+      //       pickupContactName: pickupContactName,
+      //       pickupContactPhone: pickupContactPhone,
+      //       addressTypeForPickup: addressTypeForPickup,
+      //     },
+      //     delivery: {
+      //       deliveryLocation: deliveryLocation,
+      //       isDropoffContact: isDropoffContact,
+      //       dropoffContactName: dropoffContactName,
+      //       dropoffContactPhone: dropoffContactPhone,
+      //       addressTypeForDeliver: addressTypeForDeliver,
+      //     },
+      //   },
+      // ],
+
+      locations: location.map((locations, index) => ({
+        vehicleId: vehicles[index]?.vehicleId,
+        pickup: {
+          pickupLocation: locations.pickupLocation || "",
+          isPickupContact: locations.isPickupContact || false,
+          pickupContactName: locations.pickupContactName || "",
+          pickupContactPhone: locations.pickupContactPhone || "",
+          addressTypeForPickup: locations.addressTypeForPickup || "",
+        },
+        delivery: {
+          deliveryLocation: locations.deliveryLocation || "",
+          isDropoffContact: locations.isDropoffContact || false,
+          dropoffContactName: locations.dropoffContactName || "",
+          dropoffContactPhone: locations.dropoffContactPhone || "",
+          addressTypeForDeliver: locations.addressTypeForDeliver || "",
+        },
       })),
 
-      pickUpDateOption: pickUpDateOption,
-      pickUpDate: pickUpDate?.toISOString() || null,
-      pickUpTimeOption: pickUpTimeOption,
-      pickUpTime: pickUpTime,
+      pickUpTime: {
+        pickUpDateOption: pickUpDateOption,
+        pickUpDate: pickUpDate?.toISOString() || null,
+        pickUpTimeOption: pickUpTimeOption,
+        pickUpTime: pickUpTime,
+        pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
+        pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
+        pickUpTimeRangeStart: pickUpTimeRangeStart,
+        pickUpTimeRangeEnd: pickUpTimeRangeEnd,
+      },
 
-      deliveryDateOption: deliveryDateOption,
-      deliveryDate: deliveryDate?.toISOString() || null,
-      deliveryTimeOption: deliveryTimeOption,
-      deliveryTime: deliveryTime,
-
-      pickUpDateRangeStart: pickUpDateRangeStart?.toISOString() || null,
-      pickUpDateRangeEnd: pickUpDateRangeEnd?.toISOString() || null,
-      pickUpTimeRangeStart: pickUpTimeRangeStart,
-      pickUpTimeRangeEnd: pickUpTimeRangeEnd,
-
-      deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
-      deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
-      deliveryTimeRangeStart: deliveryTimeRangeStart,
-      deliveryTimeRangeEnd: deliveryTimeRangeEnd,
+      deliveryTime: {
+        deliveryDateOption: deliveryDateOption,
+        deliveryDate: deliveryDate?.toISOString() || null,
+        deliveryTimeOption: deliveryTimeOption,
+        deliveryTime: deliveryTime,
+        deliveryDateRangeStart: deliveryDateRangeStart?.toISOString() || null,
+        deliveryDateRangeEnd: deliveryDateRangeEnd?.toISOString() || null,
+        deliveryTimeRangeStart: deliveryTimeRangeStart,
+        deliveryTimeRangeEnd: deliveryTimeRangeEnd,
+      },
 
       pickupLocation: pickupLocation,
-      deliveryLocation: deliveryLocation,
-      addressTypeForDeliver: addressTypeForDeliver,
-      addressTypeForPickup: addressTypeForPickup,
-
       isPickupContact: isPickupContact,
-      isDropoffContact: isDropoffContact,
       pickupContactName: pickupContactName,
       pickupContactPhone: pickupContactPhone,
+      addressTypeForPickup: addressTypeForPickup,
+
+      deliveryLocation: deliveryLocation,
+      isDropoffContact: isDropoffContact,
       dropoffContactName: dropoffContactName,
       dropoffContactPhone: dropoffContactPhone,
+      addressTypeForDeliver: addressTypeForDeliver,
 
-      fullName: firstName + " " + lastName,
-      email: email,
-      phone: phone,
-      isDealer: isDealer || false,
-      dealerCompanName: dealerCompanName,
+      client: {
+        fullName: firstName + " " + lastName,
+        email: email,
+        phone: phone,
+        isDealer: isDealer || false,
+        dealerCompanName: dealerCompanName,
+        note: note,
+      },
 
       status: "pending",
     };
@@ -689,6 +762,10 @@ const QouetForm: React.FC = () => {
               setIsDealer={setIsDealer}
               dealerCompanName={dealerCompanName}
               setDealerCompanName={setDealerCompanName}
+              isClientNote={isClientNote}
+              setIsClientNote={setIsClientNote}
+              note={note}
+              setNote={setNote}
               // isStep3Valid={isStep3Valid}
               isLoading={isLoading}
               isSuccess={isSuccess}
