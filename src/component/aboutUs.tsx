@@ -56,10 +56,10 @@ const SectionOne = () => {
 
   return (
     <section id="about-us">
-      <div className="w-full bg-[#ECECEC] py-12 md:py-6 p-6">
+      <div className="w-full bg-[#2D2D2D]  py-12 md:py-6 p-6">
         <div className="container mx-auto relative ">
           {/* <section id="quote" className="">
-            <p className="text-[20px] md:hidden text-gray-900 font-bold mb-2 text-center p-5">
+            <p className="text-[20px] md:hidden text-white font-bold mb-2 text-center p-5">
               Shipping Quote Calculator
             </p>
             <div className=" max-w-md w-full block md:hidden">
@@ -68,13 +68,17 @@ const SectionOne = () => {
           </section> */}
           <section
             id="shiplux"
-            className="w-full h-fit flex flex-col-reverse  lg:flex-row gap-4 mb-[60px]"
+            className="w-full h-fit flex flex-col-reverse  lg:flex-row gap-12 mb-[60px]"
           >
-            <div className="w-full lg:w-[50%] bg-white rounded-[32px] shadow-lg mt-12 lg:mt-0 ">
-              <h2 className="text-center mb-3 text-black mt-4 pt-6">
+            <div
+              className="w-full lg:w-[50%] bg-[#2c2c2c] rounded-[32px] shadow-lg mt-12 lg:mt-0 "
+              // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.8)" }}
+              style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
+            >
+              <h2 className="text-center mb-3 text-white mt-4 pt-6">
                 <span className="text-[35px] font-bold">About Us</span>
               </h2>
-              <div className="text-[20px] text-gray-900 text-justify space-y-4 p-4">
+              <div className="text-[20px] text-white text-justify space-y-4 p-4">
                 <p>
                   Mica Transportation LLC is a family-owned, insured, and
                   customer-focused company dedicated to the safe, reliable, and
@@ -101,7 +105,7 @@ const SectionOne = () => {
                   )}
                 </div>
 
-                <div className="hidden lg:block text-gray-900 ">
+                <div className="hidden lg:block text-white ">
                   <p>
                     We understand the value of your vehicle and the importance
                     of on-time, damage-free delivery. Whether you’re a
@@ -120,11 +124,17 @@ const SectionOne = () => {
                 </button>
               </div>
             </div>
-            <div className="w-full lg:w-[50%] bg-white rounded-[32px] shadow-lg mt-12 lg:mt-0 ">
+            <div
+              className="w-full lg:w-[50%] bg-[#2c2c2c] rounded-[32px] shadow-lg mt-12 lg:mt-0 "
+              // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.3)" }}
+              style={{
+                boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)",
+              }}
+            >
               <div>
                 {" "}
                 <div className="p-8">
-                  <h2 className="text-center mb-8 text-gray-900">
+                  <h2 className="text-center mb-8 text-white">
                     <span className="text-[35px] font-bold">
                       {stepContent.title}
                     </span>
@@ -134,11 +144,11 @@ const SectionOne = () => {
                       {currentItems.map((point, index) => (
                         <div
                           key={index}
-                          className="p mb-4 text-gray-900 flex items-center"
+                          className="p mb-4 text-white flex items-center"
                         >
                           <FontAwesomeIcon
                             icon={faStar}
-                            className="text-gray-900 w-4 h-4 mr-2"
+                            className="text-white w-4 h-4 mr-2"
                           />
                           <span className="text-[20px]">{point}</span>
                         </div>
@@ -151,11 +161,11 @@ const SectionOne = () => {
                         {stepContent.points.map((point, index) => (
                           <div
                             key={index}
-                            className="p mb-4 text-gray-900 flex items-center"
+                            className="p mb-4 text-white flex items-center"
                           >
                             <FontAwesomeIcon
                               icon={faStar}
-                              className="text-gray-900 w-4 h-4 mr-2 border-2 border-[#6DB8D1] rounded-full"
+                              className="text-white w-4 h-4 mr-2 border-2 border-[#6DB8D1] rounded-full"
                             />
                             <span className="text-[20px]">{point}</span>
                           </div>
@@ -166,14 +176,14 @@ const SectionOne = () => {
                       <button
                         onClick={handlePrevious}
                         disabled={currentPage === 0}
-                        className="px-4 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
+                        className="px-4 py-2 bg-white text-white border border-white rounded-full disabled:bg-white"
                       >
                         Previous
                       </button>
                       <button
                         onClick={handleNext}
                         disabled={currentPage === totalPages - 1}
-                        className="px-6 py-2 bg-white text-gray-900 border border-gray-900 rounded-full disabled:bg-white"
+                        className="px-6 py-2 bg-white text-white border border-white rounded-full disabled:bg-white"
                       >
                         Next
                       </button>

@@ -5,13 +5,13 @@ import React from "react";
 const CustomContentSection = () => {
   return (
     <section
-      className="relative w-full h-auto bg-gray-50 mx-auto flex flex-col lg:flex-row items-center justify-center py-20 px-8"
+      className="relative w-full h-auto bg-[#2D2D2D] mx-auto flex flex-col lg:flex-row items-center justify-center py-20 px-8"
       id="support"
     >
       {/* Left Column: Title */}
       <div
         id="lp-pom-text-233"
-        className="text-gray-900 w-full lg:w-1/3 font-spectral font-bold text-[25px] md:text-[30px] md:mr-8 md:px-12"
+        className="text-white w-full lg:w-1/3 font-spectral font-bold text-[25px] md:text-[30px] md:mr-8 md:px-12"
       >
         Looking for a reliable way to transport your car?
         <br></br>
@@ -25,13 +25,13 @@ const CustomContentSection = () => {
         {/* Description */}
         <div
           id="lp-pom-text-236"
-          className="text-gray-900 font-montserrat font-normal text-[20px] font-semibold leading-[24px]"
+          className="text-white font-montserrat font-normal text-[20px] font-semibold leading-[24px]"
         >
           Our car transport experts are ready to assist you!
           <br></br>Call us now{" "}
           <a
             href="tel:+(404) 988-4505"
-            className="text-[#6DB8D1] "
+            className="text-[#2098ee] "
             target="_self"
           >
             +1 (404) 988-4505
@@ -44,7 +44,7 @@ const CustomContentSection = () => {
           <a
             id="lp-pom-button-237"
             href="/#quote-form"
-            className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1]  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-[#2098ee] text-white  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}
@@ -60,7 +60,7 @@ const CustomContentSection = () => {
           <a
             id="lp-pom-button-237"
             href="/#home"
-            className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1] font-bold text-[14px] leading-[17px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-[#2098ee]    text-white font-bold text-[14px] leading-[17px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}
@@ -75,20 +75,18 @@ const CustomContentSection = () => {
 
       {/* Contact Us Section */}
       <div className="w-full lg:w-1/3 flex flex-col space-y-6 mt-12 md:mt-0 px-2 lg:px-6 lg:ml-8">
-        <h3 className="text-gray-900 font-bold text-[20px] md:px-0">
-          Contact Us
-        </h3>
+        <h3 className="text-white font-bold text-[20px] md:px-0">Contact Us</h3>
         {/* Email */}
         <div className="flex items-left md:items-center -ml-2 space-x-2  text-[16px] md:text-[20px]">
           <FontAwesomeIcon
             icon={faEnvelope}
-            className="px-2 text-gray-900"
+            className="px-2 text-white"
             width={16}
             height={16}
           />
           <a
             href="mailto:booking@micatransportation.com"
-            className="text-gray-900 "
+            className="text-white "
           >
             booking@micatransportation.com
           </a>
@@ -98,11 +96,11 @@ const CustomContentSection = () => {
         <div className="flex items-center space-x-2 -ml-2  text-[16px] md:text-[20px]">
           <FontAwesomeIcon
             icon={faPhone}
-            className="px-2 text-gray-900"
+            className="px-2 text-white"
             width={16}
             height={16}
           />
-          <a href="tel:+(404) 988-4505" className="text-gray-900 ">
+          <a href="tel:+(404) 988-4505" className="text-white ">
             + 1 (404) 988-4505
           </a>
         </div>

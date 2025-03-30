@@ -5,16 +5,18 @@ import React from "react";
 const FeaturesBox = () => {
   return (
     <div
-      className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[80%] xl:w-[70%] h-[179px] bg-white rounded-[32px] p-4 grid  grid-cols-[1fr_1fr_2fr]  md:grid-cols-3 gap-4"
-      style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.1)" }}
+      className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[80%] xl:w-[70%] h-[179px] bg-[#2c2c2c] rounded-[32px] p-4 grid  grid-cols-[1fr_1fr_2fr]  md:grid-cols-3 gap-4"
+      // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.1)" }}
+      style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
+      // style={{ boxShadow: "0 -5px 60px 10px rgba(32, 152, 238, 0.2)" }}
     >
       {/* Support Icon */}
-      <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center justify-center font-semibold">
         <img src="24phone.svg" alt="Support Icon" className="w-16 h-8" />
-        <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
+        <p className=" font-bold text-[10px] md:text-[20px]  text-[#9e9fa0] ">
           24 hour
         </p>
-        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-black">
+        <p className="font-bold text-[10px] md:text-[16px] text-[#9e9fa0]">
           customer care
         </p>
       </div>
@@ -32,10 +34,10 @@ const FeaturesBox = () => {
           height={16}
           className="w-8 h-8"
         />
-        <p className="font-montserrat font-bold text-[10px] md:text-[16px] text-black">
+        <p className="font-montserrat font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
           Professional
         </p>
-        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-black">
+        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-[#9e9fa0]">
           transport
         </p>
       </div>
@@ -54,10 +56,10 @@ const FeaturesBox = () => {
             className="w-16 h-14 lg:h-16 font-bold text-blue-900"
           />
         </div>
-        <p className="font-montserrat -mt-4 font-bold text-[10px] md:text-[16px] text-black">
+        <p className="font-montserrat -mt-4 font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
           Enclosed/Open
         </p>
-        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-black">
+        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-[#9e9fa0]">
           service
         </p>
       </div>

@@ -145,19 +145,19 @@ const Testimonials = () => {
   return (
     <section
       id="reviews"
-      className="py-20 px-6 bg-[#ECECEC]"
+      className="py-20 px-6 bg-[#2D2D2D]"
       onMouseEnter={handleMouseEnter} // Stop sliding on hover
       onMouseLeave={handleMouseLeave} // Resume sliding after hover
     >
       <div className="container mx-auto">
-        <p className="uppercase tracking-wider mb-8 text-gray-900 text-center text-[30px] font-bold">
+        <p className="uppercase tracking-wider mb-8 text-white text-center text-[30px] font-bold">
           What customers are saying
         </p>
 
-        <div className="relative">
+        <div className="relative ">
           <div className="overflow-hidden px-2">
             <div
-              className="flex transition-all duration-500 ease-in-out"
+              className="flex transition-all duration-500 ease-in-out lg:space-x-4"
               style={{
                 transform: `translateX(-${
                   currentIndex * (isDesktop ? 100 : 100)
@@ -167,11 +167,15 @@ const Testimonials = () => {
               {testimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className={`flex-none ${isDesktop ? "w-1/3" : "w-full"} px-2`}
+                  className={`flex-none ${
+                    isDesktop ? "w-1/3" : "w-full"
+                  } px-2 py-4`}
                 >
                   <div
-                    className="p-6 md:p-12 rounded-lg border bg-white border-gray-200 mb-8 text-gray-900 flex flex-col h-full"
-                    style={{ boxShadow: "0 10px 28px rgba(0,0,0,.08)" }}
+                    className="p-6 md:p-12 rounded-lg bg-[#2D2D2D] mb-8 text-white flex flex-col h-full"
+                    style={{
+                      boxShadow: "0 5px 15px 5px rgba(32, 152, 238, 0.5)", // Blue glow effect
+                    }}
                   >
                     <p className="text-xl font-semibold">{testimonial.title}</p>
                     <p className="mt-4 p-2 flex-grow">
@@ -198,13 +202,13 @@ const Testimonials = () => {
           <div>
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 font-bold transform -translate-y-1/2 -translate-x-1/2 text-black bg-white shadow-xl p-4 rounded-full"
+              className="absolute left-0 top-1/2 font-bold transform -translate-y-1/2 -translate-x-1/2 text-white text-[25px] bg-[#2098ee] shadow-xl p-4 rounded-full"
             >
               &#8249;
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 font-bold top-1/2 transform -translate-y-1/2 translate-x-1/2 text-black bg-white p-4 shadow-xl rounded-full"
+              className="absolute right-0 font-bold top-1/2 transform -translate-y-1/2 translate-x-1/2 text-white text-[25px]  bg-[#2098ee] p-4 shadow-xl rounded-full"
             >
               &#8250;
             </button>

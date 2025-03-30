@@ -54,11 +54,15 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="w-full relative bg-[#ECECEC] text-gray-900 py-16 p-6 flex flex-col-reverse lg:flex-row gap-4 pb-[60px]"
+      className="w-full relative bg-[#2D2D2D] text-white py-16 p-6 flex flex-col-reverse lg:flex-row gap-4 pb-[60px]"
     >
       <div className="container mx-auto flex space-x-6 flex-col md:flex-row">
         {/* Left Section */}
-        <div className="w-full lg:w-[50%] bg-white rounded-[28px] p-8 flex flex-col">
+        <div
+          className="w-full lg:w-[50%] bg-[#2c2c2c] rounded-[28px] p-8 flex flex-col"
+          // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.8)" }}
+          style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
+        >
           <p className="  text-[35px] font-bold rounded-[100px] text-center px-6 py-[10px] mb-6">
             Services
           </p>
@@ -69,17 +73,17 @@ const Services = () => {
           {services.map((service, index) => (
             <div key={index}>
               <div
-                className="flex flex-row justify-between border-t border-t-[#D0CAED] cursor-pointer py-4"
+                className="flex flex-row justify-between border-t border-t-[#2098ee]  cursor-pointer py-4"
                 onClick={() =>
                   setSelectedService(
                     selectedService === service.title ? null : service.title
                   )
                 }
               >
-                <p className="capitalize text-[#000E5E] font-medium text-[24px] whitespace-nowrap">
+                <p className="capitalize text-white font-medium text-[24px] whitespace-nowrap">
                   {service.title}
                 </p>
-                <p className={`p-[10px] ${service.bg} rounded-[100%]`}>
+                <p className={`p-[10px] bg-[#2098ee]  rounded-[100%]`}>
                   <img
                     alt="arrow"
                     src="/arrow_forward.38aa47a7.svg"
@@ -95,7 +99,7 @@ const Services = () => {
               </div>
               {/* Expandable Content for Mobile */}
               {selectedService === service.title && (
-                <div className="w-full block md:hidden flex flex-col gap-4  bg-[#F9F9F9] rounded-[24px] mt-4">
+                <div className="w-full block md:hidden flex flex-col gap-4  text-white rounded-[24px] mt-4">
                   <div className="w-full h-[252px] relative">
                     <div className="w-full h-full booking-gradient opacity-50 absolute z-10 rounded-[24px]" />
                     {/* <img
@@ -134,7 +138,7 @@ const Services = () => {
                       {service.title}
                     </p> */}
                   </div>
-                  <p className="text-[18px] font-medium leading-[24px] text-[#000]">
+                  <p className="text-[18px] bg-[#2c2c2c] font-medium leading-[24px] text-white pb-4">
                     {service.description}
                   </p>
                 </div>
@@ -144,7 +148,10 @@ const Services = () => {
         </div>
 
         {/* Right Section */}
-        <div className="w-full lg:w-[50%]  hidden md:block flex flex-col gap-0 md:gap-4 md:space-y-4">
+        <div
+          className="w-full lg:w-[50%]  hidden md:block flex flex-col gap-0 md:gap-4 md:space-y-4"
+          style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
+        >
           <div className="w-full h-auto lg:h-[70%] relative">
             <div className="w-full h-[252px] lg:h-full booking-gradient opacity-50 absolute z-10 rounded-[24px]" />
             {/* <img
@@ -190,7 +197,7 @@ const Services = () => {
             </p> */}
           </div>
           <div
-            style={{ backgroundColor: "rgb(255, 255, 255)" }}
+            // style={{ backgroundColor: "rgb(255, 255, 255)" }}
             className="w-full h-[29%] p-8 rounded-[24px] flex flex-col justify-between overflow-y-scroll styled-scroll"
           >
             {/* <p className="p-[10px] w-fit bg-white rounded-[100%] mb-4">
@@ -203,7 +210,7 @@ const Services = () => {
               />
             </p> */}
             <div>
-              <p className="text-[24px] font-medium leading-[32px] tracking-[0.1px]">
+              <p className="text-[24px] bg-[#2c2c2c] font-medium leading-[32px] tracking-[0.1px]">
                 {services.find((service) => service.title === selectedService)
                   ?.description || "Please select a service to view details."}
               </p>

@@ -57,7 +57,7 @@ export default function NavBar(props: INavBarProps) {
     <div>
       {/* Scrollable Phone Info Header */}
       <div className="w-full bg-[#302D38] text-center py-2 z-10 md:hidden">
-        <span className="text-lg font-medium text-gray-900 text-white">
+        <span className="text-lg font-medium  text-white">
           Call Us Now:{" "}
           <a
             href="tel:+1 (404) 988-4505"
@@ -75,25 +75,27 @@ export default function NavBar(props: INavBarProps) {
       </div>
 
       {/* Navbar */}
+      <div></div>
       <nav
         ref={navbarRef}
-        className={`md:fixed z-60 ${
+        className={`md:fixed z-60  ${
           isSticky
-            ? "fixed top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
-            : "relative top-0 left-0 w-full bg-[#ECECEC] shadow-md z-20"
-        } px-16 xl:px-40 py-4 flex justify-between items-center transition-colors duration-300`}
+            ? "fixed top-0 left-0 w-full bg-[#2D2D2D] shadow-md z-20"
+            : "relative top-0 left-0 w-full bg-[#2D2D2D] shadow-md z-20"
+        } px-16 xl:px-40 py-4 flex justify-between  items-center transition-colors duration-300 border-b-2 !border-[#2098ee]`}
       >
         {/* Brand Logo */}
         <div
-          className={`text-gray-900 text-2xl font-bold font-montserrat mx-auto md:mx-0`}
+          className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0`}
         >
-          <a href="/#home">Mica Transportion</a>
+          <a href="/#home" className="whitespace-nowrap flex flex-row">
+            Mica Transportaion{" "}
+            <span className=" hidden lg:block ml-2">LLC</span>
+          </a>
         </div>
 
         {/* Desktop Navigation Links */}
-        <ul
-          className={`hidden md:flex gap-6 text-lg font-medium text-gray-900`}
-        >
+        <ul className={`hidden md:flex gap-6 text-lg font-medium text-white`}>
           <li>
             <a href="/#about-us" className="hover:text-gray-300 cursor-pointer">
               About Us
@@ -118,7 +120,7 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile Navbar toggle */}
         <button
-          className={`md:hidden text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold text-gray-900`}
+          className={`md:hidden text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold text-white`}
           onClick={toggleMenu}
         >
           &#9776;
@@ -126,30 +128,27 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile icons display */}
         <button
-          className={`md:hidden md:text-gray-900 text-black text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold `}
+          className={`md:hidden md:text-white text-white text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold `}
           onClick={toggleMenu}
         >
           &#9776;
         </button>
 
         {/* Mobile icons display  */}
-        <div className={`flex gap-4 items-center xl:hidden text-gray-900 `}>
+        <div className={`flex gap-4 items-center xl:hidden text-white `}>
           <a
             href="tel:+1 (404) 988-4505"
             className="hover:text-gray-300 text-lg"
           >
-            <FontAwesomeIcon
-              icon={faPhone}
-              className={`w-6 h-6 text-gray-900`}
-            />
+            <FontAwesomeIcon icon={faPhone} className={`w-6 h-6 text-white`} />
           </a>
           <a href="/#quote-form" className="hover:text-gray-700 text-lg">
-            <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-gray-900`} />{" "}
+            <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-white`} />{" "}
           </a>
         </div>
 
         {/* Phone Number and Request a Quote (Desktop) */}
-        <div className={`hidden xl:flex gap-6 items-center text-gray-900`}>
+        <div className={`hidden xl:flex gap-6 items-center text-white`}>
           <div>
             <a
               href="tel:+1 (404) 988-4505"
@@ -167,7 +166,7 @@ export default function NavBar(props: INavBarProps) {
           <button className="">
             <a
               href="/#home"
-              className="bg-white border-2 border-[#6DB8D1]  text-[#6DB8D1]  font-bold text-[14px] leading-[17px]   py-3 px-6 rounded-[32px] shadow-none"
+              className="bg-[#2098ee]  text-white  font-bold text-[14px] leading-[17px]   py-3 px-6 rounded-[32px] shadow-none"
             >
               <FontAwesomeIcon
                 icon={faCar}
@@ -181,44 +180,46 @@ export default function NavBar(props: INavBarProps) {
         </div>
       </nav>
 
+      {/* <div className="border-b-4 border-[#1b384b] py-2 pt-10">a </div> */}
+
       {/* Mobile Menu (Overlay Style) */}
       {isMenuOpen && (
         <div className="fixed inset-0 z-80  bg-black/40 ">
           <div
-            className="w-[75%] p-4 h-screen flex flex-col fixed left-0  bg-white shadow-2xl  z-30"
+            className="w-[75%] p-4 h-screen flex flex-col fixed left-0  bg-[#2D2D2D]  shadow-2xl  z-30"
             ref={menuRef}
           >
             <div className="flex justify-between items-center w-full px-2">
               {/* Close Button */}
               <button
                 onClick={toggleMenu}
-                className="text-gray-900 text-4xl font-bold"
+                className="text-white text-4xl font-bold"
               >
                 &times;
               </button>
 
               {/* Centered Logo */}
-              <div className="absolute left-2/3 transform -translate-x-1/2 text-gray-900 text-2xl font-bold font-montserrat w-2/3 whitespace-nowrap ">
-                Mica Transportion
+              <div className="absolute left-2/3 transform -translate-x-1/2 text-white text-2xl font-bold font-montserrat w-2/3 whitespace-nowrap ">
+                Mica Transportaion
               </div>
             </div>
             <a
               href="/#about-us"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               About Us
             </a>
             <a
               href="/#services"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               Our Service
             </a>
             <a
               href="/#support"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               Support{" "}
@@ -226,7 +227,7 @@ export default function NavBar(props: INavBarProps) {
 
             <a
               href="/#reviews"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-gray-900"
+              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               Review
@@ -234,7 +235,7 @@ export default function NavBar(props: INavBarProps) {
             <div className="p-4 flex flex-col space-y-4">
               <a
                 href="tel:+1 (404) 988-4505"
-                className="text-gray-900 text-base mx-auto font-normal font-montserrat hover:text-gray-300"
+                className="text-white text-base mx-auto font-normal font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
                 <FontAwesomeIcon
@@ -248,7 +249,7 @@ export default function NavBar(props: INavBarProps) {
 
               <a
                 href="/#quote-form"
-                className="text-white font-bold bg-[#6DB8D1] mx-auto p-2 px-4 rounded-full text-sm font-semibold font-montserrat hover:text-gray-300"
+                className="text-white font-bold bg-[#2098ee] mx-auto p-2 px-4 rounded-full text-sm  font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
                 <FontAwesomeIcon
