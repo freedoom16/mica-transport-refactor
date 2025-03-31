@@ -125,7 +125,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
             onClick={() => setActiveIndex(index)} // Clicking a dot should change the active image
             className={`w-3 h-3 rounded-full transition-all ${
               index === activeIndex
-                ? "bg-[#6DB8D1]" // Active dot color
+                ? "bg-[#2098ee]" // Active dot color
                 : "bg-white bg-opacity-50" // Inactive dot color
             }`}
           ></button>

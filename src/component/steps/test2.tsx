@@ -382,7 +382,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-center text-gray-900 mb-2">
+      <h2 className="text-lg font-bold text-center text-white mb-2">
         Vehicle Information
       </h2>
 
@@ -390,7 +390,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         <div className="mb-2">
           {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
-              <div className=" flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr__min-content_min-content] shadow-lg  rounded-full w-full">
+              <div
+                className=" flex flex-row space-x-2 bg-[#2c2c2c] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr__min-content_min-content] shadow-lg  rounded-full w-full border-1 border-[#2098ee]"
+                style={{
+                  boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
+                }}
+              >
                 <div className="flex flex-col pl-2">
                   <strong>Make</strong> {vehicle?.vehicleMaker}
                 </div>
@@ -434,11 +439,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           {message && <p className="text-sm text-red-500 mb-4">{message}</p>}
         </div>
         {/* Vehicle Maker */}
-        <div className="w-full flex gap-4 text-gray-900 mb-4">
+        <div className="w-full flex gap-4 text-white mb-4">
           <div
-            className={`w-2/4 h-14 flex  items-center text-xl cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+            className={`w-2/4 h-14 flex  items-center text-xl cursor-pointer rounded-xl pl-4 gap-3 bg-[#2c2c2c] border ${
               type === "Open"
-                ? "border-2 border-[#6DB8D1]"
+                ? "border-2 border-[#2098ee]"
                 : " border-1 border-gray-300"
             }${errors.type ? " border-1 border-red-500" : ""}`}
             onClick={() => handleTypeChange("Open")}
@@ -454,9 +459,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             <p>Open</p>
           </div>
           <div
-            className={`w-2/4 h-14 flex items-center text-xl  cursor-pointer rounded-xl pl-4 gap-3 bg-white border ${
+            className={`w-2/4 h-14 flex items-center text-xl  cursor-pointer rounded-xl pl-4 gap-3 bg-[#2c2c2c] border ${
               type === "Enclosed"
-                ? "border-2 border-[#6DB8D1]"
+                ? "border-2 border-[#2098ee]"
                 : " border-1 border-gray-300"
             }${errors.type ? " border-1 border-red-500" : ""}`}
             onClick={() => handleTypeChange("Enclosed")}
@@ -478,7 +483,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
         {/* Vehicle Year */}
         <div className="relative mb-4 top-0">
-          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Year
           </label>
 
@@ -487,13 +492,13 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             type="number"
             onChange={(e) => handleYearInputChange(e.target.value)}
             placeholder="Year"
-            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+            className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
               errors.vehicleYear ? "border-red-500" : "border-[#938f99]"
-            } outline-none transition-all focus:border-[#6DB8D1]`}
+            } outline-none transition-all focus:border-[#2098ee]`}
           />
 
           {yearInput && filteredYears?.length > 0 && (
-            <ul className="absolute z-5 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
+            <ul className="absolute z-5 w-full mt-2 bg-[#2c2c2c] border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
               {filteredYears.slice(0, 5).map((year: any, idx: any) => (
                 <li
                   key={idx}
@@ -514,7 +519,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
 
         <div className="relative  mb-4  top-0">
-          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
             Vehicle Make
           </label>
@@ -524,12 +529,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             value={makerInput}
             onChange={(e) => handleMakerInputChange(e.target.value)}
             placeholder="Make"
-            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+            className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
               errors.vehicleMaker ? "border-red-500" : "border-[#938f99]"
-            } outline-none transition-all focus:border-[#6DB8D1]`}
+            } outline-none transition-all focus:border-[#2098ee]`}
           />
           {filteredMakers.length > 0 && (
-            <ul className="absolute z-5 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
+            <ul className="absolute z-5 w-full mt-2 bg-[#2c2c2c] border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
               {filteredMakers.map((make, idx) => (
                 <li
                   key={idx}
@@ -550,7 +555,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
         {/* Vehicle Model */}
         <div className="relative z-4 w-full mb-4 group">
-          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
             {selectedMaker ? "Vehicle Model" : "Select a maker first"}
           </label>
@@ -560,13 +565,13 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
             onChange={(e) => handleModelInputChange(e.target.value)}
             placeholder={selectedMaker ? "Model" : "Model"}
             // disabled={!selectedMaker}
-            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+            className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
               errors.vehicleModel ? "border-red-500" : "border-[#938f99]"
-            } outline-none transition-all focus:border-[#6DB8D1]`}
+            } outline-none transition-all focus:border-[#2098ee]`}
           />
 
           {filteredModels.length > 0 && (
-            <ul className="absolute z-4 w-full mt-2 bg-white border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-gray-900">
+            <ul className="absolute z-4 w-full mt-2 bg-[#2c2c2c] border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
               {filteredModels.map((model, idx) => (
                 <li
                   key={idx}
@@ -586,13 +591,13 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
 
         <div className="relative mb-4">
-          <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+          <label className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             Vehicle Catagory
           </label>
 
           <div
             onClick={toggleDropdown}
-            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 mt-1 rounded-xl bg-white border-1 ${
+            className={`w-full h-14 px-3 py-2 text-sm text-white mt-1 rounded-xl bg-[#2c2c2c] border-1 ${
               errors.category ? "border-red-500" : "border-[#938f99]"
             }`}
           >
@@ -600,7 +605,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           </div>
 
           {isOpen && (
-            <div className="absolute top-full text-gray-900 left-0 w-full bg-white border border-[#938f99] rounded-xl shadow-lg z-10 mt-2">
+            <div className="absolute top-full text-white left-0 w-full bg-[#2c2c2c] border border-[#938f99] rounded-xl shadow-lg z-10 mt-2">
               {options.map((option, idx) => (
                 <div
                   key={idx}
@@ -623,7 +628,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </div>
 
         <div className="relative z-0 w-full mb-2 group flex flex-row">
-          <label className="block text-sm font-medium text-gray-900 mr-2">
+          <label className="block text-sm font-medium text-white mr-2">
             Is this load drivable? <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center justify-center space-x-6">
@@ -636,7 +641,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 onChange={() => handleDrivableChange(true)}
                 className="form-radio text-[#ECECEC] 0 w-6 h-6 border-2 border-gray-300"
               />
-              <span className="text-sm text-gray-900">Yes</span>
+              <span className="text-sm text-white">Yes</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -647,7 +652,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 onChange={() => handleDrivableChange(false)}
                 className="form-radio text-[#ECECEC] w-6 h-6 border-2 border-[#ECECEC]"
               />
-              <span className="text-sm text-gray-900">No</span>
+              <span className="text-sm text-white">No</span>
             </label>
           </div>
           <br></br>
@@ -661,17 +666,17 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       <div className="flex justify-between">
         <button
           type="button"
-          className="bg-white text-[#6DB8D1] border-2 border-[#6DB8D1] font-bold py-2 px-4 rounded-full"
+          className="bg-[#2098ee] text-white border-2 border-[#2098ee] font-bold py-2 px-4 rounded-full"
           onClick={handleAddVehicle}
         >
           Add Vehicle
         </button>
         <button
           type="button"
-          className={`px-8 py-2 rounded-full shadow-xl bg-white  text-gray-900   ${
+          className={`px-8 py-2 rounded-full shadow-xl bg-[#2098ee]  text-white   ${
             isNextEnabled
-              ? "border-2 border-[#6DB8D1] text-[#6DB8D1] font-bold"
-              : "border-1 border-gray-900 text-gray-900"
+              ? "border-2 border-[#2098ee] text-white font-bold"
+              : "border-1 border-gray-900 text-white"
           }`}
           onClick={handleNextMobaile}
         >

@@ -89,12 +89,12 @@ export default function Home(props: IHomeProps) {
           </div> */}
           {!showForm && ( // Hide button when form is displayed
             <button
-              className="bg-[#2098ee] px-4 py-2 rounded-full hidden xl:block"
+              className="bg-[#425059] px-4 py-2 rounded-full hidden xl:block"
               onClick={() => setShowForm(true)}
             >
               <FontAwesomeIcon
                 icon={faCar}
-                className=""
+                className="text-[#2098ee]"
                 width={16}
                 height={16}
               />{" "}

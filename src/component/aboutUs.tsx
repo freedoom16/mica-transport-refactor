@@ -78,7 +78,10 @@ const SectionOne = () => {
               <h2 className="text-center mb-3 text-white mt-4 pt-6">
                 <span className="text-[35px] font-bold">About Us</span>
               </h2>
-              <div className="text-[20px] text-white text-justify space-y-4 p-4">
+              <div className="border-b-1 border-[#2098ee] mx-4"></div>
+              <div className="text-[20px] text-white text-left space-y-4 p-4">
+                {/* <div className="border-b-1 border-[#2098ee] "></div> */}
+
                 <p>
                   Mica Transportation LLC is a family-owned, insured, and
                   customer-focused company dedicated to the safe, reliable, and
@@ -118,7 +121,7 @@ const SectionOne = () => {
                 </div>
                 <button
                   onClick={toggleReadMore}
-                  className="text-blue-500 font-medium block lg:hidden hover:text-blue-700 transition-all"
+                  className="text-[#2098ee] font-medium block lg:hidden hover:text-blue-700 transition-all"
                 >
                   {isReadMore ? "Read Less" : "Read More"}
                 </button>
@@ -134,11 +137,13 @@ const SectionOne = () => {
               <div>
                 {" "}
                 <div className="p-8">
-                  <h2 className="text-center mb-8 text-white">
+                  <h2 className="text-center mb-6 text-white">
                     <span className="text-[35px] font-bold">
                       {stepContent.title}
                     </span>
                   </h2>
+                  <div className="border-b-1 border-[#2098ee] mb-4"></div>
+
                   <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
                     <div className="w-full block lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
                       {currentItems.map((point, index) => (
@@ -148,7 +153,7 @@ const SectionOne = () => {
                         >
                           <FontAwesomeIcon
                             icon={faStar}
-                            className="text-[#6DB8D1] w-4 h-4 mr-2 border-[#6DB8D1]"
+                            className="text-[#2098ee] w-5 h-5 mr-2 border-[#2098ee]"
                           />
                           <span className="text-[20px]">{point}</span>
                         </div>
@@ -165,14 +170,14 @@ const SectionOne = () => {
                           >
                             <FontAwesomeIcon
                               icon={faStar}
-                              className="text-[#6DB8D1] w-4 h-4 mr-2 border-2 border-[#6DB8D1] rounded-full"
+                              className="text-[#2098ee] w-4 h-4 mr-2 border-2 border-[#2098ee] rounded-full"
                             />
                             <span className="text-[20px]">{point}</span>
                           </div>
                         ))}
                       </div>
                     </div>
-                    <div className="flex w-full justify-between block lg:hidden mt-4">
+                    {/* <div className="flex w-full justify-between block lg:hidden mt-4">
                       <button
                         onClick={handlePrevious}
                         disabled={currentPage === 0}
@@ -187,7 +192,18 @@ const SectionOne = () => {
                       >
                         Next
                       </button>
-                    </div>
+                    </div> */}
+                  </div>
+                  <div className="flex gap-2 justify-center items-center mt-4 block lg:hidden">
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                      <button
+                        key={index}
+                        className={`w-4 h-4 rounded-full ${
+                          currentPage === index ? "bg-[#2098ee]" : "bg-gray-400"
+                        }`}
+                        onClick={() => setCurrentPage(index)}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
