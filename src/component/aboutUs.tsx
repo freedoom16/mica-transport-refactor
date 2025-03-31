@@ -1,154 +1,189 @@
-import React, { useState } from "react";
+"use client";
+import React from "react";
 import QouetForm from "./quoetForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faStar } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const SectionOne = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-
-  const handleNextStep = () => {
-    if (currentStep < 3) setCurrentStep(currentStep + 1);
+  const stepContent = {
+    title: "Why Us",
+    points: [
+      "Create your order and submit it",
+      "Receive a call from us",
+      "Agree electronically",
+      "Make payment online or over the phone",
+      "We get the job done with no hassle",
+      "24/7 on-call support",
+      "Support via email",
+      "Support via text",
+      "Licensed",
+      "Insured",
+    ],
   };
 
-  const handlePrevStep = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 4;
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(stepContent.points.length / itemsPerPage);
+
+  // Slice the points array based on the current page
+  const currentItems = stepContent.points.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
+  // Handle the "Next" button click
+  const handleNext = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+    }
   };
 
-  const handleStepClick = (step: any) => {
-    setCurrentStep(step);
+  // Handle the "Previous" button click
+  const handlePrevious = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
-  const stepContents = [
-    {
-      title: "Booking an order is easy. You are always kept in the loop.",
-      points: [
-        "Agree to your order electronically",
-        "Know when your carrier is confirmed",
-        "All orders are confirmed via email",
-        "Only charged when a shipping partner is confirmed",
-        "All major credit and debit cards are accepted",
-        "Pay online or over the phone",
-      ],
-    },
-    {
-      title: "You choose how you would like to communicate with us:",
-      points: [
-        "Available 24hrs a day, 7 days a week",
-        "Phone",
-        "Live Chat",
-        "Email",
-      ],
-    },
-    {
-      title:
-        "We take the guesswork and verification out of your hands. This is supposed to be hassle and stress-free.",
-      points: ["Licensed", "Bonded", "Insured"],
-    },
-  ];
+  const [isReadMore, setIsReadMore] = useState(false);
+
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
 
   return (
     <section id="about-us">
-      <div className="w-full bg-gray-900 py-24">
-        <div className="container mx-auto relative mt-16">
-          <section id="/#quote">
-            <div className="bg-gray-900 px-6 rounded-xl shadow-lg max-w-md w-full  md:mt-0 block md:hidden">
-              <p className="text-[20px]   font-bold  font-montserrat text-center">
-                Shipping Quote Calculator
-              </p>
+      <div className="w-full bg-[#2D2D2D]  py-12 md:py-6 p-6">
+        <div className="container mx-auto relative ">
+          {/* <section id="quote" className="">
+            <p className="text-[20px] md:hidden text-white font-bold mb-2 text-center p-5">
+              Shipping Quote Calculator
+            </p>
+            <div className=" max-w-md w-full block md:hidden">
               <QouetForm />
             </div>
-          </section>
-          <div className="flex flex-col lg:flex-row items-center relative">
-            {/* Image Section */}
-            <div className="flex flex-col w-full lg:w-1/2 px-4">
-              <div className="text-center mt-8 ">
-                <p
-                  className="text-white font-semibold text-[45px] p-8"
-                  style={{ lineHeight: "58px", fontFamily: "Spectral" }}
-                >
-                  About Us
+          </section> */}
+          <section
+            id="shiplux"
+            className="w-full h-fit flex flex-col-reverse  lg:flex-row gap-12 mb-[60px]"
+          >
+            <div
+              className="w-full lg:w-[50%] bg-[#2c2c2c] rounded-[32px] shadow-lg mt-12 lg:mt-0 "
+              // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.8)" }}
+              style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
+            >
+              <h2 className="text-center mb-3 text-white mt-4 pt-6">
+                <span className="text-[35px] font-bold">About Us</span>
+              </h2>
+              <div className="text-[20px] text-white text-justify space-y-4 p-4">
+                <p>
+                  Mica Transportation LLC is a family-owned, insured, and
+                  customer-focused company dedicated to the safe, reliable, and
+                  affordable transport of all vehicles, including classic,
+                  exotic, luxury, and everyday cars. We proudly serve
+                  individuals, businesses, dealerships, and auction houses,
+                  ensuring every vehicle is handled with professionalism and
+                  care. With both enclosed and open transport options, we offer
+                  the right balance of protection and cost-effectiveness to meet
+                  our customers’ needs.
                 </p>
-              </div>
-              <div className="w-full mb-[-8px] ">
-                <img
-                  src="img/truck4.jpeg"
-                  alt="Shiplux"
-                  className="w-full h-auto mt-[-12px]"
-                />
-              </div>
-            </div>
 
-            {/* Steps Section */}
-            <div className="w-full lg:w-1/2 p-6 rounded-lg shadow-lg md:relative mt-12  lg:mt-[-200px] xl:mt-[-200px]  lg:ml-[-100px]">
-              <div className="bg-gray-800 p-8">
-                <h2 className="text-center mb-8 text-white">
-                  <span className="text-lg font-bold">{`0${currentStep}`}</span>
-                  <span className="text-sm text-gray-500"> / 03</span>
-                  &nbsp;&nbsp;
-                  <span className="text-xl font-semibold">Simple Process</span>
-                </h2>
-
-                {/* Step Content */}
-                <div
-                  className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300"
-                  key={currentStep}
-                >
-                  <div className="des-text mb-8 w-full text-white">
-                    {stepContents[currentStep - 1].title}
-                  </div>
-
-                  <div className="w-full md:w-1/2">
-                    {stepContents[currentStep - 1].points
-                      .slice(0, 3)
-                      .map((point, index) => (
-                        <div key={index} className="p mb-4 text-white">
-                          <span className="hyphen"></span> {point}
-                        </div>
-                      ))}
-                  </div>
-
-                  <div className="w-full md:w-1/2 ">
-                    {stepContents[currentStep - 1].points
-                      .slice(3)
-                      .map((point, index) => (
-                        <div key={index} className="p mb-4 text-white">
-                          <span className="hyphen"></span> {point}
-                        </div>
-                      ))}
-                  </div>
+                <div className="block lg:hidden">
+                  {isReadMore && (
+                    <p>
+                      We understand the value of your vehicle and the importance
+                      of on-time, damage-free delivery. Whether you’re a
+                      collector, dealer, auction buyer, business, or simply
+                      relocating a vehicle, our team is committed to providing a
+                      seamless experience with personalized service, efficiency,
+                      and attention to detail. At Mica Transportation LLC, we
+                      make vehicle transport safe, simple, and stress-free.
+                    </p>
+                  )}
                 </div>
 
-                {/* Step Navigation */}
-                <div className="step-status">
-                  <div className="flex justify-between items-center mt-8">
-                    <div className="flex items-center">
-                      {[1, 2, 3].map((step) => (
-                        <React.Fragment key={step}>
-                          {step !== 3 && (
-                            <div
-                              className={`color-step ${
-                                currentStep >= step
-                                  ? "bg-main-color"
-                                  : "bg-gray-500"
-                              } w-2 h-2 rounded-full mx-2`}
-                            ></div>
-                          )}
-                        </React.Fragment>
+                <div className="hidden lg:block text-white ">
+                  <p>
+                    We understand the value of your vehicle and the importance
+                    of on-time, damage-free delivery. Whether you’re a
+                    collector, dealer, auction buyer, business, or simply
+                    relocating a vehicle, our team is committed to providing a
+                    seamless experience with personalized service, efficiency,
+                    and attention to detail. At Mica Transportation LLC, we make
+                    vehicle transport safe, simple, and stress-free.
+                  </p>
+                </div>
+                <button
+                  onClick={toggleReadMore}
+                  className="text-blue-500 font-medium block lg:hidden hover:text-blue-700 transition-all"
+                >
+                  {isReadMore ? "Read Less" : "Read More"}
+                </button>
+              </div>
+            </div>
+            <div
+              className="w-full lg:w-[50%] bg-[#2c2c2c] rounded-[32px] shadow-lg mt-12 lg:mt-0 "
+              // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.3)" }}
+              style={{
+                boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)",
+              }}
+            >
+              <div>
+                {" "}
+                <div className="p-8">
+                  <h2 className="text-center mb-8 text-white">
+                    <span className="text-[35px] font-bold">
+                      {stepContent.title}
+                    </span>
+                  </h2>
+                  <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
+                    <div className="w-full block lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {currentItems.map((point, index) => (
+                        <div
+                          key={index}
+                          className="p mb-4 text-white flex items-center"
+                        >
+                          <FontAwesomeIcon
+                            icon={faStar}
+                            className="text-white w-4 h-4 mr-2"
+                          />
+                          <span className="text-[20px]">{point}</span>
+                        </div>
                       ))}
                     </div>
 
-                    <div className="flex">
+                    {/* Desktop View: List all items */}
+                    <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300 hidden lg:block">
+                      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {stepContent.points.map((point, index) => (
+                          <div
+                            key={index}
+                            className="p mb-4 text-white flex items-center"
+                          >
+                            <FontAwesomeIcon
+                              icon={faStar}
+                              className="text-[#6DB8D1] w-4 h-4 mr-2 border-2 border-[#6DB8D1] rounded-full"
+                            />
+                            <span className="text-[20px]">{point}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="flex w-full justify-between block lg:hidden mt-4">
                       <button
-                        id="prev"
-                        className="change-step text-main-color shadow-xl text-white rounded-lg border-gray-200 border p-4 bg-gray-700 disabled:opacity-50"
-                        onClick={handlePrevStep}
-                        disabled={currentStep === 1}
+                        onClick={handlePrevious}
+                        disabled={currentPage === 0}
+                        className="px-4 py-2 bg-white text-black border border-white rounded-full disabled:bg-white"
                       >
                         Previous
                       </button>
                       <button
-                        id="next"
-                        className="change-step text-main-color ml-4 shadow-xl text-white rounded-lg border-gray-200 border p-4 bg-gray-700 disabled:opacity-50"
-                        onClick={handleNextStep}
-                        disabled={currentStep === 3}
+                        onClick={handleNext}
+                        disabled={currentPage === totalPages - 1}
+                        className="px-6 py-2 bg-white text-black border border-white rounded-full disabled:bg-white"
                       >
                         Next
                       </button>
@@ -157,7 +192,7 @@ const SectionOne = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </section>

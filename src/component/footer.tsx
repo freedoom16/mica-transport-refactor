@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebookF,
@@ -7,10 +8,14 @@ import {
   faLinkedin,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import CareerModal from "./modal/carrier";
+import PartnershipModal from "./modal/partnership";
 
 const Footer: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
   return (
-    <footer className="bg-white dark:bg-gray-900">
+    <footer className="bg-[#2D2D2D] border border-t-2 border-[#2098ee]">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -20,14 +25,14 @@ const Footer: React.FC = () => {
                 className="h-8 me-3"
                 alt="FlowBite Logo"
               /> */}
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                Mica Transport
+              <span className="self-center text-white text-2xl font-semibold whitespace-nowrap ">
+                Mica Transportaion LLC
               </span>
             </a>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-4">
             <div>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-white  font-medium">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     About Us
@@ -41,7 +46,7 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             <div>
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-white  font-medium">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     Support
@@ -55,10 +60,43 @@ const Footer: React.FC = () => {
               </ul>
             </div>
             <div>
-              {/* <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+              <ul className="text-white  font-medium">
+                <li className="mb-4">
+                  {/* <a href="#" className="hover:underline"> */}
+                  <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="  hover:underline "
+                  >
+                    Career
+                  </button>
+                  {/* </a> */}
+                  <CareerModal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                  />
+                </li>
+                <li className="mb-4">
+                  {/* <a href="#" className="hover:underline"> */}
+                  <button
+                    onClick={() => setIsPartnershipModalOpen(true)}
+                    className="  hover:underline "
+                  >
+                    Partnership
+                  </button>
+                  {/* </a> */}
+
+                  <PartnershipModal
+                    isOpen={isPartnershipModalOpen}
+                    onClose={() => setIsPartnershipModalOpen(false)}
+                  />
+                </li>
+              </ul>
+            </div>
+            <div>
+              {/* <h2 className="mb-6 text-sm font-semibold text-white uppercase ">
                 Legal
               </h2> */}
-              <ul className="text-gray-500 dark:text-gray-400 font-medium">
+              <ul className="text-white  font-medium">
                 <li className="mb-4">
                   <a href="#" className="hover:underline">
                     Privacy Policy
@@ -73,56 +111,68 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+        <hr className="my-6 border-[#2098ee] sm:mx-auto  lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
+          <span className="text-sm text-white sm:text-center ">
             © 2025{" "}
             <a href="https://flowbite.com/" className="hover:underline">
-              Mica Transport™
+              Mica Transportaion LLC™
             </a>
             . All Rights Reserved.
           </span>
 
-          <div className="flex mt-4 sm:justify-center sm:mt-0 space-x-4">
+          <div className="flex items-center space-x-4">
+            {/* Facebook */}
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/share/1EU19YmKhE/?mibextid=wwXIfr"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faFacebookF} className="w-8 h-8" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                alt="Facebook"
+                className="w-8 h-8"
+              />
             </a>
+            {/* Instagram */}
             <a
-              href="https://twitter.com"
+              href="https://www.instagram.com/micatransportationllc?igsh=eGcxejMyMWxtcXFy&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faTwitter} className="w-8 h-8" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                alt="Instagram"
+                className="w-8 h-8"
+              />
             </a>
+            {/* WhatsApp */}
             <a
-              href="https://instagram.com"
+              href="https://wa.me/+1(404)9884505"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faInstagram} className="w-8 h-8" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                alt="WhatsApp"
+                className="w-12 h-10"
+              />
             </a>
+            {/* Telegram */}
             <a
-              href="https://linkedin.com"
+              href="https://t.me/Michaelfasil"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
+              className="hover:scale-110 transition-transform"
             >
-              <FontAwesomeIcon icon={faLinkedin} className="w-8 h-8" />
-            </a>
-            <a
-              href="https://youtube.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-            >
-              <FontAwesomeIcon icon={faYoutube} className="w-8 h-8" />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"
+                alt="Telegram"
+                className="w-8 h-8"
+              />
             </a>
           </div>
         </div>
@@ -138,10 +188,7 @@ const SocialLink: React.FC<{
   srText: string;
   svgPath: string;
 }> = ({ href, srText, svgPath }) => (
-  <a
-    href={href}
-    className="text-gray-500 hover:text-gray-900 dark:hover:text-white ms-5"
-  >
+  <a href={href} className="text-gray-500 hover:text-white  ms-5">
     <svg
       className="w-4 h-4"
       xmlns="http://www.w3.org/2000/svg"

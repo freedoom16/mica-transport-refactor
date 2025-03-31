@@ -1,48 +1,66 @@
+import { faUserTie } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const FeaturesBox = () => {
   return (
-    <div className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[90%] xl:w-[80%] h-[179px] bg-white rounded-[32px] shadow-lg flex items-center justify-around p-6">
-      {/* Car Icon */}
-      <div className="flex flex-col items-center justify-center">
-        <img
-          src="//d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/8eda3952-ico-car.svg"
-          alt="Car Icon"
-          className="w-16 h-16"
-        />
-        <p className="font-montserrat font-bold text-[16px] text-black">
-          Door-to-Door
-        </p>
-        <p className="font-montserrat font-normal text-[16px] text-black">
-          service
-        </p>
-      </div>
-
+    <div
+      className="absolute bottom-[-100px] left-[50%] transform -translate-x-1/2 z-[127] w-[90%] md:w-[80%] xl:w-[70%] h-[179px] bg-[#2c2c2c] rounded-[32px] p-4 grid  grid-cols-[1fr_1fr_2fr]  md:grid-cols-3 gap-4"
+      // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.1)" }}
+      style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
+      // style={{ boxShadow: "0 -5px 60px 10px rgba(32, 152, 238, 0.2)" }}
+    >
       {/* Support Icon */}
-      <div className="flex flex-col items-center justify-center">
-        <img
-          src="//d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/8f399b0c-ico-support.svg"
-          alt="Support Icon"
-          className="w-16 h-16"
-        />
-        <p className="font-montserrat font-bold text-[16px] text-black">24/7</p>
-        <p className="font-montserrat font-normal text-[16px] text-black">
+      <div className="flex flex-col items-center justify-center font-semibold">
+        <img src="24phone.svg" alt="Support Icon" className="w-16 h-8" />
+        <p className=" font-bold text-[10px] md:text-[20px]  text-[#9e9fa0] ">
+          24 hour
+        </p>
+        <p className="font-bold text-[10px] md:text-[16px] text-[#9e9fa0]">
           customer care
         </p>
       </div>
 
       {/* Transport Icon */}
-      <div className="flex flex-col items-center justify-center">
-        <img
-          src="//d9hhrg4mnvzow.cloudfront.net/enclosedcarshipping.shiplux.com/68d5cca8-ico-transport.svg"
+      <div className="flex flex-col items-center justify-center p-2 rounded">
+        {/* <img
+          src="truck-icon2.svg"
           alt="Transport Icon"
-          className="w-16 h-16"
+          className="w-16 h-8 font-bold text-blue-900"
+        /> */}
+        <FontAwesomeIcon
+          icon={faUserTie}
+          width={32}
+          height={16}
+          className="w-8 h-8"
         />
-        <p className="font-montserrat font-bold text-[16px] text-black">
-          White Glove
+        <p className="font-montserrat font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
+          Professional
         </p>
-        <p className="font-montserrat font-normal text-[16px] text-black">
+        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-[#9e9fa0]">
           transport
+        </p>
+      </div>
+
+      {/* Car Icon */}
+      <div className="flex flex-col items-center justify-center  p-2 rounded">
+        <div className="flex flex-row space-x-1 lg:space-x-2 -mt-3 lg:-mt-0">
+          <img
+            src="truckicon.svg"
+            alt="Car Icon"
+            className="w-16 h-14 lg:h-16 font-bold text-blue-900"
+          />
+          <img
+            src="opentruck.svg"
+            alt="Car Icon"
+            className="w-16 h-14 lg:h-16 font-bold text-blue-900"
+          />
+        </div>
+        <p className="font-montserrat -mt-4 font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
+          Enclosed/Open
+        </p>
+        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-[#9e9fa0]">
+          service
         </p>
       </div>
     </div>
