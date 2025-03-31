@@ -4,7 +4,7 @@ import {
   useUpdateQuoetsMutation,
 } from "@/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const MultiStepTransportationForm = () => {
@@ -27,14 +27,7 @@ const MultiStepTransportationForm = () => {
 
   // Initialize formData with empty values
   const [formData, setFormData] = useState<any>({
-    vehicleInfo: [
-      {
-        vehicleMileage: "",
-        plateNumber: "",
-        vinNumber: "",
-        dimension: "",
-      },
-    ],
+    vehicleInfo: [],
     vehicleMileage: "",
     plateNumber: "",
     vinNumber: "",
@@ -46,6 +39,24 @@ const MultiStepTransportationForm = () => {
     paymentMadeIn: "",
     totalAmount: "",
   });
+
+  useEffect(() => {
+    if (dataForm?.data?.vehicleInfo) {
+      const initialVehicleInfo = dataForm.data.vehicleInfo.map(
+        (vehicle: any) => ({
+          vehicleMileage: vehicle.vehicleMileage || "",
+          plateNumber: vehicle.plateNumber || "",
+          vinNumber: vehicle.vinNumber || "",
+          dimension: vehicle.dimension || "",
+        })
+      );
+
+      setFormData((prevState: any) => ({
+        ...prevState,
+        vehicleInfo: initialVehicleInfo,
+      }));
+    }
+  }, [dataForm]);
 
   // Handle input changes dynamically based on vehicle index
   const handleInputChange = (e: any, vehicleIndex: any) => {
@@ -180,7 +191,7 @@ const MultiStepTransportationForm = () => {
                         <button className="text-red-500">
                           <img
                             src={`${
-                              vehicle.isDrivable
+                              vehicle.isDrivable === "true"
                                 ? "/motor-svg-green.svg"
                                 : "/motor-svg-red.svg"
                             }`}

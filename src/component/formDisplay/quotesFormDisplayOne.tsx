@@ -293,7 +293,7 @@ const QuoteFormDisplayOne: React.FC = () => {
             {/* Pickup Date */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Pickup Date:</p>
-              <p className="w-2/3 flex flex-row">
+              <div className="w-2/3 flex flex-row">
                 <p className="pr-2">{quoteData.pickUpTime.pickUpDateOption}</p>
                 {quoteData.pickUpTime.pickUpDateOption === "on" ? (
                   <p>
@@ -312,13 +312,13 @@ const QuoteFormDisplayOne: React.FC = () => {
                     ).toLocaleDateString()}
                   </p>
                 )}
-              </p>
+              </div>
             </div>
 
             {/* Delivery Date */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Delivery Date:</p>
-              <p className="w-2/3 flex flex-row">
+              <div className="w-2/3 flex flex-row">
                 <p className="pr-2">
                   {quoteData.deliveryTime.deliveryDateOption}
                 </p>
@@ -339,13 +339,13 @@ const QuoteFormDisplayOne: React.FC = () => {
                     ).toLocaleDateString()}
                   </p>
                 )}
-              </p>
+              </div>
             </div>
 
             {/* Pickup Time */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Pickup Time:</p>
-              <p className="w-2/3 flex flex-row">
+              <div className="w-2/3 flex flex-row">
                 <p className="pr-2">{quoteData.pickUpTime.pickUpTimeOption}</p>
                 {quoteData.pickUpTime.pickUpTimeOption === "on" ? (
                   <p>
@@ -376,13 +376,13 @@ const QuoteFormDisplayOne: React.FC = () => {
                     })}
                   </p>
                 )}
-              </p>
+              </div>
             </div>
 
             {/* Delivery Time */}
             <div className="flex justify-between items-center">
               <p className="font-semibold w-1/3">Delivery Time:</p>
-              <p className="w-2/3 flex flex-row">
+              <div className="w-2/3 flex flex-row">
                 <p className="pr-2">
                   {quoteData.deliveryTime.deliveryTimeOption}
                 </p>
@@ -415,7 +415,7 @@ const QuoteFormDisplayOne: React.FC = () => {
                     })}
                   </p>
                 )}
-              </p>
+              </div>
             </div>
           </div>
         </div>
@@ -446,7 +446,13 @@ const QuoteFormDisplayOne: React.FC = () => {
 
                 {/* Drivable Status */}
                 <div className="flex justify-between items-center">
-                  <p className="w-2/3 font-bold bg-green-700 p-2 rounded-lg text-center">
+                  <p
+                    className={`w-2/3 font-bold  p-2 rounded-lg text-center ${
+                      vehicle.isDrivable === "true"
+                        ? "bg-green-700"
+                        : "bg-red-700"
+                    }`}
+                  >
                     {vehicle.isDrivable === "true"
                       ? "Drivable"
                       : "Not Drivable"}

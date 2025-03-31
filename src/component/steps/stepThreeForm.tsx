@@ -255,7 +255,10 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 type="radio"
                 name="is_drivable"
                 value="false"
-                onChange={() => handleRadioChange(false)}
+                onChange={() => {
+                  handleRadioChange(false);
+                  setDealerCompanName("");
+                }}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
               <span className="text-sm text-gray-900">No</span>
@@ -301,7 +304,10 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 type="radio"
                 name="is_clientNote"
                 value="false"
-                onChange={() => setIsClientNote(false)}
+                onChange={() => {
+                  setIsClientNote(false);
+                  setNote("");
+                }}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
               <span className="text-sm text-gray-900">No</span>

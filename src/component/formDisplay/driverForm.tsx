@@ -20,26 +20,27 @@ const ViewQuoteForm = () => {
     isError,
   } = useGetQuoetsByIDQuery(userId);
   // const { data: formData, isLoading, error } = useGetQuoetsByIDQuery(userId);
-
-  const formData = {
-    pickupName: "John Doe",
-    pickupAddress: "123 Main St, Springfield, IL",
-    pickupCityState: "Springfield, IL",
-    pickupPhone: "(555) 123-4567",
-    deliveryName: "Jane Smith",
-    deliveryAddress: "456 Oak Ave, Chicago, IL",
-    deliveryCityState: "Chicago, IL",
-    deliveryPhone: "(555) 987-6543",
-    vehicleMileage: "25,000 miles",
-    plateNumber: "XYZ 1234",
-    vinNumber: "XMN10918",
-    inspectionConditions: "Good condition, no visible damage",
-    transportFee: "$300.00",
-    prePaid: "$150.00",
-    totalCOD: "$150.00",
-    paymentType: "Credit Card",
-    paymentMadeIn: "USD",
-  };
+  console.log(data);
+  const formData: any = data?.data;
+  // {
+  //   pickupName: "John Doe",
+  //   pickupAddress: "123 Main St, Springfield, IL",
+  //   pickupCityState: "Springfield, IL",
+  //   pickupPhone: "(555) 123-4567",
+  //   deliveryName: "Jane Smith",
+  //   deliveryAddress: "456 Oak Ave, Chicago, IL",
+  //   deliveryCityState: "Chicago, IL",
+  //   deliveryPhone: "(555) 987-6543",
+  //   vehicleMileage: "25,000 miles",
+  //   plateNumber: "XYZ 1234",
+  //   vinNumber: "XMN10918",
+  //   inspectionConditions: "Good condition, no visible damage",
+  //   transportFee: "$300.00",
+  //   prePaid: "$150.00",
+  //   totalCOD: "$150.00",
+  //   paymentType: "Credit Card",
+  //   paymentMadeIn: "USD",
+  // };
 
   // State for loading/error handling
   const [loading, setLoading] = useState(false);
@@ -79,22 +80,46 @@ const ViewQuoteForm = () => {
           Vehicle and Payment Details
         </h3>
         <div className="space-y-4 text-black ">
-          <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Vehicle Mileage:</p>
-            <p className="w-2/3">{formData?.vehicleMileage}</p>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Plate Number:</p>
-            <p className="w-2/3">{formData?.plateNumber}</p>
-          </div>
-          <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">VIN Number:</p>
-            <p className="w-2/3">{formData?.vinNumber}</p>
-          </div>
+          {formData?.vehicleInfo && formData?.vehicleInfo.length > 0 ? (
+            formData?.vehicleInfo.map((vehicle: any, index: number) => (
+              <div key={index} className="space-y-4 whitespace-nowrap">
+                <div className="flex justify-between items-center whitespace-nowrap">
+                  <p className="font-semibold w-1/3">
+                    Vehicle Mileage vehicle {index}
+                  </p>
+                  <p className="w-2/3">{vehicle.vehicleMileage}</p>
+                </div>
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">
+                    Plate Number vehicle {index}
+                  </p>
+                  <p className="w-2/3">{vehicle.plateNumber}</p>
+                </div>
+                {/* <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">VIN Number:</p>
+                  <p className="w-2/3">{vehicle.vinNumber}</p>
+                </div> */}
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">
+                    Dimension vehicle {index}
+                  </p>
+                  <p className="w-2/3">{vehicle.dimension}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No vehicle information available.</p>
+          )}
 
           <div className="flex justify-between items-center">
             <p className="font-semibold w-1/3">Total COD:</p>
-            <p className="w-2/3">{formData?.totalCOD}</p>
+            <div className="flex flex-row">
+              {formData?.payment?.paymentType === "COP" ? (
+                <p className="w-2/3">{formData?.payment?.totalAmount}</p>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
       </div>
