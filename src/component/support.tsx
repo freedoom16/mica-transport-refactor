@@ -40,15 +40,16 @@ const CustomContentSection = () => {
         </div>
 
         {/* Button */}
-        <div className="block md:hidden py-2">
+        <div className="block md:hidden py-2 justify-center">
           <a
             id="lp-pom-button-237"
             href="/#quote-form"
-            className="bg-[#2098ee] text-white  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
+            // className="bg-gradient-to-r from-[#425059] to-[#9e9fa0] bg-opacity-70  text-white  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-[#425059]  text-white -mr-6 font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}
-              className="px-2"
+              className="px-2 text-[#2098ee]"
               width={16}
               height={16}
             />{" "}
@@ -60,11 +61,11 @@ const CustomContentSection = () => {
           <a
             id="lp-pom-button-237"
             href="/#home"
-            className="bg-[#2098ee]    text-white font-bold text-[14px] leading-[17px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-[#425059]    text-white font-bold text-[14px] leading-[17px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}
-              className="lg:px-0 px-2  "
+              className="lg:px-0 px-2 text-[#2098ee] "
               width={16}
               height={16}
             />{" "}
@@ -80,7 +81,7 @@ const CustomContentSection = () => {
         <div className="flex items-left md:items-center -ml-2 space-x-2  text-[16px] md:text-[20px]">
           <FontAwesomeIcon
             icon={faEnvelope}
-            className="px-2 text-white"
+            className="px-2 text-[#2098ee]"
             width={16}
             height={16}
           />
@@ -96,7 +97,7 @@ const CustomContentSection = () => {
         <div className="flex items-center space-x-2 -ml-2  text-[16px] md:text-[20px]">
           <FontAwesomeIcon
             icon={faPhone}
-            className="px-2 text-white"
+            className="px-2 text-[#2098ee]"
             width={16}
             height={16}
           />

@@ -65,7 +65,7 @@ export default function NavBar(props: INavBarProps) {
           >
             <FontAwesomeIcon
               icon={faPhone}
-              className="px-2"
+              className="px-2 text-[#2098ee]"
               width={16}
               height={16}
             />
@@ -135,15 +135,23 @@ export default function NavBar(props: INavBarProps) {
         </button>
 
         {/* Mobile icons display  */}
-        <div className={`flex gap-4 items-center xl:hidden text-white `}>
+        <div
+          className={`flex gap-4 items-end justify-end xl:hidden text-white `}
+        >
           <a
             href="tel:+1 (404) 988-4505"
             className="hover:text-gray-300 text-lg"
           >
-            <FontAwesomeIcon icon={faPhone} className={`w-6 h-6 text-white`} />
+            <FontAwesomeIcon
+              icon={faPhone}
+              className={`w-6 h-6 text-[#2098ee]`}
+            />
           </a>
           <a href="/#quote-form" className="hover:text-gray-700 text-lg">
-            <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-white`} />{" "}
+            <FontAwesomeIcon
+              icon={faCar}
+              className={`w-6 h-6 text-[#2098ee]`}
+            />{" "}
           </a>
         </div>
 
@@ -156,7 +164,7 @@ export default function NavBar(props: INavBarProps) {
             >
               <FontAwesomeIcon
                 icon={faPhone}
-                className="px-2"
+                className="px-2 text-[#2098ee]"
                 width={16}
                 height={16}
               />
@@ -166,11 +174,11 @@ export default function NavBar(props: INavBarProps) {
           <button className="">
             <a
               href="/#home"
-              className="bg-[#2098ee]  text-white  font-bold text-[14px] leading-[17px]   py-3 px-6 rounded-[32px] shadow-none"
+              className="bg-[#425059]  text-white  font-bold text-[14px] leading-[17px]   py-3 px-6 rounded-[32px] shadow-none"
             >
               <FontAwesomeIcon
                 icon={faCar}
-                className=""
+                className="text-[#2098ee]"
                 width={16}
                 height={16}
               />{" "}
@@ -240,7 +248,7 @@ export default function NavBar(props: INavBarProps) {
               >
                 <FontAwesomeIcon
                   icon={faPhone}
-                  className="px-2"
+                  className="px-2 text-[#2098ee]"
                   width={16}
                   height={16}
                 />
@@ -249,12 +257,12 @@ export default function NavBar(props: INavBarProps) {
 
               <a
                 href="/#quote-form"
-                className="text-white font-bold bg-[#2098ee] mx-auto p-2 px-4 rounded-full text-sm  font-montserrat hover:text-gray-300"
+                className="text-white font-bold bg-[#425059] mx-auto p-2 px-4 rounded-full text-sm  font-montserrat hover:text-gray-300"
                 onClick={toggleMenu}
               >
                 <FontAwesomeIcon
                   icon={faCar}
-                  className="px-2"
+                  className="px-2 text-[#2098ee]"
                   width={16}
                   height={16}
                 />{" "}

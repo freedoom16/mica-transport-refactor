@@ -80,7 +80,7 @@ const Services = () => {
                   )
                 }
               >
-                <p className="capitalize text-white font-medium text-[24px] whitespace-nowrap">
+                <p className="capitalize text-white font-medium text-[20px] md:text-[24px] whitespace-nowrap">
                   {service.title}
                 </p>
                 <p className={`p-[10px] bg-[#2098ee]  rounded-[100%]`}>

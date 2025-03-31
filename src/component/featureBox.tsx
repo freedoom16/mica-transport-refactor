@@ -32,7 +32,7 @@ const FeaturesBox = () => {
           icon={faUserTie}
           width={32}
           height={16}
-          className="w-8 h-8"
+          className="w-8 h-8 text-[#2098ee]"
         />
         <p className="font-montserrat font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
           Professional
