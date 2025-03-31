@@ -599,7 +599,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
         <div className="mt-4 space-y-4">
           <div className="flex space-x-4">
             <div className="w-1/2">
-              <label className="absolute z-1 px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+              <label className="absolute z-1 px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
                 From Date
               </label>
               <DatePicker
@@ -611,13 +611,13 @@ const StepDataTest: React.FC<StepFourProps> = ({
                 // maxDate={new Date(maxDate)}
                 // className="py-2 px-4 text-white rounded-md border border-gray-400 "
                 // withPortal={true}
-                className="w-full  h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                className="w-full  h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
                 popperClassName="w-full z-50  text-right justify-center font-bold"
                 required
               />
             </div>
             <div className="w-1/2">
-              <label className="absolute z-1  px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+              <label className="absolute z-1  px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
                 To Date
               </label>
               <DatePicker
@@ -635,7 +635,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
                 // maxDate={new Date(maxDate)}
                 // className="py-2 px-4 text-white rounded-md border border-gray-400 "
                 // withPortal={true}
-                className="w-full  h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                className="w-full  h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
                 popperClassName="z-50  text-left justify-center font-bold"
                 required
               />
@@ -656,7 +656,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
           <div className="mb-4   mt-4 ">
             <label
               //for="origin_postal_code"
-              className="absolute z-1 bg-white px-3 py-2 text-sm rounded-xl text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+              className="absolute z-1 bg-[#2c2c2c] px-3 py-2 text-sm rounded-xl text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
             >
               {label}
             </label>
@@ -669,7 +669,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
                 placeholderText={"select " + label}
                 // ref={singleRef}
                 // withPortal={true}
-                className={`w-[100%] h-14 px-3 z-50 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                className={`w-[100%] h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                   (
                     label === "Pick Up Date"
                       ? errorsDateValidation.pickUpDate
@@ -677,7 +677,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
                   )
                     ? "border-red-500"
                     : "border-[#938f99]"
-                } outline-none transition-all focus:border-[#6DB8D1]`}
+                } outline-none transition-all focus:border-[#2098ee]`}
                 popperClassName="w-full z-50  text-right justify-center font-bold"
               />
             </div>
@@ -704,7 +704,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
         <div className="mt-4 space-y-4">
           <div className="flex space-x-4">
             <div className="w-1/2">
-              <label className="absolute px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+              <label className="absolute px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
                 {" "}
                 From Time
               </label>
@@ -716,14 +716,14 @@ const StepDataTest: React.FC<StepFourProps> = ({
                   setTimeRangeStart(e.target.value);
                   handleRangeChangeForTime(e.target.value, label, true); // Start time
                 }}
-                className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
                 // ref={rangeStartRef}
                 onFocus={(e) => e.target.showPicker && e.target.showPicker()}
                 required
               />
             </div>
             <div className="w-1/2">
-              <label className="absolute px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+              <label className="absolute px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
                 {" "}
                 To Time
               </label>
@@ -735,7 +735,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
                   setTimeRangeEnd(e.target.value);
                   handleRangeChangeForTime(e.target.value, label, false); // End time
                 }}
-                className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+                className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
                 min={timeRangeStart || "00:00"}
                 onFocus={(e) => e.target.showPicker && e.target.showPicker()}
                 required
@@ -752,7 +752,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
     } else if (option) {
       return (
         <div className="mt-4">
-          <label className=" px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+          <label className=" px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
             {" "}
             {label}
           </label>
@@ -762,8 +762,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
             value={time}
             // onChange={(e) => setTime(e.target.value)}
             onChange={(date) => handleTimeChange(date.target.value, label)}
-            // className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
-            className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+            // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+            className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
               (
                 label === "Pick Up Time"
                   ? errorsDateValidation.pickUpTime
@@ -771,7 +771,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
               )
                 ? "border-red-500"
                 : "border-[#938f99]"
-            } outline-none transition-all focus:border-[#6DB8D1]`}
+            } outline-none transition-all focus:border-[#2098ee]`}
             // ref={singleRef}
             onFocus={(e) => e.target.showPicker && e.target.showPicker()}
             required
@@ -784,13 +784,13 @@ const StepDataTest: React.FC<StepFourProps> = ({
   return (
     <div className=" space-y-3 md:space-y-6">
       {/* Pick Up Date */}
-      <div className=" text-center text-gray-900 p-1 font-bold">
+      <div className=" text-center text-white p-1 font-bold">
         Pickup Information
       </div>
       <div className="relative  w-full mb-5 group">
         <label
           htmlFor="pick_up_date_option"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           {" "}
           Pick Up Date
@@ -803,12 +803,12 @@ const StepDataTest: React.FC<StepFourProps> = ({
             setPickUpDateOption(e.target.value);
             validatePickUpDate();
           }}
-          // className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
-          className={`w-full h-14 px-3 z-50 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+          // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className={`w-full h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
             errorsDateValidation.pickUpDate
               ? "border-red-500"
               : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#6DB8D1]`}
+          } outline-none transition-all focus:border-[#2098ee]`}
           aria-label="Select pick-up time option"
           required
         >
@@ -843,7 +843,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
       <div className="relative  w-full mb-5 group">
         <label
           htmlFor="pick_up_time_option"
-          className="absolute px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           {" "}
           Pick Up Time
@@ -853,12 +853,12 @@ const StepDataTest: React.FC<StepFourProps> = ({
           id="pick_up_time_option"
           value={pickUpTimeOption}
           onChange={(e) => setPickUpTimeOption(e.target.value)}
-          // className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
-          className={`w-full h-14 px-3 z-50 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+          // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className={`w-full h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
             errorsDateValidation.pickUpTime
               ? "border-red-500"
               : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#6DB8D1]`}
+          } outline-none transition-all focus:border-[#2098ee]`}
           aria-label="Select pick-up time option"
           required
         >
@@ -889,14 +889,14 @@ const StepDataTest: React.FC<StepFourProps> = ({
           </p>
         )} */}
       </div>
-      <div className=" text-center text-gray-900 p-1 font-bold">
+      <div className=" text-center text-white p-1 font-bold">
         Delivery Information
       </div>
       {/* Delivery Date */}
       <div className="relative  w-full mb-5 group">
         <label
           htmlFor="delivery_date_option"
-          className="absolute px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           Delivery Date
         </label>
@@ -904,12 +904,12 @@ const StepDataTest: React.FC<StepFourProps> = ({
           id="delivery_date_option"
           value={deliveryDateOption}
           onChange={(e) => setDeliveryDateOption(e.target.value)}
-          // className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
-          className={`w-full h-14 px-3 z-50 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+          // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className={`w-full h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
             errorsDateValidation.deliveryDate
               ? "border-red-500"
               : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#6DB8D1]`}
+          } outline-none transition-all focus:border-[#2098ee]`}
           aria-label="Select pick-up time option"
           required
         >
@@ -954,7 +954,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
       <div className="relative  w-full mb-5 group">
         <label
           htmlFor="delivery_time_option"
-          className="absolute px-3 py-2  text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           Delivery Time
         </label>
@@ -965,12 +965,12 @@ const StepDataTest: React.FC<StepFourProps> = ({
             setDeliveryTimeOption(e.target.value);
             validateDeliveryTime();
           }}
-          // className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
-          className={`w-full h-14 px-3 z-50 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+          // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className={`w-full h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
             errorsDateValidation.deliveryTime
               ? "border-red-500"
               : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#6DB8D1]`}
+          } outline-none transition-all focus:border-[#2098ee]`}
           aria-label="Select pick-up time option"
           required
         >

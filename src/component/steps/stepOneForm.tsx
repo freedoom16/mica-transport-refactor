@@ -472,13 +472,16 @@ const StepOne: React.FC<StepOneProps> = ({
               ""
             ) : (
               <div
-                className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_1fr] shadow-lg rounded-lg w-full cursor-pointer"
+                className="flex flex-row space-x-2 bg-[#2c2c2c] border-1 border-[#2098ee] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_1fr] shadow-lg rounded-lg w-full cursor-pointer"
                 onClick={() =>
                   setExpandedIndex(
                     expandedIndex === vehicleIndex ? null : vehicleIndex
                   )
                 }
-                style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.1)" }}
+                // style={{ boxShadow: "0 -5px 50px -5px rgba(0, 0, 0, 0.1)" }}
+                style={{
+                  boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
+                }}
               >
                 <div className="flex flex-col pl-2">
                   <strong>Make</strong> {vehicle.vehicleMaker}
@@ -503,10 +506,10 @@ const StepOne: React.FC<StepOneProps> = ({
                   </button>
                 </div>
                 <div>
-                  <p className={`p-[10px] bg-white rounded-[100%]`}>
+                  <p className={`p-[10px] bg-[#2c2c2c] rounded-[100%]`}>
                     <img
                       alt="arrow"
-                      src="/arrow_forward.38aa47a7.svg"
+                      src="/arrow_forward.38aa47a7_2.svg"
                       width="24"
                       height="24"
                       loading="lazy"
@@ -522,8 +525,8 @@ const StepOne: React.FC<StepOneProps> = ({
 
             {/* Expandable Form */}
             {expandedIndex === vehicleIndex && (
-              <div className="bg-white p-4">
-                <p className="text-gray-900 mb-4 text-center font-bold">
+              <div className="bg-[#2c2c2c] p-4">
+                <p className="text-white mb-4 text-center font-bold">
                   {sameLocation || currentVehicleIndex === 1
                     ? "Address Information"
                     : `Address Information for vehicle ${
@@ -535,7 +538,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 <div className="relative z-0 w-full mb-5  ">
                   <label
                     htmlFor={`pickup_location_${vehicleIndex}`}
-                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                   >
                     Pickup Location
                   </label>
@@ -547,17 +550,17 @@ const StepOne: React.FC<StepOneProps> = ({
                     onChange={(e: any) =>
                       handlePickupChangeArray(e, vehicleIndex)
                     }
-                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                       errorsLocation[vehicleIndex]?.pickupLocation
                         ? "border-red-500"
                         : "border-[#938f99]"
-                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    } outline-none transition-all focus:border-[#2098ee]`}
                     placeholder="Address or zipcode"
                     required
                   />
-                  <div className="relative z-10 w-full mt-2 bg-white rounded-lg shadow-lg">
+                  <div className="relative z-10 w-full mt-2 bg-[#2c2c2c] rounded-lg shadow-lg">
                     {location[vehicleIndex]?.pickupSuggestions?.length > 0 && (
-                      <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                      <div className="relative z-10 w-full mt-2 bg-[#2c2c2c] border border-gray-300 rounded-lg shadow-lg">
                         {location[vehicleIndex]?.pickupSuggestions.map(
                           (suggestion: any, index: any) => (
                             <div
@@ -575,7 +578,7 @@ const StepOne: React.FC<StepOneProps> = ({
                                 ].pickupSuggestions = []; // Clear suggestions
                                 setPickupSuggestions([]); // Clear global suggestions
                               }}
-                              className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1] text-gray-900"
+                              className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1] text-white"
                             >
                               {suggestion}
                             </div>
@@ -590,7 +593,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 <div className="relative z-0 w-full mb-5 group">
                   <label
                     htmlFor={`address_type_pickup_${vehicleIndex}`}
-                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                   >
                     Select Address Type for Pickup
                   </label>
@@ -601,21 +604,21 @@ const StepOne: React.FC<StepOneProps> = ({
                     onChange={(e: any) =>
                       handleAddressTypeChange(e, vehicleIndex)
                     }
-                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                       errorsLocation[vehicleIndex]?.addressTypeForPickup
                         ? "border-red-500"
                         : "border-[#938f99]"
-                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    } outline-none transition-all focus:border-[#2098ee]`}
                     required
                   >
                     <option value="">Select Address Type</option>
-                    <option value="residential" className="text-gray-900">
+                    <option value="residential" className="text-white">
                       Residential
                     </option>
-                    <option value="business" className="text-gray-900">
+                    <option value="business" className="text-white">
                       Business
                     </option>
-                    <option value="auction_yard" className="text-gray-900">
+                    <option value="auction_yard" className="text-white">
                       Auction Yard
                     </option>
                   </select>
@@ -625,7 +628,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 <div className="relative z-0 w-full mb-5 group">
                   <label
                     htmlFor={`pickup_location_${vehicleIndex}`}
-                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                   >
                     Delivery Location
                   </label>
@@ -637,18 +640,18 @@ const StepOne: React.FC<StepOneProps> = ({
                     onChange={(e: any) =>
                       handleDeliveryChangeArray(e, vehicleIndex)
                     }
-                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                       errorsLocation[vehicleIndex]?.deliveryLocation
                         ? "border-red-500"
                         : "border-[#938f99]"
-                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    } outline-none transition-all focus:border-[#2098ee]`}
                     placeholder="Address or zipcode"
                     required
                   />
-                  <div className="relative z-10 w-full mt-2 bg-white  rounded-lg shadow-lg">
+                  <div className="relative z-10 w-full mt-2 bg-[#2c2c2c]  rounded-lg shadow-lg">
                     {location[vehicleIndex]?.deliverySuggestions?.length >
                       0 && (
-                      <div className="relative z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg">
+                      <div className="relative z-10 w-full mt-2 bg-[#2c2c2c] border border-gray-300 rounded-lg shadow-lg">
                         {location[vehicleIndex]?.deliverySuggestions.map(
                           (suggestion: any, index: any) => (
                             <div
@@ -666,7 +669,7 @@ const StepOne: React.FC<StepOneProps> = ({
                                 ].deliverySuggestions = []; // Clear suggestions
                                 setPickupSuggestions([]); // Clear global suggestions
                               }}
-                              className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1] text-gray-900"
+                              className="px-4 py-2 cursor-pointer hover:bg-[#6DB8D1] text-white"
                             >
                               {suggestion}
                             </div>
@@ -681,7 +684,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 <div className="relative z-0 w-full mb-5 group">
                   <label
                     htmlFor={`address_type_deliver_${vehicleIndex}`}
-                    className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                    className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                   >
                     Select Address Type for Delivery
                   </label>
@@ -692,21 +695,21 @@ const StepOne: React.FC<StepOneProps> = ({
                     onChange={(e: any) =>
                       handleAddressTypeDeliveryChange(e, vehicleIndex)
                     }
-                    className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                    className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                       errorsLocation[vehicleIndex]?.addressTypeForDeliver
                         ? "border-red-500"
                         : "border-[#938f99]"
-                    } outline-none transition-all focus:border-[#6DB8D1]`}
+                    } outline-none transition-all focus:border-[#2098ee]`}
                     required
                   >
                     <option value="">Select Address Type</option>
-                    <option value="residential" className="text-gray-900">
+                    <option value="residential" className="text-white">
                       Residential
                     </option>
-                    <option value="business" className="text-gray-900">
+                    <option value="business" className="text-white">
                       Business
                     </option>
-                    <option value="auction_yard" className="text-gray-900">
+                    <option value="auction_yard" className="text-white">
                       Auction Yard
                     </option>
                   </select>
@@ -715,7 +718,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 <div className="space-y-4">
                   {/* Pickup Location Point of Contact */}
                   <div className="flex flex-row">
-                    <label className="block text-sm font-medium text-gray-900 md:mr-2 md:mb-0">
+                    <label className="block text-sm font-medium text-white md:mr-2 md:mb-0">
                       Are you the point of contact at the pickup location?
                     </label>
                     <div className="flex items-center space-x-4">
@@ -738,7 +741,7 @@ const StepOne: React.FC<StepOneProps> = ({
                           }
                           className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
                         />
-                        <span className="text-sm text-gray-900">Yes</span>
+                        <span className="text-sm text-white">Yes</span>
                       </label>
                       <label className="flex items-center space-x-2">
                         <input
@@ -759,7 +762,7 @@ const StepOne: React.FC<StepOneProps> = ({
                           }
                           className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
                         />
-                        <span className="text-sm text-gray-900">No</span>
+                        <span className="text-sm text-white">No</span>
                       </label>
                     </div>
                   </div>
@@ -770,7 +773,7 @@ const StepOne: React.FC<StepOneProps> = ({
                       <div className="relative z-0 w-full mb-5 group">
                         <label
                           htmlFor={`pickup_contact_name_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                         >
                           Pickup Contact Name
                         </label>
@@ -788,11 +791,11 @@ const StepOne: React.FC<StepOneProps> = ({
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                             errorsLocation[vehicleIndex]?.pickupContactName
                               ? "border-red-500"
                               : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#6DB8D1]`}
+                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Pickup Contact Name"
                           required
                         />
@@ -802,7 +805,7 @@ const StepOne: React.FC<StepOneProps> = ({
                       <div className="relative z-0 w-full mb-5 group">
                         <label
                           htmlFor={`pickup_contact_phone_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                         >
                           Pickup Contact Phone Number
                         </label>
@@ -820,11 +823,11 @@ const StepOne: React.FC<StepOneProps> = ({
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                             errorsLocation[vehicleIndex]?.pickupContactPhone
                               ? "border-red-500"
                               : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#6DB8D1]`}
+                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Pickup Contact Phone Number"
                           required
                         />
@@ -834,7 +837,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 </div>
                 <div className="space-y-4">
                   <div className="flex flex-row">
-                    <label className="block text-sm font-medium text-gray-900 mb-2">
+                    <label className="block text-sm font-medium text-white mb-2">
                       Are you the point of contact at the drop-off location?
                     </label>
                     <div className="flex items-center space-x-4">
@@ -857,7 +860,7 @@ const StepOne: React.FC<StepOneProps> = ({
                           }
                           className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
                         />
-                        <span className="text-sm text-gray-900">Yes</span>
+                        <span className="text-sm text-white">Yes</span>
                       </label>
                       <label className="flex items-center space-x-2">
                         <input
@@ -878,7 +881,7 @@ const StepOne: React.FC<StepOneProps> = ({
                           }
                           className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
                         />
-                        <span className="text-sm text-gray-900">No</span>
+                        <span className="text-sm text-white">No</span>
                       </label>
                     </div>
                   </div>
@@ -888,7 +891,7 @@ const StepOne: React.FC<StepOneProps> = ({
                       <div className="relative z-0 w-full mb-5 group">
                         <label
                           htmlFor={`dropoff_contact_name_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                         >
                           Dropoff Contact Name
                         </label>
@@ -906,11 +909,11 @@ const StepOne: React.FC<StepOneProps> = ({
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                             errorsLocation[vehicleIndex]?.dropoffContactName
                               ? "border-red-500"
                               : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#6DB8D1]`}
+                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Dropoff Contact Name"
                           required
                         />
@@ -920,7 +923,7 @@ const StepOne: React.FC<StepOneProps> = ({
                       <div className="relative z-0 w-full mb-5 group">
                         <label
                           htmlFor={`dropoff_contact_phone_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
                         >
                           Dropoff Contact Phone Number
                         </label>
@@ -938,11 +941,11 @@ const StepOne: React.FC<StepOneProps> = ({
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border ${
+                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
                             errorsLocation[vehicleIndex]?.dropoffContactPhone
                               ? "border-red-500"
                               : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#6DB8D1]`}
+                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Dropoff Contact Phone Number"
                           required
                         />

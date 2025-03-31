@@ -123,14 +123,14 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
 
   return (
     <div>
-      <h2 className="text-lg font-bold text-center text-gray-900 mb-4">
+      <h2 className="text-lg font-bold text-center text-white mb-4">
         Contact Information
       </h2>
 
       <div className="relative z-0 w-full mb-5 group">
         <label
           htmlFor="first_name"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           First Name
         </label>
@@ -143,7 +143,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             setFirstName(e.target.value);
             validateField("firstName", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" First Name"
         />
         {/* {errorsContact.firstName && (
@@ -156,7 +156,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       <div className="relative z-0 w-full mb-5 group">
         <label
           htmlFor="last_name"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           Last Name
         </label>
@@ -170,7 +170,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             setLastName(e.target.value);
             validateField("lastName", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" Last Name"
         />
         {/* {errorsContact.lastName && (
@@ -183,7 +183,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       <div className="relative z-0 w-full mb-5 group">
         <label
           htmlFor="email"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           Email Address
         </label>
@@ -197,7 +197,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             setEmail(e.target.value);
             validateField("email", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" Email Address"
         />
         {errorsContact.email && (
@@ -210,7 +210,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       <div className="relative z-0 w-full mb-5 group">
         <label
           htmlFor="phone"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
+          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
         >
           Phone Number
         </label>
@@ -222,7 +222,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           value={phone}
           // onChange={(e) => setPhone(e.target.value)}
           onChange={handlePhoneChange}
-          className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1] focus:ring-1 focus:ring-[#6DB8D1]"
+          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" Phone Number"
         />
         {phoneError && <div className="mt-2 text-red-500">{phoneError}</div>}
@@ -235,7 +235,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
 
       <div>
         <div className="relative z-0 w-full mb-5 group flex flex-row  justify-between">
-          <label className="block text-sm font-medium text-gray-900 mr-2">
+          <label className="block text-sm font-medium text-white mr-2">
             Are you a dealer or business?{" "}
             <span className="text-red-500">*</span>
           </label>
@@ -248,7 +248,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 onChange={() => handleRadioChange(true)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
-              <span className="text-sm text-gray-900">Yes</span>
+              <span className="text-sm text-white">Yes</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -258,7 +258,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 onChange={() => handleRadioChange(false)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
-              <span className="text-sm text-gray-900">No</span>
+              <span className="text-sm text-white">No</span>
             </label>
           </div>
         </div>
@@ -266,7 +266,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         {/* Conditional Company Name Input */}
         {isDealer && (
           <div className="relative z-0 w-full mb-5 group">
-            <label className="absolute px-3 py-2 text-sm rounded-xl bg-white  text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            <label className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
               {" "}
               Company Name
             </label>
@@ -275,14 +275,14 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
               placeholder="Enter your company name"
               value={dealerCompanName}
               onChange={(e) => setDealerCompanName(e.target.value)}
-              className="w-full h-14 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
+              className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee]"
             />
           </div>
         )}
       </div>
       <div>
         <div className="relative z-0 w-full mb-5 group flex flex-row justify-between">
-          <label className="block text-sm font-medium text-gray-900 mr-2">
+          <label className="block text-sm font-medium text-white mr-2">
             Do you have any note? <span className="text-red-500">*</span>
           </label>
           <div className="flex items-center justify-center space-x-6">
@@ -294,7 +294,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 onChange={() => setIsClientNote(true)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
-              <span className="text-sm text-gray-900">Yes</span>
+              <span className="text-sm text-white">Yes</span>
             </label>
             <label className="flex items-center space-x-2">
               <input
@@ -304,7 +304,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 onChange={() => setIsClientNote(false)}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
-              <span className="text-sm text-gray-900">No</span>
+              <span className="text-sm text-white">No</span>
             </label>
           </div>
         </div>
@@ -312,7 +312,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         {/* Conditional Company Name Input */}
         {isClientNote && (
           <div className="relative z-0 w-full mb-5 group">
-            <label className="absolute px-3 py-2 text-sm rounded-xl bg-white text-black transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
+            <label className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
               Any Note
             </label>
             <textarea
@@ -327,7 +327,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                   setErrorField("Maximum limit of 50 words reached.");
                 }
               }}
-              className="w-full h-32 px-3 py-2 text-sm text-gray-900 rounded-xl bg-white border border-[#938f99] outline-none transition-all focus:border-[#6DB8D1]"
+              className="w-full h-32 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee]"
             />
             {errorField && (
               <p className="text-red-500 text-sm mt-1">{errorField}</p>
