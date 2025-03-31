@@ -81,46 +81,47 @@ const ViewQuoteForm = () => {
         </h3>
         <div className="space-y-4 text-black ">
           {formData?.vehicleInfo && formData?.vehicleInfo.length > 0 ? (
-            formData?.vehicleInfo.map((vehicle: any, index: number) => (
-              <div key={index} className="space-y-4 whitespace-nowrap">
-                <div className="flex justify-between items-center whitespace-nowrap">
-                  <p className="font-semibold w-1/3">
-                    Vehicle Mileage vehicle {index}
-                  </p>
-                  <p className="w-2/3">{vehicle.vehicleMileage}</p>
-                </div>
-                <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">
-                    Plate Number vehicle {index}
-                  </p>
-                  <p className="w-2/3">{vehicle.plateNumber}</p>
-                </div>
-                {/* <div className="flex justify-between items-center">
+            <>
+              {formData?.vehicleInfo.map((vehicle: any, index: number) => (
+                <div key={index} className="space-y-4 whitespace-nowrap">
+                  <div className="flex justify-between items-center whitespace-nowrap">
+                    <p className="font-semibold w-1/3">
+                      Vehicle Mileage vehicle {index}
+                    </p>
+                    <p className="w-2/3">{vehicle.vehicleMileage}</p>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p className="font-semibold w-1/3">
+                      Plate Number vehicle {index}
+                    </p>
+                    <p className="w-2/3">{vehicle.plateNumber}</p>
+                  </div>
+                  {/* <div className="flex justify-between items-center">
                   <p className="font-semibold w-1/3">VIN Number:</p>
                   <p className="w-2/3">{vehicle.vinNumber}</p>
                 </div> */}
-                <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">
-                    Dimension vehicle {index}
-                  </p>
-                  <p className="w-2/3">{vehicle.dimension}</p>
+                  <div className="flex justify-between items-center">
+                    <p className="font-semibold w-1/3">
+                      Dimension vehicle {index}
+                    </p>
+                    <p className="w-2/3">{vehicle.dimension}</p>
+                  </div>
                 </div>
+              ))}
+              <div className="flex justify-between items-center">
+                <p className="font-semibold w-1/3">Total COD:</p>
+                <p className="w-2/3">
+                  {formData?.payment?.paymentType === "COP" ? (
+                    <p className="w-2/3">{formData?.payment?.totalAmount}</p>
+                  ) : (
+                    ""
+                  )}
+                </p>
               </div>
-            ))
+            </>
           ) : (
             <p>No vehicle information available.</p>
           )}
-
-          <div className="flex justify-between items-center">
-            <p className="font-semibold w-1/3">Total COD:</p>
-            <div className="flex flex-row">
-              {formData?.payment?.paymentType === "COP" ? (
-                <p className="w-2/3">{formData?.payment?.totalAmount}</p>
-              ) : (
-                ""
-              )}
-            </div>
-          </div>
         </div>
       </div>
     </div>
