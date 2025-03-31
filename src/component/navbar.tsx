@@ -199,7 +199,7 @@ export default function NavBar(props: INavBarProps) {
               </button>
 
               {/* Centered Logo */}
-              <div className="absolute left-2/3 transform -translate-x-1/2 text-white text-2xl font-bold font-montserrat w-2/3 whitespace-nowrap ">
+              <div className="absolute left-2/3 transform -translate-x-1/2 text-white text-lg md:text-2xl font-bold font-montserrat w-2/3 whitespace-nowrap ">
                 Mica Transportaion
               </div>
             </div>
