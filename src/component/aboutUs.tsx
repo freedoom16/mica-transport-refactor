@@ -148,7 +148,7 @@ const SectionOne = () => {
                         >
                           <FontAwesomeIcon
                             icon={faStar}
-                            className="text-white w-4 h-4 mr-2"
+                            className="text-[#6DB8D1] w-4 h-4 mr-2 border-[#6DB8D1]"
                           />
                           <span className="text-[20px]">{point}</span>
                         </div>
