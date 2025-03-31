@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useGetQuoetsByIDQuery } from "../../../src/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
 import DIsplayFormSkeleton from "./displayFormSkeleton";
+import { after } from "node:test";
 
 const QuoteFormDisplayOne: React.FC = () => {
   const [pickupLocation, setPickupLocation] = useState("");
@@ -216,6 +217,9 @@ const QuoteFormDisplayOne: React.FC = () => {
                 key={index}
                 className="grid grid-cols-1 md:grid-cols-1 gap-4 text-gray-300"
               >
+                <p className="font-bold text-white text-center">
+                  Vehicle {index + 1} Location
+                </p>
                 {/* Pickup Location */}
                 <div className="flex justify-between items-center">
                   <p className="font-semibold w-1/3">Pickup Location:</p>
@@ -295,7 +299,9 @@ const QuoteFormDisplayOne: React.FC = () => {
               <p className="font-semibold w-1/3">Pickup Date:</p>
               <div className="w-2/3 flex flex-row">
                 <p className="pr-2">{quoteData.pickUpTime.pickUpDateOption}</p>
-                {quoteData.pickUpTime.pickUpDateOption === "on" ? (
+                {quoteData.pickUpTime.pickUpDateOption === "on" ||
+                "before" ||
+                "after" ? (
                   <p>
                     {new Date(
                       quoteData.pickUpTime.pickUpDate
@@ -322,7 +328,9 @@ const QuoteFormDisplayOne: React.FC = () => {
                 <p className="pr-2">
                   {quoteData.deliveryTime.deliveryDateOption}
                 </p>
-                {quoteData.deliveryTime.deliveryDateOption === "on" ? (
+                {quoteData.deliveryTime.deliveryDateOption === "on" ||
+                "before" ||
+                "after" ? (
                   <p>
                     {new Date(
                       quoteData.deliveryTime.deliveryDate
@@ -347,7 +355,9 @@ const QuoteFormDisplayOne: React.FC = () => {
               <p className="font-semibold w-1/3">Pickup Time:</p>
               <div className="w-2/3 flex flex-row">
                 <p className="pr-2">{quoteData.pickUpTime.pickUpTimeOption}</p>
-                {quoteData.pickUpTime.pickUpTimeOption === "on" ? (
+                {quoteData.pickUpTime.pickUpTimeOption === "on" ||
+                "before" ||
+                "after" ? (
                   <p>
                     {new Date(
                       `1970-01-01T${quoteData.pickUpTime.pickUpTime}:00`
@@ -386,7 +396,9 @@ const QuoteFormDisplayOne: React.FC = () => {
                 <p className="pr-2">
                   {quoteData.deliveryTime.deliveryTimeOption}
                 </p>
-                {quoteData.deliveryTime.deliveryTimeOption === "on" ? (
+                {quoteData.deliveryTime.deliveryTimeOption === "on" ||
+                "before" ||
+                "after" ? (
                   <p>
                     {new Date(
                       `1970-01-01T${quoteData.deliveryTime.deliveryTime}:00`

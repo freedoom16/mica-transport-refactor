@@ -656,7 +656,7 @@ const QouetForm: React.FC = () => {
         fullName: firstName + " " + lastName,
         email: email,
         phone: phone,
-        isDealer: isDealer || false,
+        areYouDealer: isDealer || false,
         dealerCompanName: dealerCompanName,
         note: note,
       },
