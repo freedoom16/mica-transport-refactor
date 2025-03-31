@@ -5,6 +5,8 @@ import axios from "axios";
 import FeaturesBox from "./featureBox";
 import HomePageForm from "./quoetForm";
 import imageTruck from "../../public/img/download6.jpeg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCar } from "@fortawesome/free-solid-svg-icons";
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
@@ -22,6 +24,7 @@ export default function Home(props: IHomeProps) {
 
     fetchQuotes();
   }, []);
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <section id="home">
@@ -84,6 +87,26 @@ export default function Home(props: IHomeProps) {
           {/* <div className=" z-[150] px-4 rounded-xl  max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[800px]">
             <HomePageForm />
           </div> */}
+          {!showForm && ( // Hide button when form is displayed
+            <button
+              className="bg-[#2098ee] px-4 py-2 rounded-full hidden xl:block"
+              onClick={() => setShowForm(true)}
+            >
+              <FontAwesomeIcon
+                icon={faCar}
+                className=""
+                width={16}
+                height={16}
+              />{" "}
+              REQUEST A QUOTE
+            </button>
+          )}
+
+          {showForm && (
+            <div className="z-[150] px-4 rounded-xl max-w-lg w-full mt-6 md:mt-12 xl:block min-h-[800px]">
+              <HomePageForm />
+            </div>
+          )}
           {/* <div
             className="absolute right-8 top-full transform -translate-y-1/2 z-[150] p-4 rounded-xl max-w-lg w-full"
             style={{
