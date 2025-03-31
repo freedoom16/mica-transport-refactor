@@ -184,7 +184,7 @@ const Testimonials = () => {
                     <div className="flex items-center mt-2 lg:mt-6">
                       <div>
                         <p className="font-medium">{testimonial.name}</p>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-300">
                           {testimonial.position}
                         </p>
                       </div>

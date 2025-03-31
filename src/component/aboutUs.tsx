@@ -165,7 +165,7 @@ const SectionOne = () => {
                           >
                             <FontAwesomeIcon
                               icon={faStar}
-                              className="text-white w-4 h-4 mr-2 border-2 border-[#6DB8D1] rounded-full"
+                              className="text-[#6DB8D1] w-4 h-4 mr-2 border-2 border-[#6DB8D1] rounded-full"
                             />
                             <span className="text-[20px]">{point}</span>
                           </div>
@@ -176,14 +176,14 @@ const SectionOne = () => {
                       <button
                         onClick={handlePrevious}
                         disabled={currentPage === 0}
-                        className="px-4 py-2 bg-white text-white border border-white rounded-full disabled:bg-white"
+                        className="px-4 py-2 bg-white text-black border border-white rounded-full disabled:bg-white"
                       >
                         Previous
                       </button>
                       <button
                         onClick={handleNext}
                         disabled={currentPage === totalPages - 1}
-                        className="px-6 py-2 bg-white text-white border border-white rounded-full disabled:bg-white"
+                        className="px-6 py-2 bg-white text-black border border-white rounded-full disabled:bg-white"
                       >
                         Next
                       </button>
