@@ -640,28 +640,34 @@ const QouetForm: React.FC = () => {
         deliveryTimeRangeEnd: deliveryTimeRangeEnd,
       },
 
-      pickupLocation: pickupLocation,
-      isPickupContact: isPickupContact,
-      pickupContactName: pickupContactName,
-      pickupContactPhone: pickupContactPhone,
-      addressTypeForPickup: addressTypeForPickup,
+      // pickupLocation: pickupLocation,
+      // isPickupContact: isPickupContact,
+      // pickupContactName: pickupContactName,
+      // pickupContactPhone: pickupContactPhone,
+      // addressTypeForPickup: addressTypeForPickup,
 
-      deliveryLocation: deliveryLocation,
-      isDropoffContact: isDropoffContact,
-      dropoffContactName: dropoffContactName,
-      dropoffContactPhone: dropoffContactPhone,
-      addressTypeForDeliver: addressTypeForDeliver,
+      // deliveryLocation: deliveryLocation,
+      // isDropoffContact: isDropoffContact,
+      // dropoffContactName: dropoffContactName,
+      // dropoffContactPhone: dropoffContactPhone,
+      // addressTypeForDeliver: addressTypeForDeliver,
 
       client: {
         fullName: firstName + " " + lastName,
         email: email,
         phone: phone,
-        isDealer: isDealer || false,
+        areYouDealer: isDealer || false,
         dealerCompanName: dealerCompanName,
         note: note,
       },
 
-      status: "pending",
+      // status: "pending",
+      status: {
+        type: Object,
+        fullName: "String",
+        email: "String",
+        phone: "String",
+      },
     };
     try {
       await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
