@@ -99,7 +99,7 @@ const Services = () => {
               </div>
               {/* Expandable Content for Mobile */}
               {selectedService === service.title && (
-                <div className="w-full block md:hidden flex flex-col gap-4  text-white rounded-[24px] mt-4">
+                <div className="w-full block lg:hidden flex flex-col gap-4  text-white rounded-[24px] mt-4">
                   <div className="w-full h-[252px] relative">
                     <div className="w-full h-full booking-gradient opacity-50 absolute z-10 rounded-[24px]" />
                     {/* <img
@@ -149,7 +149,7 @@ const Services = () => {
 
         {/* Right Section */}
         <div
-          className="w-full lg:w-[50%]  hidden md:block flex flex-col gap-0 md:gap-4 md:space-y-4"
+          className="w-full lg:w-[50%]  hidden lg:block flex flex-col gap-0 md:gap-4 md:space-y-4"
           style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
         >
           <div className="w-full h-auto lg:h-[70%] relative">

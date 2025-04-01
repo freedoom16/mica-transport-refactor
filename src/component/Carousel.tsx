@@ -35,13 +35,13 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         pagination={{ clickable: true }}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
         loop
-        className="relative h-56 md:h-96 rounded-lg"
+        className="relative h-56 lg:h-96 rounded-lg"
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
             <img
               src={image}
-              className="w-full h-auto md:h-[500px] lg:h-auto object-cover cursor-pointer"
+              className="w-full h-auto  lg:h-auto object-cover cursor-pointer"
               alt={`Slide ${index + 1}`}
               onClick={() => openModal(image)}
             />
