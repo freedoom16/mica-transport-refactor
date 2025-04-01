@@ -207,10 +207,16 @@ const SectionOne = () => {
                                     key={index}
                                     className="p mb-4 flex items-center"
                                   >
-                                    <FontAwesomeIcon
+                                    <img
+                                      src="/star-svgrepo-com.svg"
+                                      width={24}
+                                      height={24}
+                                      className="mr-2"
+                                    />
+                                    {/* <FontAwesomeIcon
                                       icon={faStar}
                                       className="text-[#2098ee] w-5 h-5 mr-2"
-                                    />
+                                    /> */}
                                     <span className="text-[20px]">{point}</span>
                                   </div>
                                 ))}
@@ -223,20 +229,20 @@ const SectionOne = () => {
 
                   {/* Larger Pagination Dots */}
                   <style tsx>{`
-                     .swiper-pagination {
+                    .swiper-pagination {
                         margin-top: 20px;
                         padding-top: 10px;
-                      }
+                    }
                     .swiper-pagination-bullet {
                       width: 20px; /* Set dot width */
                       height: 20px; /* Set dot height */
                       border-radius: 50%; /* Make the dot circular */
-                      background-color: #d1d5db
+                      background-color: #f3f4f6
                     }
                     .swiper-pagination-bullet-active {
                       background-color: #2098ee; /* Active dot color */
                     }
-                    .swiper-pagination-bullet-inactive-color: #000;
+                    .swiper-pagination-bullet-inactive-color: #d1d7e3;
                   `}</style>
 
                   {/* Desktop View: List all items */}
