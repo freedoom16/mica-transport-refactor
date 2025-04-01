@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useRef } from "react";
 
 const Testimonials = () => {
   const testimonials = [
@@ -74,6 +75,8 @@ const Testimonials = () => {
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | undefined>(
     undefined
   ); // For handling interval
+  // const [isAutoplay, setIsAutoPlay] = useState<boolean>(false);
+  const swiperRef = useRef<any>(null); // Store Swiper instance4
 
   const handleResize = () => {
     setIsDesktop(window.innerWidth >= 1024);
@@ -126,6 +129,65 @@ const Testimonials = () => {
     setIntervalId(interval);
   };
 
+  const handleUserInteraction = () => {
+    // setIsAutoPlay(true);
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(undefined);
+    }
+  };
+
+  const [isAutoplay, setIsAutoplay] = useState(true); // Track autoplay state
+
+  // Stop autoplay when user swipes or clicks pagination
+  const stopAutoplay = () => {
+    console.log("onclick");
+    if (swiperRef.current?.swiper) {
+      swiperRef.current.swiper.autoplay.stop(); // Stop autoplay
+      setIsAutoplay(false); // Prevent restart
+    }
+  };
+
+  // Resume autoplay when user interacts outside testimonials
+  const resumeAutoplay = () => {
+    if (!isAutoplay && swiperRef.current?.swiper) {
+      swiperRef.current.swiper.autoplay.start(); // Restart autoplay
+      setIsAutoplay(true);
+    }
+  };
+
+  // Stop autoplay when pagination is clicked
+  useEffect(() => {
+    const paginationBullets = document.querySelectorAll(
+      ".swiper-pagination-bullet"
+    );
+    paginationBullets.forEach((bullet) => {
+      bullet.addEventListener("click", stopAutoplay);
+    });
+
+    return () => {
+      paginationBullets.forEach((bullet) => {
+        bullet.removeEventListener("click", stopAutoplay);
+      });
+    };
+  }, []);
+
+  // Listen for clicks anywhere on the page
+  useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      const testimonialsSection = document.getElementById("reviews");
+      if (
+        testimonialsSection &&
+        !testimonialsSection.contains(event.target as Node)
+      ) {
+        resumeAutoplay(); // Restart autoplay if clicked outside testimonials
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
+  }, [isAutoplay]);
+
   const renderStars = (rating: number) => {
     // Define colors for each star index
     const starColors = [
@@ -171,6 +233,7 @@ const Testimonials = () => {
         </p>
 
         <Swiper
+          ref={swiperRef}
           slidesPerView={1} // Mobile: 1 slide
           spaceBetween={20}
           breakpoints={{
@@ -180,17 +243,20 @@ const Testimonials = () => {
             },
           }}
           pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
           modules={[Pagination, Autoplay]}
           className="pb-12"
+          // onSlideChange={stopAutoplay} // Stop autoplay on slide change
+          onTouchStart={stopAutoplay} // Stop autoplay on swipe
+          onClick={stopAutoplay} // Stop autoplay on pagination click
         >
           {testimonials.map((testimonial) => (
             <SwiperSlide key={testimonial.id}>
               <div className="relative ">
                 <div className="overflow-hidden px-2">
-                  <div key={testimonial.id} className={`flex-none  px-2 py-4`}>
+                  <div key={testimonial.id} className={`flex-none px-2 py-4`}>
                     <div
-                      className="p-6 md:p-12 mb-8 rounded-lg bg-[#2D2D2D] text-white flex flex-col h-[400px] max-w-lg mx-auto"
+                      className="p-6  xl:p-12 mb-8 rounded-lg bg-[#2D2D2D] text-white flex flex-col h-full lg:h-[500px] xl:h-[400px] max-w-lg mx-auto"
                       style={{
                         boxShadow: "0 5px 15px 5px rgba(32, 152, 238, 0.5)", // Blue glow effect
                       }}
@@ -201,7 +267,7 @@ const Testimonials = () => {
                       <p className="mt-4 p-2 flex-grow">
                         {testimonial.description}
                       </p>
-                      <div className="flex items-center mt-2 lg:mt-6">
+                      <div className="flex items-center mt-2 xl:mt-6">
                         <div>
                           <p className="font-medium">{testimonial.name}</p>
                           <p className="text-sm text-gray-300">
@@ -237,18 +303,6 @@ const Testimonials = () => {
             height: 18px;
           }
         `}</style>
-        {/* Points Below */}
-        {/* <div className="flex justify-center mt-6">
-          {Array.from({ length: totalSlides }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => handlePointClick(index)}
-              className={`w-3 h-3 mx-1 rounded-full ${
-                currentIndex === index ? "bg-blue-500" : "bg-gray-400"
-              }`}
-            />
-          ))}
-        </div> */}
       </div>
     </section>
   );
