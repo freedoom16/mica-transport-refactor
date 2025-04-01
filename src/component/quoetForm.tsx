@@ -382,6 +382,7 @@ const QouetForm: React.FC = () => {
       // setErrorMessage("All fields are required for Step 4.");
       // return;
       validatePickupAndDelivery();
+      console.log(errorsDateValidation);
       if (!(pickUpDate || pickUpDateRangeStart || pickUpDateRangeEnd)) {
         setErrorMessage("Pickup location is required.");
         return;
@@ -398,6 +399,7 @@ const QouetForm: React.FC = () => {
         setErrorMessage("Delivery Time is required.");
         return;
       }
+      console.log(errorsDateValidation);
     }
 
     // if (step < totalSteps) {
