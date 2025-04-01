@@ -97,7 +97,7 @@ const MultiStepTransportationForm = () => {
     }));
   };
 
-  const [expandedIndex, setExpandedIndex] = useState(null);
+  const [expandedIndex, setExpandedIndex] = useState<any>(null);
 
   const handlePaymentTypeChange = (e: any) => {
     const { name, value } = e.target;
