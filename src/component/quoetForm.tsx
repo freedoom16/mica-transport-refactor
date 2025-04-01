@@ -640,28 +640,34 @@ const QouetForm: React.FC = () => {
         deliveryTimeRangeEnd: deliveryTimeRangeEnd,
       },
 
-      pickupLocation: pickupLocation,
-      isPickupContact: isPickupContact,
-      pickupContactName: pickupContactName,
-      pickupContactPhone: pickupContactPhone,
-      addressTypeForPickup: addressTypeForPickup,
+      // pickupLocation: pickupLocation,
+      // isPickupContact: isPickupContact,
+      // pickupContactName: pickupContactName,
+      // pickupContactPhone: pickupContactPhone,
+      // addressTypeForPickup: addressTypeForPickup,
 
-      deliveryLocation: deliveryLocation,
-      isDropoffContact: isDropoffContact,
-      dropoffContactName: dropoffContactName,
-      dropoffContactPhone: dropoffContactPhone,
-      addressTypeForDeliver: addressTypeForDeliver,
+      // deliveryLocation: deliveryLocation,
+      // isDropoffContact: isDropoffContact,
+      // dropoffContactName: dropoffContactName,
+      // dropoffContactPhone: dropoffContactPhone,
+      // addressTypeForDeliver: addressTypeForDeliver,
 
       client: {
         fullName: firstName + " " + lastName,
         email: email,
         phone: phone,
-        isDealer: isDealer || false,
+        areYouDealer: isDealer || false,
         dealerCompanName: dealerCompanName,
         note: note,
       },
 
-      status: "pending",
+      // status: "pending",
+      status: {
+        type: Object,
+        fullName: "String",
+        email: "String",
+        phone: "String",
+      },
     };
     try {
       await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
@@ -687,11 +693,11 @@ const QouetForm: React.FC = () => {
           className="max-w-xl mx-auto  bg-[#2c2c2c] p-4 md:px-4 rounded-[32px] "
           // style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
-          <p className="text-[20px] text-whitefont-bold    text-center ">
+          <p className="text-[20px] text-white font-bold    text-center ">
             Shipping Quote Calculator
           </p>
           {/* Progress Indicator */}
-          <div className=" text-whitetext-end mb-1 text-right">
+          <div className=" text-white text-end mb-1 text-right">
             <p className="text-lg font-bold">
               Step {step} of {totalSteps}
             </p>

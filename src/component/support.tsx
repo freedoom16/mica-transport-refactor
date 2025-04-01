@@ -21,7 +21,7 @@ const CustomContentSection = () => {
       </div>
 
       {/* Right Column: Description and Button */}
-      <div className="flex flex-col items-start space-y-8 md:px-8 w-full lg:w-1/3">
+      <div className="flex flex-col items-center space-y-8 md:px-8 w-full lg:w-1/3">
         {/* Description */}
         <div
           id="lp-pom-text-236"
@@ -40,12 +40,12 @@ const CustomContentSection = () => {
         </div>
 
         {/* Button */}
-        <div className="block md:hidden py-2 justify-center">
+        <div className="block md:hidden py-2 ">
           <a
             id="lp-pom-button-237"
             href="/#quote-form"
             // className="bg-gradient-to-r from-[#425059] to-[#9e9fa0] bg-opacity-70  text-white  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
-            className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white -mr-6 font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white text-center  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}

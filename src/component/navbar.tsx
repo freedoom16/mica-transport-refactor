@@ -148,7 +148,10 @@ export default function NavBar(props: INavBarProps) {
             />
           </a>
           <a href="/#quote-form" className="hover:text-gray-700 text-lg">
-            <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-white`} />{" "}
+            <FontAwesomeIcon
+              icon={faCar}
+              className={`w-6 h-6 text-[#2098ee]`}
+            />{" "}
           </a>
         </div>
 

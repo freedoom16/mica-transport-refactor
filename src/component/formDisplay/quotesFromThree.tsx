@@ -4,7 +4,7 @@ import {
   useUpdateQuoetsMutation,
 } from "@/store/Api/quotesApi";
 import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const MultiStepTransportationForm = () => {
@@ -27,25 +27,51 @@ const MultiStepTransportationForm = () => {
 
   // Initialize formData with empty values
   const [formData, setFormData] = useState<any>({
-    vehicleInfo: [
-      {
-        vehicleMileage: "",
-        plateNumber: "",
-        vinNumber: "",
-        dimension: "",
-      },
-    ],
+    vehicleInfo: [],
     vehicleMileage: "",
     plateNumber: "",
     vinNumber: "",
     inspectionConditions: "",
     transportFee: "",
-    prePaid: "",
-    totalCOD: "",
-    paymentType: "",
+    prePaid: dataForm?.data?.payment?.prePaidAmount || "",
+    totalCOD: dataForm?.data?.payment?.totalAmount || "",
+    totalAmount: dataForm?.data?.payment?.totalAmount || "",
+
+    paymentType: dataForm?.data?.payment?.paymentType || "",
     paymentMadeIn: "",
-    totalAmount: "",
   });
+
+  useEffect(() => {
+    if (dataForm?.data?.vehicleInfo) {
+      const initialVehicleInfo = dataForm.data.vehicleInfo.map(
+        (vehicle: any) => ({
+          vehicleMileage: vehicle.vehicleMileage || "",
+          plateNumber: vehicle.plateNumber || "",
+          vinNumber: vehicle.vinNumber || "",
+          dimension: vehicle.dimension || "",
+          vehicleYear: vehicle.vehicleYear,
+          vehicleMaker: vehicle.vehicleMaker,
+          vehicleModel: vehicle.vehicleModel,
+          isDrivable: vehicle.isDrivable,
+          vehicleId: vehicle.vehicleId,
+        })
+      );
+
+      setFormData((prevState: any) => ({
+        ...prevState,
+        vehicleInfo: initialVehicleInfo,
+      }));
+    }
+    if (dataForm?.data?.payment) {
+      setFormData((prevState: any) => ({
+        ...prevState,
+        prePaid: dataForm.data.payment.prePaidAmount || "",
+        totalCOD: dataForm.data.payment.totalAmount || "",
+        totalAmount: dataForm.data.payment.totalAmount || "",
+        paymentType: dataForm.data.payment.paymentType || "",
+      }));
+    }
+  }, [dataForm]);
 
   // Handle input changes dynamically based on vehicle index
   const handleInputChange = (e: any, vehicleIndex: any) => {
@@ -157,10 +183,10 @@ const MultiStepTransportationForm = () => {
             {dataForm?.data?.vehicleInfo?.map(
               (vehicle: any, vehicleIndex: any) => (
                 <div key={vehicleIndex}>
-                  <div className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr)] border-t border-b">
+                  <div className="flex flex-row space-x-2 bg-gray-900 text-gray-900 mb-2 p-2 grid grid-cols-[1fr)] border-t border-b">
                     {/* <h3 className="text-xl col-span-3">Vehicle #{vehicleIndex + 1}</h3> */}
                     <div
-                      className="flex flex-row space-x-2 bg-white text-gray-900 mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_min-content] shadow-lg rounded-lg w-full cursor-pointer"
+                      className="flex flex-row space-x-2 bg-gray-800 text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_min-content] shadow-lg rounded-lg w-full cursor-pointer"
                       onClick={() =>
                         setExpandedIndex(
                           expandedIndex === vehicleIndex ? null : vehicleIndex
@@ -180,7 +206,7 @@ const MultiStepTransportationForm = () => {
                         <button className="text-red-500">
                           <img
                             src={`${
-                              vehicle.isDrivable
+                              vehicle.isDrivable === "true"
                                 ? "/motor-svg-green.svg"
                                 : "/motor-svg-red.svg"
                             }`}
@@ -260,7 +286,7 @@ const MultiStepTransportationForm = () => {
                   type="text"
                   name={key}
                   id={key}
-                  value={formData[key]}
+                  value={formData[key] || ""}
                   onChange={(e) => handlePaymentTypeChange(e)}
                   className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
                   placeholder=" "
@@ -307,7 +333,7 @@ const MultiStepTransportationForm = () => {
           <div
             // type="button"
             onClick={handleNext}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+            className="bg-blue-500 text-white px-4 text-center py-2 rounded-lg"
           >
             Next
           </div>
@@ -315,7 +341,7 @@ const MultiStepTransportationForm = () => {
           <button
             // type="submit"
             onClick={handleSubmit}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg"
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg"
           >
             {isLoadingQuotes ? (
               <button

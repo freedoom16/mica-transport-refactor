@@ -46,6 +46,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
   };
 
   const handleNextMobaile = () => {
+    console.log(currentStep, totalSteps);
     if (currentStep < totalSteps) {
       onNext();
       scrollToQuote(); // Scroll to "About Us" section

@@ -123,23 +123,35 @@ const Testimonials = () => {
   };
 
   const renderStars = (rating: number) => {
-    let stars = [];
-    for (let i = 0; i < 5; i++) {
-      stars.push(
-        <svg
-          key={i}
-          xmlns="http://www.w3.org/2000/svg"
-          fill={i < rating ? "#FFD700" : "gray"}
-          viewBox="0 0 24 24"
-          className="font-bold"
-          width="20"
-          height="20"
-        >
-          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-        </svg>
-      );
-    }
-    return stars;
+    // Define colors for each star index
+    const starColors = [
+      "rgb(30, 64, 175)", // Tailwind blue-800
+      "rgb(29, 78, 216)", // Tailwind blue-800
+      // "rgb(29, 78, 216)", // Tailwind blue-700
+      "rgb(37, 99, 235)", // Tailwind blue-600
+      "rgb(59, 130, 246)", // Tailwind blue-500
+      "rgb(96, 165, 250)",
+    ];
+
+    return (
+      <div className="flex">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <svg
+            key={i}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            className="text-gray-300"
+          >
+            <path
+              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+              fill={i < rating ? starColors[i] : "gray"}
+            />
+          </svg>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -199,7 +211,7 @@ const Testimonials = () => {
           </div>
 
           {/* Navigation Buttons */}
-          <div>
+          {/* <div>
             <button
               onClick={prevSlide}
               className="absolute left-0 top-1/2 font-bold transform -translate-y-1/2 -translate-x-1/2 text-white text-[25px] bg-[#2098ee] shadow-xl p-4 rounded-full"
@@ -212,7 +224,7 @@ const Testimonials = () => {
             >
               &#8250;
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* Points Below */}
