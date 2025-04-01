@@ -89,7 +89,7 @@ export default function NavBar(props: INavBarProps) {
           className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0`}
         >
           <a href="/#home" className="whitespace-nowrap flex flex-row">
-            Mica Transportaion{" "}
+            MicaTransportation{" "}
             <span className=" hidden lg:block ml-2">LLC</span>
           </a>
         </div>
@@ -208,7 +208,7 @@ export default function NavBar(props: INavBarProps) {
 
               {/* Centered Logo */}
               <div className="absolute left-2/3 transform -translate-x-1/2 text-white text-lg md:text-2xl font-bold font-montserrat w-2/3 whitespace-nowrap ">
-                Mica Transportaion
+                MicaTransportation
               </div>
             </div>
             <a
