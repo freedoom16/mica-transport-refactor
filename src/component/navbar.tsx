@@ -142,16 +142,10 @@ export default function NavBar(props: INavBarProps) {
             href="tel:+1 (404) 988-4505"
             className="hover:text-gray-300 text-lg"
           >
-            <FontAwesomeIcon
-              icon={faPhone}
-              className={`w-6 h-6 text-[#2098ee]`}
-            />
+            <FontAwesomeIcon icon={faPhone} className={`w-6 h-6 text-white`} />
           </a>
           <a href="/#quote-form" className="hover:text-gray-700 text-lg">
-            <FontAwesomeIcon
-              icon={faCar}
-              className={`w-6 h-6 text-[#2098ee]`}
-            />{" "}
+            <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-white`} />{" "}
           </a>
         </div>
 
@@ -160,7 +154,7 @@ export default function NavBar(props: INavBarProps) {
           <div>
             <a
               href="tel:+1 (404) 988-4505"
-              className=" text-base font-normal  bg-gradient-to-r from-blue-800 to-[#2098ee] py-3 px-6 font-montserrat   rounded-[32px] shadow-none"
+              className=" text-base font-normal   py-3 px-6 font-montserrat   rounded-[32px] shadow-none"
             >
               <FontAwesomeIcon
                 icon={faPhone}
@@ -213,21 +207,21 @@ export default function NavBar(props: INavBarProps) {
             </div>
             <a
               href="/#about-us"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
+              className="capitalize border-b border-[#2098ee] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               About Us
             </a>
             <a
               href="/#services"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
+              className="capitalize border-b border-[#2098ee] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               Our Service
             </a>
             <a
               href="/#support"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
+              className="capitalize border-b border-[#2098ee] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               Support{" "}
@@ -235,7 +229,7 @@ export default function NavBar(props: INavBarProps) {
 
             <a
               href="/#reviews"
-              className="capitalize border-b border-[#938F99] text-[18px] font-medium p-4 text-white"
+              className="capitalize border-b border-[#2098ee] text-[18px] font-medium p-4 text-white"
               onClick={toggleMenu}
             >
               Review

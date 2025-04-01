@@ -120,61 +120,6 @@ const Footer: React.FC = () => {
             </a>
             . All Rights Reserved.
           </span>
-
-          <div className="flex items-center space-x-4">
-            {/* Facebook */}
-            <a
-              href="https://www.facebook.com/share/1EU19YmKhE/?mibextid=wwXIfr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
-                alt="Facebook"
-                className="w-8 h-8"
-              />
-            </a>
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/micatransportationllc?igsh=eGcxejMyMWxtcXFy&utm_source=qr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                alt="Instagram"
-                className="w-8 h-8"
-              />
-            </a>
-            {/* WhatsApp */}
-            <a
-              href="https://wa.me/+1(404)9884505"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-                alt="WhatsApp"
-                className="w-12 h-10"
-              />
-            </a>
-            {/* Telegram */}
-            <a
-              href="https://t.me/Michaelfasil"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:scale-110 transition-transform"
-            >
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"
-                alt="Telegram"
-                className="w-8 h-8"
-              />
-            </a>
-          </div>
         </div>
       </div>
     </footer>
