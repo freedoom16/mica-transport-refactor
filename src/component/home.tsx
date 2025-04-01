@@ -103,7 +103,7 @@ export default function Home(props: IHomeProps) {
           )}
 
           {showForm && (
-            <div className="z-[150] px-4 rounded-xl max-w-lg w-full mt-6 md:mt-12 xl:block min-h-[800px]">
+            <div className="z-[150] px-4 rounded-xl max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[800px]">
               <HomePageForm />
             </div>
           )}
