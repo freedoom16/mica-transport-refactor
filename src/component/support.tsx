@@ -45,11 +45,11 @@ const CustomContentSection = () => {
             id="lp-pom-button-237"
             href="/#quote-form"
             // className="bg-gradient-to-r from-[#425059] to-[#9e9fa0] bg-opacity-70  text-white  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
-            className="bg-[#425059]  text-white -mr-6 font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white -mr-6 font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}
-              className="px-2 text-[#2098ee]"
+              className="px-2 text-white"
               width={16}
               height={16}
             />{" "}
@@ -61,11 +61,11 @@ const CustomContentSection = () => {
           <a
             id="lp-pom-button-237"
             href="/#home"
-            className="bg-[#425059]    text-white font-bold text-[14px] leading-[17px]  py-3 px-6 rounded-[32px] shadow-none"
+            className="bg-gradient-to-r from-blue-800 to-[#2098ee]   text-white font-bold text-[14px] leading-[17px]  py-3 px-6 rounded-[32px] shadow-none"
           >
             <FontAwesomeIcon
               icon={faCar}
-              className="lg:px-0 px-2 text-[#2098ee] "
+              className="lg:px-0 px-2 text-white "
               width={16}
               height={16}
             />{" "}

@@ -666,14 +666,14 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       <div className="flex justify-between">
         <button
           type="button"
-          className="bg-[#2098ee] text-white border-2 border-[#2098ee] font-bold py-2 px-4 rounded-full"
+          className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white py-2 px-5 rounded-full"
           onClick={handleAddVehicle}
         >
           Add Vehicle
         </button>
         <button
           type="button"
-          className={`px-8 py-2 rounded-full shadow-xl bg-[#2098ee]  text-white   ${
+          className={`px-8 py-2 rounded-full shadow-xl bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white   ${
             isNextEnabled
               ? "border-2 border-[#2098ee] text-white font-bold"
               : "border-1 border-gray-900 text-white"
