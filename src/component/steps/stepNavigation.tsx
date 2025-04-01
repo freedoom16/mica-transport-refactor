@@ -95,11 +95,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             }`}
           >
             {isLoading ? (
-              <button
-                disabled
-                type="button"
-                className="text-white   font-medium rounded-lg   py-2.5 text-center me-2  inline-flex items-center"
-              >
+              <button disabled type="button">
                 <svg
                   aria-hidden="true"
                   role="status"
@@ -157,11 +153,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             }`}
           >
             {isLoading ? (
-              <button
-                disabled
-                type="button"
-                className="text-white   font-medium rounded-lg  py-2.5 text-center me-2  inline-flex items-center"
-              >
+              <button disabled type="button">
                 <svg
                   aria-hidden="true"
                   role="status"
