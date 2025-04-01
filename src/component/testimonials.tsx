@@ -1,5 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const Testimonials = () => {
   const testimonials = [
@@ -166,69 +170,75 @@ const Testimonials = () => {
           What customers are saying
         </p>
 
-        <div className="relative ">
-          <div className="overflow-hidden px-2">
-            <div
-              className="flex transition-all duration-500 ease-in-out lg:space-x-4"
-              style={{
-                transform: `translateX(-${
-                  currentIndex * (isDesktop ? 100 : 100)
-                }%)`,
-              }}
-            >
-              {testimonials.map((testimonial) => (
-                <div
-                  key={testimonial.id}
-                  className={`flex-none ${
-                    isDesktop ? "w-1/3" : "w-full"
-                  } px-2 py-4`}
-                >
-                  <div
-                    className="p-6 md:p-12 rounded-lg bg-[#2D2D2D] mb-8 text-white flex flex-col h-full"
-                    style={{
-                      boxShadow: "0 5px 15px 5px rgba(32, 152, 238, 0.5)", // Blue glow effect
-                    }}
-                  >
-                    <p className="text-xl font-semibold">{testimonial.title}</p>
-                    <p className="mt-4 p-2 flex-grow">
-                      {testimonial.description}
-                    </p>
-                    <div className="flex items-center mt-2 lg:mt-6">
-                      <div>
-                        <p className="font-medium">{testimonial.name}</p>
-                        <p className="text-sm text-gray-300">
-                          {testimonial.position}
-                        </p>
+        <Swiper
+          slidesPerView={1} // Mobile: 1 slide
+          spaceBetween={20}
+          breakpoints={{
+            1024: {
+              slidesPerView: 3, // Desktop: 3 slides
+              spaceBetween: 30,
+            },
+          }}
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 5000 }}
+          modules={[Pagination, Autoplay]}
+          className="pb-12"
+        >
+          {testimonials.map((testimonial) => (
+            <SwiperSlide key={testimonial.id}>
+              <div className="relative ">
+                <div className="overflow-hidden px-2">
+                  <div key={testimonial.id} className={`flex-none  px-2 py-4`}>
+                    <div
+                      className="p-6 md:p-12 mb-8 rounded-lg bg-[#2D2D2D] text-white flex flex-col h-[400px] max-w-lg mx-auto"
+                      style={{
+                        boxShadow: "0 5px 15px 5px rgba(32, 152, 238, 0.5)", // Blue glow effect
+                      }}
+                    >
+                      <p className="text-xl font-semibold">
+                        {testimonial.title}
+                      </p>
+                      <p className="mt-4 p-2 flex-grow">
+                        {testimonial.description}
+                      </p>
+                      <div className="flex items-center mt-2 lg:mt-6">
+                        <div>
+                          <p className="font-medium">{testimonial.name}</p>
+                          <p className="text-sm text-gray-300">
+                            {testimonial.position}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                    <div className="mt-2 flex">
-                      {renderStars(testimonial.rating)}
+                      <div className="mt-2 flex">
+                        {renderStars(testimonial.rating)}
+                      </div>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation Buttons */}
-          {/* <div>
-            <button
-              onClick={prevSlide}
-              className="absolute left-0 top-1/2 font-bold transform -translate-y-1/2 -translate-x-1/2 text-white text-[25px] bg-[#2098ee] shadow-xl p-4 rounded-full"
-            >
-              &#8249;
-            </button>
-            <button
-              onClick={nextSlide}
-              className="absolute right-0 font-bold top-1/2 transform -translate-y-1/2 translate-x-1/2 text-white text-[25px]  bg-[#2098ee] p-4 shadow-xl rounded-full"
-            >
-              &#8250;
-            </button>
-          </div> */}
-        </div>
-
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        {/* Styled Pagination Dots */}
+        <style jsx>{`
+          .swiper-pagination {
+            margin-top: 20px;
+            padding-top: 10px;
+          }
+          .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background-color: rgb(209, 213, 219); /* gray-300 */
+            opacity: 1;
+          }
+          .swiper-pagination-bullet-active {
+            background-color: #2098ee;
+            width: 18px;
+            height: 18px;
+          }
+        `}</style>
         {/* Points Below */}
-        <div className="flex justify-center mt-6">
+        {/* <div className="flex justify-center mt-6">
           {Array.from({ length: totalSlides }).map((_, index) => (
             <button
               key={index}
@@ -238,7 +248,7 @@ const Testimonials = () => {
               }`}
             />
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

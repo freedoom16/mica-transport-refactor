@@ -4,6 +4,11 @@ import QouetForm from "./quoetForm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 const SectionOne = () => {
   const stepContent = {
@@ -144,7 +149,7 @@ const SectionOne = () => {
                   </h2>
                   <div className="border-b-1 border-[#2098ee] mb-4"></div>
 
-                  <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
+                  {/* <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
                     <div className="w-full block lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
                       {currentItems.map((point, index) => (
                         <div
@@ -160,7 +165,6 @@ const SectionOne = () => {
                       ))}
                     </div>
 
-                    {/* Desktop View: List all items */}
                     <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300 hidden lg:block">
                       <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
                         {stepContent.points.map((point, index) => (
@@ -177,24 +181,78 @@ const SectionOne = () => {
                         ))}
                       </div>
                     </div>
-                    {/* <div className="flex w-full justify-between block lg:hidden mt-4">
-                      <button
-                        onClick={handlePrevious}
-                        disabled={currentPage === 0}
-                        className="px-4 py-2 bg-white text-black border border-white rounded-full disabled:bg-white"
-                      >
-                        Previous
-                      </button>
-                      <button
-                        onClick={handleNext}
-                        disabled={currentPage === totalPages - 1}
-                        className="px-6 py-2 bg-white text-black border border-white rounded-full disabled:bg-white"
-                      >
-                        Next
-                      </button>
-                    </div> */}
+                  </div> */}
+
+                  <div className="block lg:hidden">
+                    <Swiper
+                      modules={[Pagination, Navigation]}
+                      pagination={{ clickable: true }}
+                      // navigation
+                      spaceBetween={20}
+                      slidesPerView={1}
+                      className="w-full"
+                    >
+                      {/* Create slides with 4 points per step */}
+                      {Array.from({ length: totalPages }).map(
+                        (_, pageIndex) => (
+                          <SwiperSlide key={pageIndex} className="text-white">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {stepContent.points
+                                .slice(
+                                  pageIndex * itemsPerPage,
+                                  (pageIndex + 1) * itemsPerPage
+                                )
+                                .map((point, index) => (
+                                  <div
+                                    key={index}
+                                    className="p mb-4 flex items-center"
+                                  >
+                                    <FontAwesomeIcon
+                                      icon={faStar}
+                                      className="text-[#2098ee] w-5 h-5 mr-2"
+                                    />
+                                    <span className="text-[20px]">{point}</span>
+                                  </div>
+                                ))}
+                            </div>
+                          </SwiperSlide>
+                        )
+                      )}
+                    </Swiper>
                   </div>
-                  <div className="flex gap-2 justify-center items-center mt-4 block lg:hidden">
+
+                  {/* Larger Pagination Dots */}
+                  <style tsx>{`
+                    .swiper-pagination-bullet {
+                      width: 20px; /* Set dot width */
+                      height: 20px; /* Set dot height */
+                      border-radius: 50%; /* Make the dot circular */
+                      background-color: #d1d5db
+                    }
+                    .swiper-pagination-bullet-active {
+                      background-color: #2098ee; /* Active dot color */
+                    }
+                    .swiper-pagination-bullet-inactive-color: #000;
+                  `}</style>
+
+                  {/* Desktop View: List all items */}
+                  <div className="hidden lg:block">
+                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {stepContent.points.map((point, index) => (
+                        <div
+                          key={index}
+                          className="p mb-4 text-white flex items-center"
+                        >
+                          <FontAwesomeIcon
+                            icon={faStar}
+                            className="text-[#2098ee] w-4 h-4 mr-2 border-2 border-[#2098ee] rounded-full"
+                          />
+                          <span className="text-[20px]">{point}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* <div className="flex gap-2 justify-center items-center mt-4 block lg:hidden">
                     {Array.from({ length: totalPages }).map((_, index) => (
                       <button
                         key={index}
@@ -204,7 +262,7 @@ const SectionOne = () => {
                         onClick={() => setCurrentPage(index)}
                       />
                     ))}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
