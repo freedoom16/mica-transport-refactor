@@ -1,19 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageUpload from "./imageUpload";
 import { useSearchParams } from "next/navigation";
-import { useGetQuoetsByIDQuery } from "@/store/Api/quotesApi";
+import {
+  useGetQuoetsByIDQuery,
+  useUpdateQuoetsMutation,
+} from "@/store/Api/quotesApi";
+import UploadComponent from "./testImageUpload";
 
 const VehicleImageUpload: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [driverName, setDriverName] = useState(""); // New state for driver's name
+  const [clientName, setClientName] = useState(""); // New state for driver's name
+
   const [damageType, setDamageType] = useState<string | null>(null);
   const searchParams: any = useSearchParams();
+  const userId = searchParams.get("id");
   const quoteId = searchParams.get("id");
 
   // Fetch the quote data using `useGetQuotesQuery`
+  const [
+    updateQuoets,
+    { isLoading: isLoadingQuotes, isSuccess, isError: errorUpdate },
+  ] = useUpdateQuoetsMutation();
+
   const {
-    data: data,
+    data: dataForm,
     isLoading,
     isError,
     error,
@@ -28,6 +40,13 @@ const VehicleImageUpload: React.FC = () => {
   //   motor: null,
   //   behindDriver: null,
   // });
+
+  useEffect(() => {
+    if (dataForm?.data) {
+      setDriverName(dataForm?.data?.driverSignName);
+      setClientName(dataForm?.data?.clientSignName);
+    }
+  }, [dataForm]);
 
   const [selectedImages, setSelectedImages] = useState<any>({
     front: { image: null, damageType: null },
@@ -115,6 +134,20 @@ const VehicleImageUpload: React.FC = () => {
 
   const handleSubmitContract = async (e: React.FormEvent) => {
     e.preventDefault();
+    const updatedQuote: any = {
+      driverSignName: driverName,
+      clientSignName: clientName,
+    };
+
+    try {
+      console.log("Form submitted successfully:", updatedQuote);
+
+      // Dispatch the mutation with userId and form data
+      await updateQuoets({ userId, data: updatedQuote }).unwrap();
+      console.log("Form submitted successfully:", updatedQuote);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
     // Add logic to submit form or handle confirmation
     alert("Contract Confirmed! Driver: " + driverName); // Example confirmation
   };
@@ -269,8 +302,8 @@ const VehicleImageUpload: React.FC = () => {
             type="text"
             name="driver_name"
             id="driver_name"
-            // value={driverName}
-            // onChange={(e) => setDriverName(e.target.value)}
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
             className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
             placeholder=" "
             required
@@ -316,6 +349,8 @@ const VehicleImageUpload: React.FC = () => {
           Submit Contract
         </button>
       </div>
+
+      {/* <UploadComponent /> */}
     </div>
   );
 };
