@@ -160,7 +160,7 @@ export default function NavBar(props: INavBarProps) {
           <div>
             <a
               href="tel:+1 (404) 988-4505"
-              className=" text-base font-normal font-montserrat hover:text-gray-700"
+              className=" text-base font-normal  bg-gradient-to-r from-blue-800 to-[#2098ee] py-3 px-6 font-montserrat   rounded-[32px] shadow-none"
             >
               <FontAwesomeIcon
                 icon={faPhone}
