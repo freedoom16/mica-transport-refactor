@@ -190,13 +190,13 @@ const SectionOne = () => {
                       // navigation
                       spaceBetween={20}
                       slidesPerView={1}
-                      className="w-full"
+                      className="w-full pb-6"
                     >
                       {/* Create slides with 4 points per step */}
                       {Array.from({ length: totalPages }).map(
                         (_, pageIndex) => (
                           <SwiperSlide key={pageIndex} className="text-white">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
                               {stepContent.points
                                 .slice(
                                   pageIndex * itemsPerPage,
@@ -223,6 +223,10 @@ const SectionOne = () => {
 
                   {/* Larger Pagination Dots */}
                   <style tsx>{`
+                     .swiper-pagination {
+                        margin-top: 20px;
+                        padding-top: 10px;
+                      }
                     .swiper-pagination-bullet {
                       width: 20px; /* Set dot width */
                       height: 20px; /* Set dot height */

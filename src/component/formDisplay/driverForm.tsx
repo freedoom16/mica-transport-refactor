@@ -83,36 +83,36 @@ const ViewQuoteForm = () => {
           {formData?.vehicleInfo && formData?.vehicleInfo.length > 0 ? (
             <>
               {formData?.vehicleInfo.map((vehicle: any, index: number) => (
-                <div key={index} className="space-y-4 whitespace-nowrap">
-                  <div className="flex justify-between items-center whitespace-nowrap">
-                    <p className="font-semibold w-1/3">
-                      Vehicle Mileage vehicle {index}
+                <div key={index} className="space-y-4 lg:whitespace-nowrap">
+                  <div className="flex justify-between items-center lg:whitespace-nowrap">
+                    <p className="font-semibold w-2/3">
+                      Vehicle Mileage for vehicle {index + 1}
                     </p>
-                    <p className="w-2/3">{vehicle.vehicleMileage}</p>
+                    <p className="w-1/3">{vehicle.vehicleMileage}</p>
                   </div>
                   <div className="flex justify-between items-center">
-                    <p className="font-semibold w-1/3">
-                      Plate Number vehicle {index}
+                    <p className="font-semibold w-2/3">
+                      Plate Number of vehicle {index + 1}
                     </p>
-                    <p className="w-2/3">{vehicle.plateNumber}</p>
+                    <p className="w-1/3">{vehicle.plateNumber}</p>
                   </div>
                   {/* <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">VIN Number:</p>
-                  <p className="w-2/3">{vehicle.vinNumber}</p>
+                  <p className="font-semibold w-2/3">VIN Number:</p>
+                  <p className="w-1/3">{vehicle.vinNumber}</p>
                 </div> */}
                   <div className="flex justify-between items-center">
-                    <p className="font-semibold w-1/3">
-                      Dimension vehicle {index}
+                    <p className="font-semibold w-2/3">
+                      Dimension of vehicle {index + 1}
                     </p>
-                    <p className="w-2/3">{vehicle.dimension}</p>
+                    <p className="w-1/3">{vehicle.dimension}</p>
                   </div>
                 </div>
               ))}
               <div className="flex justify-between items-center">
-                <p className="font-semibold w-1/3">Total COD:</p>
-                <p className="w-2/3">
+                <p className="font-semibold w-2/3">Total COD:</p>
+                <p className="w-1/3">
                   {formData?.payment?.paymentType === "COP" ? (
-                    <p className="w-2/3">{formData?.payment?.totalAmount}</p>
+                    <p className="w-1/3">{formData?.payment?.totalAmount}</p>
                   ) : (
                     ""
                   )}

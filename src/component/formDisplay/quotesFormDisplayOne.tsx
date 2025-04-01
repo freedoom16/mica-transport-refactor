@@ -191,12 +191,13 @@ const QuoteFormDisplayOne: React.FC = () => {
               </div>
             )}
 
-            {quoteData.client.areYouDealer === true && (
-              <div className="flex justify-between items-center">
-                <p className="font-semibold w-1/3">Is Dealer:</p>
-                <p className="w-2/3">{quoteData.client?.companyName}</p>
-              </div>
-            )}
+            {quoteData.client.areYouDealer === true &&
+              quoteData.client?.companyName && (
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Is Dealer:</p>
+                  <p className="w-2/3">{quoteData.client?.companyName}</p>
+                </div>
+              )}
             {quoteData.client.note && (
               <div className="flex justify-between items-center">
                 <p className="font-semibold w-1/3">Client Note</p>

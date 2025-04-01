@@ -7,13 +7,13 @@ interface ToastNotificationProps {
 const ToastNotification: React.FC<ToastNotificationProps> = ({ isSuccess }) => {
   const [visible, setVisible] = useState(isSuccess);
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     setVisible(true);
-  //     const timer = setTimeout(() => setVisible(false), 5000);
-  //     return () => clearTimeout(timer);
-  //   }
-  // }, [isSuccess]);
+  useEffect(() => {
+    if (isSuccess) {
+      setVisible(true);
+      const timer = setTimeout(() => setVisible(false), 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess]);
 
   if (!visible) return null;
 
