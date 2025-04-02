@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="80px" height="80px" viewBox="0 0 80 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 60.1 (88133) - https://sketch.com -->
+   <defs>
+    <linearGradient id="gradientColor" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#1e40af"/>  <!-- Dark Blue (Tailwind blue-800) -->
+      <stop offset="100%" stop-color="#2098ee"/>  <!-- Light Blue -->
+    </linearGradient>
+  </defs>
     <title>svg / services / enclosed</title>
     <desc>Created with Sketch.</desc>
     <g id="svg-/-services-/-enclosed" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

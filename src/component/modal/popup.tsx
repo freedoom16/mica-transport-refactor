@@ -46,13 +46,13 @@ const Modal: React.FC<ModalProps> = ({
 
           {/* Buttons */}
           <button
-            className="text-[#6DB8D1] bg-white border border-[#6DB8D1] rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium text-sm px-5 py-2.5"
+            className="text-white bg-[#2098ee]  rounded-full focus:ring-4 focus:outline-none focus:ring-blue-300  font-medium text-sm px-5 py-2.5"
             onClick={onConfirm}
           >
             Yes
           </button>
           <button
-            className="py-2.5 px-5 ms-3 text-sm font-medium text-[#6DB8D1] rounded-full bg-white border border-[#6DB8D1] focus:outline-none hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 "
+            className="py-2.5 px-5 ms-3 text-sm font-medium  bg-[#2098ee]  text-white rounded-full  border border-[#6DB8D1] focus:outline-none hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 "
             onClick={onClose}
           >
             No

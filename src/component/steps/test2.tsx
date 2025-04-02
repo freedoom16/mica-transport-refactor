@@ -391,7 +391,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           {vehicles.slice(0, currentVehicleIndex).map((vehicle, index) => (
             <div key={index} className="flex flex-row space-y-2 ">
               <div
-                className=" flex flex-row space-x-2 bg-[#2c2c2c] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr__min-content_min-content] shadow-lg  rounded-full w-full border-1 border-[#2098ee]"
+                className=" flex flex-row space-x-2 bg-[#2c2c2c] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr__min-content_min-content] shadow-lg  rounded-xl w-full border-1 border-[#2098ee]"
                 style={{
                   boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
                 }}
@@ -406,20 +406,24 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                   <strong>Year</strong> {vehicle?.vehicleYear}
                 </div>
 
-                <div className="flex w-8">
-                  <button className="text-red-500">
-                    <img
-                      // src="/motor-svg-green.svg"
-                      src={`${
-                        vehicle.isDrivable
-                          ? "/motor-svg-green.svg"
-                          : "/motor-svg-red.svg"
-                      }`}
-                      width={24}
-                      height={24}
-                    />
-                  </button>
-                </div>
+                {!vehicle.isDrivable ? (
+                  <div className="flex w-8">
+                    <button className="text-red-500">
+                      <img
+                        src={
+                          vehicle.isDrivable
+                            ? "/motor-svg-green.svg"
+                            : "/motor-svg-red.svg"
+                        }
+                        width={24}
+                        height={24}
+                        alt="Drivable status"
+                      />
+                    </button>
+                  </div>
+                ) : (
+                  <div></div>
+                )}
                 <div className="flex w-8">
                   <button
                     className="text-red-500 "

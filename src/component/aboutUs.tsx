@@ -228,7 +228,7 @@ const SectionOne = () => {
                   </div>
 
                   {/* Larger Pagination Dots */}
-                  <style tsx>{`
+                  <style>{`
                     .swiper-pagination {
                         margin-top: 20px;
                         padding-top: 10px;

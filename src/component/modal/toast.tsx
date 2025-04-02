@@ -10,7 +10,7 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ isSuccess }) => {
   useEffect(() => {
     if (isSuccess) {
       setVisible(true);
-      const timer = setTimeout(() => setVisible(false), 10000);
+      const timer = setTimeout(() => setVisible(false), 3000);
       return () => clearTimeout(timer);
     }
   }, [isSuccess]);
@@ -19,19 +19,18 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ isSuccess }) => {
 
   return (
     <div
-      id="toast-top-right"
-      className="fixed flex items-center justify-center h-[200px] w-full z-50 max-w-xs mt-16 mr-12 p-4 flex-col space-x-4 text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow-sm top-5 right-5 "
+      className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center h-auto w-auto z-50 p-4 text-gray-500 bg-white divide-y divide-gray-200 rounded-lg shadow-lg"
       role="alert"
     >
       <button
         type="button"
-        className="ms-auto -mx-1.5 font-bold -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 "
+        className="self-end text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100"
         aria-label="Close"
         onClick={() => setVisible(false)}
       >
         <span className="sr-only">Close</span>
         <svg
-          className="w-3 h-3"
+          className="w-4 h-4"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -46,15 +45,13 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ isSuccess }) => {
           />
         </svg>
       </button>
-      Quote Submited successfully
-      <div
-        id="toast-success"
-        className="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500  rounded-lg   "
-        role="alert"
-      >
-        <div className="inline-flex items-center justify-center shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg ">
+      <div className="text-center font-semibold w-full p-4">
+        Thank You! We will contact you.
+      </div>
+      <div className="flex items-center space-x-3 mt-6 p-2 md:p-4">
+        <div className="w-8 h-8 text-[#2098ee] bg-blue-100 rounded-lg flex items-center justify-center">
           <svg
-            className="w-5 h-5"
+            className="w-6 h-6"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
@@ -62,9 +59,8 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ isSuccess }) => {
           >
             <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z" />
           </svg>
-          <span className="sr-only">Check icon</span>
         </div>
-        <div className="ms-3  font-normal">Thank You. We will contact you!</div>
+        <div className="font-medium">Quote submitted successfully!</div>
       </div>
     </div>
   );

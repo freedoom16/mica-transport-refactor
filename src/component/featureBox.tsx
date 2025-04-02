@@ -23,17 +23,17 @@ const FeaturesBox = () => {
 
       {/* Transport Icon */}
       <div className="flex flex-col items-center justify-center p-2 rounded">
-        {/* <img
-          src="truck-icon2.svg"
+        <img
+          src="user-tie-svgrepo-com.svg"
           alt="Transport Icon"
-          className="w-16 h-8 font-bold text-blue-900"
-        /> */}
-        <FontAwesomeIcon
+          className="w-16 h-8 "
+        />
+        {/* <FontAwesomeIcon
           icon={faUserTie}
           width={32}
           height={16}
           className="w-8 h-8 text-[#2098ee]"
-        />
+        /> */}
         <p className="font-montserrat font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
           Professional
         </p>

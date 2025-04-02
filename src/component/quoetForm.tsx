@@ -345,6 +345,7 @@ const QouetForm: React.FC = () => {
     }
 
     if (currentVehicleIndex > 0 && step === 1 && isStep2Valid) {
+      setCurrentVehicleIndex(() => currentVehicleIndex + 1);
       setModalOpenLocation(true);
       return;
     }
@@ -417,8 +418,14 @@ const QouetForm: React.FC = () => {
       //   // setCurrentVehicleIndex(currentVehicleIndex + 1);
     } else if (step === 1 && !isStep2Valid) {
       console.log("is step2 valid 222 ", isStep2Valid);
+      console.log(currentVehicleIndex);
+
       handleRemoveVehicle(currentVehicleIndex);
       setCurrentVehicleIndex((prevIndex) => currentVehicleIndex);
+      if (vehicles.length > 1 && step === 1) {
+        setModalOpenLocation(true);
+        return;
+      }
     }
     console.log("111111111111111111111111111111111111111");
 
@@ -510,7 +517,7 @@ const QouetForm: React.FC = () => {
     console.log("User confirmed the message", vehicles);
     setSameLocation(true);
     // setSameLocation(null);
-    setCurrentVehicleIndex(() => currentVehicleIndex + 1);
+    setCurrentVehicleIndex(() => currentVehicleIndex);
     setStep(step + 1);
     setModalOpenLocation(false); // Close modal after action
   };
