@@ -32,7 +32,7 @@ const MultiStepTransportationForm = () => {
     plateNumber: "",
     vinNumber: "",
     inspectionConditions: "",
-    transportFee: "",
+    transportationFee: "",
     prePaid: dataForm?.data?.payment?.prePaidAmount || "",
     totalCOD: dataForm?.data?.payment?.totalAmount || "",
     totalAmount: dataForm?.data?.payment?.totalAmount || "",
@@ -54,6 +54,8 @@ const MultiStepTransportationForm = () => {
           vehicleModel: vehicle.vehicleModel,
           isDrivable: vehicle.isDrivable,
           vehicleId: vehicle.vehicleId,
+          vehicleType: vehicle.vehicleType,
+          vehicleCatagory: vehicle.vehicleCatagory,
         })
       );
 
@@ -66,6 +68,7 @@ const MultiStepTransportationForm = () => {
       setFormData((prevState: any) => ({
         ...prevState,
         prePaid: dataForm.data.payment.prePaidAmount || "",
+        transportationFee: dataForm.data.payment.transportationFee || "",
         totalCOD: dataForm.data.payment.totalAmount || "",
         totalAmount: dataForm.data.payment.totalAmount || "",
         paymentType: dataForm.data.payment.paymentType || "",
@@ -280,7 +283,7 @@ const MultiStepTransportationForm = () => {
                 ))}
               </div>
             </div>
-            {["transportFee", "prePaid", "totalAmount"].map((key) => (
+            {["transportationFee", "prePaid", "totalAmount"].map((key) => (
               <div className="relative z-0 w-full  group mb-4" key={key}>
                 <input
                   type="text"

@@ -84,16 +84,16 @@ const ViewQuoteForm = () => {
             <>
               {formData?.vehicleInfo.map((vehicle: any, index: number) => (
                 <div key={index} className="space-y-4 lg:whitespace-nowrap">
+                  <div className="border-b border-blue-600"></div>
+                  <div className="font-bold">
+                    vehicle {index + 1} information
+                  </div>
                   <div className="flex justify-between items-center lg:whitespace-nowrap">
-                    <p className="font-semibold w-2/3">
-                      Vehicle Mileage for vehicle {index + 1}
-                    </p>
+                    <p className="font-semibold w-2/3">Vehicle Mileage</p>
                     <p className="w-1/3">{vehicle.vehicleMileage}</p>
                   </div>
                   <div className="flex justify-between items-center">
-                    <p className="font-semibold w-2/3">
-                      Plate Number of vehicle {index + 1}
-                    </p>
+                    <p className="font-semibold w-2/3">Plate Number</p>
                     <p className="w-1/3">{vehicle.plateNumber}</p>
                   </div>
                   {/* <div className="flex justify-between items-center">
@@ -101,13 +101,13 @@ const ViewQuoteForm = () => {
                   <p className="w-1/3">{vehicle.vinNumber}</p>
                 </div> */}
                   <div className="flex justify-between items-center">
-                    <p className="font-semibold w-2/3">
-                      Dimension of vehicle {index + 1}
-                    </p>
+                    <p className="font-semibold w-2/3">Dimension</p>
                     <p className="w-1/3">{vehicle.dimension}</p>
                   </div>
                 </div>
               ))}
+              <div className="border-b border-blue-600"></div>
+
               <div className="flex justify-between items-center">
                 <p className="font-semibold w-2/3">Total COD:</p>
                 <p className="w-1/3">
