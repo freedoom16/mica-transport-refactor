@@ -95,7 +95,7 @@ export default function NavBar(props: INavBarProps) {
         </div>
 
         {/* Desktop Navigation Links */}
-        <ul className={`hidden md:flex gap-6 text-lg font-medium text-white`}>
+        <ul className={`hidden lg:flex gap-6 text-lg font-medium text-white`}>
           <li>
             <a href="/#about-us" className="hover:text-gray-300 cursor-pointer">
               About Us
@@ -120,7 +120,7 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile Navbar toggle */}
         <button
-          className={`md:hidden text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold text-white`}
+          className={`lg:hidden text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold text-white`}
           onClick={toggleMenu}
         >
           &#9776;
@@ -128,7 +128,7 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile icons display */}
         <button
-          className={`md:hidden md:text-white text-white text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold `}
+          className={`lg:hidden md:text-white text-white text-2xl absolute left-0 top-1/2 transform -translate-y-1/2 p-6 font-bold `}
           onClick={toggleMenu}
         >
           &#9776;
