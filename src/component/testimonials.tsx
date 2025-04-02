@@ -256,7 +256,7 @@ const Testimonials = () => {
                 <div className="overflow-hidden px-2">
                   <div key={testimonial.id} className={`flex-none px-2 py-4`}>
                     <div
-                      className="p-6  xl:p-12 mb-8 rounded-lg bg-[#2D2D2D] text-white flex flex-col flex-grow min-h-[350px] lg:h-[500px] xl:h-[400px] max-w-lg mx-auto"
+                      className="p-6  xl:p-12 mb-8 rounded-lg bg-[#2D2D2D] text-white flex flex-col flex-grow min-h-[400px] lg:h-[550px] xl:h-[400px] max-w-lg mx-auto"
                       style={{
                         boxShadow: "0 5px 15px 5px rgba(32, 152, 238, 0.5)", // Blue glow effect
                       }}
