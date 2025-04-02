@@ -89,8 +89,8 @@ export default function NavBar(props: INavBarProps) {
           className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0`}
         >
           <a href="/#home" className="whitespace-nowrap flex flex-row">
-            MicaTransportation{" "}
-            <span className=" hidden lg:block ml-2">LLC</span>
+            Mica Transportation{" "}
+            <span className=" hidden md:block ml-2">LLC</span>
           </a>
         </div>
 
