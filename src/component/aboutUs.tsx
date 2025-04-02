@@ -253,9 +253,11 @@ const SectionOne = () => {
                           key={index}
                           className="p mb-4 text-white flex items-center"
                         >
-                          <FontAwesomeIcon
-                            icon={faStar}
-                            className="text-[#2098ee] w-4 h-4 mr-2 border-2 border-[#2098ee] rounded-full"
+                          <img
+                            src="/star-svgrepo-com.svg"
+                            width={24}
+                            height={24}
+                            className="mr-2"
                           />
                           <span className="text-[20px]">{point}</span>
                         </div>
