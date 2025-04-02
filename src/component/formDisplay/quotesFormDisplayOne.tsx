@@ -182,20 +182,19 @@ const QuoteFormDisplayOne: React.FC = () => {
             </div>
 
             {/* Is Dealer */}
-            {quoteData.client.areYouDealer && (
-              <div className="flex justify-between items-center">
-                <p className="font-semibold w-1/3">Is Dealer:</p>
-                <p className="w-2/3">
-                  {quoteData.client.areYouDealer ? "Dealer" : "Not Dealer"}
-                </p>
-              </div>
-            )}
+
+            <div className="flex justify-between items-center">
+              {/* <p className="font-semibold w-1/3">Is Dealer:</p> */}
+              <p className="w-2/3 font-bold">
+                {quoteData.client.areYouDealer ? "Dealer" : "Not Dealer"}
+              </p>
+            </div>
 
             {quoteData.client.areYouDealer === true &&
-              quoteData.client?.companyName && (
+              quoteData.client?.dealerName && (
                 <div className="flex justify-between items-center">
-                  <p className="font-semibold w-1/3">Is Dealer:</p>
-                  <p className="w-2/3">{quoteData.client?.companyName}</p>
+                  <p className="font-semibold w-1/3">Dealer Name</p>
+                  <p className="w-2/3">{quoteData.client?.dealerName}</p>
                 </div>
               )}
             {quoteData.client.note && (
@@ -218,6 +217,8 @@ const QuoteFormDisplayOne: React.FC = () => {
                 key={index}
                 className="grid grid-cols-1 md:grid-cols-1 gap-4 text-gray-300"
               >
+                <div className="border-b border-blue-600"></div>
+
                 <p className="font-bold text-white text-center">
                   Vehicle {index + 1} Location
                 </p>
@@ -249,7 +250,7 @@ const QuoteFormDisplayOne: React.FC = () => {
                   </div>
                 ) : (
                   <div className="flex justify-between items-center">
-                    <p className="font-semibold w-1/3">At Point of Pickup</p>
+                    <p className="font-semibold w-full">At Point of Pickup</p>
                   </div>
                 )}
 
@@ -281,7 +282,7 @@ const QuoteFormDisplayOne: React.FC = () => {
                   </div>
                 ) : (
                   <div className="flex justify-between items-center">
-                    <p className="font-semibold w-1/3">At Point of Dropoff</p>
+                    <p className="font-semibold w-full">At Point of Dropoff</p>
                   </div>
                 )}
               </div>
@@ -435,10 +436,22 @@ const QuoteFormDisplayOne: React.FC = () => {
 
         {/* Step 2: Vehicle Info */}
         <div className="bg-gray-800 p-6 mb-4">
-          <h2 className="text-lg font-bold text-white mb-4">Vehicle Info</h2>
           <div className="space-y-4">
             {quoteData.vehicleInfo.map((vehicle: any, index: any) => (
               <div key={index} className="space-y-4">
+                <div className="border-b border-blue-600"></div>
+                <h2 className="text-lg font-bold text-white mb-4">
+                  Vehicle {index + 1} Information
+                </h2>
+
+                {/* Vehicle type */}
+                <div className="flex justify-between items-center">
+                  {/* <p className="font-semibold w-1/3">Vehicle Year:</p> */}
+                  <p className="w-2/3 text-green-600 text-2xl">
+                    {vehicle.vehicleType}
+                  </p>
+                </div>
+
                 {/* Vehicle Year */}
                 <div className="flex justify-between items-center">
                   <p className="font-semibold w-1/3">Vehicle Year:</p>
@@ -455,6 +468,11 @@ const QuoteFormDisplayOne: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <p className="font-semibold w-1/3">Vehicle Model:</p>
                   <p className="w-2/3">{vehicle.vehicleModel}</p>
+                </div>
+
+                <div className="flex justify-between items-center">
+                  <p className="font-semibold w-1/3">Vehicle Catagory:</p>
+                  <p className="w-2/3">{vehicle.vehicleCatagory}</p>
                 </div>
 
                 {/* Drivable Status */}
