@@ -136,7 +136,7 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile icons display  */}
         <div
-          className={`flex gap-4 pl-4 items-end justify-end xl:hidden text-white `}
+          className={`flex gap-4 pl-2 items-end justify-end xl:hidden text-white `}
         >
           <a
             href="tel:+1 (404) 988-4505"
