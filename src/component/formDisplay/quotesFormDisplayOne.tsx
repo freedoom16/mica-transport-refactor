@@ -301,9 +301,9 @@ const QuoteFormDisplayOne: React.FC = () => {
               <p className="font-semibold w-1/3">Pickup Date:</p>
               <div className="w-2/3 flex flex-row">
                 <p className="pr-2">{quoteData.pickUpTime.pickUpDateOption}</p>
-                {quoteData.pickUpTime.pickUpDateOption === "on" ||
-                "before" ||
-                "after" ? (
+                {["on", "before", "after"].includes(
+                  quoteData.pickUpTime.pickUpDateOption
+                ) ? (
                   <p>
                     {new Date(
                       quoteData.pickUpTime.pickUpDate
@@ -330,9 +330,9 @@ const QuoteFormDisplayOne: React.FC = () => {
                 <p className="pr-2">
                   {quoteData.deliveryTime.deliveryDateOption}
                 </p>
-                {quoteData.deliveryTime.deliveryDateOption === "on" ||
-                "before" ||
-                "after" ? (
+                {["on", "before", "after"].includes(
+                  quoteData.deliveryTime.deliveryDateOption
+                ) ? (
                   <p>
                     {new Date(
                       quoteData.deliveryTime.deliveryDate
@@ -357,9 +357,10 @@ const QuoteFormDisplayOne: React.FC = () => {
               <p className="font-semibold w-1/3">Pickup Time:</p>
               <div className="w-2/3 flex flex-row">
                 <p className="pr-2">{quoteData.pickUpTime.pickUpTimeOption}</p>
-                {quoteData.pickUpTime.pickUpTimeOption === "on" ||
-                "before" ||
-                "after" ? (
+
+                {["on", "before", "after"].includes(
+                  quoteData.pickUpTime.pickUpTimeOption
+                ) ? (
                   <p>
                     {new Date(
                       `1970-01-01T${quoteData.pickUpTime.pickUpTime}:00`
@@ -398,9 +399,10 @@ const QuoteFormDisplayOne: React.FC = () => {
                 <p className="pr-2">
                   {quoteData.deliveryTime.deliveryTimeOption}
                 </p>
-                {quoteData.deliveryTime.deliveryTimeOption === "on" ||
-                "before" ||
-                "after" ? (
+
+                {["on", "before", "after"].includes(
+                  quoteData.deliveryTime.deliveryTimeOption
+                ) ? (
                   <p>
                     {new Date(
                       `1970-01-01T${quoteData.deliveryTime.deliveryTime}:00`
