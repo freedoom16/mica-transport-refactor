@@ -679,6 +679,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
                     : "border-[#938f99]"
                 } outline-none transition-all focus:border-[#2098ee]`}
                 popperClassName="w-full z-50  text-right justify-center font-bold"
+                disabledKeyboardNavigation={true}
               />
             </div>
           </div>
@@ -686,6 +687,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
       );
     }
   };
+
+  console.log("error validation ", errorsDateValidation);
 
   const renderTimePicker = (
     option: string,
@@ -801,7 +804,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
           value={pickUpDateOption}
           onChange={(e) => {
             setPickUpDateOption(e.target.value);
-            validatePickUpDate();
+            // validatePickUpDate();
           }}
           // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           className={`w-full h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
@@ -935,13 +938,9 @@ const StepDataTest: React.FC<StepFourProps> = ({
             ? new Date(
                 new Date(pickUpDateRangeEnd).getTime() + 24 * 60 * 60 * 1000
               )
-            : // .toISOString()
-            // .split("T")[0]
-            pickUpDate
-            ? new Date(new Date(pickUpDate).getTime() + 24 * 60 * 60 * 1000)
-            : // .toISOString()
-              // .split("T")[0]
-              null,
+            : pickUpDate
+            ? new Date(new Date(pickUpDate).getTime())
+            : null,
           "Delivery Date"
         )}
         {/* {errorsDateValidation.deliveryDate && (

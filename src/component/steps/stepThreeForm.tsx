@@ -127,7 +127,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         Contact Information
       </h2>
 
-      <div className="relative z-0 w-full mb-5 group">
+      <div className="relative z-0 w-full mb-5 group bg-[#2c2c2c] ">
         <label
           htmlFor="first_name"
           className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
@@ -136,15 +136,16 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         </label>
         <input
           type="text"
-          name="first_name"
+          name="firstName"
           id="first_name"
           value={firstName}
           onChange={(e) => {
             setFirstName(e.target.value);
             validateField("firstName", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee]  focus:ring-1 focus:ring-[#6DB8D1]  onFocus:bg-[#2c2c2c] active:bg-[#2c2c2c]"
           placeholder=" First Name"
+          autoComplete="off"
         />
         {/* {errorsContact.firstName && (
           <p className="text-sm text-red-500 ml-1 px-4 ">
@@ -170,8 +171,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             setLastName(e.target.value);
             validateField("lastName", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 "
           placeholder=" Last Name"
+          autoComplete="off"
         />
         {/* {errorsContact.lastName && (
           <p className="text-sm text-red-500 ml-1 px-4 ">
@@ -199,6 +201,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           }}
           className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" Email Address"
+          autoComplete="off"
         />
         {errorsContact.email && (
           <p className="text-sm text-red-500 ml-1 px-4 ">
@@ -224,6 +227,7 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           onChange={handlePhoneChange}
           className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           placeholder=" Phone Number"
+          autoComplete="off"
         />
         {phoneError && <div className="mt-2 text-red-500">{phoneError}</div>}
         {/* {errorsContact.phone && (

@@ -67,7 +67,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const [showCategoryOptions, setShowCategoryOptions] =
     useState<boolean>(false);
-  const categories = ["Van", "SUV", "Sedan", "Truck"];
+  const categories = ["Van", "SUV", "Sedan", "Pick up"];
 
   useEffect(() => {
     // Fetch data from the API
@@ -334,7 +334,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     { value: "Van", img: "car/van.svg" },
     { value: "SUV", img: "car/suv.svg" },
     { value: "Sedan", img: "car/sedan.svg" },
-    { value: "Truck", img: "car/truck.svg" },
+    { value: "Pick up", img: "car/pickup2.svg" },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
