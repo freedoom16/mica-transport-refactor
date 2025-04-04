@@ -135,7 +135,7 @@ const QouetForm: React.FC = () => {
     }); // Reset errors
     if (step < 2) setStep(step + 1); // Proceed to next step (adjust total steps as necessary)
     console.log("stepone nextstepone");
-    setCurrentVehicleIndex(() => currentVehicleIndex + 1);
+    // setCurrentVehicleIndex(() => currentVehicleIndex + 1);
   };
 
   const validatePickupAndDelivery = () => {
@@ -345,19 +345,33 @@ const QouetForm: React.FC = () => {
     }
 
     if (currentVehicleIndex > 0 && step === 1 && isStep2Valid) {
-      setCurrentVehicleIndex(() => currentVehicleIndex + 1);
+      // setCurrentVehicleIndex(() => currentVehicleIndex + 1);
       setModalOpenLocation(true);
       return;
     }
 
-    if (step === 1 && !isStep2Valid && currentVehicleIndex === 0) {
-      // setErrorMessage("All fields are required for Step 2.");
-      // return;
-      nextStepOne();
+    if (step === 1 && !isStep2Valid && currentVehicleIndex >= 0) {
+      // Check if the required fields are not empty
+      const vehicle = vehicles[currentVehicleIndex];
+      if (currentVehicleIndex === 0) {
+        nextStepOne();
 
-      // If there were errors in nextStepOne, stop further execution
-      if (Object.keys(errors).length > 0) {
-        return; // Stop further execution if there are errors
+        if (Object.keys(errors).length > 0) {
+          return; // Stop further execution if there are errors
+        }
+      } else if (vehicle) {
+        nextStepOne();
+
+        if (Object.keys(errors).length > 0) {
+          return; // Stop further execution if there are errors
+        }
+      } else {
+        console.log("else");
+      }
+
+      if (vehicles.length > 1 && step === 1) {
+        setModalOpenLocation(true);
+        return;
       }
     }
 
@@ -414,19 +428,20 @@ const QouetForm: React.FC = () => {
       if (Object.keys(errors).length > 0) {
         return; // Stop further execution if there are errors
       }
-      setCurrentVehicleIndex((prevIndex) => currentVehicleIndex + 1);
+      // setCurrentVehicleIndex((prevIndex) => currentVehicleIndex + 1);
       //   // setCurrentVehicleIndex(currentVehicleIndex + 1);
-    } else if (step === 1 && !isStep2Valid) {
-      console.log("is step2 valid 222 ", isStep2Valid);
-      console.log(currentVehicleIndex);
-
-      handleRemoveVehicle(currentVehicleIndex);
-      setCurrentVehicleIndex((prevIndex) => currentVehicleIndex);
-      if (vehicles.length > 1 && step === 1) {
-        setModalOpenLocation(true);
-        return;
-      }
     }
+    // else if (step === 1 && !isStep2Valid) {
+    //   console.log("is step2 valid 222 ", isStep2Valid);
+    //   console.log(currentVehicleIndex);
+
+    //   handleRemoveVehicle(currentVehicleIndex);
+    //   setCurrentVehicleIndex((prevIndex) => currentVehicleIndex);
+    // if (vehicles.length > 1 && step === 1) {
+    //   setModalOpenLocation(true);
+    //   return;
+    // }
+    // }
     console.log("111111111111111111111111111111111111111");
 
     if (step < totalSteps) {
