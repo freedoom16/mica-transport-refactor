@@ -719,7 +719,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         )}
       </div>
 
-      {vehicles[currentVehicleIndex] ? (
+      {vehicles[currentVehicleIndex] && currentVehicleIndex > 0 ? (
         <button
           className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white py-2 px-5 rounded-full mb-4"
           onClick={handleClear}
