@@ -935,9 +935,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
           deliveryDateRangeEnd,
           setDeliveryDateRangeEnd,
           pickUpDateOption === "between" && pickUpDateRangeEnd
-            ? new Date(
-                new Date(pickUpDateRangeEnd).getTime() + 24 * 60 * 60 * 1000
-              )
+            ? new Date(new Date(pickUpDateRangeEnd).getTime())
             : pickUpDate
             ? new Date(new Date(pickUpDate).getTime())
             : null,
