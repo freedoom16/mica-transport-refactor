@@ -30,7 +30,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
       } else {
         console.log("Could not find the quote section to scroll.");
       }
-    }, 300); // Adjust the timeout if needed (300ms delay gives time for rendering)
+    }, 30); // Adjust the timeout if needed (300ms delay gives time for rendering)
   };
 
   const handleNext = () => {
