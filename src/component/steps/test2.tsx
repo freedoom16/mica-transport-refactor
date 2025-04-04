@@ -195,20 +195,33 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     console.log("type ");
 
     if (
-      !makerInput ||
-      !modelInput ||
-      !yearInput ||
-      isDrivable === null ||
-      !type ||
-      !categoryInput
+      !vehicles[currentVehicleIndex].vehicleMaker ||
+      !vehicles[currentVehicleIndex].vehicleModel ||
+      !vehicles[currentVehicleIndex].vehicleYear ||
+      vehicles[currentVehicleIndex].isDrivable === null ||
+      !vehicles[currentVehicleIndex].type ||
+      !vehicles[currentVehicleIndex].category
     ) {
       const newErrors = {
-        vehicleMaker: makerInput ? "" : "Vehicle maker is required",
-        vehicleModel: modelInput ? "" : "Vehicle model is required",
-        vehicleYear: yearInput ? "" : "Vehicle year is required",
-        isDrivable: isDrivable !== null ? "" : "Drivable status is required",
-        type: type ? "" : "This field is required",
-        category: categoryInput ? "" : "Vehicle catagory is required",
+        vehicleMaker: vehicles[currentVehicleIndex].vehicleMaker
+          ? ""
+          : "Vehicle maker is required",
+        vehicleModel: vehicles[currentVehicleIndex].vehicleModel
+          ? ""
+          : "Vehicle model is required",
+        vehicleYear: vehicles[currentVehicleIndex].vehicleYear
+          ? ""
+          : "Vehicle year is required",
+        isDrivable:
+          (vehicles[currentVehicleIndex].isDrivable === null) !== null
+            ? ""
+            : "Drivable status is required",
+        type: vehicles[currentVehicleIndex].type
+          ? ""
+          : "This field is required",
+        category: vehicles[currentVehicleIndex].category
+          ? ""
+          : "Vehicle catagory is required",
       };
 
       setErrors(newErrors);
@@ -224,12 +237,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
     // Update the vehicle at the current index or add a new one
     updatedVehicles[currentVehicleIndex] = {
-      vehicleMaker: makerInput,
-      vehicleModel: modelInput,
-      vehicleYear: yearInput,
-      type: type,
-      isDrivable: isDrivable,
-      category: categoryInput,
+      vehicleMaker: vehicles[currentVehicleIndex].vehicleMaker,
+      vehicleModel: vehicles[currentVehicleIndex].vehicleModel,
+      vehicleYear: vehicles[currentVehicleIndex].vehicleYear,
+      type: vehicles[currentVehicleIndex].type,
+      isDrivable: vehicles[currentVehicleIndex].isDrivable,
+      category: vehicles[currentVehicleIndex].category,
       sameLocation: sameLocation,
       vehicleId: generateRandomId,
     };
@@ -380,6 +393,33 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setFilteredYears([]); // Clear suggestions after selection
   };
 
+  const handleClear = () => {
+    handleRemoveVehicle(currentVehicleIndex);
+
+    setMakerInput("");
+    setModelInput("");
+    setYearInput("");
+    setType("");
+    setCategoryInput("");
+    setSameLocation(null);
+    setIsDrivable(null);
+    setFilteredMakers([]);
+    setFilteredModels([]);
+    setSelectedMaker("");
+
+    setErrors({
+      vehicleMaker: "",
+      vehicleModel: "",
+      vehicleYear: "",
+      isDrivable: "",
+      type: "",
+      category: "",
+    });
+
+    // Optionally increment the index for adding new vehicles
+    setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+  };
+
   return (
     <div>
       <h2 className="text-lg font-bold text-center text-white mb-2">
@@ -456,7 +496,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               type="radio"
               name="type"
               value="Open"
-              checked={type === "Open"}
+              checked={
+                vehicles[currentVehicleIndex]?.type == "Open" || type === "Open"
+              }
               onChange={() => handleTypeChange("Open")}
               className="w-6 h-6 bg-[#ECECEC] text-[#ECECEC]"
             />
@@ -474,7 +516,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               type="radio"
               name="type"
               value="Enclosed"
-              checked={type === "Enclosed"}
+              checked={
+                vehicles[currentVehicleIndex]?.type == "Enclosed" ||
+                type === "Enclosed"
+              }
               onChange={() => handleTypeChange("Enclosed")}
               className="w-6 h-6 bg-[#ECECEC] text-[#ECECEC]"
             />
@@ -492,7 +537,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           </label>
 
           <input
-            value={yearInput}
+            value={vehicles[currentVehicleIndex]?.vehicleYear || yearInput}
             type="number"
             onChange={(e) => handleYearInputChange(e.target.value)}
             placeholder="Year"
@@ -530,7 +575,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
           <input
             // type="text"
-            value={makerInput}
+            value={vehicles[currentVehicleIndex]?.vehicleMaker || makerInput}
             onChange={(e) => handleMakerInputChange(e.target.value)}
             placeholder="Make"
             className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
@@ -565,7 +610,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           </label>
           <input
             type="text"
-            value={modelInput}
+            value={vehicles[currentVehicleIndex]?.vehicleModel || modelInput}
             onChange={(e) => handleModelInputChange(e.target.value)}
             placeholder={selectedMaker ? "Model" : "Model"}
             // disabled={!selectedMaker}
@@ -605,7 +650,9 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               errors.category ? "border-red-500" : "border-[#938f99]"
             }`}
           >
-            {categoryInput ? categoryInput : "--- Select Vehicle Type ---"}
+            {vehicles[currentVehicleIndex]?.category || categoryInput
+              ? vehicles[currentVehicleIndex]?.category || categoryInput
+              : "--- Select Vehicle Type ---"}
           </div>
 
           {isOpen && (
@@ -641,7 +688,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 type="radio"
                 name="isDrivable"
                 value="true"
-                checked={isDrivable === true}
+                checked={
+                  vehicles[currentVehicleIndex]?.isDrivable === true ||
+                  isDrivable === true
+                }
                 onChange={() => handleDrivableChange(true)}
                 className="form-radio text-[#ECECEC] 0 w-6 h-6 border-2 border-gray-300"
               />
@@ -652,7 +702,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
                 type="radio"
                 name="isDrivable"
                 value="false"
-                checked={isDrivable === false}
+                checked={
+                  vehicles[currentVehicleIndex]?.isDrivable === false ||
+                  isDrivable === false
+                }
                 onChange={() => handleDrivableChange(false)}
                 className="form-radio text-[#ECECEC] w-6 h-6 border-2 border-[#ECECEC]"
               />
@@ -666,6 +719,16 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         )}
       </div>
 
+      {vehicles[currentVehicleIndex] ? (
+        <button
+          className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white py-2 px-5 rounded-full mb-4"
+          onClick={handleClear}
+        >
+          Clear Form
+        </button>
+      ) : (
+        ""
+      )}
       {/* Add Vehicle Button */}
       <div className="flex justify-between">
         <button
