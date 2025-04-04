@@ -47,12 +47,12 @@ const CustomContentSection = () => {
             // className="bg-gradient-to-r from-[#425059] to-[#9e9fa0] bg-opacity-70  text-white  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
             className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white text-center  font-bold text-[18px] leading-[25px]  py-3 px-6 rounded-[32px] shadow-none"
           >
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faCar}
               className="px-2 text-white"
               width={16}
               height={16}
-            />{" "}
+            />{" "} */}
             REQUEST A QUOTE
           </a>
         </div>
