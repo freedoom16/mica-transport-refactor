@@ -17,7 +17,7 @@ const Services = () => {
     "/car/imageenclosed1.jpeg",
     "/car/imageenclosed2.jpeg",
     "/car/imageenclosed3.jpeg",
-    "/car/imageenclosed4.jpeg",
+    // "/car/imageenclosed4.jpeg",
   ];
 
   const services = [
