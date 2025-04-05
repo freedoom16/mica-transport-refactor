@@ -540,6 +540,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           <input
             value={vehicles[currentVehicleIndex]?.vehicleYear || yearInput}
             type="number"
+            // type="tel"
+            inputMode="numeric"
             onChange={(e) => handleYearInputChange(e.target.value)}
             placeholder="Year"
             className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
