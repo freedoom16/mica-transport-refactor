@@ -78,6 +78,24 @@ export default function Home(props: IHomeProps) {
                 <br></br>We handle every car with care.
               </p>
             </div>
+
+            {!showForm && ( // Hide button when form is displayed
+              <div className="flex justify-center mt-12">
+                <button
+                  className="bg-gradient-to-r from-blue-900 to-[#2098ee] px-5 py-2 rounded-full hidden xl:block"
+                  onClick={() => setShowForm(true)}
+                >
+                  <FontAwesomeIcon
+                    icon={faCar}
+                    className="text-white"
+                    width={16}
+                    height={16}
+                  />{" "}
+                  REQUEST A QUOTE
+                </button>
+              </div>
+            )}
+
             <div className="mt-0 lg:mt-12 xl:mt-0  bg-[#2D2D2D]">
               <FeaturesBox />
             </div>
@@ -87,20 +105,6 @@ export default function Home(props: IHomeProps) {
           {/* <div className=" z-[150] px-4 rounded-xl  max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[800px]">
             <HomePageForm />
           </div> */}
-          {!showForm && ( // Hide button when form is displayed
-            <button
-              className="bg-gradient-to-r from-blue-900 to-[#2098ee] px-5 py-2 rounded-full hidden xl:block"
-              onClick={() => setShowForm(true)}
-            >
-              <FontAwesomeIcon
-                icon={faCar}
-                className="text-white"
-                width={16}
-                height={16}
-              />{" "}
-              REQUEST A QUOTE
-            </button>
-          )}
 
           {showForm && (
             <div className="z-[150] px-4 rounded-xl max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[800px]">

@@ -85,12 +85,14 @@ export default function NavBar(props: INavBarProps) {
         } px-16 xl:px-40 py-4 flex justify-between  items-center transition-colors duration-300 border-b-2 !border-[#2098ee]`}
       >
         {/* Brand Logo */}
+        {/* <img src="micalogo.png" width={60} height={20} className="" /> */}
         <div
           className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0`}
         >
           <a href="/#home" className="whitespace-nowrap flex flex-row">
+            {/* <img src="micalogo.png" width={60} height={30} className="" /> */}
             Mica Transportation{" "}
-            <span className=" hidden md:block ml-2">LLC</span>
+            <span className=" hidden md:block ml-2 justify-center ">LLC</span>
           </a>
         </div>
 

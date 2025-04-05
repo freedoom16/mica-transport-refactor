@@ -66,8 +66,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         {currentStep > 1 && (
           <button
             type="button"
-            className="px-4 py-2 bg-gradient-to-r from-blue-800 to-[#2098ee] shadow-xl text-white border border-gray-900 rounded-full "
-            style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
+            className="px-4 py-2 bg-gradient-to-r from-blue-800 to-[#2098ee] shadow-xl text-white border border-[#2098ee] rounded-full "
             onClick={handlePrev}
           >
             <div className="">Previous</div>
@@ -79,9 +78,11 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
           <div>
             <button
               type="button"
-              className={`px-8 py-2 rounded-full shadow-xl   bg-gradient-to-r from-blue-800 to-[#2098ee]  
-              ${isNextEnabled ? " font-bold" : " text-white"}
-            `}
+              className={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px]   ${
+                isNextEnabled
+                  ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
+                  : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
+              }`}
               onClick={handleNext}
             >
               Next
@@ -90,8 +91,10 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         ) : (
           <button
             type="submit"
-            className={`px-4 py-2 bg-gradient-to-r from-blue-800 to-[#2098ee] shadow-xl text-white rounded-full   ${
-              isNextEnabled ? " text-white font-bold" : " text-white"
+            className={`px-4 py-2 shadow-xl text-white rounded-full   ${
+              isNextEnabled
+                ? " bg-gradient-to-r from-blue-800 to-[#2098ee] text-white font-bold"
+                : " text-white"
             }`}
           >
             {isLoading ? (
@@ -126,8 +129,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         {currentStep > 1 && (
           <button
             type="button"
-            className="px-4 py-2 bg-gradient-to-r from-blue-800 to-[#2098ee] shadow-xl text-white border border-gray-900 rounded-full "
-            style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
+            className="px-4 py-2 bg-gradient-to-r from-blue-800 to-[#2098ee] shadow-xl text-white border border-[#2098ee] rounded-full "
             onClick={handlePrevMobaile}
           >
             <div className="">Previous</div>
@@ -138,8 +140,10 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         {currentStep < totalSteps ? (
           <button
             type="button"
-            className={`px-8 py-2 rounded-full shadow-xl bg-gradient-to-r from-blue-800 to-[#2098ee] text-white   ${
-              isNextEnabled ? " text-white font-bold" : " text-white"
+            className={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px]   ${
+              isNextEnabled
+                ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
+                : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
             }`}
             onClick={handleNextMobaile}
           >
@@ -148,8 +152,10 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
         ) : (
           <button
             type="submit"
-            className={`px-4 py-2 bg-gradient-to-r from-blue-800 to-[#2098ee] shadow-xl text-white rounded-full   ${
-              isNextEnabled ? " font-bold" : "  text-white"
+            className={`px-4 py-2 shadow-xl text-white rounded-full   ${
+              isNextEnabled
+                ? " bg-gradient-to-r from-blue-800 to-[#2098ee] font-bold"
+                : "  text-white"
             }`}
           >
             {isLoading ? (

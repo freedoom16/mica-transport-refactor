@@ -740,10 +740,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         </button>
         <button
           type="button"
-          className={`px-8 py-2 rounded-full shadow-xl bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white   ${
+          className={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px]   ${
             isNextEnabled
-              ? "border-2 border-[#2098ee] text-white font-bold"
-              : "border-1 border-gray-900 text-white"
+              ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
+              : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
           }`}
           onClick={handleNextMobaile}
         >
