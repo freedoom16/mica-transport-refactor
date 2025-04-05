@@ -17,18 +17,23 @@ const SectionOne = () => {
       "Create your order and submit it",
       "Receive a call from us",
       "Agree electronically",
+
       "Make payment online or over the phone",
+      "You pay what we agree ",
       "We get the job done with no hassle",
+
       "24/7 on-call support",
       "Support via email",
       "Support via text",
+
+      "professional",
       "Licensed",
       "Insured",
     ],
   };
 
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(stepContent.points.length / itemsPerPage);
@@ -205,7 +210,7 @@ const SectionOne = () => {
                                 .map((point, index) => (
                                   <div
                                     key={index}
-                                    className="p mb-4 flex items-center"
+                                    className="p mb-8 flex items-center"
                                   >
                                     <img
                                       src="/star-svgrepo-com.svg"

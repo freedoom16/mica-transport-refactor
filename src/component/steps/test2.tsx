@@ -348,6 +348,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     { value: "SUV", img: "car/suv.svg" },
     { value: "Sedan", img: "car/sedan.svg" },
     { value: "Pick up", img: "car/pickup2.svg" },
+    { value: "Hatchback", img: "car/hatchback.svg" },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -724,7 +725,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white py-2 px-5 rounded-full mb-4"
           onClick={handleClear}
         >
-          Clear Form
+          Skip
         </button>
       ) : (
         ""

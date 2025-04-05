@@ -74,7 +74,8 @@ export default function Home(props: IHomeProps) {
             <div id="lp-pom-text-482" className="mt-2 px-6">
               <p className="text-[20px] md:text-[30px] font-semibold leading-[29px] font-montserrat text-left">
                 Trust us for safe, reliable vehicle transport.
-                <br></br>Whether it’s your luxury, classic, or business fleet.
+                <br></br>Whether it’s your luxury, classic, personal or business
+                fleet.
                 <br></br>We handle every car with care.
               </p>
             </div>

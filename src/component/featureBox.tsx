@@ -13,10 +13,10 @@ const FeaturesBox = () => {
       {/* Support Icon */}
       <div className="flex flex-col items-center justify-center font-semibold">
         <img src="24phone.svg" alt="Support Icon" className="w-16 h-8" />
-        <p className=" font-bold text-[10px] md:text-[20px]  text-[#9e9fa0] ">
+        <p className=" font-bold text-[10px] md:text-[20px]  text-white ">
           24 hour
         </p>
-        <p className="font-bold text-[10px] md:text-[16px] text-[#9e9fa0]">
+        <p className="font-bold text-[10px] md:text-[16px] text-gray-200">
           customer care
         </p>
       </div>
@@ -34,10 +34,10 @@ const FeaturesBox = () => {
           height={16}
           className="w-8 h-8 text-[#2098ee]"
         /> */}
-        <p className="font-montserrat font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
+        <p className="font-montserrat font-bold text-[10px] md:text-[20px]  text-white">
           Professional
         </p>
-        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-[#9e9fa0]">
+        <p className="font-bold text-[10px] md:text-[16px] text-gray-200">
           transport
         </p>
       </div>
@@ -56,10 +56,10 @@ const FeaturesBox = () => {
             className="w-16 h-14 lg:h-16 font-bold text-blue-900"
           />
         </div>
-        <p className="font-montserrat -mt-4 font-bold text-[10px] md:text-[20px]  text-[#9e9fa0]">
+        <p className="font-montserrat -mt-3 font-bold text-[10px] md:text-[20px]  text-white">
           Enclosed/Open
         </p>
-        <p className="font-montserrat font-normal text-[10px] md:text-[16px] text-[#9e9fa0]">
+        <p className="font-bold text-[10px] md:text-[16px] text-gray-200">
           service
         </p>
       </div>
