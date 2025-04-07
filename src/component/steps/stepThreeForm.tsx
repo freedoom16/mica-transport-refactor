@@ -88,6 +88,29 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           newErrors.phone = "";
         }
         break;
+      case "dealerCompanName":
+        if (isDealer && !value.trim()) {
+          newErrors.dealerCompanName = "Company name is required.";
+        } else {
+          newErrors.dealerCompanName = "";
+        }
+        break;
+
+      case "note":
+        if (isClientNote) {
+          const words = value.trim().split(/\s+/);
+          if (!value.trim()) {
+            newErrors.note = "Note cannot be empty.";
+          } else if (words.length > 50) {
+            newErrors.note = "Note cannot exceed 50 words.";
+          } else {
+            newErrors.note = "";
+          }
+        } else {
+          newErrors.note = "";
+        }
+        break;
+
       default:
         break;
     }
@@ -143,7 +166,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             setFirstName(e.target.value);
             validateField("firstName", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee]  focus:ring-1 focus:ring-[#6DB8D1]  onFocus:bg-[#2c2c2c] active:bg-[#2c2c2c]"
+          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
+            errorsContact?.firstName ? "border-red-500" : "border-[#938f99]"
+          } outline-none transition-all focus:border-[#2098ee]`}
           placeholder=" First Name"
           autoComplete="off"
         />
@@ -171,7 +196,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             setLastName(e.target.value);
             validateField("lastName", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 "
+          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
+            errorsContact?.lastName ? "border-red-500" : "border-[#938f99]"
+          } outline-none transition-all focus:border-[#2098ee]`}
           placeholder=" Last Name"
           autoComplete="off"
         />
@@ -199,7 +226,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             setEmail(e.target.value);
             validateField("email", e.target.value);
           }}
-          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
+            errorsContact?.email ? "border-red-500" : "border-[#938f99]"
+          } outline-none transition-all focus:border-[#2098ee]`}
           placeholder=" Email Address"
           autoComplete="off"
         />
@@ -225,7 +254,9 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
           value={phone}
           // onChange={(e) => setPhone(e.target.value)}
           onChange={handlePhoneChange}
-          className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
+          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
+            errorsContact?.phone ? "border-red-500" : "border-[#938f99]"
+          } outline-none transition-all focus:border-[#2098ee]`}
           placeholder=" Phone Number"
           autoComplete="off"
         />
@@ -249,7 +280,13 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 type="radio"
                 name="is_drivable"
                 value="true"
-                onChange={() => handleRadioChange(true)}
+                onChange={() => {
+                  handleRadioChange(true);
+                  setErrorsContact((prevErrors: any) => ({
+                    ...prevErrors,
+                    isDealer: "",
+                  })); // Clear error
+                }}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
               <span className="text-sm text-white">Yes</span>
@@ -262,6 +299,10 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 onChange={() => {
                   handleRadioChange(false);
                   setDealerCompanName("");
+                  setErrorsContact((prevErrors: any) => ({
+                    ...prevErrors,
+                    isDealer: "",
+                  })); // Clear error
                 }}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
@@ -269,6 +310,12 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             </label>
           </div>
         </div>
+
+        {errorsContact.isDealer && (
+          <p className="text-sm text-red-500 ml-1 px-4 ">
+            {errorsContact.isDealer}
+          </p>
+        )}
 
         {/* Conditional Company Name Input */}
         {isDealer && (
@@ -281,8 +328,19 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
               type="text"
               placeholder="Enter your company name"
               value={dealerCompanName}
-              onChange={(e) => setDealerCompanName(e.target.value)}
-              className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee]"
+              // onChange={(e) => setDealerCompanName(e.target.value)}
+              onChange={(e) => {
+                setDealerCompanName(e.target.value);
+                setErrorsContact((prevErrors: any) => ({
+                  ...prevErrors,
+                  dealerCompanName: "",
+                })); // Clear error
+              }}
+              className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
+                errorsContact?.dealerCompanName
+                  ? "border-red-500"
+                  : "border-[#938f99]"
+              } outline-none transition-all focus:border-[#2098ee]`}
             />
           </div>
         )}
@@ -298,7 +356,13 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 type="radio"
                 name="is_clientNote"
                 value="true"
-                onChange={() => setIsClientNote(true)}
+                onChange={() => {
+                  setIsClientNote(true);
+                  setErrorsContact((prevErrors: any) => ({
+                    ...prevErrors,
+                    isClientNote: "", // Clear any previous errors
+                  }));
+                }}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
               <span className="text-sm text-white">Yes</span>
@@ -311,6 +375,11 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 onChange={() => {
                   setIsClientNote(false);
                   setNote("");
+                  setErrorField(""); // Clear errors
+                  setErrorsContact((prevErrors: any) => ({
+                    ...prevErrors,
+                    isClientNote: "", // Clear any previous errors
+                  }));
                 }}
                 className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300 "
               />
@@ -318,6 +387,11 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
             </label>
           </div>
         </div>
+        {errorsContact.isClientNote && (
+          <p className="text-sm text-red-500 ml-1 px-4 ">
+            {errorsContact.isClientNote}
+          </p>
+        )}
 
         {/* Conditional Company Name Input */}
         {isClientNote && (
@@ -336,8 +410,14 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
                 } else {
                   setErrorField("Maximum limit of 50 words reached.");
                 }
+                setErrorsContact((prevErrors: any) => ({
+                  ...prevErrors,
+                  note: "", // Clear any previous errors
+                }));
               }}
-              className="w-full h-32 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c]  border border-[#938f99] outline-none transition-all focus:border-[#2098ee]"
+              className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
+                errorsContact?.note ? "border-red-500" : "border-[#938f99]"
+              } outline-none transition-all focus:border-[#2098ee]`}
             />
             {errorField && (
               <p className="text-red-500 text-sm mt-1">{errorField}</p>

@@ -1,7 +1,12 @@
 "use client";
-import { faCar, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCar,
+  faPenToSquare,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import VehicleForm from "./vehiclesForms";
 
 interface StepOneProps {
   pickupLocation: string;
@@ -35,6 +40,9 @@ interface StepOneProps {
   vehicles: any[];
   //   setVehicles: (vehicles: Vehicle[]) => void;
   setVehicles: React.Dispatch<React.SetStateAction<any[]>>;
+  setCurrentVehicleIndex: React.Dispatch<React.SetStateAction<number>>;
+  errors: any;
+  setErrors: React.Dispatch<React.SetStateAction<any>>;
 }
 
 const StepOne: React.FC<StepOneProps> = ({
@@ -68,12 +76,19 @@ const StepOne: React.FC<StepOneProps> = ({
   sameLocation,
   vehicles,
   setVehicles,
+  setCurrentVehicleIndex,
+  errors,
+  setErrors,
 }) => {
   const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
   const [deliverySuggestions, setDeliverySuggestions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
+  console.log("errors location ", errorsLocation);
+
   const API_KEY = "f20bdd1c4a7b4139b83d4901b95d6dc4";
+  // const API_KEY = "AIzaSyDUOpQCTATgps_ywDxi1U24hdvaj8NTWyc";
+
   const API_URL = "https://api.opencagedata.com/geocode/v1/json";
 
   const fetchSuggestions = async (
@@ -451,19 +466,165 @@ const StepOne: React.FC<StepOneProps> = ({
 
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
-  console.log(
-    "location ",
-    currentLocationIndex,
-    " ",
-    currentVehicleIndex,
-    " ",
-    expandedIndex
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentEditingIndex, setCurrentEditingIndex] = useState<number | null>(
+    null
   );
-  console.log(location);
+
+  // const setIndex = setCurrentVehicleIndex;
+  const handleEditVehicle = (index: number) => {
+    console.log("edit index ", index, vehicles[index]);
+    setExpandedIndex(index);
+    setCurrentEditingIndex(index);
+    // setCurrentVehicleIndex(index);
+    console.log("edit index ", expandedIndex, vehicles[expandedIndex || index]);
+
+    setIsEditing(true);
+  };
+
+  const handleNextLocation = (vehicleIndex: number) => {
+    const validateLocation = () => {
+      const newErrors = [...errorsLocation]; // Clone errors array
+
+      // Validate current vehicle (vehicleIndex) only
+      const vehicle = location[vehicleIndex];
+
+      // Ensure that there's an error object for the current vehicle
+      if (!newErrors[vehicleIndex]) {
+        newErrors[vehicleIndex] = {
+          pickupLocation: "",
+          deliveryLocation: "",
+          addressTypeForPickup: "",
+          addressTypeForDeliver: "",
+          pickupContactName: "",
+          pickupContactPhone: "",
+          dropoffContactName: "",
+          dropoffContactPhone: "",
+        };
+      }
+
+      // Pickup location check
+      newErrors[vehicleIndex].pickupLocation = vehicle?.pickupLocation
+        ? ""
+        : "Pickup location is required.";
+
+      // Delivery location check
+      newErrors[vehicleIndex].deliveryLocation = vehicle?.deliveryLocation
+        ? ""
+        : "Delivery location is required.";
+
+      // Address type for Pickup check
+      newErrors[vehicleIndex].addressTypeForPickup =
+        vehicle?.addressTypeForPickup ? "" : "Pickup address type is required.";
+
+      // Address type for Delivery check
+      newErrors[vehicleIndex].addressTypeForDeliver =
+        vehicle?.addressTypeForDeliver
+          ? ""
+          : "Delivery address type is required.";
+
+      // Pickup contact name and phone check
+      if (vehicle?.isPickupContact === false) {
+        newErrors[vehicleIndex].pickupContactName = vehicle?.pickupContactName
+          ? ""
+          : "Pickup contact name is required.";
+        newErrors[vehicleIndex].pickupContactPhone =
+          vehicle?.pickupContactPhone &&
+          /^\(\d{3}\) \d{3}-\d{4}$/.test(vehicle?.pickupContactPhone)
+            ? ""
+            : "Enter a valid 10-digit phone number for pickup contact.";
+      }
+
+      // Dropoff contact name and phone check
+      if (vehicle?.isDropoffContact === false) {
+        newErrors[vehicleIndex].dropoffContactName = vehicle?.dropoffContactName
+          ? ""
+          : "Dropoff contact name is required.";
+        newErrors[vehicleIndex].dropoffContactPhone =
+          vehicle?.dropoffContactPhone &&
+          /^\(\d{3}\) \d{3}-\d{4}$/.test(vehicle?.dropoffContactPhone)
+            ? ""
+            : "Enter a valid 10-digit phone number for dropoff contact.";
+      }
+
+      setErrorsLocation(newErrors); // Update error state
+
+      // Check if there are any errors for the current vehicle
+      const hasError = Object.values(newErrors[vehicleIndex]).some(
+        (error) => error !== ""
+      );
+
+      return !hasError; // If no errors, return true, else false
+    };
+
+    // Run validation for the current vehicle index
+    const isValid = validateLocation();
+
+    if (isValid) {
+      console.log(" All locations filled!", vehicleIndex, vehicles.length - 1);
+
+      // No errors found, move to the next vehicle if possible
+      if (vehicleIndex < vehicles.length - 1) {
+        console.log(" All locations filled!", location);
+
+        setExpandedIndex(vehicleIndex + 1);
+      } else {
+        console.log("✅ All locations filled!");
+        // Proceed with form submission or any other action
+      }
+    } else {
+      console.log("🚫 Fix errors before continuing.");
+    }
+
+    // setExpandedIndex((prev) => vehicleIndex + 1);
+  };
+  const [isAddVehciles, setIsAddVehciles] = useState<boolean>(false);
+
+  // console.log(location);
   return (
     <div>
       {/* /////////////////////////////////////////////////// */}
       <div className="mb-2">
+        <div className="flex justify-end items-end  w-full ">
+          <div
+            className="flex  w-1/2 text-xl bg-[#2c2c2c] justify-center border-1 border-[#2098ee] text-white mb-2 p-2  shadow-lg rounded-xl cursor-pointer"
+            onClick={() => {
+              setIsAddVehciles(!isAddVehciles);
+              // setExpandedIndex(vehicleIndex);
+              // setErrors([]);
+              // setIsEditing(false);
+            }}
+            // onClick={() => handleEditVehicle(vehicleIndex)}
+            style={{
+              boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
+            }}
+          >
+            Add Vehicles{" "}
+            {isAddVehciles === true && (
+              <span className=" px-2 text-xl font-extrabold text-blue-500">
+                {" "}
+                x
+              </span>
+            )}
+          </div>
+        </div>
+        {isAddVehciles && (
+          <div>
+            <VehicleForm
+              index={vehicles.length + 1}
+              vehicles={vehicles}
+              setVehicles={setVehicles}
+              currentVehicleIndex={currentVehicleIndex + 1}
+              setCurrentVehicleIndex={setCurrentVehicleIndex}
+              isEditing={currentEditingIndex}
+              setIsEditing={setCurrentEditingIndex}
+              errors={errors}
+              setErrors={setErrors}
+              setIsAddVehciles={setIsAddVehciles}
+              isAddVehciles={isAddVehciles}
+            />
+          </div>
+        )}
         {vehicles.map((vehicle, vehicleIndex) => (
           <div key={vehicleIndex} className="flex flex-col space-y-2">
             {/* Vehicle Item */}
@@ -472,12 +633,13 @@ const StepOne: React.FC<StepOneProps> = ({
               ""
             ) : (
               <div
-                className="flex flex-row space-x-2 bg-[#2c2c2c] border-1 border-[#2098ee] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_1fr] shadow-lg rounded-xl w-full cursor-pointer"
-                onClick={() =>
-                  setExpandedIndex(
-                    expandedIndex === vehicleIndex ? null : vehicleIndex
-                  )
-                }
+                className="flex flex-row space-x-2 bg-[#2c2c2c] border-1 border-[#2098ee] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_min-content_1fr] shadow-lg rounded-xl w-full cursor-pointer"
+                onClick={() => {
+                  setExpandedIndex(vehicleIndex);
+                  setErrors([]);
+                  // setIsEditing(false);
+                }}
+                // onClick={() => handleEditVehicle(vehicleIndex)}
                 style={{
                   boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
                 }}
@@ -511,7 +673,25 @@ const StepOne: React.FC<StepOneProps> = ({
                     ) : (
                       <div></div>
                     )}
-                    <div className="flex ">
+
+                    <div className="flex w-8">
+                      <button
+                        className="text-blue-500"
+                        onClick={() => handleEditVehicle(vehicleIndex)}
+                      >
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                      </button>
+                    </div>
+                    <div
+                      className="flex "
+                      onClick={() => {
+                        setExpandedIndex(
+                          expandedIndex === vehicleIndex ? null : vehicleIndex
+                        );
+                        // Optional: if you also want to stop editing when collapsing
+                        // if (expandedIndex === vehicleIndex) setCurrentEditingIndex(null);
+                      }}
+                    >
                       <p className={`p-[10px] bg-[#2c2c2c] rounded-[100%]`}>
                         <img
                           alt="arrow"
@@ -535,8 +715,18 @@ const StepOne: React.FC<StepOneProps> = ({
                     <div></div>
                     <div></div>
                     <div></div>
+                    <div></div>
 
-                    <div className=" ">
+                    <div
+                      className=" "
+                      onClick={() => {
+                        setExpandedIndex(
+                          expandedIndex === vehicleIndex ? null : vehicleIndex
+                        );
+                        // Optional: if you also want to stop editing when collapsing
+                        // if (expandedIndex === vehicleIndex) setCurrentEditingIndex(null);
+                      }}
+                    >
                       <p className={`p-[10px] bg-[#2c2c2c] rounded-[100%]`}>
                         <img
                           alt="arrow"
@@ -553,24 +743,26 @@ const StepOne: React.FC<StepOneProps> = ({
                     </div>
                   </>
                 )}
-
-                {/* <div className="flex ">
-                  <p className={`p-[10px] bg-[#2c2c2c] rounded-[100%]`}>
-                    <img
-                      alt="arrow"
-                      src="/arrow_forward.38aa47a7_2.svg"
-                      width="24"
-                      height="24"
-                      loading="lazy"
-                      className={
-                        expandedIndex === vehicleIndex ? "rotate-90" : ""
-                      }
-                      style={{ transition: "transform 0.3s ease" }}
-                    />
-                  </p>
-                </div> */}
               </div>
             )}
+            {currentEditingIndex === vehicleIndex &&
+              expandedIndex === vehicleIndex && (
+                <div>
+                  <VehicleForm
+                    index={vehicleIndex}
+                    vehicles={vehicles}
+                    setVehicles={setVehicles}
+                    currentVehicleIndex={vehicleIndex}
+                    setCurrentVehicleIndex={setCurrentVehicleIndex}
+                    isEditing={currentEditingIndex}
+                    setIsEditing={setCurrentEditingIndex}
+                    errors={errors}
+                    setErrors={setErrors}
+                    setIsAddVehciles={setIsAddVehciles}
+                    isAddVehciles={false}
+                  />
+                </div>
+              )}
 
             {/* Expandable Form */}
             {expandedIndex === vehicleIndex && (
@@ -603,7 +795,8 @@ const StepOne: React.FC<StepOneProps> = ({
                         : "border-[#938f99]"
                     } outline-none transition-all focus:border-[#2098ee]`}
                     placeholder="Address or zipcode"
-                    required
+                    //required
+                    autoComplete="off"
                   />
                   <div className="relative z-10 w-full mt-2 bg-[#2c2c2c] rounded-lg shadow-lg">
                     {location[vehicleIndex]?.pickupSuggestions?.length > 0 && (
@@ -656,7 +849,7 @@ const StepOne: React.FC<StepOneProps> = ({
                         ? "border-red-500"
                         : "border-[#938f99]"
                     } outline-none transition-all focus:border-[#2098ee]`}
-                    required
+                    //required
                   >
                     <option value="">Select Address Type</option>
                     <option value="residential" className="text-white">
@@ -693,7 +886,8 @@ const StepOne: React.FC<StepOneProps> = ({
                         : "border-[#938f99]"
                     } outline-none transition-all focus:border-[#2098ee]`}
                     placeholder="Address or zipcode"
-                    required
+                    //required
+                    autoComplete="off"
                   />
                   <div className="relative z-10 w-full mt-2 bg-[#2c2c2c]  rounded-lg shadow-lg">
                     {location[vehicleIndex]?.deliverySuggestions?.length >
@@ -747,7 +941,7 @@ const StepOne: React.FC<StepOneProps> = ({
                         ? "border-red-500"
                         : "border-[#938f99]"
                     } outline-none transition-all focus:border-[#2098ee]`}
-                    required
+                    //required
                   >
                     <option value="">Select Address Type</option>
                     <option value="residential" className="text-white">
@@ -844,7 +1038,8 @@ const StepOne: React.FC<StepOneProps> = ({
                               : "border-[#938f99]"
                           } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Pickup Contact Name"
-                          required
+                          //required
+                          autoComplete="off"
                         />
                       </div>
 
@@ -876,7 +1071,8 @@ const StepOne: React.FC<StepOneProps> = ({
                               : "border-[#938f99]"
                           } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Pickup Contact Phone Number"
-                          required
+                          //required
+                          autoComplete="off"
                         />
                       </div>
                     </div>
@@ -962,7 +1158,8 @@ const StepOne: React.FC<StepOneProps> = ({
                               : "border-[#938f99]"
                           } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Dropoff Contact Name"
-                          required
+                          //required
+                          autoComplete="off"
                         />
                       </div>
 
@@ -994,12 +1191,29 @@ const StepOne: React.FC<StepOneProps> = ({
                               : "border-[#938f99]"
                           } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Dropoff Contact Phone Number"
-                          required
+                          //required
+                          autoComplete="off"
                         />
                       </div>
                     </div>
                   )}
                 </div>
+
+                {vehicleIndex < vehicles.length - 1 && (
+                  <div className="flex justify-end">
+                    <button
+                      type="button"
+                      className={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px] flex bg-red-400 justify-center  ${
+                        true
+                          ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
+                          : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
+                      }`}
+                      onClick={() => handleNextLocation(vehicleIndex)}
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

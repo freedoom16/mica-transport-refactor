@@ -6,7 +6,7 @@ interface StepNavigationProps {
   totalSteps: number;
   onNext: () => void;
   onPrev: () => void;
-
+  handleSubmit: (e: React.FormEvent) => void;
   isNextEnabled: boolean | string;
   isLoading: boolean | null;
   isSuccess: boolean | null;
@@ -17,6 +17,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
   totalSteps,
   onNext,
   onPrev,
+  handleSubmit,
   isNextEnabled,
   isLoading,
   isSuccess,
@@ -60,6 +61,7 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
     }
   };
 
+  console.log("isnext enabled ", isNextEnabled);
   return (
     <div>
       <div className="hidden md:block md:flex md:justify-between md:mt-2">
@@ -94,8 +96,9 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             className={`px-4 py-2 shadow-xl text-white rounded-full   ${
               isNextEnabled
                 ? " bg-gradient-to-r from-blue-800 to-[#2098ee] text-white font-bold"
-                : " text-white"
+                : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
             }`}
+            onClick={handleSubmit}
           >
             {isLoading ? (
               <button disabled type="button">
@@ -155,8 +158,9 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
             className={`px-4 py-2 shadow-xl text-white rounded-full   ${
               isNextEnabled
                 ? " bg-gradient-to-r from-blue-800 to-[#2098ee] font-bold"
-                : "  text-white"
+                : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
             }`}
+            onClick={handleSubmit}
           >
             {isLoading ? (
               <button disabled type="button">

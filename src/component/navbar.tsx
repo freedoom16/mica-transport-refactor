@@ -86,11 +86,23 @@ export default function NavBar(props: INavBarProps) {
       >
         {/* Brand Logo */}
         {/* <img src="micalogo.png" width={60} height={20} className="" /> */}
+
+        <img
+          src="micalogo.svg"
+          // width={40}
+          // height={40}
+          className="pr-2 justify-center hidden md:block w-16 h-12"
+        />
         <div
           className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0`}
         >
           <a href="/#home" className="whitespace-nowrap flex flex-row">
-            {/* <img src="micalogo.png" width={60} height={30} className="" /> */}
+            <img
+              src="micalogo.svg"
+              width={40}
+              height={40}
+              className="pr-2 justify-center block md:hidden"
+            />
             Mica Transportation{" "}
             <span className=" hidden md:block ml-2 justify-center ">LLC</span>
           </a>
@@ -142,11 +154,14 @@ export default function NavBar(props: INavBarProps) {
         >
           <a
             href="tel:+1 (404) 988-4505"
-            className="hover:text-gray-300 text-lg"
+            className="hover:text-gray-300 text-lg hidden md:block"
           >
             <FontAwesomeIcon icon={faPhone} className={`w-6 h-6 text-white`} />
           </a>
-          <a href="/#quote-form" className="hover:text-gray-700 text-lg">
+          <a
+            href="/#quote-form"
+            className="hover:text-gray-700 text-lg sm:gap-4"
+          >
             <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-white`} />{" "}
           </a>
         </div>

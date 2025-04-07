@@ -72,11 +72,15 @@ const QouetForm: React.FC = () => {
     lastName: string | null;
     email: string | null;
     phone: string | null;
+    isDealer: string | null;
+    isClientNote: string | null;
   }>({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
+    isDealer: "",
+    isClientNote: "",
   });
 
   const [errorsLocation, setErrorsLocation] = useState<any[]>(
@@ -294,7 +298,33 @@ const QouetForm: React.FC = () => {
         "Phone number format is incorrect. Please use (xxx) xxx-xxxx.";
     }
 
+    if (!email) {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(email)) {
+        newErrors.email = "Please enter a valid email address.";
+      }
+    }
+
+    if (isDealer === null || isDealer === undefined) {
+      newErrors.isDealer = "Please select if you are a dealer or business.";
+    } else if (isDealer && !dealerCompanName?.trim()) {
+      newErrors.dealerCompanName = "Company name is required.";
+    }
+
+    // Note radio selection
+    if (isClientNote === null || isClientNote === undefined) {
+      newErrors.isClientNote = "Please indicate if you have a note.";
+    } else if (isClientNote) {
+      const noteWords = note.trim().split(/\s+/);
+      if (!note.trim()) {
+        newErrors.note = "Note cannot be empty.";
+      } else if (noteWords.length > 50) {
+        newErrors.note = "Note cannot exceed 50 words.";
+      }
+    }
+
     setErrorsContact(newErrors); // Update errors state
+    console.log(errorsContact);
     return newErrors; // Return errors object to be used for form submission validation if needed
   };
 
@@ -304,54 +334,29 @@ const QouetForm: React.FC = () => {
     const generateRandomId = () =>
       Math.floor(10000 + Math.random() * 90000).toString();
 
-    const quoteData = {
-      vehicleInfo: vehicles.map((vehicle: any) => ({
-        vehicleYear: parseInt(vehicle.vehicleYear) || null,
-        vehicleMaker: vehicle.vehicleMaker || "",
-        vehicleModel: vehicle.vehicleModel || "",
-        category: vehicle.category || "",
-        type: vehicle.type || "",
-        isDrivable: vehicle.isDrivable || false,
-        vehicleId: generateRandomId(),
-      })),
-
-      locations: location.map((locations, index) => ({
-        vehicleId: vehicles[index]?.vehicleId,
-        pickup: {
-          pickupLocation: locations.pickupLocation || "",
-          isPickupContact: locations.isPickupContact || false,
-          pickupContactName: locations.pickupContactName || "",
-          pickupContactPhone: locations.pickupContactPhone || "",
-          addressTypeForPickup: locations.addressTypeForPickup || "",
-        },
-        delivery: {
-          deliveryLocation: locations.deliveryLocation || "",
-          isDropoffContact: locations.isDropoffContact || false,
-          dropoffContactName: locations.dropoffContactName || "",
-          dropoffContactPhone: locations.dropoffContactPhone || "",
-          addressTypeForDeliver: locations.addressTypeForDeliver || "",
-        },
-      })),
-    };
-
-    console.log("quoteData ", quoteData);
     if (step === 2 && !isStep1Valid) {
       const isValidLocation = validateLocation();
-
+      console.log("vvvvvvvvvvvv ", !isValidLocation);
       if (!isValidLocation) {
         // Stop further execution if validation fails
         return;
       }
     }
 
-    if (currentVehicleIndex > 0 && step === 1 && isStep2Valid) {
+    if (vehicles.length > 1 && step === 1 && isStep2Valid) {
       // setCurrentVehicleIndex(() => currentVehicleIndex + 1);
+      const updatedVehicles = [...vehicles];
+      setVehicles(updatedVehicles.filter((v) => v !== undefined));
+
       setModalOpenLocation(true);
       return;
     }
 
     if (step === 1 && !isStep2Valid && currentVehicleIndex >= 0) {
       // Check if the required fields are not empty
+      const updatedVehicles = [...vehicles];
+      setVehicles(updatedVehicles.filter((v) => v !== undefined));
+
       const vehicle = vehicles[currentVehicleIndex];
       if (currentVehicleIndex === 0) {
         nextStepOne();
@@ -376,6 +381,7 @@ const QouetForm: React.FC = () => {
     }
 
     if (step === 4 && !isStep3Valid) {
+      console.log("step4 validation");
       validateContact();
 
       if (!firstName) {
@@ -420,16 +426,17 @@ const QouetForm: React.FC = () => {
     // if (step < totalSteps) {
     //   setStep((prevStep) => prevStep + 1);
     // }
-    if (isStep2Valid) {
+    if (isStep2Valid && step === 1) {
       console.log("is step2 valid ", isStep2Valid);
+      const updatedVehicles = [...vehicles];
+      setVehicles(updatedVehicles.filter((v) => v !== undefined));
+
       nextStepOne();
 
       // If there were errors in nextStepOne, stop further execution
       if (Object.keys(errors).length > 0) {
         return; // Stop further execution if there are errors
       }
-      // setCurrentVehicleIndex((prevIndex) => currentVehicleIndex + 1);
-      //   // setCurrentVehicleIndex(currentVehicleIndex + 1);
     }
     // else if (step === 1 && !isStep2Valid) {
     //   console.log("is step2 valid 222 ", isStep2Valid);
@@ -454,6 +461,13 @@ const QouetForm: React.FC = () => {
   };
 
   const prevStep = () => {
+    if (vehicles.length > 1 && step === 2) {
+      // setCurrentVehicleIndex(() => currentVehicleIndex + 1);
+      setModalOpenLocation(true);
+      if (step > 1) setStep(step - 1);
+
+      return;
+    }
     if (step > 1) setStep(step - 1);
   };
 
@@ -530,6 +544,9 @@ const QouetForm: React.FC = () => {
   // Function to handle "Yes" button click
   const handleConfirm = () => {
     console.log("User confirmed the message", vehicles);
+    const updatedVehicles = [...vehicles];
+    setVehicles(updatedVehicles.filter((v) => v !== undefined));
+
     setSameLocation(true);
     // setSameLocation(null);
     setCurrentVehicleIndex(() => currentVehicleIndex);
@@ -541,14 +558,46 @@ const QouetForm: React.FC = () => {
   console.log("main maker", vehicles[0]?.vehicleMaker);
 
   // Validation logic for each step
-  const isStep1Valid = !!(
-    pickupLocation &&
-    deliveryLocation &&
-    addressTypeForDeliver &&
-    addressTypeForPickup &&
-    (isPickupContact === true || (pickupContactName && pickupContactPhone)) &&
-    (isDropoffContact === true || (dropoffContactName && dropoffContactPhone))
-  );
+  // const isStep1Valid = !!(
+  //   pickupLocation &&
+  //   deliveryLocation &&
+  //   addressTypeForDeliver &&
+  //   addressTypeForPickup &&
+  //   (isPickupContact === true || (pickupContactName && pickupContactPhone)) &&
+  //   (isDropoffContact === true || (dropoffContactName && dropoffContactPhone))
+  // );
+
+  const isStep1Valid =
+    sameLocation === true
+      ? // When sameLocation is true, validate using the first location
+        location?.[0]?.pickupLocation &&
+        location?.[0]?.deliveryLocation &&
+        location?.[0]?.addressTypeForPickup &&
+        location?.[0]?.addressTypeForDeliver &&
+        (location?.[0]?.isPickupContact === true ||
+          (location?.[0]?.pickupContactName &&
+            location?.[0]?.pickupContactPhone)) &&
+        (location?.[0]?.isDropoffContact === true ||
+          (location?.[0]?.dropoffContactName &&
+            location?.[0]?.dropoffContactPhone))
+      : // When sameLocation is false, validate each vehicle's location independently
+        vehicles.length > 0 &&
+        vehicles.every((_: any, index: any) => {
+          const loc = location[index];
+          return (
+            loc &&
+            loc.pickupLocation &&
+            loc.deliveryLocation &&
+            loc.addressTypeForPickup &&
+            loc.addressTypeForDeliver &&
+            (loc.isPickupContact === true ||
+              (loc.pickupContactName && loc.pickupContactPhone)) &&
+            (loc.isDropoffContact === true ||
+              (loc.dropoffContactName && loc.dropoffContactPhone))
+          );
+        });
+
+  console.log("isStep1Valid", isStep1Valid);
 
   const isStep2Valid =
     // true;
@@ -565,11 +614,25 @@ const QouetForm: React.FC = () => {
       vehicles[currentVehicleIndex]?.category
     );
 
+  // const isStep3Valid = !!(
+  //   (firstName && lastName && phone && email)
+  //   // &&
+  //   // isDealer != null &&
+  //   // isClientNote != null
+  // );
   const isStep3Valid = !!(
-    (firstName && lastName && phone)
-    // &&
-    // isDealer != null &&
-    // isClientNote != null
+    firstName &&
+    lastName &&
+    phone &&
+    /^\(\d{3}\) \d{3}-\d{4}$/.test(phone) && // validate phone format
+    (!email ||
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) && // optional email format check
+    isDealer !== null &&
+    isDealer !== undefined &&
+    (!isDealer || dealerCompanName?.trim()) &&
+    isClientNote !== null &&
+    isClientNote !== undefined &&
+    (!isClientNote || (note.trim() && note.trim().split(/\s+/).length <= 50))
   );
 
   const isStep4Valid = !!(
@@ -588,10 +651,13 @@ const QouetForm: React.FC = () => {
     if (!isStep3Valid) {
       validateContact();
 
-      if (!firstName || !lastName || !phone) {
+      if (!firstName || !lastName || !phone || !email) {
+        validateContact();
         setErrorMessage("First name is required.");
         return;
       }
+      setErrorMessage("First name is required.");
+      return;
     }
 
     const quoteData = {
@@ -604,25 +670,6 @@ const QouetForm: React.FC = () => {
         isDrivable: vehicle.isDrivable || false,
         vehicleId: vehicle.vehicleId,
       })),
-      // locations: [
-      //   {
-      //     vehicleId: "12345",
-      //     pickup: {
-      //       pickupLocation: pickupLocation,
-      //       isPickupContact: isPickupContact,
-      //       pickupContactName: pickupContactName,
-      //       pickupContactPhone: pickupContactPhone,
-      //       addressTypeForPickup: addressTypeForPickup,
-      //     },
-      //     delivery: {
-      //       deliveryLocation: deliveryLocation,
-      //       isDropoffContact: isDropoffContact,
-      //       dropoffContactName: dropoffContactName,
-      //       dropoffContactPhone: dropoffContactPhone,
-      //       addressTypeForDeliver: addressTypeForDeliver,
-      //     },
-      //   },
-      // ],
 
       locations: location.map((locations, index) => ({
         vehicleId: vehicles[index]?.vehicleId,
@@ -696,6 +743,8 @@ const QouetForm: React.FC = () => {
     try {
       await addQuote(quoteData).unwrap(); // Submit the form data using the mutation hook
       setVehicles([]);
+      setLocation([]);
+      resetForm();
       // Reset the form or navigate to a confirmation page on success
       setStep(1); // Optional: Reset form after submission
     } catch (err) {
@@ -703,6 +752,36 @@ const QouetForm: React.FC = () => {
     }
   };
   console.log("vehicle index ", currentVehicleIndex);
+
+  const resetForm = () => {
+    setVehicles([]);
+    setLocation([]);
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPhone("");
+    setIsDealer(false);
+    setDealerCompanName("");
+    setNote("");
+
+    setPickUpDateOption("");
+    setPickUpDate(null);
+    setPickUpTimeOption("");
+    setPickUpTime("");
+    setPickUpDateRangeStart(null);
+    setPickUpDateRangeEnd(null);
+    setPickUpTimeRangeStart("");
+    setPickUpTimeRangeEnd("");
+
+    setDeliveryDateOption("");
+    setDeliveryDate(null);
+    setDeliveryTimeOption("");
+    setDeliveryTime("");
+    setDeliveryDateRangeStart(null);
+    setDeliveryDateRangeEnd(null);
+    setDeliveryTimeRangeStart("");
+    setDeliveryTimeRangeEnd("");
+  };
 
   return (
     <section
@@ -712,8 +791,8 @@ const QouetForm: React.FC = () => {
       style={{ boxShadow: "0 -5px 50px -5px rgba(32, 152, 238, 0.3)" }}
     >
       <div>
-        <form
-          onSubmit={handleSubmit}
+        <div
+          // onSubmit={handleSubmit}
           className="max-w-xl mx-auto  bg-[#2c2c2c] p-4 md:px-4 rounded-[32px] "
           // style={{ boxShadow: "0 -59px 500px -5px rgba(0, 0, 0, 0.1)" }}
         >
@@ -759,6 +838,9 @@ const QouetForm: React.FC = () => {
               sameLocation={sameLocation}
               vehicles={vehicles}
               setVehicles={setVehicles}
+              setCurrentVehicleIndex={setCurrentVehicleIndex}
+              errors={errors}
+              setErrors={setErrors}
             />
           )}
           {step === 1 && (
@@ -855,10 +937,11 @@ const QouetForm: React.FC = () => {
               totalSteps={totalSteps}
               onNext={nextStep}
               onPrev={prevStep}
+              handleSubmit={handleSubmit}
               isNextEnabled={
                 (step === 1 && isStep2Valid) ||
-                (step === 2 && isStep4Valid) ||
-                (step === 3 && isStep1Valid) ||
+                (step === 2 && isStep1Valid) ||
+                (step === 3 && isStep4Valid) ||
                 (step === 4 && isStep3Valid)
               }
               isLoading={isLoading}
@@ -879,7 +962,7 @@ const QouetForm: React.FC = () => {
             message=" vehicles are in the same location?"
             onConfirm={handleConfirm}
           />
-        </form>
+        </div>
       </div>
     </section>
   );

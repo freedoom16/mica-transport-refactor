@@ -1,53 +1,34 @@
-"use client";
-import {
-  faDeleteLeft,
-  faPenToSquare,
-  faRecycle,
-  faRemove,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useEffect } from "react";
-import Modal from "../modal/popup";
+import React, { useEffect, useState } from "react";
 
-interface Vehicle {
-  vehicleYear: string;
-  vehicleModel: string;
-  vehicleMaker: string;
-  type: string; // "Open" or "Enclosed"
-  isDrivable: boolean | null;
-  category: string;
-  sameLocation: boolean | null;
-  vehicleId: string;
-}
-
-interface StepTwoProps {
-  vehicles: Vehicle[];
-  //   setVehicles: (vehicles: Vehicle[]) => void;
-  setVehicles: React.Dispatch<React.SetStateAction<Vehicle[]>>;
+type VehicleFormProps = {
+  index: number;
+  vehicles: any[];
+  setVehicles: React.Dispatch<React.SetStateAction<any[]>>;
   currentVehicleIndex: number;
   setCurrentVehicleIndex: React.Dispatch<React.SetStateAction<number>>;
+  isEditing: number | null;
+  setIsEditing: React.Dispatch<React.SetStateAction<any>>;
   errors: any;
   setErrors: React.Dispatch<React.SetStateAction<any>>;
-  currentStep: number;
-  totalSteps: number;
-  onNext: () => void;
-  isNextEnabled: boolean | string;
-}
+  setIsAddVehciles: React.Dispatch<React.SetStateAction<boolean>>;
+  isAddVehciles: boolean;
+};
 
-const StepTwoComponentTest: React.FC<StepTwoProps> = ({
-  setVehicles,
+const VehicleForm: React.FC<VehicleFormProps> = ({
+  index,
   vehicles,
+  setVehicles,
   currentVehicleIndex,
   setCurrentVehicleIndex,
+  isEditing,
+  setIsEditing,
   errors,
   setErrors,
-  currentStep,
-  totalSteps,
-  onNext,
-  isNextEnabled,
+  setIsAddVehciles,
+  isAddVehciles,
 }) => {
-  //   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [makes, setMakes] = useState<string[]>([]);
   const [carsByMake, setCarsByMake] = useState<Record<string, any[]>>({});
   const [makerInput, setMakerInput] = useState<string>("");
@@ -63,6 +44,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
   const [type, setType] = useState<string>(""); // Default to "Open"
   const [isDrivable, setIsDrivable] = useState<boolean | null>(null);
   // const [categoryInput, setCategoryInput] = useState<string>(categories[0]); // Default to the first category
+
+  console.log(
+    "expand index ",
+    currentVehicleIndex,
+    vehicles[currentVehicleIndex]
+  );
 
   const generateRandomId = Math.floor(10000 + Math.random() * 90000).toString();
 
@@ -185,13 +172,6 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     }, 300); // Adjust the timeout if needed (300ms delay gives time for rendering)
   };
 
-  const handleNextMobaile = () => {
-    if (currentStep < totalSteps) {
-      onNext();
-      // scrollToQuote(); // Scroll to "About Us" section
-    }
-  };
-
   const handleAddVehicle = () => {
     console.log("type ", currentVehicleIndex);
 
@@ -248,9 +228,8 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
       vehicleId: generateRandomId,
     };
 
-    setVehicles(updatedVehicles.filter((v) => v !== undefined));
-
     // setVehicles(updatedVehicles);
+    setVehicles(updatedVehicles.filter((v) => v !== undefined));
 
     // Reset the form fields
     setMakerInput("");
@@ -268,6 +247,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
     setMessage("");
     setIsEditing(false);
+    setIsAddVehciles(false);
   };
 
   const handleMakerSelect = (make: string) => {
@@ -437,9 +417,10 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
     // Optionally increment the index for adding new vehicles
     setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+    setIsAddVehciles(false);
   };
 
-  const [isEditing, setIsEditing] = useState(false);
+  //   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditVehicle = (index: number) => {
     console.log("edit index ", index);
@@ -450,92 +431,19 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const handleSaveChanges = () => {
     handleAddVehicle();
-    setCurrentVehicleIndex(vehicles.length + 2);
+    // setCurrentVehicleIndex(vehicles.length + 1);
     // setIsEditing(false); // Turn off editing after saving
   };
 
   const handleDeleteVehicle = (index: number) => {
     // Logic to remove the vehicle
     handleRemoveVehicle(index);
-    setCurrentVehicleIndex(vehicles.length + 4);
-    setIsEditing(false); // Turn off editing after removing
+    setCurrentVehicleIndex(vehicles.length + 2);
+    setIsEditing(null); // Turn off editing after removing
   };
 
-  console.log(
-    vehicles.length > 1 || currentVehicleIndex > 1,
-    vehicles.length > 1,
-    currentVehicleIndex > 1,
-    currentVehicleIndex
-  );
   return (
-    <div>
-      <h2 className="text-lg font-bold text-center text-white mb-2">
-        Vehicle Information
-      </h2>
-
-      {vehicles.length > 0 && (
-        <div className="mb-2">
-          {vehicles
-            .filter((v) => v?.sameLocation)
-            .map((vehicle, index) => (
-              <div key={index} className="flex flex-row space-y-2 ">
-                <div
-                  className=" flex flex-row space-x-2 bg-[#2c2c2c] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr__min-content_min-content_min-content] shadow-lg  rounded-xl w-full border-1 border-[#2098ee]"
-                  style={{
-                    boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
-                  }}
-                >
-                  <div className="flex flex-col pl-2">
-                    <strong>Make</strong> {vehicle?.vehicleMaker}
-                  </div>
-                  <div className="flex flex-col">
-                    <strong>Model</strong> {vehicle?.vehicleModel}
-                  </div>
-                  <div className="flex flex-col">
-                    <strong>Year</strong> {vehicle?.vehicleYear}
-                  </div>
-
-                  {!vehicle.isDrivable ? (
-                    <div className="flex w-8">
-                      <button className="text-red-500">
-                        <img
-                          src={
-                            vehicle.isDrivable
-                              ? "/motor-svg-green.svg"
-                              : "/motor-svg-red.svg"
-                          }
-                          width={24}
-                          height={24}
-                          alt="Drivable status"
-                        />
-                      </button>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
-
-                  <div className="flex w-8">
-                    <button
-                      className="text-blue-500"
-                      onClick={() => handleEditVehicle(index)}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </button>
-                  </div>
-
-                  <div className="flex w-8">
-                    <button
-                      className="text-red-500 "
-                      onClick={() => handleDeleteVehicle(index)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-        </div>
-      )}
+    <div className="space-y-4">
       {/* Vehicle input form */}
       <div className="mb-2">
         <div>
@@ -780,64 +688,32 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
         )}
       </div>
 
-      {vehicles[currentVehicleIndex] &&
-      currentVehicleIndex > 0 &&
-      isEditing === false ? (
-        <button
-          className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white py-2 px-5 rounded-full mb-4"
-          onClick={handleClear}
-        >
-          Skip
-        </button>
-      ) : (
-        ""
-      )}
-
-      {isEditing && currentVehicleIndex !== null && (
-        <div className="flex justify-between gap-4 mb-4 mt-4">
+      <div className="flex justify-between gap-4 mb-4 mt-4">
+        {isAddVehciles === true ? (
+          <button
+            className=" text-white px-6 py-2 rounded-full bg-gradient-to-r from-blue-800 to-[#2098ee] shadow-lg  transition-all"
+            onClick={handleClear}
+          >
+            Skip
+          </button>
+        ) : (
           <button
             className=" text-white px-6 py-2 rounded-xl shadow-lg hover:bg-red-600 transition-all"
             onClick={() => handleDeleteVehicle(currentVehicleIndex)}
           >
-            Delete vehicles
-          </button>
-
-          <button
-            className="bg-gradient-to-r from-blue-800 to-[#2098ee] text-white px-6 py-2 rounded-full shadow-lg  transition-all"
-            onClick={handleSaveChanges}
-          >
-            Save Changes
-          </button>
-        </div>
-      )}
-      {/* Add Vehicle Button */}
-      <div className="flex justify-between">
-        {isEditing ? (
-          <div></div>
-        ) : (
-          <button
-            type="button"
-            className="bg-gradient-to-r from-blue-800 to-[#2098ee]  text-white py-2 px-5 rounded-full"
-            onClick={handleAddVehicle}
-          >
-            Add Vehicle
+            <FontAwesomeIcon icon={faTrash} /> Delete vehicles
           </button>
         )}
 
         <button
-          type="button"
-          className={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px]   ${
-            isNextEnabled || vehicles.length > 1
-              ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
-              : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
-          }`}
-          onClick={handleNextMobaile}
+          className="bg-gradient-to-r from-blue-800 to-[#2098ee] text-white px-6 py-2 rounded-full shadow-lg  transition-all"
+          onClick={handleSaveChanges}
         >
-          Next
+          Save Changes
         </button>
       </div>
     </div>
   );
 };
 
-export default StepTwoComponentTest;
+export default VehicleForm;
