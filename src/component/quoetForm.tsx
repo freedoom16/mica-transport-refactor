@@ -752,6 +752,7 @@ const QouetForm: React.FC = () => {
     }
   };
   console.log("vehicle index ", currentVehicleIndex);
+  console.log("Location ", location);
 
   const resetForm = () => {
     setVehicles([]);

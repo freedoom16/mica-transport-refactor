@@ -14,6 +14,7 @@ type VehicleFormProps = {
   setErrors: React.Dispatch<React.SetStateAction<any>>;
   setIsAddVehciles: React.Dispatch<React.SetStateAction<boolean>>;
   isAddVehciles: boolean;
+  onDeleteVehicle: (index: number) => void;
 };
 
 const VehicleForm: React.FC<VehicleFormProps> = ({
@@ -28,6 +29,7 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
   setErrors,
   setIsAddVehciles,
   isAddVehciles,
+  onDeleteVehicle,
 }) => {
   const [makes, setMakes] = useState<string[]>([]);
   const [carsByMake, setCarsByMake] = useState<Record<string, any[]>>({});
@@ -244,7 +246,7 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
     setSelectedMaker("");
 
     // Optionally increment the index for adding new vehicles
-    setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+    setCurrentVehicleIndex((prevIndex) => vehicles.length + 1);
     setMessage("");
     setIsEditing(false);
     setIsAddVehciles(false);
@@ -285,11 +287,6 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
     setVehicles(cleanedVehicles.filter((v) => v !== undefined));
     // setVehicles(cleanedVehicles);
 
-    console.log(
-      "remove vehicles ",
-      cleanedVehicles.length,
-      currentVehicleIndex
-    );
     // Adjust currentVehicleIndex to stay valid
     let newIndex = currentVehicleIndex;
 
@@ -393,6 +390,7 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
   };
 
   const handleClear = () => {
+    console.log("current vehicle index ", currentVehicleIndex);
     handleRemoveVehicle(currentVehicleIndex);
 
     setMakerInput("");
@@ -416,7 +414,9 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
     });
 
     // Optionally increment the index for adding new vehicles
-    setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+    // setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+    console.log("current vehicle index ", currentVehicleIndex);
+
     setIsAddVehciles(false);
   };
 
@@ -437,9 +437,10 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
 
   const handleDeleteVehicle = (index: number) => {
     // Logic to remove the vehicle
-    handleRemoveVehicle(index);
-    setCurrentVehicleIndex(vehicles.length + 2);
-    setIsEditing(null); // Turn off editing after removing
+    onDeleteVehicle(index);
+    // handleRemoveVehicle(index);
+    // setCurrentVehicleIndex(vehicles.length + 2);
+    // setIsEditing(null); // Turn off editing after removing
   };
 
   return (

@@ -78,11 +78,11 @@ export default function NavBar(props: INavBarProps) {
       <div></div>
       <nav
         ref={navbarRef}
-        className={`md:fixed z-60  ${
+        className={`md:fixed z-60 ${
           isSticky
             ? "fixed top-0 left-0 w-full bg-[#2D2D2D] shadow-md z-20"
             : "relative top-0 left-0 w-full bg-[#2D2D2D] shadow-md z-20"
-        } px-16 xl:px-40 py-4 flex justify-between  items-center transition-colors duration-300 border-b-2 !border-[#2098ee]`}
+        } px-6 md:px-16 xl:px-40 py-4 flex justify-between  items-center transition-colors duration-300 border-b-2 !border-[#2098ee]`}
       >
         {/* Brand Logo */}
         {/* <img src="micalogo.png" width={60} height={20} className="" /> */}
@@ -91,10 +91,10 @@ export default function NavBar(props: INavBarProps) {
           src="micalogo.svg"
           // width={40}
           // height={40}
-          className="pr-2 justify-center hidden md:block w-16 h-12"
+          className="pr-2 justify-center hidden md:block w-16 h-12 ml-6 "
         />
         <div
-          className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0`}
+          className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0 `}
         >
           <a href="/#home" className="whitespace-nowrap flex flex-row">
             <img
@@ -150,7 +150,7 @@ export default function NavBar(props: INavBarProps) {
 
         {/* Mobile icons display  */}
         <div
-          className={`flex gap-4 pl-2 items-end justify-end xl:hidden text-white `}
+          className={`flex gap-4 pl-2 items-end justify-end xl:hidden text-white  `}
         >
           <a
             href="tel:+1 (404) 988-4505"
@@ -158,10 +158,7 @@ export default function NavBar(props: INavBarProps) {
           >
             <FontAwesomeIcon icon={faPhone} className={`w-6 h-6 text-white`} />
           </a>
-          <a
-            href="/#quote-form"
-            className="hover:text-gray-700 text-lg sm:gap-4"
-          >
+          <a href="/#quote-form" className="hover:text-gray-700 text-lg ">
             <FontAwesomeIcon icon={faCar} className={`w-6 h-6 text-white`} />{" "}
           </a>
         </div>

@@ -436,7 +436,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     });
 
     // Optionally increment the index for adding new vehicles
-    setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+    setCurrentVehicleIndex((prevIndex) => vehicles.length + 1);
   };
 
   const [isEditing, setIsEditing] = useState(false);

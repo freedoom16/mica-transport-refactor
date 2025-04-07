@@ -108,10 +108,11 @@ export default function Home(props: IHomeProps) {
           </div> */}
 
           {showForm && (
-            <div className="z-[150] px-4 rounded-xl max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[800px]">
+            <div className="z-[150]  rounded-[32px] max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[500px] max-h-[700px] overflow-y-auto">
               <HomePageForm />
             </div>
           )}
+
           {/* <div
             className="absolute right-8 top-full transform -translate-y-1/2 z-[150] p-4 rounded-xl max-w-lg w-full"
             style={{

@@ -390,18 +390,6 @@ const StepOne: React.FC<StepOneProps> = ({
     }
   };
 
-  const handleRemoveVehicle = (index: number) => {
-    const updatedVehicles = location.filter((_, i) => i !== index);
-    setLocation(updatedVehicles);
-
-    // Adjust the currentVehicleIndex if necessary
-    if (index === currentLocationIndex && currentLocationIndex > 0) {
-      setCurrentLocationIndex(currentLocationIndex - 1);
-    } else if (index < currentLocationIndex) {
-      setCurrentLocationIndex(currentLocationIndex - 1);
-    }
-  };
-
   const handleAddressTypeChange = (e: any, vehicleIndex: number) => {
     const updatedLocation = [...location];
 
@@ -580,6 +568,42 @@ const StepOne: React.FC<StepOneProps> = ({
   };
   const [isAddVehciles, setIsAddVehciles] = useState<boolean>(false);
 
+  const handleRemoveVehicle = (index: number) => {
+    const updatedVehicles = vehicles.filter((_, i) => i !== index);
+
+    // Remove any remaining `undefined` just in case
+    const cleanedVehicles = updatedVehicles.filter(Boolean);
+    setVehicles(cleanedVehicles.filter((v) => v !== undefined));
+    // setVehicles(cleanedVehicles);
+
+    // Adjust currentVehicleIndex to stay valid
+    let newIndex = currentVehicleIndex;
+
+    if (currentVehicleIndex >= cleanedVehicles.length) {
+      newIndex = Math.max(0, cleanedVehicles.length - 1);
+      console.log("remove vehicles 2 ", newIndex);
+    } else if (currentVehicleIndex > index) {
+      newIndex = currentVehicleIndex - 1;
+    }
+
+    setCurrentVehicleIndex(newIndex);
+  };
+
+  const handleDeleteVehicleAndLocation = (index: number) => {
+    // Remove vehicle
+    console.log("indexxxxx ", index);
+    handleRemoveVehicle(index);
+
+    // Remove location
+    setLocation((prev) => prev.filter((_, i) => i !== index));
+
+    // Reset UI if needed
+    setCurrentVehicleIndex(vehicles.length + 2);
+    setCurrentEditingIndex(null);
+  };
+
+  // Pass it to child
+
   // console.log(location);
   return (
     <div>
@@ -622,6 +646,7 @@ const StepOne: React.FC<StepOneProps> = ({
               setErrors={setErrors}
               setIsAddVehciles={setIsAddVehciles}
               isAddVehciles={isAddVehciles}
+              onDeleteVehicle={handleDeleteVehicleAndLocation}
             />
           </div>
         )}
@@ -760,6 +785,7 @@ const StepOne: React.FC<StepOneProps> = ({
                     setErrors={setErrors}
                     setIsAddVehciles={setIsAddVehciles}
                     isAddVehciles={false}
+                    onDeleteVehicle={handleDeleteVehicleAndLocation}
                   />
                 </div>
               )}
@@ -1199,21 +1225,22 @@ const StepOne: React.FC<StepOneProps> = ({
                   )}
                 </div>
 
-                {vehicleIndex < vehicles.length - 1 && (
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      className={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px] flex bg-red-400 justify-center  ${
-                        true
-                          ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
-                          : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
-                      }`}
-                      onClick={() => handleNextLocation(vehicleIndex)}
-                    >
-                      Next
-                    </button>
-                  </div>
-                )}
+                {vehicleIndex < vehicles.length - 1 &&
+                  sameLocation === false && (
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        className={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px] flex bg-red-400 justify-center  ${
+                          true
+                            ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
+                            : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
+                        }`}
+                        onClick={() => handleNextLocation(vehicleIndex)}
+                      >
+                        Next
+                      </button>
+                    </div>
+                  )}
               </div>
             )}
           </div>
