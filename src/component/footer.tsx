@@ -19,12 +19,19 @@ const Footer: React.FC = () => {
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <a href="https://flowbite.com/" className="flex items-center">
-              {/* <img
-                src="https://flowbite.com/docs/images/logo.svg"
-                className="h-8 me-3"
-                alt="FlowBite Logo"
-              /> */}
+            <a href="/#" className="flex items-center">
+              <img
+                src="micalogo.svg"
+                width={40}
+                height={40}
+                className="pr-2 justify-center w-16 h-12 block md:hidden ml-6 "
+              />
+              <img
+                src="micalogo.svg"
+                // width={40}
+                // height={40}
+                className="pr-2 justify-center hidden md:block w-30 h-24  "
+              />
               <span className="self-center text-white text-2xl font-semibold whitespace-nowrap ">
                 MicaTransportation LLC
               </span>
@@ -34,12 +41,12 @@ const Footer: React.FC = () => {
             <div>
               <ul className="text-white  font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
-                    About Us
+                  <a href="/#about-us" className="hover:underline">
+                    Why Us
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="/#services" className="hover:underline">
                     Our Service
                   </a>
                 </li>
@@ -48,12 +55,12 @@ const Footer: React.FC = () => {
             <div>
               <ul className="text-white  font-medium">
                 <li className="mb-4">
-                  <a href="#" className="hover:underline">
+                  <a href="/#support" className="hover:underline">
                     Support
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="/#reviews" className="hover:underline">
                     Review
                   </a>
                 </li>
@@ -115,7 +122,7 @@ const Footer: React.FC = () => {
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-white sm:text-center ">
             © 2025{" "}
-            <a href="https://flowbite.com/" className="hover:underline">
+            <a href="/#" className="hover:underline">
               MicaTransportation LLC™
             </a>
             . All Rights Reserved.
