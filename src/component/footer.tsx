@@ -24,7 +24,7 @@ const Footer: React.FC = () => {
                 src="micalogo.svg"
                 width={40}
                 height={40}
-                className="pr-2 justify-center w-16 h-12 block md:hidden ml-6 "
+                className="pr-2 justify-center w-16 h-12 block md:hidden "
               />
               <img
                 src="micalogo.svg"
