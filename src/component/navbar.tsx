@@ -101,7 +101,7 @@ export default function NavBar(props: INavBarProps) {
               src="micalogo.svg"
               width={40}
               height={40}
-              className="pr-2 justify-center block md:hidden"
+              className="pr-2 justify-center block md:hidden ml-6 bg-green-300"
             />
             Mica Transportation{" "}
             <span className=" hidden md:block ml-2 justify-center ">LLC</span>
