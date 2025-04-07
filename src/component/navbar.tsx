@@ -82,7 +82,7 @@ export default function NavBar(props: INavBarProps) {
           isSticky
             ? "fixed top-0 left-0 w-full bg-[#2D2D2D] shadow-md z-20"
             : "relative top-0 left-0 w-full bg-[#2D2D2D] shadow-md z-20"
-        } px-6 md:px-16 xl:px-40 py-4 flex justify-between  items-center transition-colors duration-300 border-b-2 !border-[#2098ee]`}
+        } px-2 md:px-16 xl:px-40 py-4 flex justify-between  items-center transition-colors duration-300 border-b-2 !border-[#2098ee]`}
       >
         {/* Brand Logo */}
         {/* <img src="micalogo.png" width={60} height={20} className="" /> */}
