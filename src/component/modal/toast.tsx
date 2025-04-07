@@ -10,7 +10,11 @@ const ToastNotification: React.FC<ToastNotificationProps> = ({ isSuccess }) => {
   useEffect(() => {
     if (isSuccess) {
       setVisible(true);
-      const timer = setTimeout(() => setVisible(false), 3000);
+      const timer = setTimeout(() => {
+        setVisible(false);
+        // Refresh the page after the message is hidden
+        window.location.reload(); // This will refresh the page
+      }, 6000);
       return () => clearTimeout(timer);
     }
   }, [isSuccess]);

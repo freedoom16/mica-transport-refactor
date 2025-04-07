@@ -960,7 +960,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
           value={deliveryTimeOption}
           onChange={(e) => {
             setDeliveryTimeOption(e.target.value);
-            validateDeliveryTime();
+            // validateDeliveryTime();
           }}
           // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
           className={`w-full h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
