@@ -1226,7 +1226,7 @@ const StepOne: React.FC<StepOneProps> = ({
                 </div>
 
                 {vehicleIndex < vehicles.length - 1 &&
-                  sameLocation === false && (
+                  (sameLocation === false || sameLocation === null) && (
                     <div className="flex justify-end">
                       <button
                         type="button"
