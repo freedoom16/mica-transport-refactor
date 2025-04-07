@@ -91,18 +91,21 @@ export default function NavBar(props: INavBarProps) {
           src="micalogo.svg"
           // width={40}
           // height={40}
-          className="pr-2 justify-center hidden md:block w-16 h-12 ml-6 "
+          className="pr-2 justify-center hidden md:block w-16 h-12 lg:ml-6 "
         />
+        <div className="ml-12 block md:hidden ">
+          <img
+            src="micalogo.svg"
+            // width={40}
+            // height={40}
+            className="pr-2 justify-center block w-12 h-10 md:hidden  "
+          />
+        </div>
+
         <div
           className={`text-white text-2xl font-bold font-montserrat mx-auto md:mx-0 `}
         >
           <a href="/#home" className="whitespace-nowrap flex flex-row">
-            <img
-              src="micalogo.svg"
-              width={40}
-              height={40}
-              className="pr-2 justify-center block md:hidden ml-6 "
-            />
             Mica Transportation{" "}
             <span className=" hidden md:block ml-2 justify-center ">LLC</span>
           </a>
