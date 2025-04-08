@@ -194,6 +194,26 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const handleAddVehicle = () => {
     console.log("type ", currentVehicleIndex);
+    let currentVehicle = vehicles[currentVehicleIndex];
+
+    if (!currentVehicle) {
+      console.log("Initializing default vehicle");
+
+      currentVehicle = {
+        vehicleMaker: "",
+        vehicleModel: "",
+        vehicleYear: "",
+        isDrivable: null,
+        type: "",
+        category: "",
+        sameLocation: null,
+        vehicleId: "",
+      };
+
+      // Instead of setVehicles and waiting for React to update,
+      // use it directly in this call
+      vehicles[currentVehicleIndex] = currentVehicle;
+    }
 
     if (
       !vehicles[currentVehicleIndex].vehicleMaker ||
@@ -264,6 +284,11 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     setFilteredModels([]);
     setSelectedMaker("");
 
+    if (isEditing === true) {
+      setCurrentVehicleIndex((prevIndex) => vehicles.length + 2);
+      setIsEditing(false);
+      return;
+    }
     // Optionally increment the index for adding new vehicles
     setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
     setMessage("");
@@ -443,14 +468,34 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const handleEditVehicle = (index: number) => {
     console.log("edit index ", index);
-    setCurrentVehicleIndex(index);
+    setMakerInput("");
+    setModelInput("");
+    setYearInput("");
+    setType("");
+    setCategoryInput("");
+    setSameLocation(null);
+    setIsDrivable(null);
+    setFilteredMakers([]);
+    setFilteredModels([]);
+    setSelectedMaker("");
 
+    setErrors({
+      vehicleMaker: "",
+      vehicleModel: "",
+      vehicleYear: "",
+      isDrivable: "",
+      type: "",
+      category: "",
+    });
+
+    setCurrentVehicleIndex(index);
     setIsEditing(true);
   };
 
   const handleSaveChanges = () => {
     handleAddVehicle();
-    setCurrentVehicleIndex(vehicles.length + 2);
+
+    // setCurrentVehicleIndex(vehicles.length + 2);
     // setIsEditing(false); // Turn off editing after saving
   };
 
@@ -804,7 +849,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
           <button
             className="bg-gradient-to-r from-blue-800 to-[#2098ee] text-white px-6 py-2 rounded-full shadow-lg  transition-all"
-            onClick={handleSaveChanges}
+            onClick={handleAddVehicle}
           >
             Save Changes
           </button>
