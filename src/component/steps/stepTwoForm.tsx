@@ -162,7 +162,7 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
             )}
           </div>
 
-          {/* Vehicle Model */}
+          {/* Model */}
           <div className="relative z-4 w-full mb-5 group">
             <input
               type="text"
@@ -175,7 +175,7 @@ const StepTwoComponent: React.FC<StepTwoProps> = ({
               className="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-500 appearance-none focus:outline-none focus:ring-0 focus:border-blue-500 peer"
             />
             <label className="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 peer-focus:text-blue-500">
-              {selectedMaker ? "Vehicle Model" : "Select a maker first"}
+              {selectedMaker ? "Model" : "Model"}
             </label>
             {filteredModels.length > 0 && (
               <ul className="absolute z-4 w-full mt-2 bg-gray-800 border border-gray-500 rounded max-h-48 overflow-y-auto text-sm text-white">
