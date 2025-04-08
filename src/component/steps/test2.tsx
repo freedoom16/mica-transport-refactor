@@ -214,7 +214,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           ? ""
           : "Vehicle year is required",
         isDrivable:
-          (vehicles[currentVehicleIndex].isDrivable === null) !== null
+          vehicles[currentVehicleIndex].isDrivable !== null
             ? ""
             : "Drivable status is required",
         type: vehicles[currentVehicleIndex].type
