@@ -21,23 +21,23 @@ const Footer: React.FC = () => {
           <div className="mb-6 md:mb-0">
             <a href="/#" className="flex items-center">
               <img
-                src="micalogo.svg"
+                src="micalogo3.svg"
                 width={40}
                 height={40}
-                className="pr-2 justify-center w-16 h-12 block md:hidden "
+                className="pr-2 justify-center w-auto h-10 block md:hidden "
               />
               <img
-                src="micalogo.svg"
+                src="micalogo3.svg"
                 // width={40}
                 // height={40}
-                className="pr-2 justify-center hidden md:block w-30 h-24  "
+                className="pr-2 justify-center hidden md:block w-auto h-12  "
               />
-              <span className="self-center text-white text-2xl font-semibold whitespace-nowrap ">
+              <span className="self-center text-white text-xl md:text-2xl font-semibold whitespace-nowrap ">
                 MicaTransportation LLC
               </span>
             </a>
           </div>
-          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-4 md:grid-cols-2 lg:grid-cols-4 ">
             <div>
               <ul className="text-white  font-medium">
                 <li className="mb-4">
