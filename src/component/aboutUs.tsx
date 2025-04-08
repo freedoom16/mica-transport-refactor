@@ -154,40 +154,6 @@ const SectionOne = () => {
                   </h2>
                   <div className="border-b-1 border-[#2098ee] mb-4"></div>
 
-                  {/* <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300">
-                    <div className="w-full block lg:hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {currentItems.map((point, index) => (
-                        <div
-                          key={index}
-                          className="p mb-4 text-white flex items-center"
-                        >
-                          <FontAwesomeIcon
-                            icon={faStar}
-                            className="text-[#2098ee] w-5 h-5 mr-2 border-[#2098ee]"
-                          />
-                          <span className="text-[20px]">{point}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="step-content flex flex-wrap justify-between mb-8 transition-all duration-300 hidden lg:block">
-                      <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {stepContent.points.map((point, index) => (
-                          <div
-                            key={index}
-                            className="p mb-4 text-white flex items-center"
-                          >
-                            <FontAwesomeIcon
-                              icon={faStar}
-                              className="text-[#2098ee] w-4 h-4 mr-2 border-2 border-[#2098ee] rounded-full"
-                            />
-                            <span className="text-[20px]">{point}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div> */}
-
                   <div className="block lg:hidden">
                     <Swiper
                       modules={[Pagination, Navigation]}
@@ -201,7 +167,7 @@ const SectionOne = () => {
                       {Array.from({ length: totalPages }).map(
                         (_, pageIndex) => (
                           <SwiperSlide key={pageIndex} className="text-white">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+                            <div className="grid grid-cols-1  gap-4 ">
                               {stepContent.points
                                 .slice(
                                   pageIndex * itemsPerPage,
