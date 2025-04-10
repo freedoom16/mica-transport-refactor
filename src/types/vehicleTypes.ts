@@ -1,8 +1,8 @@
 export type Vehicle = {
-  vehicleId: string;
+  vehicleId: number | null;
   vehicleMaker: string;
   vehicleModel: string;
-  vehicleYear: string;
+  vehicleYear: number | null;
   isDrivable: boolean | null;
   type: string;
   category: string;

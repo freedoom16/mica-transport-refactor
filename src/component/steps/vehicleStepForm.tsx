@@ -79,7 +79,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     isDrivable: null,
     category: "",
     sameLocation: null,
-    vehicleId: generateRandomId,
+    vehicleId: "",
   });
 
   const resetForm = () => {
@@ -160,6 +160,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const handleAddVehicle = () => {
     console.log("type ", currentVehicleIndex);
+    const updatedVehiclesUndefined = vehicles.filter(
+      (v: any) => v !== undefined
+    );
+
+    setVehicles(updatedVehiclesUndefined);
+
     const currentVehicle =
       vehicles[currentVehicleIndex] || createEmptyVehicle();
 
@@ -313,10 +319,6 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleCategoryChange = (value: string) => {
     setCategoryInput(value);
     setIsOpen(false); // Close the dropdown after selection
@@ -333,6 +335,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     }
     return years;
   };
+
   const [filteredYears, setFilteredYears] = useState(generateYearOptions());
 
   const handleYearInputChange = (value: any) => {
@@ -595,7 +598,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
               : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
           }`}
           isVisible={true}
-          disabled={!(isNextEnabled || vehicles.length > 1)}
+          // disabled={!(isNextEnabled || vehicles.length > 1)}
         />
       </div>
     </div>
