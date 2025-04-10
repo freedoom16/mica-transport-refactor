@@ -6,7 +6,7 @@ import StepNavigation from "./steps/stepNavigation";
 import StepTwoComponent from "./steps/stepTwoForm";
 import StepThreeComponent from "./steps/stepThreeForm";
 import StepForDate from "./steps/stepDateForm";
-import StepTwoComponentTest from "./steps/test2";
+import StepTwoComponentTest from "./steps/vehicleStep";
 import TestTest from "./test";
 import ToastNotification from "./modal/toast";
 import Modal from "./modal/popup";
