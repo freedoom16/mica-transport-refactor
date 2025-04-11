@@ -7,6 +7,7 @@ import SelectDropdown from "../inputField/SelectDropdown";
 import AutoCompleteList from "../inputField/AutoCompleteList";
 import VehicleCard from "../cards/vehicleCard";
 import Button from "../buttons/button";
+import { validateVehicleDetails } from "@/utils/quoetFormsValidation";
 
 interface Vehicle {
   vehicleYear: string;
@@ -79,7 +80,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     isDrivable: null,
     category: "",
     sameLocation: null,
-    vehicleId: generateRandomId,
+    vehicleId: "",
   });
 
   const resetForm = () => {
@@ -160,6 +161,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const handleAddVehicle = () => {
     console.log("type ", currentVehicleIndex);
+    const updatedVehiclesUndefined = vehicles.filter(
+      (v: any) => v !== undefined
+    );
+
+    setVehicles(updatedVehiclesUndefined);
+
     const currentVehicle =
       vehicles[currentVehicleIndex] || createEmptyVehicle();
 
@@ -209,7 +216,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     resetForm();
 
     if (isEditing === true) {
-      setCurrentVehicleIndex((prevIndex) => vehicles.length + 1);
+      setCurrentVehicleIndex((prevIndex) => vehicles.length);
       setIsEditing(false);
       return;
     }
@@ -313,10 +320,6 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
   const handleCategoryChange = (value: string) => {
     setCategoryInput(value);
     setIsOpen(false); // Close the dropdown after selection
@@ -333,6 +336,7 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     }
     return years;
   };
+
   const [filteredYears, setFilteredYears] = useState(generateYearOptions());
 
   const handleYearInputChange = (value: any) => {
@@ -368,13 +372,29 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
     });
 
     // Optionally increment the index for adding new vehicles
-    setCurrentVehicleIndex((prevIndex) => vehicles.length + 1);
+    setCurrentVehicleIndex((prevIndex) => vehicles.length - 1);
   };
 
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditVehicle = (index: number) => {
     console.log("edit index ", index);
+    // Get the current vehicle before switching
+    const currentVehicle = vehicles[currentVehicleIndex];
+
+    // Check if the current vehicle form was started (has any value filled)
+    const isFormComplete =
+      currentVehicle &&
+      Object.entries(currentVehicle).every(
+        ([key, value]) =>
+          key === "sameLocation" ||
+          (value !== "" && value !== null && value !== undefined)
+      );
+
+    if (!isFormComplete) {
+      handleClear();
+    }
+
     resetForm();
 
     setErrors({
@@ -392,7 +412,14 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
 
   const handleDeleteVehicle = (index: number) => {
     handleRemoveVehicle(index);
-    setCurrentVehicleIndex(vehicles.length + 4);
+    // setCurrentVehicleIndex(vehicles.length);
+    // Reset current index if it was deleted or out of bounds
+    if (
+      index === currentVehicleIndex ||
+      currentVehicleIndex >= vehicles.length
+    ) {
+      setCurrentVehicleIndex(vehicles.length - 1); // go to last item
+    }
     setIsEditing(false); // Turn off editing after removing
   };
 
@@ -590,12 +617,12 @@ const StepTwoComponentTest: React.FC<StepTwoProps> = ({
           text="Next"
           onClick={handleNextMobaile}
           styleClasses={`inline-block rounded-full p-[2px] bg-gradient-to-r from-blue-800 to-[#2098ee] px-8 py-2 rounded-full shadow-xl text-[18px]   ${
-            isNextEnabled || vehicles.length > 1
+            isNextEnabled || vehicles.length > 1 || currentVehicleIndex > 0
               ? "border-2 bg-gradient-to-r from-blue-800 to-[#2098ee] border-[#2098ee] text-white font-bold"
               : "font-bold  bg-gradient-to-r from-blue-800 to-[#2098ee] text-transparent bg-clip-text border border-[#2098ee] "
           }`}
           isVisible={true}
-          disabled={!(isNextEnabled || vehicles.length > 1)}
+          // disabled={!(isNextEnabled || vehicles.length > 1)}
         />
       </div>
     </div>
