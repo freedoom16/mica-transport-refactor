@@ -246,7 +246,7 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
     setSelectedMaker("");
 
     // Optionally increment the index for adding new vehicles
-    setCurrentVehicleIndex((prevIndex) => vehicles.length + 1);
+    setCurrentVehicleIndex((prevIndex) => vehicles.length);
     setMessage("");
     setIsEditing(false);
     setIsAddVehciles(false);
@@ -391,6 +391,12 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
 
   const handleClear = () => {
     console.log("current vehicle index ", currentVehicleIndex);
+    const updatedVehiclesUndefined = vehicles.filter(
+      (v: any) => v !== undefined
+    );
+
+    setVehicles(updatedVehiclesUndefined);
+
     handleRemoveVehicle(currentVehicleIndex);
 
     setMakerInput("");
@@ -414,7 +420,7 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
     });
 
     // Optionally increment the index for adding new vehicles
-    // setCurrentVehicleIndex((prevIndex) => prevIndex + 1);
+    setCurrentVehicleIndex((prevIndex) => vehicles.length);
     console.log("current vehicle index ", currentVehicleIndex);
 
     setIsAddVehciles(false);
