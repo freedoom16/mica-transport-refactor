@@ -29,7 +29,7 @@ export const generateQuoteData = (
 ) => {
   return {
     vehicleInfo: vehicles.map((vehicle) => ({
-      vehicleYear: parseInt(vehicle.vehicleYear.toString()) || null,
+      vehicleYear: vehicle.vehicleYear || null,
       vehicleMaker: vehicle.vehicleMaker || "",
       vehicleModel: vehicle.vehicleModel || "",
       vehicleCatagory: vehicle.category || "",
