@@ -1,16 +1,17 @@
 export const VehicleValidation = (
   vehicle: any,
-  currentYear: number
+  currentYear: number,
+  currentVehicleIndex: number
 ): boolean => {
   return !!(
-    vehicle?.vehicleMaker &&
-    vehicle?.vehicleModel &&
-    vehicle?.vehicleYear &&
-    /^\d{4}$/.test(vehicle?.vehicleYear) &&
-    Number(vehicle.vehicleYear) >= 1900 &&
-    Number(vehicle.vehicleYear) <= currentYear &&
-    vehicle?.isDrivable !== null &&
-    vehicle?.type &&
-    vehicle?.category
+    vehicle[currentVehicleIndex]?.vehicleMaker &&
+    vehicle[currentVehicleIndex]?.vehicleModel &&
+    vehicle[currentVehicleIndex]?.vehicleYear &&
+    /^\d{4}$/.test(vehicle[currentVehicleIndex]?.vehicleYear) &&
+    vehicle[currentVehicleIndex]?.vehicleYear >= 1900 &&
+    vehicle[currentVehicleIndex]?.vehicleYear <= currentYear &&
+    vehicle[currentVehicleIndex]?.isDrivable !== null &&
+    vehicle[currentVehicleIndex]?.type &&
+    vehicle[currentVehicleIndex]?.category
   );
 };

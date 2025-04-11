@@ -136,33 +136,41 @@ const QouetForm: React.FC = () => {
   });
 
   const nextStep = () => {
-    setErrorMessage(""); // Reset the error message
     console.log("next clicked");
     if (step === 1) {
-      // If no vehicles, stop and show an error
+      // Ensure at least one vehicle exists
       if (vehicles.length === 0) {
-        createEmptyVehicle();
-        setVehicles([createEmptyVehicle()]);
-        console.log("Please add at least one vehicle.");
-        // return;
-      }
-
-      // Filter out any undefined vehicles
-      const updatedVehicles = vehicles.filter((v: any) => v !== undefined);
-      setVehicles(updatedVehicles);
-
-      // Validate the current vehicle
-      const vehicle = updatedVehicles[currentVehicleIndex];
-      const vehicleErrors = validateVehicleDetails(vehicle);
-      setErrors(vehicleErrors);
-
-      // If there are validation errors, stop here
-      if (Object.keys(vehicleErrors).length > 0) {
-        console.log("Vehicle validation failed:", vehicleErrors);
+        const emptyVehicle = createEmptyVehicle();
+        setVehicles([emptyVehicle]);
+        const vehicleErrors = validateVehicleDetails(vehicles);
+        setErrors(vehicleErrors);
         return;
       }
 
-      // Clear errors
+      const updatedVehicles = vehicles.filter((v: any) => v !== undefined);
+      setVehicles(updatedVehicles);
+
+      const vehicle = updatedVehicles[currentVehicleIndex];
+      const isFormStarted =
+        vehicle &&
+        Object.values(vehicle).some(
+          (value) => value !== "" && value !== null && value !== undefined
+        );
+
+      if (isFormStarted) {
+        const vehicleErrors = validateVehicleDetails(vehicle);
+        setErrors(vehicleErrors);
+
+        // Set error message to appear above the form if there are any errors
+        if (Object.keys(vehicleErrors).length > 0) {
+          setErrorMessage(
+            "Please fill all required fields in the vehicle form."
+          );
+          console.log("Vehicle validation failed:", vehicleErrors);
+          return;
+        }
+      }
+      // Clear previous input-level errors
       setErrors({
         vehicleMaker: "",
         vehicleModel: "",
@@ -172,9 +180,13 @@ const QouetForm: React.FC = () => {
         category: "",
       });
 
-      // If valid and more than one vehicle, open modal and return
-      if (updatedVehicles.length > 1) {
-        console.log("Opening location modal for multiple vehicles");
+      // Check how many vehicles are fully valid
+      const fullyValidVehicles = updatedVehicles.filter(
+        (v: any) => v && Object.keys(validateVehicleDetails(v)).length === 0
+      );
+
+      if (fullyValidVehicles.length > 1) {
+        console.log("Multiple fully valid vehicles — opening modal");
         setModalOpenLocation(true);
         return;
       }
@@ -256,7 +268,11 @@ const QouetForm: React.FC = () => {
     vehicles.length
   );
 
-  const stepVehicleValidation = VehicleValidation(vehicles, currentYear);
+  const stepVehicleValidation = VehicleValidation(
+    vehicles,
+    currentYear,
+    currentVehicleIndex
+  );
 
   const clientData = {
     firstName,
@@ -281,6 +297,7 @@ const QouetForm: React.FC = () => {
 
   console.log("stepLocationValidation", stepLocationValidation);
   console.log("stepVehicleValidation", stepVehicleValidation);
+  console.log("stepVehicleValidation", !!validateVehicleDetails(vehicles));
 
   // Use the mutation hook
   const [addQuote, { isLoading, isSuccess, isError, error }] =
