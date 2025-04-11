@@ -3,7 +3,7 @@ export const LocationValidation = (
   sameLocation: boolean | null,
   vehiclesLength: number
 ): boolean => {
-  if (sameLocation) {
+  if (sameLocation || location.length === 0) {
     const loc = location?.[0];
     return (
       loc?.pickupLocation &&

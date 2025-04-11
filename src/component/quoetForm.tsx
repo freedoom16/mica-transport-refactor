@@ -193,7 +193,11 @@ const QouetForm: React.FC = () => {
     }
 
     if (step === 2 && !stepLocationValidation) {
-      const { newErrors, isValid } = validateLocation(location, errorsLocation);
+      const { newErrors, isValid } = validateLocation(
+        location,
+        errorsLocation,
+        vehicles
+      );
       setErrorsLocation(newErrors);
       if (!isValid) return;
     }

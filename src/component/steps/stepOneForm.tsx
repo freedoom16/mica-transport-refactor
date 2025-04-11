@@ -7,6 +7,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import VehicleForm from "./vehiclesForms";
+import VehicleListItem from "../cards/VehicleListItem";
+import InputField from "../inputField/inputField";
+import RadioButton from "../inputField/radioButtons";
 
 interface StepOneProps {
   pickupLocation: string;
@@ -302,11 +305,7 @@ const StepOne: React.FC<StepOneProps> = ({
     }
   };
 
-  const handlePickupChangeArray = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    vehicleIndex: number
-  ) => {
-    const value = e.target.value;
+  const handlePickupChangeArray = (value: string, vehicleIndex: number) => {
     // setDeliveryLocation(value);
     updateVehicleField("pickupLocation", value, vehicleIndex);
     // validateField("deliveryLocation", value);
@@ -653,123 +652,17 @@ const StepOne: React.FC<StepOneProps> = ({
         {vehicles.map((vehicle, vehicleIndex) => (
           <div key={vehicleIndex} className="flex flex-col space-y-2">
             {/* Vehicle Item */}
+            <VehicleListItem
+              vehicle={vehicle}
+              vehicleIndex={vehicleIndex}
+              expandedIndex={expandedIndex}
+              currentVehicleIndex={currentVehicleIndex}
+              sameLocation={sameLocation}
+              setExpandedIndex={setExpandedIndex}
+              handleEditVehicle={handleEditVehicle}
+              setErrors={setErrors}
+            />
 
-            {sameLocation || currentVehicleIndex === 0 ? (
-              ""
-            ) : (
-              <div
-                className="flex flex-row space-x-2 bg-[#2c2c2c] border-1 border-[#2098ee] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_min-content_1fr] shadow-lg rounded-xl w-full cursor-pointer"
-                onClick={() => {
-                  setExpandedIndex(vehicleIndex);
-                  setErrors([]);
-                  // setIsEditing(false);
-                }}
-                // onClick={() => handleEditVehicle(vehicleIndex)}
-                style={{
-                  boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
-                }}
-              >
-                {expandedIndex === vehicleIndex ? (
-                  <>
-                    <div className="flex flex-col pl-2">
-                      <strong>Make</strong> {vehicle.vehicleMaker}
-                    </div>
-                    <div className="flex flex-col">
-                      <strong>Model</strong> {vehicle.vehicleModel}
-                    </div>
-                    <div className="flex flex-col">
-                      <strong>Year</strong> {vehicle.vehicleYear}
-                    </div>
-                    {!vehicle.isDrivable ? (
-                      <div className="flex w-8">
-                        <button className="text-red-500">
-                          <img
-                            src={
-                              vehicle.isDrivable
-                                ? "/motor-svg-green.svg"
-                                : "/motor-svg-red.svg"
-                            }
-                            width={24}
-                            height={24}
-                            alt="Drivable status"
-                          />
-                        </button>
-                      </div>
-                    ) : (
-                      <div></div>
-                    )}
-
-                    <div className="flex w-8">
-                      <button
-                        className="text-blue-500"
-                        onClick={() => handleEditVehicle(vehicleIndex)}
-                      >
-                        <FontAwesomeIcon icon={faPenToSquare} />
-                      </button>
-                    </div>
-                    <div
-                      className="flex "
-                      onClick={() => {
-                        setExpandedIndex(
-                          expandedIndex === vehicleIndex ? null : vehicleIndex
-                        );
-                        // Optional: if you also want to stop editing when collapsing
-                        // if (expandedIndex === vehicleIndex) setCurrentEditingIndex(null);
-                      }}
-                    >
-                      <p className={`p-[10px] bg-[#2c2c2c] rounded-[100%]`}>
-                        <img
-                          alt="arrow"
-                          src="/arrow_forward.38aa47a7_2.svg"
-                          width="24"
-                          height="24"
-                          loading="lazy"
-                          className={
-                            expandedIndex === vehicleIndex ? "rotate-90" : ""
-                          }
-                          style={{ transition: "transform 0.3s ease" }}
-                        />
-                      </p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="flex  items-center ">
-                      Vehicle {vehicleIndex + 1}
-                    </div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-
-                    <div
-                      className=" "
-                      onClick={() => {
-                        setExpandedIndex(
-                          expandedIndex === vehicleIndex ? null : vehicleIndex
-                        );
-                        // Optional: if you also want to stop editing when collapsing
-                        // if (expandedIndex === vehicleIndex) setCurrentEditingIndex(null);
-                      }}
-                    >
-                      <p className={`p-[10px] bg-[#2c2c2c] rounded-[100%]`}>
-                        <img
-                          alt="arrow"
-                          src="/arrow_forward.38aa47a7_2.svg"
-                          width="24"
-                          height="24"
-                          loading="lazy"
-                          className={
-                            expandedIndex === vehicleIndex ? "rotate-90" : ""
-                          }
-                          style={{ transition: "transform 0.3s ease" }}
-                        />
-                      </p>
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
             {currentEditingIndex === vehicleIndex &&
               expandedIndex === vehicleIndex && (
                 <div>
@@ -801,29 +694,16 @@ const StepOne: React.FC<StepOneProps> = ({
 
                 {/* Pickup Location */}
                 <div className="relative z-0 w-full mb-5  ">
-                  <label
-                    htmlFor={`pickup_location_${vehicleIndex}`}
-                    className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-                  >
-                    Pickup Location
-                  </label>
-                  <input
-                    type="text"
-                    name="pickup_location"
-                    id={`pickup_location_${vehicleIndex}`}
-                    value={location[vehicleIndex]?.pickupLocation || ""} // Safe access with default empty string
-                    onChange={(e: any) =>
-                      handlePickupChangeArray(e, vehicleIndex)
+                  <InputField
+                    value={location[vehicleIndex]?.pickupLocation || ""}
+                    onChange={(value) =>
+                      handlePickupChangeArray(value, vehicleIndex)
                     }
-                    className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                      errorsLocation[vehicleIndex]?.pickupLocation
-                        ? "border-red-500"
-                        : "border-[#938f99]"
-                    } outline-none transition-all focus:border-[#2098ee]`}
                     placeholder="Address or zipcode"
-                    //required
-                    autoComplete="off"
+                    label="Pickup Location"
+                    error={!!errorsLocation[vehicleIndex]?.pickupLocation}
                   />
+
                   <div className="relative z-10 w-full mt-2 bg-[#2c2c2c] rounded-lg shadow-lg">
                     {location[vehicleIndex]?.pickupSuggestions?.length > 0 && (
                       <div className="relative z-10 w-full mt-2 bg-[#2c2c2c] border border-gray-300 rounded-lg shadow-lg">
@@ -892,29 +772,21 @@ const StepOne: React.FC<StepOneProps> = ({
 
                 {/* Delivery Location */}
                 <div className="relative z-0 w-full mb-5 group">
-                  <label
-                    htmlFor={`pickup_location_${vehicleIndex}`}
-                    className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-                  >
-                    Delivery Location
-                  </label>
-                  <input
-                    type="text"
-                    name="pickup_location"
-                    id={`pickup_location_${vehicleIndex}`}
-                    value={location[vehicleIndex]?.deliveryLocation || ""} // Safe access with default empty string
-                    onChange={(e: any) =>
-                      handleDeliveryChangeArray(e, vehicleIndex)
+                  <InputField
+                    value={location[vehicleIndex]?.deliveryLocation || ""}
+                    onChange={(value) =>
+                      handleDeliveryChangeArray(
+                        {
+                          target: { value },
+                        } as React.ChangeEvent<HTMLInputElement>,
+                        vehicleIndex
+                      )
                     }
-                    className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                      errorsLocation[vehicleIndex]?.deliveryLocation
-                        ? "border-red-500"
-                        : "border-[#938f99]"
-                    } outline-none transition-all focus:border-[#2098ee]`}
                     placeholder="Address or zipcode"
-                    //required
-                    autoComplete="off"
+                    label="Delivery Location"
+                    error={!!errorsLocation[vehicleIndex]?.deliveryLocation}
                   />
+
                   <div className="relative z-10 w-full mt-2 bg-[#2c2c2c]  rounded-lg shadow-lg">
                     {location[vehicleIndex]?.deliverySuggestions?.length >
                       0 && (
@@ -989,48 +861,42 @@ const StepOne: React.FC<StepOneProps> = ({
                       Are you the point of contact at the pickup location?
                     </label>
                     <div className="flex items-center space-x-4">
-                      <label className="flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          name={`pickup_contact_${vehicleIndex}`}
-                          value="true"
-                          onChange={(e) =>
-                            handleLocationUpdate(
-                              vehicleIndex,
-                              "isPickupContact",
-                              true,
-                              true,
-                              false
-                            )
-                          }
-                          checked={
-                            location[vehicleIndex]?.isPickupContact === true
-                          }
-                          className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
-                        />
-                        <span className="text-sm text-white">Yes</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          name={`pickup_contact_${vehicleIndex}`}
-                          value="false"
-                          onChange={(e) =>
-                            handleLocationUpdate(
-                              vehicleIndex,
-                              "isPickupContact",
-                              false,
-                              true,
-                              false
-                            )
-                          }
-                          checked={
-                            location[vehicleIndex]?.isPickupContact === false
-                          }
-                          className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
-                        />
-                        <span className="text-sm text-white">No</span>
-                      </label>
+                      <RadioButton
+                        name={`pickup_contact_${vehicleIndex}`}
+                        value="true"
+                        checked={
+                          location[vehicleIndex]?.isPickupContact === true
+                        }
+                        onChange={() =>
+                          handleLocationUpdate(
+                            vehicleIndex,
+                            "isPickupContact",
+                            true,
+                            true,
+                            false
+                          )
+                        }
+                        label="Yes"
+                        className="text-blue-500"
+                      />
+                      <RadioButton
+                        name={`pickup_contact_${vehicleIndex}`}
+                        value="false"
+                        checked={
+                          location[vehicleIndex]?.isPickupContact === false
+                        }
+                        onChange={() =>
+                          handleLocationUpdate(
+                            vehicleIndex,
+                            "isPickupContact",
+                            false,
+                            true,
+                            false
+                          )
+                        }
+                        label="No"
+                        className="text-blue-500"
+                      />
                     </div>
                   </div>
 
@@ -1038,67 +904,44 @@ const StepOne: React.FC<StepOneProps> = ({
                     <div>
                       {/* Pickup Contact Name */}
                       <div className="relative z-0 w-full mb-5 group">
-                        <label
-                          htmlFor={`pickup_contact_name_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-                        >
-                          Pickup Contact Name
-                        </label>
-                        <input
-                          type="text"
-                          name="pickup_contact_name"
-                          id={`pickup_contact_name_${vehicleIndex}`}
+                        <InputField
                           value={
                             location[vehicleIndex]?.pickupContactName || ""
                           }
-                          onChange={(e) =>
+                          onChange={(value) =>
                             handleInputChangeArray(
                               "pickupContactName",
-                              e.target.value,
+                              value,
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                            errorsLocation[vehicleIndex]?.pickupContactName
-                              ? "border-red-500"
-                              : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Pickup Contact Name"
-                          //required
-                          autoComplete="off"
+                          label="Pickup Contact Name"
+                          error={
+                            !!errorsLocation[vehicleIndex]?.pickupContactName
+                          }
                         />
                       </div>
 
                       {/* Pickup Contact Phone */}
                       <div className="relative z-0 w-full mb-5 group">
-                        <label
-                          htmlFor={`pickup_contact_phone_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-                        >
-                          Pickup Contact Phone Number
-                        </label>
-                        <input
-                          type="text"
-                          name="pickup_contact_phone"
-                          id={`pickup_contact_phone_${vehicleIndex}`}
+                        <InputField
                           value={
                             location[vehicleIndex]?.pickupContactPhone || ""
                           }
-                          onChange={(e) =>
+                          onChange={(value) =>
                             handleInputChangeArray(
                               "pickupContactPhone",
-                              e.target.value,
+                              value,
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                            errorsLocation[vehicleIndex]?.pickupContactPhone
-                              ? "border-red-500"
-                              : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Pickup Contact Phone Number"
-                          //required
-                          autoComplete="off"
+                          label="Pickup Contact Phone Number"
+                          error={
+                            !!errorsLocation[vehicleIndex]?.pickupContactPhone
+                          }
+                          inputMode="tel"
                         />
                       </div>
                     </div>
@@ -1110,115 +953,86 @@ const StepOne: React.FC<StepOneProps> = ({
                       Are you the point of contact at the drop-off location?
                     </label>
                     <div className="flex items-center space-x-4">
-                      <label className="flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          name="dropoff_contact"
-                          value="true"
-                          onChange={() =>
-                            handleLocationUpdate(
-                              vehicleIndex,
-                              "isDropoffContact",
-                              true,
-                              false,
-                              true
-                            )
-                          }
-                          checked={
-                            location[vehicleIndex]?.isDropoffContact === true
-                          }
-                          className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
-                        />
-                        <span className="text-sm text-white">Yes</span>
-                      </label>
-                      <label className="flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          name="dropoff_contact"
-                          value="false"
-                          onChange={() =>
-                            handleLocationUpdate(
-                              vehicleIndex,
-                              "isDropoffContact",
-                              false,
-                              false,
-                              true
-                            )
-                          }
-                          checked={
-                            location[vehicleIndex]?.isDropoffContact === false
-                          }
-                          className="form-radio text-blue-500 w-6 h-6 border-2 border-gray-300"
-                        />
-                        <span className="text-sm text-white">No</span>
-                      </label>
+                      <RadioButton
+                        name="dropoff_contact"
+                        value="true"
+                        checked={
+                          location[vehicleIndex]?.isDropoffContact === true
+                        }
+                        onChange={() =>
+                          handleLocationUpdate(
+                            vehicleIndex,
+                            "isDropoffContact",
+                            true,
+                            false,
+                            true
+                          )
+                        }
+                        label="Yes"
+                        className="text-blue-500"
+                      />
+                      <RadioButton
+                        name="dropoff_contact"
+                        value="false"
+                        checked={
+                          location[vehicleIndex]?.isDropoffContact === false
+                        }
+                        onChange={() =>
+                          handleLocationUpdate(
+                            vehicleIndex,
+                            "isDropoffContact",
+                            false,
+                            false,
+                            true
+                          )
+                        }
+                        label="No"
+                        className="text-blue-500"
+                      />
                     </div>
                   </div>
                   {location[vehicleIndex]?.isDropoffContact === false && (
                     <div>
                       {/* Dropoff Contact Name */}
                       <div className="relative z-0 w-full mb-5 group">
-                        <label
-                          htmlFor={`dropoff_contact_name_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-                        >
-                          Dropoff Contact Name
-                        </label>
-                        <input
-                          type="text"
-                          name="dropoff_contact_name"
-                          id={`dropoff_contact_name_${vehicleIndex}`}
+                        <InputField
                           value={
                             location[vehicleIndex]?.dropoffContactName || ""
                           }
-                          onChange={(e) =>
+                          onChange={(value) =>
                             handleInputChangeArray(
                               "dropoffContactName",
-                              e.target.value,
+                              value,
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                            errorsLocation[vehicleIndex]?.dropoffContactName
-                              ? "border-red-500"
-                              : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Dropoff Contact Name"
-                          //required
-                          autoComplete="off"
+                          label="Dropoff Contact Name"
+                          error={
+                            !!errorsLocation[vehicleIndex]?.dropoffContactName
+                          }
                         />
                       </div>
 
                       {/* Dropoff Contact Phone */}
                       <div className="relative z-0 w-full mb-5 group">
-                        <label
-                          htmlFor={`dropoff_contact_phone_${vehicleIndex}`}
-                          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c] text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-                        >
-                          Dropoff Contact Phone Number
-                        </label>
-                        <input
-                          type="text"
-                          name="dropoff_contact_phone"
-                          id={`dropoff_contact_phone_${vehicleIndex}`}
+                        <InputField
                           value={
                             location[vehicleIndex]?.dropoffContactPhone || ""
                           }
-                          onChange={(e) =>
+                          onChange={(value) =>
                             handleInputChangeArray(
                               "dropoffContactPhone",
-                              e.target.value,
+                              value,
                               vehicleIndex
                             )
                           }
-                          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                            errorsLocation[vehicleIndex]?.dropoffContactPhone
-                              ? "border-red-500"
-                              : "border-[#938f99]"
-                          } outline-none transition-all focus:border-[#2098ee]`}
                           placeholder="Dropoff Contact Phone Number"
-                          //required
-                          autoComplete="off"
+                          label="Dropoff Contact Phone Number"
+                          error={
+                            !!errorsLocation[vehicleIndex]?.dropoffContactPhone
+                          }
+                          inputMode="tel"
                         />
                       </div>
                     </div>
