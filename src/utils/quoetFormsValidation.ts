@@ -127,8 +127,8 @@ export const validateLocation = (
         deliveryLocation: "",
         addressTypeForPickup: "",
         addressTypeForDeliver: "",
-        isPickupContact: true,
-        isDropoffContact: true,
+        isPickupContact: undefined,
+        isDropoffContact: undefined,
         pickupContactName: "",
         pickupContactPhone: "",
         dropoffContactName: "",
@@ -162,7 +162,10 @@ export const validateLocation = (
       newErrors[index].addressTypeForDeliver =
         "Delivery address type is required.";
 
-    if (loc.isPickupContact === false) {
+    if (loc.isPickupContact === undefined) {
+      newErrors[index].isPickupContact =
+        "Please select if there is a pickup contact.";
+    } else if (loc.isPickupContact === false) {
       if (!loc.pickupContactName)
         newErrors[index].pickupContactName = "Pickup contact name is required.";
       if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(loc.pickupContactPhone ?? "")) {
@@ -171,7 +174,10 @@ export const validateLocation = (
       }
     }
 
-    if (loc.isDropoffContact === false) {
+    if (loc.isDropoffContact === undefined) {
+      newErrors[index].isDropoffContact =
+        "Please select if there is a Drop of contact.";
+    } else if (loc.isDropoffContact === false) {
       if (!loc.dropoffContactName)
         newErrors[index].dropoffContactName =
           "Dropoff contact name is required.";

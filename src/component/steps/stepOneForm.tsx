@@ -447,7 +447,11 @@ const StepOne: React.FC<StepOneProps> = ({
       updatedLocation[vehicleIndex][field] = value; // Update the specific field
       return updatedLocation; // Return the updated state
     });
-
+    if (field === "isPickupContact") {
+      errorsLocation[vehicleIndex]["isPickupContact"] = ""; // Clear errors for dropoffContactPhone
+    } else if (field === "isDropoffContact") {
+      errorsLocation[vehicleIndex]["isDropoffContact"] = ""; // Clear errors for dropoffContactPhone
+    }
     updateVehicleField(field, value, vehicleIndex); // Ensure vehicle-specific update
   };
 
@@ -511,7 +515,10 @@ const StepOne: React.FC<StepOneProps> = ({
           : "Delivery address type is required.";
 
       // Pickup contact name and phone check
-      if (vehicle?.isPickupContact === false) {
+      if (vehicle?.isPickupContact === undefined) {
+        newErrors[vehicleIndex].isPickupContact =
+          "Please select if there is a pickup contact.";
+      } else if (vehicle?.isPickupContact === false) {
         newErrors[vehicleIndex].pickupContactName = vehicle?.pickupContactName
           ? ""
           : "Pickup contact name is required.";
@@ -523,7 +530,10 @@ const StepOne: React.FC<StepOneProps> = ({
       }
 
       // Dropoff contact name and phone check
-      if (vehicle?.isDropoffContact === false) {
+      if (vehicle?.isDropoffContact === undefined) {
+        newErrors[vehicleIndex].isDropoffContact =
+          "Please select if there is a dropoff contact.";
+      } else if (vehicle?.isDropoffContact === false) {
         newErrors[vehicleIndex].dropoffContactName = vehicle?.dropoffContactName
           ? ""
           : "Dropoff contact name is required.";
@@ -856,7 +866,7 @@ const StepOne: React.FC<StepOneProps> = ({
 
                 <div className="space-y-4">
                   {/* Pickup Location Point of Contact */}
-                  <div className="flex flex-row">
+                  <div className="flex flex-row justify-between">
                     <label className="block text-sm font-medium text-white md:mr-2 md:mb-0">
                       Are you the point of contact at the pickup location?
                     </label>
@@ -899,6 +909,11 @@ const StepOne: React.FC<StepOneProps> = ({
                       />
                     </div>
                   </div>
+                  {errorsLocation[vehicleIndex]?.isPickupContact && (
+                    <div className="text-sm text-red-500 px-4 -mt-4">
+                      {errorsLocation[vehicleIndex]?.isPickupContact}
+                    </div>
+                  )}
 
                   {location[vehicleIndex]?.isPickupContact === false && (
                     <div>
@@ -929,13 +944,13 @@ const StepOne: React.FC<StepOneProps> = ({
                           value={
                             location[vehicleIndex]?.pickupContactPhone || ""
                           }
-                          onChange={(value) =>
+                          onChange={(value) => {
                             handleInputChangeArray(
                               "pickupContactPhone",
                               value,
                               vehicleIndex
-                            )
-                          }
+                            );
+                          }}
                           placeholder="Pickup Contact Phone Number"
                           label="Pickup Contact Phone Number"
                           error={
@@ -948,7 +963,7 @@ const StepOne: React.FC<StepOneProps> = ({
                   )}
                 </div>
                 <div className="space-y-4">
-                  <div className="flex flex-row">
+                  <div className="flex flex-row justify-between">
                     <label className="block text-sm font-medium text-white mb-2">
                       Are you the point of contact at the drop-off location?
                     </label>
@@ -991,6 +1006,11 @@ const StepOne: React.FC<StepOneProps> = ({
                       />
                     </div>
                   </div>
+                  {errorsLocation[vehicleIndex]?.isDropoffContact && (
+                    <div className="text-sm text-red-500 px-4 -mt-6">
+                      {errorsLocation[vehicleIndex]?.isDropoffContact}
+                    </div>
+                  )}
                   {location[vehicleIndex]?.isDropoffContact === false && (
                     <div>
                       {/* Dropoff Contact Name */}
