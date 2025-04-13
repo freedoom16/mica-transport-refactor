@@ -18,6 +18,7 @@ interface Props {
   setExpandedIndex: (index: number | null) => void;
   handleEditVehicle: (index: number) => void;
   setErrors: (errors: any[]) => void;
+  errors: any[];
 }
 
 const VehicleListItem: React.FC<Props> = ({
@@ -29,20 +30,30 @@ const VehicleListItem: React.FC<Props> = ({
   setExpandedIndex,
   handleEditVehicle,
   setErrors,
+  errors,
 }) => {
   if (sameLocation || currentVehicleIndex === 0) return null;
+
+  const vehicleErrorObj = errors?.[vehicleIndex] || {};
+  const hasError = Object.values(vehicleErrorObj).some(
+    (val) => typeof val === "string" && val.trim() !== ""
+  );
 
   const isExpanded = expandedIndex === vehicleIndex;
 
   return (
     <div
-      className="flex flex-row space-x-2 bg-[#2c2c2c] border-1 border-[#2098ee] text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_min-content_1fr] shadow-lg rounded-xl w-full cursor-pointer"
+      className={`flex flex-row space-x-2 bg-[#2c2c2c] border-1  ${
+        hasError ? "border-red-500" : "border-[#2098ee]"
+      }  text-white mb-2 p-2 grid grid-cols-[1fr_1fr_1fr_min-content_min-content_1fr] shadow-lg rounded-xl w-full cursor-pointer`}
       onClick={() => {
         setExpandedIndex(vehicleIndex);
         setErrors([]);
       }}
       style={{
-        boxShadow: "0 0 50px -5px rgba(32, 152, 238, 0.2)",
+        boxShadow: hasError
+          ? "0 0 50px -5px rgba(239, 68, 68, 0.2)"
+          : "0 0 50px -5px rgba(32, 152, 238, 0.2)",
       }}
     >
       {isExpanded ? (
@@ -131,6 +142,11 @@ const VehicleListItem: React.FC<Props> = ({
           </div>
         </>
       )}
+      {/* {hasError && (
+        <div className="col-span-6 text-red-400 font-semibold mt-2">
+          Please fill all forms
+        </div>
+      )} */}
     </div>
   );
 };

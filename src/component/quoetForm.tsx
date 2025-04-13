@@ -269,7 +269,8 @@ const QouetForm: React.FC = () => {
   const stepLocationValidation = LocationValidation(
     location,
     sameLocation,
-    vehicles.length
+    vehicles,
+    setLocation
   );
 
   const stepVehicleValidation = VehicleValidation(

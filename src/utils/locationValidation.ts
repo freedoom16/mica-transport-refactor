@@ -1,8 +1,30 @@
+import React, { useEffect } from "react";
+
 export const LocationValidation = (
   location: any[],
   sameLocation: boolean | null,
-  vehiclesLength: number
+  vehicles: any,
+  setLocation: React.Dispatch<React.SetStateAction<any[]>>
 ): boolean => {
+  useEffect(() => {
+    if (!sameLocation && vehicles.length > 0) {
+      setLocation(
+        Array.from({ length: vehicles.length }, () => ({
+          pickupLocation: "",
+          deliveryLocation: "",
+          addressTypeForPickup: "",
+          addressTypeForDeliver: "",
+          isPickupContact: undefined,
+          pickupContactName: "",
+          pickupContactPhone: "",
+          isDropoffContact: undefined,
+          dropoffContactName: "",
+          dropoffContactPhone: "",
+        }))
+      );
+    }
+  }, [sameLocation, vehicles.length]);
+
   if (sameLocation || location.length === 0) {
     const loc = location?.[0];
     return (
@@ -17,7 +39,7 @@ export const LocationValidation = (
     );
   } else {
     return (
-      vehiclesLength > 0 &&
+      vehicles.length > 0 &&
       location.every(
         (loc: any) =>
           loc &&

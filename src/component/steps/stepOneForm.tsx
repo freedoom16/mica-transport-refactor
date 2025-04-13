@@ -671,6 +671,7 @@ const StepOne: React.FC<StepOneProps> = ({
               setExpandedIndex={setExpandedIndex}
               handleEditVehicle={handleEditVehicle}
               setErrors={setErrors}
+              errors={errorsLocation}
             />
 
             {currentEditingIndex === vehicleIndex &&
