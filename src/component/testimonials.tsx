@@ -10,62 +10,62 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Mekuriya Worku",
-      position: "Frequent Mover",
+      name: "Patric S.",
+      position: "Auto Deliver",
       image: "/review/review6.jpg",
       title: "Reliable and Stress-Free",
       description:
-        "I used their services for an interstate move, and it was stress-free from start to finish. The team kept me informed throughout, and the driver was very professional. My car arrived on time and in great condition. It’s hard to find such reliable service these days!",
+        "The move was smooth from start to finish. Great communication, timely delivery, and my car arrived in perfect condition. Highly reliable service!",
       rating: 5,
     },
     {
       id: 2,
-      name: "Gabriela Fasil",
+      name: "Shwan R.",
       position: "Business Owner",
       image: "/review/review7.jpg",
       title: "Great Experience with Open Transport",
       description:
-        "I had my fleet vehicle transported using their open transport service, and it was a great experience. The driver was punctual and followed all my instructions. The entire process was smooth, and my car arrived safely. Excellent service overall!",
+        "Smooth experience with open transport. The driver was punctual, followed all instructions, and my car arrived safely. Excellent service!",
       rating: 5,
     },
     {
       id: 3,
-      name: "John Paul",
+      name: "John P.",
       position: "Classic Car Enthusiast",
       image: "/review/review5.png",
       title: "Outstanding Enclosed Transport",
       description:
-        "Their enclosed transport services are fantastic! After dealing with multiple companies that failed to meet my expectations or caused unnecessary delays, this one stood out. The cost was slightly higher than some quotes, but it was completely worth it—no hidden fees or surprises",
+        "Enclosed transport was top-tier. No delays, no hidden fees, and everything went as promised. Definitely worth the extra cost!",
       rating: 5,
     },
     {
       id: 4,
-      name: "Lali Kalab",
-      position: "First-Time User",
+      name: "Mohamed A.",
+      position: "Satisfied Customer",
       image: "/review/review8.png",
       title: "Professional Enclosed Transport",
       description:
-        "Their enclosed transport is top-notch! My car was handled with care, and the team provided regular updates. The driver was courteous and made sure everything was secure. I’ll definitely use their services again for my luxury cars!",
+        "Excellent enclosed transport service. My car was handled with care, and I received regular updates. I’ll use them again!",
       rating: 5,
     },
     {
       id: 5,
-      name: "Netsanet moss",
+      name: "Dj S.",
       position: "Satisfied Customer",
       image: "/review/review4.png",
       title: "Seamless Open Transport Service",
       description:
-        "This company delivered on its promises with open transport! The price was transparent and reasonable. Communication was amazing—I received updates via text and email, and the driver handled my car with care. Highly recommend!",
+        "Everything was smooth—great communication, transparent pricing, and my car was handled carefully. Highly recommend this service!",
       rating: 5,
     },
     {
       id: 6,
-      name: "Milikiyas M",
-      position: "Car Enthusiast",
+      name: "Michael B.",
+      position: "Car Collector",
       image: "/review/review9.jpg",
       title: "Excellent Communication and Service",
       description:
-        "As a first-time user, I was nervous about transporting my car, but they made it easy. The team was responsive, and I appreciated the updates during transit. My vehicle arrived earlier than expected, in perfect condition. Highly recommend!",
+        "As a first-time user, I was impressed by the service. Fast, responsive team and early delivery. Would use again!",
       rating: 5,
     },
   ];
@@ -256,27 +256,34 @@ const Testimonials = () => {
                 <div className="overflow-hidden px-2">
                   <div key={testimonial.id} className={`flex-none px-2 py-4`}>
                     <div
-                      className="p-6  xl:p-12 mb-8 rounded-lg bg-[#2D2D2D] text-white flex flex-col flex-grow min-h-[400px] lg:h-[550px] xl:h-[400px] max-w-lg mx-auto"
+                      className="p-6 xl:p-12 mb-8 rounded-lg bg-[#2D2D2D] text-white flex flex-col justify-between min-h-[400px] max-w-lg mx-auto"
                       style={{
-                        boxShadow: "0 5px 15px 5px rgba(32, 152, 238, 0.5)", // Blue glow effect
+                        boxShadow: "0 5px 15px 5px rgba(32, 152, 238, 0.5)",
                       }}
                     >
-                      <p className="text-xl font-semibold">
+                      {/* Title */}
+                      <p className="text-xl font-semibold line-clamp-2 h-[56px]">
                         {testimonial.title}
                       </p>
-                      <p className="mt-4 p-2 flex-grow">
+
+                      {/* Description */}
+                      <p className="mt-4 p-2 text-base text-gray-200 line-clamp-4 h-[96px]">
                         {testimonial.description}
                       </p>
-                      <div className="flex items-center mt-2 xl:mt-6">
-                        <div>
-                          <p className="font-medium">{testimonial.name}</p>
-                          <p className="text-sm text-gray-300">
-                            {testimonial.position}
-                          </p>
+
+                      {/* Bottom */}
+                      <div className="mt-auto pt-4">
+                        <div className="flex items-center mb-2">
+                          <div>
+                            <p className="font-medium">{testimonial.name}</p>
+                            <p className="text-sm text-gray-300">
+                              {testimonial.position}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="mt-2 flex">
-                        {renderStars(testimonial.rating)}
+                        <div className="flex">
+                          {renderStars(testimonial.rating)}
+                        </div>
                       </div>
                     </div>
                   </div>

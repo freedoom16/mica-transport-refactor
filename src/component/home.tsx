@@ -47,8 +47,8 @@ export default function Home(props: IHomeProps) {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          width: "100vw",
-          height: "100vh",
+          // width: "100vw",
+          // height: "100vh",
         }}
       >
         {/* Overlay */}

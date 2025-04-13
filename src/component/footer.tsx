@@ -1,21 +1,14 @@
 "use client";
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookF,
-  faTwitter,
-  faInstagram,
-  faLinkedin,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
 import CareerModal from "./modal/carrier";
 import PartnershipModal from "./modal/partnership";
 
 const Footer: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isPartnershipModalOpen, setIsPartnershipModalOpen] = useState(false);
+
   return (
-    <footer className="bg-[#2D2D2D]  border-t-2 border-[#2098ee]">
+    <footer className="bg-[#2D2D2D]  border-t-2 border-[#2098ee] ">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
