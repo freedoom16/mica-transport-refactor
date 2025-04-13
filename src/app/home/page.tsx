@@ -1,4 +1,3 @@
-import AboutPage from "@/component/aboutPage2";
 import SectionOne from "@/component/aboutUs";
 import Footer from "@/component/footer";
 import Forms from "@/component/forms";
@@ -15,25 +14,22 @@ const BlockComponent: React.FC = () => {
       {/* Navbar */}
       <NavBar />
 
-      {/* Section 1 */}
+      {/* Home page */}
       <Home />
 
+      {/* Forms */}
       <Forms />
 
-      {/* Section 2 */}
+      {/* About page and why us */}
       <SectionOne />
 
-      {/* <Forms /> */}
-
-      {/* <AboutPage /> */}
-
-      {/* Section 3 */}
+      {/* Service Section */}
       <ServicesSection />
 
-      {/* Section 4 */}
+      {/* Testimonals Section */}
       <Testimonials />
 
-      {/* Section 5 */}
+      {/* Customer Support section */}
       <CustomContentSection />
 
       {/* footer  */}

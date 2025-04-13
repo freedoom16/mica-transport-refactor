@@ -111,13 +111,32 @@ export const validateContactInfo = (
 
 export const validateLocation = (
   location: Location[],
-  errorsLocation: any[]
+  errorsLocation: any[],
+  vehicles: Vehicle[]
 ) => {
   let isValid = true;
+
+  // Initialize missing location and error entries
+  const updatedLocation = [...location];
   const newErrors = [...errorsLocation];
 
-  location.forEach((vehicle, index) => {
-    if (!newErrors[index])
+  vehicles.forEach((_, index) => {
+    if (!updatedLocation[index]) {
+      updatedLocation[index] = {
+        pickupLocation: "",
+        deliveryLocation: "",
+        addressTypeForPickup: "",
+        addressTypeForDeliver: "",
+        isPickupContact: undefined,
+        isDropoffContact: undefined,
+        pickupContactName: "",
+        pickupContactPhone: "",
+        dropoffContactName: "",
+        dropoffContactPhone: "",
+      };
+    }
+
+    if (!newErrors[index]) {
       newErrors[index] = {
         pickupLocation: "",
         deliveryLocation: "",
@@ -128,32 +147,41 @@ export const validateLocation = (
         dropoffContactName: "",
         dropoffContactPhone: "",
       };
+    }
 
-    if (!vehicle.pickupLocation)
+    const loc = updatedLocation[index];
+
+    if (!loc.pickupLocation)
       newErrors[index].pickupLocation = "Pickup location is required.";
-    if (!vehicle.deliveryLocation)
+    if (!loc.deliveryLocation)
       newErrors[index].deliveryLocation = "Delivery location is required.";
-    if (!vehicle.addressTypeForPickup)
+    if (!loc.addressTypeForPickup)
       newErrors[index].addressTypeForPickup =
         "Pickup address type is required.";
-    if (!vehicle.addressTypeForDeliver)
+    if (!loc.addressTypeForDeliver)
       newErrors[index].addressTypeForDeliver =
         "Delivery address type is required.";
 
-    if (vehicle.isPickupContact === false) {
-      if (!vehicle.pickupContactName)
+    if (loc.isPickupContact === undefined) {
+      newErrors[index].isPickupContact =
+        "Please select if there is a pickup contact.";
+    } else if (loc.isPickupContact === false) {
+      if (!loc.pickupContactName)
         newErrors[index].pickupContactName = "Pickup contact name is required.";
-      if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(vehicle.pickupContactPhone ?? "")) {
+      if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(loc.pickupContactPhone ?? "")) {
         newErrors[index].pickupContactPhone =
           "Enter a valid 10-digit phone number for pickup contact.";
       }
     }
 
-    if (vehicle.isDropoffContact === false) {
-      if (!vehicle.dropoffContactName)
+    if (loc.isDropoffContact === undefined) {
+      newErrors[index].isDropoffContact =
+        "Please select if there is a Drop of contact.";
+    } else if (loc.isDropoffContact === false) {
+      if (!loc.dropoffContactName)
         newErrors[index].dropoffContactName =
           "Dropoff contact name is required.";
-      if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(vehicle.dropoffContactPhone ?? "")) {
+      if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(loc.dropoffContactPhone ?? "")) {
         newErrors[index].dropoffContactPhone =
           "Enter a valid 10-digit phone number for dropoff contact.";
       }

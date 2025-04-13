@@ -88,14 +88,14 @@ export default function NavBar(props: INavBarProps) {
         {/* <img src="micalogo.png" width={60} height={20} className="" /> */}
 
         <img
-          src="micalogo3.svg"
+          src="micalogo1.svg"
           // width={40}
           // height={40}
           className="pr-2 justify-center hidden md:block w-auto h-14"
         />
         <div className="ml-12 block md:hidden ">
           <img
-            src="micalogo3.svg"
+            src="micalogo1.svg"
             // width={40}
             // height={40}
             className="pr-2 justify-center block w-auto h-10 md:hidden  "
