@@ -1,5 +1,6 @@
 "uses client";
 import React, { useState } from "react";
+import InputField from "../inputField/inputField";
 
 interface StepThreeProps {
   firstName: string;
@@ -151,86 +152,43 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       </h2>
 
       <div className="relative z-0 w-full mb-5 group bg-[#2c2c2c] ">
-        <label
-          htmlFor="first_name"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-        >
-          First Name
-        </label>
-        <input
-          type="text"
-          name="firstName"
-          id="first_name"
+        <InputField
           value={firstName}
-          onChange={(e) => {
-            setFirstName(e.target.value);
-            validateField("firstName", e.target.value);
+          onChange={(value) => {
+            setFirstName(value);
+            validateField("firstName", value);
           }}
-          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-            errorsContact?.firstName ? "border-red-500" : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#2098ee]`}
-          placeholder=" First Name"
-          autoComplete="off"
+          placeholder="First Name"
+          label="First Name"
+          error={!!errorsContact?.firstName}
         />
-        {/* {errorsContact.firstName && (
-          <p className="text-sm text-red-500 ml-1 px-4 ">
-            {errorsContact.firstName}
-          </p>
-        )} */}
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
-        <label
-          htmlFor="last_name"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-        >
-          Last Name
-        </label>
-
-        <input
-          type="text"
-          name="last_name"
-          id="last_name"
+        <InputField
           value={lastName}
-          onChange={(e) => {
-            setLastName(e.target.value);
-            validateField("lastName", e.target.value);
+          onChange={(value) => {
+            setLastName(value);
+            validateField("lastName", value);
           }}
-          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-            errorsContact?.lastName ? "border-red-500" : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#2098ee]`}
-          placeholder=" Last Name"
-          autoComplete="off"
+          placeholder="Last Name"
+          label="Last Name"
+          error={!!errorsContact?.lastName}
         />
-        {/* {errorsContact.lastName && (
-          <p className="text-sm text-red-500 ml-1 px-4 ">
-            {errorsContact.lastName}
-          </p>
-        )} */}
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
-        <label
-          htmlFor="email"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-        >
-          Email Address
-        </label>
-
-        <input
-          type="email"
-          name="email"
-          id="email"
+        <InputField
           value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            validateField("email", e.target.value);
+          onChange={(value) => {
+            setEmail(value);
+            validateField("email", value);
           }}
-          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-            errorsContact?.email ? "border-red-500" : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#2098ee]`}
-          placeholder=" Email Address"
-          autoComplete="off"
+          placeholder="Email Address"
+          label="Email Address"
+          type="email"
+          inputMode="email"
+          error={!!errorsContact?.email}
         />
         {errorsContact.email && (
           <p className="text-sm text-red-500 ml-1 px-4 ">
@@ -240,32 +198,19 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
       </div>
 
       <div className="relative z-0 w-full mb-5 group">
-        <label
-          htmlFor="phone"
-          className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-        >
-          Phone Number
-        </label>
-
-        <input
-          type="text"
-          name="phone"
-          id="phone"
+        <InputField
           value={phone}
-          // onChange={(e) => setPhone(e.target.value)}
-          onChange={handlePhoneChange}
-          className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-            errorsContact?.phone ? "border-red-500" : "border-[#938f99]"
-          } outline-none transition-all focus:border-[#2098ee]`}
-          placeholder=" Phone Number"
-          autoComplete="off"
+          onChange={(value: string) =>
+            handlePhoneChange({
+              target: { value },
+            } as React.ChangeEvent<HTMLInputElement>)
+          }
+          placeholder="Phone Number"
+          label="Phone Number"
+          inputMode="tel"
+          error={!!errorsContact?.phone}
         />
         {phoneError && <div className="mt-2 text-red-500">{phoneError}</div>}
-        {/* {errorsContact.phone && (
-          <p className="text-sm text-red-500 ml-1 px-4 ">
-            {errorsContact.phone}
-          </p>
-        )} */}
       </div>
 
       <div>
@@ -320,27 +265,18 @@ const StepThreeComponent: React.FC<StepThreeProps> = ({
         {/* Conditional Company Name Input */}
         {isDealer && (
           <div className="relative z-0 w-full mb-5 group">
-            <label className="absolute px-3 py-2 text-sm rounded-xl bg-[#2c2c2c]   text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-              {" "}
-              Company Name
-            </label>
-            <input
-              type="text"
-              placeholder="Enter your company name"
+            <InputField
               value={dealerCompanName}
-              // onChange={(e) => setDealerCompanName(e.target.value)}
-              onChange={(e) => {
-                setDealerCompanName(e.target.value);
+              onChange={(value) => {
+                setDealerCompanName(value);
                 setErrorsContact((prevErrors: any) => ({
                   ...prevErrors,
                   dealerCompanName: "",
-                })); // Clear error
+                }));
               }}
-              className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                errorsContact?.dealerCompanName
-                  ? "border-red-500"
-                  : "border-[#938f99]"
-              } outline-none transition-all focus:border-[#2098ee]`}
+              placeholder="Enter your company name"
+              label="Company Name"
+              error={!!errorsContact?.dealerCompanName}
             />
           </div>
         )}
