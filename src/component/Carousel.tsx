@@ -14,8 +14,10 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
 
-  const openModal = (image: string) => {
-    setModalImage(image);
+  const [modalIndex, setModalIndex] = useState<number>(0); // current index of modal image
+
+  const openModal = (index: number) => {
+    setModalIndex(index);
     setShowModal(true);
   };
 
@@ -43,7 +45,7 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
               src={image}
               className="w-full h-auto  lg:h-auto object-cover cursor-pointer"
               alt={`Slide ${index + 1}`}
-              onClick={() => openModal(image)}
+              onClick={() => openModal(index)}
             />
           </SwiperSlide>
         ))}
@@ -67,20 +69,37 @@ const Carousel: React.FC<CarouselProps> = ({ images }) => {
         }
       `}</style>
       {/* Modal for full-screen image */}
-      {showModal && modalImage && (
+      {showModal && (
         <div
-          className="fixed inset-0 bg-black/50 z-50 flex justify-center items-center"
+          className="fixed inset-0 bg-black/70 z-50 flex justify-center items-center"
           onClick={closeModal}
         >
-          <div className="relative" onClick={(e) => e.stopPropagation()}>
-            <img
-              src={modalImage}
-              className="max-w-full max-h-[90vh] rounded-lg"
-              alt="Modal"
-            />
+          <div
+            className="relative w-full max-w-4xl px-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Swiper
+              modules={[Navigation, Pagination]}
+              spaceBetween={10}
+              slidesPerView={1}
+              // navigation
+              pagination={{ clickable: true }}
+              initialSlide={modalIndex}
+              className="rounded-lg"
+            >
+              {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                  <img
+                    src={image}
+                    className="max-h-[90vh] w-full object-contain rounded-lg"
+                    alt={`Modal Slide ${index + 1}`}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
             <button
               onClick={closeModal}
-              className="absolute top-2 right-2 text-white text-4xl font-extrabold"
+              className="absolute top-2 right-4 z-52 text-white text-4xl font-bold"
             >
               &times;
             </button>

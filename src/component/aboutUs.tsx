@@ -68,17 +68,9 @@ const SectionOne = () => {
     <section id="about-us">
       <div className="w-full bg-[#2D2D2D]  py-12 md:py-6 p-6">
         <div className="container mx-auto relative ">
-          {/* <section id="quote" className="">
-            <p className="text-[20px] md:hidden text-white font-bold mb-2 text-center p-5">
-              Shipping Quote Calculator
-            </p>
-            <div className=" max-w-md w-full block md:hidden">
-              <QouetForm />
-            </div>
-          </section> */}
           <section
-            id="shiplux"
-            className="w-full h-fit flex flex-col-reverse  lg:flex-row gap-12 mb-[60px]"
+            id="about-us"
+            className="w-full h-fit flex flex-col lg:flex-row gap-12 mb-[60px]"
           >
             <div
               className="w-full lg:w-[50%] bg-[#2c2c2c] rounded-[32px] shadow-lg mt-12 lg:mt-0 "
