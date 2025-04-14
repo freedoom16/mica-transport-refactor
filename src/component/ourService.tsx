@@ -182,7 +182,7 @@ const Services = () => {
                 <img
                   alt="service image"
                   src="/car/USAMap.png"
-                  className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
+                  className="rounded-[24px] object-cover absolute inset-0 w-full h-[400px]"
                 />
               </div>
             )}
