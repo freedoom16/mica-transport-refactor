@@ -40,7 +40,7 @@ const CustomContentSection = () => {
         </div>
 
         {/* Button */}
-        <div className="block md:hidden py-2 ">
+        <div className="block xl:hidden py-2 ">
           <a
             id="lp-pom-button-237"
             href="/#quote-form"
@@ -57,7 +57,7 @@ const CustomContentSection = () => {
           </a>
         </div>
 
-        <div className="hidden w-full md:block py-2 ">
+        <div className="hidden w-full xl:block py-2 ">
           <a
             id="lp-pom-button-237"
             href="/#home"

@@ -2,6 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "react-time-picker";
+import {
+  RenderDatePicker,
+  RenderTimePicker,
+} from "../inputField/DateTimePickerSection";
 
 interface StepFourProps {
   // Pick Up Date and Time states
@@ -82,11 +86,6 @@ const StepDataTest: React.FC<StepFourProps> = ({
   setErrorsDateValidation,
   errorsDateValidation,
 }) => {
-  const [dateTest, setDateTest] = useState<Date | null>(null);
-
-  const minDateTest = "2025-03-15"; // Example min date
-  const maxDate = "2025-12-31"; // Example max date
-
   // Refs for focus management
   const singlePickUpDatePickerRef = useRef<any>(null);
   const rangePickUpStartDatePickerRef = useRef<any>(null);
@@ -148,158 +147,6 @@ const StepDataTest: React.FC<StepFourProps> = ({
     }
   }, [deliveryTimeOption]);
 
-  const validatePickUpDate = () => {
-    console.log("////// pick date time ", !pickUpDate, pickUpDate);
-
-    if (!pickUpDate) {
-      setErrorsDateValidation((prevState: any) => ({
-        ...prevState,
-        pickUpDate: "Pick-up Date is required.",
-      }));
-    } else {
-      setErrorsDateValidation((prevState: any) => ({
-        ...prevState,
-        pickUpDate: "",
-      }));
-    }
-
-    if (
-      pickUpDateOption === "between" &&
-      pickUpDateRangeEnd &&
-      pickUpDateRangeStart
-    ) {
-      if (pickUpDateRangeEnd <= pickUpDateRangeStart) {
-        setErrorsDateValidation((prevState: any) => ({
-          ...prevState,
-          pickUpDate: "To Date must be greater than From Date.",
-        }));
-      } else {
-        setErrorsDateValidation((prevState: any) => ({
-          ...prevState,
-          pickUpDate: "",
-        }));
-      }
-    }
-  };
-
-  const validateDeliveryDate = () => {
-    console.log("////// delivery date time ", !deliveryDate, deliveryDate);
-
-    setErrorsDateValidation((prevState: any) => {
-      const updatedErrors = { ...prevState };
-
-      // Check if deliveryDate is missing
-      if (!deliveryDate) {
-        updatedErrors.deliveryDate = "Delivery Date is required.";
-      } else {
-        updatedErrors.deliveryDate = "";
-      }
-
-      // Validate the "between" delivery date range
-      if (
-        deliveryDateOption === "between" &&
-        deliveryDateRangeEnd &&
-        deliveryDateRangeStart
-      ) {
-        if (deliveryDateRangeEnd <= deliveryDateRangeStart) {
-          updatedErrors.deliveryDate =
-            "To Date must be greater than From Date.";
-        } else if (
-          pickUpDateOption === "between" &&
-          pickUpDateRangeEnd &&
-          deliveryDateRangeStart <= pickUpDateRangeEnd
-        ) {
-          updatedErrors.deliveryDate =
-            "Delivery date cannot be earlier than pick-up date.";
-        } else {
-          updatedErrors.deliveryDate = "";
-        }
-      }
-
-      return updatedErrors;
-    });
-  };
-
-  const validatePickUpTime = () => {
-    console.log("////// pickup time ", !pickUpTime, pickUpTime);
-
-    if (!pickUpTime) {
-      setErrorsDateValidation((prevState: any) => ({
-        ...prevState,
-        pickUpTime: "Pick-up time is required.",
-      }));
-    } else {
-      setErrorsDateValidation((prevState: any) => ({
-        ...prevState,
-        pickUpTime: "",
-      }));
-    }
-
-    if (
-      pickUpTimeOption === "between" &&
-      pickUpTimeRangeEnd &&
-      pickUpTimeRangeStart
-    ) {
-      if (pickUpTimeRangeEnd <= pickUpTimeRangeStart) {
-        setErrorsDateValidation((prevState: any) => ({
-          ...prevState,
-          pickUpTime: "To Time must be later than From Time.",
-        }));
-      } else {
-        setErrorsDateValidation((prevState: any) => ({
-          ...prevState,
-          pickUpTime: "",
-        }));
-      }
-    }
-  };
-
-  const validateDeliveryTime = () => {
-    console.log("////// delivery time ", !deliveryTime);
-    if (!deliveryTime) {
-      setErrorsDateValidation((prevState: any) => ({
-        ...prevState,
-        deliveryTime: "Delivery time is required.",
-      }));
-    } else {
-      setErrorsDateValidation((prevState: any) => ({
-        ...prevState,
-        deliveryTime: "",
-      }));
-    }
-
-    if (
-      deliveryTimeOption === "between" &&
-      deliveryTimeRangeEnd &&
-      deliveryTimeRangeStart
-    ) {
-      if (deliveryTimeRangeEnd <= deliveryTimeRangeStart) {
-        setErrorsDateValidation((prevState: any) => ({
-          ...prevState,
-          deliveryTime: "To Time must be later than From Time.",
-        }));
-      } else {
-        setErrorsDateValidation((prevState: any) => ({
-          ...prevState,
-          deliveryTime: "",
-        }));
-      }
-
-      if (
-        deliveryTimeRangeStart &&
-        pickUpTimeOption === "between" &&
-        pickUpTimeRangeEnd &&
-        deliveryTimeRangeStart <= pickUpTimeRangeEnd &&
-        deliveryDate == pickUpDate
-      ) {
-        setErrorsDateValidation((prevState: any) => ({
-          ...prevState,
-          deliveryTime: "Delivery time cannot be earlier than pick-up time.",
-        }));
-      }
-    }
-  };
-
   const validateFieldsForTime = (
     field: "pickUpTime" | "deliveryTime",
     value: string | null
@@ -314,16 +161,6 @@ const StepDataTest: React.FC<StepFourProps> = ({
       } else {
         delete newErrors.pickUpTime; // No error
       }
-
-      // Validate the "between" pickUpTime range if options are set
-
-      // Additional validation for pickUpTime related to deliveryTime, if applicable
-      // if (deliveryTime && value && deliveryTime < value) {
-      //   newErrors.deliveryTime =
-      //     "Delivery time cannot be earlier than pick-up time.";
-      // } else {
-      //   delete newErrors.deliveryTime;
-      // }
     }
 
     if (field === "deliveryTime") {
@@ -373,22 +210,8 @@ const StepDataTest: React.FC<StepFourProps> = ({
       if (!value) {
         newErrors.pickUpDate = "Pickup date is required.";
       } else {
-        console.log("rrrrrrrrrr");
         delete newErrors.pickUpDate; // No error
       }
-
-      // Validate pickup date range if options are set
-      // if (
-      //   pickUpDateOption === "between" &&
-      //   pickUpDateRangeEnd &&
-      //   pickUpDateRangeStart
-      // ) {
-      //   if (pickUpDateRangeEnd <= pickUpDateRangeStart) {
-      //     newErrors.pickUpDate = "To Date must be greater than From Date.";
-      //   } else {
-      //     delete newErrors.pickUpDate; // No error
-      //   }
-      // }
 
       // Ensure deliveryDate is validated relative to the new pickupDate
       if (deliveryDate && value && deliveryDate < value) {
@@ -439,9 +262,6 @@ const StepDataTest: React.FC<StepFourProps> = ({
   };
 
   const handleDateChange = async (date: any, label: any) => {
-    console.log("--------- ", date);
-    console.log(label);
-
     if (label === "Pick Up Date") {
       setPickUpDate(date);
       validateFields("pickupDate", date); // Await the validation function
@@ -579,210 +399,7 @@ const StepDataTest: React.FC<StepFourProps> = ({
     setErrorsDateValidation(newErrors); // Update errors state
   };
 
-  const renderDatePicker = (
-    option: string,
-    singleRef: React.RefObject<any>,
-    rangeStartRef: React.RefObject<any>,
-    date: Date | null,
-    setDate: (value: Date | null) => void,
-    dateRangeStart: Date | null,
-    setDateRangeStart: (value: Date | null) => void,
-    dateRangeEnd: Date | null,
-    setDateRangeEnd: (value: Date | null) => void,
-    minDate: Date | null,
-    label: string
-  ) => {
-    const today = new Date();
-
-    if (option === "between") {
-      return (
-        <div className="mt-4 space-y-4">
-          <div className="flex space-x-4">
-            <div className="w-1/2">
-              <label className="absolute z-1 px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-                From Date
-              </label>
-              <DatePicker
-                selected={dateRangeStart}
-                onChange={(date) => handleRangeChange(date, label, true)}
-                minDate={minDate || today} // Disable dates before today
-                placeholderText={"select from date"}
-                // ref={rangeStartRef}
-                // maxDate={new Date(maxDate)}
-                // className="py-2 px-4 text-white rounded-md border border-gray-400 "
-                // withPortal={true}
-                className="w-full  h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
-                popperClassName="w-full z-50  text-right justify-center font-bold"
-                required
-              />
-            </div>
-            <div className="w-1/2">
-              <label className="absolute z-1  px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-                To Date
-              </label>
-              <DatePicker
-                selected={dateRangeEnd}
-                // onChange={(date) => setDateRangeEnd(date)}
-                onChange={(date) => handleRangeChange(date, label, false)}
-                minDate={
-                  dateRangeStart
-                    ? new Date(
-                        new Date(dateRangeStart).getTime() + 24 * 60 * 60 * 1000
-                      )
-                    : minDate || today
-                }
-                placeholderText={"select to date"}
-                // maxDate={new Date(maxDate)}
-                // className="py-2 px-4 text-white rounded-md border border-gray-400 "
-                // withPortal={true}
-                className="w-full  h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
-                popperClassName="z-50  text-left justify-center font-bold"
-                required
-              />
-            </div>
-          </div>
-          {pickUpDateRangeStart &&
-            pickUpDateRangeEnd &&
-            pickUpDateRangeEnd <= pickUpDateRangeStart && (
-              <p className="text-sm text-red-500">
-                To Date must be greater than From Date.
-              </p>
-            )}
-        </div>
-      );
-    } else if (option) {
-      return (
-        <div className="w-full">
-          <div className="mb-4   mt-4 ">
-            <label
-              //for="origin_postal_code"
-              className="absolute z-1 bg-[#2c2c2c] px-3 py-2 text-sm rounded-xl text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all"
-            >
-              {label}
-            </label>
-            <div className="w-full">
-              <DatePicker
-                selected={date}
-                // onChange={(date) => setDate(date)}
-                onChange={(date) => handleDateChange(date, label)}
-                minDate={minDate || new Date()}
-                placeholderText={"select " + label}
-                // ref={singleRef}
-                // withPortal={true}
-                className={`w-[100%] h-14 px-3 z-50 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-                  (
-                    label === "Pick Up Date"
-                      ? errorsDateValidation.pickUpDate
-                      : errorsDateValidation.deliveryDate
-                  )
-                    ? "border-red-500"
-                    : "border-[#938f99]"
-                } outline-none transition-all focus:border-[#2098ee]`}
-                popperClassName="w-full z-50  text-right justify-center font-bold"
-                disabledKeyboardNavigation={true}
-              />
-            </div>
-          </div>
-        </div>
-      );
-    }
-  };
-
   console.log("error validation ", errorsDateValidation);
-
-  const renderTimePicker = (
-    option: string,
-    singleRef: React.RefObject<any>,
-    rangeStartRef: React.RefObject<any>,
-    time: string,
-    setTime: (value: string) => void,
-    timeRangeStart: string,
-    setTimeRangeStart: (value: string) => void,
-    timeRangeEnd: string,
-    setTimeRangeEnd: (value: string) => void,
-    label: string
-  ) => {
-    if (option === "between") {
-      return (
-        <div className="mt-4 space-y-4">
-          <div className="flex space-x-4">
-            <div className="w-1/2">
-              <label className="absolute px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-                {" "}
-                From Time
-              </label>
-              <input
-                type="time"
-                value={timeRangeStart}
-                // onChange={(e) => setTimeRangeStart(e.target.value)}
-                onChange={(e) => {
-                  setTimeRangeStart(e.target.value);
-                  handleRangeChangeForTime(e.target.value, label, true); // Start time
-                }}
-                className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
-                // ref={rangeStartRef}
-                onFocus={(e) => e.target.showPicker && e.target.showPicker()}
-                required
-              />
-            </div>
-            <div className="w-1/2">
-              <label className="absolute px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-                {" "}
-                To Time
-              </label>
-              <input
-                type="time"
-                value={timeRangeEnd}
-                // onChange={(e) => setTimeRangeEnd(e.target.value)}
-                onChange={(e) => {
-                  setTimeRangeEnd(e.target.value);
-                  handleRangeChangeForTime(e.target.value, label, false); // End time
-                }}
-                className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
-                min={timeRangeStart || "00:00"}
-                onFocus={(e) => e.target.showPicker && e.target.showPicker()}
-                required
-              />
-            </div>
-          </div>
-          {timeRangeStart && timeRangeEnd && timeRangeEnd <= timeRangeStart && (
-            <p className="text-sm text-red-500">
-              To Time must be later than From Time.
-            </p>
-          )}
-        </div>
-      );
-    } else if (option) {
-      return (
-        <div className="mt-4">
-          <label className=" px-3 py-2  text-sm rounded-xl bg-[#2c2c2c]  text-white transform translate-x-2.5 -translate-y-3.5 scale-[0.75] origin-[left_top] transition-all">
-            {" "}
-            {label}
-          </label>
-
-          <input
-            type="time"
-            value={time}
-            // onChange={(e) => setTime(e.target.value)}
-            onChange={(date) => handleTimeChange(date.target.value, label)}
-            // className="w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border border-[#938f99] outline-none transition-all focus:border-[#2098ee] focus:ring-1 focus:ring-[#6DB8D1]"
-            className={`w-full h-14 px-3 py-2 text-sm text-white rounded-xl bg-[#2c2c2c] border ${
-              (
-                label === "Pick Up Time"
-                  ? errorsDateValidation.pickUpTime
-                  : errorsDateValidation.deliveryTime
-              )
-                ? "border-red-500"
-                : "border-[#938f99]"
-            } outline-none transition-all focus:border-[#2098ee]`}
-            // ref={singleRef}
-            onFocus={(e) => e.target.showPicker && e.target.showPicker()}
-            required
-          />
-        </div>
-      );
-    }
-  };
 
   return (
     <div className=" space-y-3 md:space-y-6">
@@ -823,24 +440,20 @@ const StepDataTest: React.FC<StepFourProps> = ({
           <option value="after">After</option>
           <option value="between">Between</option>
         </select>
-        {renderDatePicker(
-          pickUpDateOption,
-          singlePickUpDatePickerRef,
-          rangePickUpStartDatePickerRef,
-          pickUpDate,
-          setPickUpDate,
-          pickUpDateRangeStart,
-          setPickUpDateRangeStart,
-          pickUpDateRangeEnd,
-          setPickUpDateRangeEnd,
-          null,
-          "Pick Up Date"
-        )}
-        {/* {errorsDateValidation.pickUpDate && (
-          <p className="text-sm px-2 text-red-500">
-            {errorsDateValidation.pickUpDate}
-          </p>
-        )} */}
+        <RenderDatePicker
+          option={pickUpDateOption}
+          date={pickUpDate}
+          onChange={setPickUpDate}
+          rangeStart={pickUpDateRangeStart}
+          setRangeStart={setPickUpDateRangeStart}
+          rangeEnd={pickUpDateRangeEnd}
+          setRangeEnd={setPickUpDateRangeEnd}
+          minDate={null}
+          label="Pick Up Date"
+          error={!!errorsDateValidation.pickUpDate}
+          handleDateChange={handleDateChange}
+          handleRangeChange={handleRangeChange}
+        />
       </div>
       {/* Pick Up Time */}
       <div className="relative  w-full mb-5 group">
@@ -874,23 +487,18 @@ const StepDataTest: React.FC<StepFourProps> = ({
           <option value="after">After</option>
           <option value="between">Between</option>
         </select>
-        {renderTimePicker(
-          pickUpTimeOption,
-          singlePickUpTimePickerRef,
-          rangePickUpStartTimePickerRef,
-          pickUpTime,
-          setPickUpTime,
-          pickUpTimeRangeStart,
-          setPickUpTimeRangeStart,
-          pickUpTimeRangeEnd,
-          setPickUpTimeRangeEnd,
-          "Pick Up Time"
-        )}
-        {/* {errorsDateValidation.pickUpTime && (
-          <p className="text-sm px-2 text-red-500">
-            {errorsDateValidation.pickUpTime}
-          </p>
-        )} */}
+        <RenderTimePicker
+          option={pickUpTimeOption}
+          time={pickUpTime}
+          onChange={setPickUpTime}
+          rangeStart={pickUpTimeRangeStart}
+          setRangeStart={setPickUpTimeRangeStart}
+          rangeEnd={pickUpTimeRangeEnd}
+          setRangeEnd={setPickUpTimeRangeEnd}
+          label="Pick Up Time"
+          handleTimeChange={handleTimeChange}
+          handleRangeChangeForTime={handleRangeChangeForTime}
+        />
       </div>
       <div className=" text-center text-white p-1 font-bold">
         Delivery Information
@@ -924,28 +532,20 @@ const StepDataTest: React.FC<StepFourProps> = ({
           <option value="after">After</option>
           <option value="between">Between</option>
         </select>
-        {renderDatePicker(
-          deliveryDateOption,
-          singleDeliverDatePickerRef,
-          rangeDeliverStartDatePickerRef,
-          deliveryDate,
-          setDeliveryDate,
-          deliveryDateRangeStart,
-          setDeliveryDateRangeStart,
-          deliveryDateRangeEnd,
-          setDeliveryDateRangeEnd,
-          pickUpDateOption === "between" && pickUpDateRangeEnd
-            ? new Date(new Date(pickUpDateRangeEnd).getTime())
-            : pickUpDate
-            ? new Date(new Date(pickUpDate).getTime())
-            : null,
-          "Delivery Date"
-        )}
-        {/* {errorsDateValidation.deliveryDate && (
-          <p className="text-sm px-2 text-red-500">
-            {errorsDateValidation.deliveryDate}
-          </p>
-        )} */}
+        <RenderDatePicker
+          option={deliveryDateOption}
+          date={deliveryDate}
+          onChange={setDeliveryDate}
+          rangeStart={deliveryDateRangeStart}
+          setRangeStart={setDeliveryDateRangeStart}
+          rangeEnd={deliveryDateRangeEnd}
+          setRangeEnd={setDeliveryDateRangeEnd}
+          minDate={pickUpDate} // You can make sure delivery date is after pickup
+          label="Delivery Date"
+          error={!!errorsDateValidation.deliveryDate}
+          handleDateChange={handleDateChange}
+          handleRangeChange={handleRangeChange}
+        />
       </div>
       {/* Delivery Time */}
       <div className="relative  w-full mb-5 group">
@@ -979,23 +579,18 @@ const StepDataTest: React.FC<StepFourProps> = ({
           <option value="after">After</option>
           <option value="between">Between</option>
         </select>
-        {renderTimePicker(
-          deliveryTimeOption,
-          singleDeliverTimePickerRef,
-          rangeDeliverStartTimePickerRef,
-          deliveryTime,
-          setDeliveryTime,
-          deliveryTimeRangeStart,
-          setDeliveryTimeRangeStart,
-          deliveryTimeRangeEnd,
-          setDeliveryTimeRangeEnd,
-          "Delivery Time"
-        )}
-        {/* {errorsDateValidation.deliveryTime && (
-          <p className="text-sm px-2 text-red-500">
-            {errorsDateValidation.deliveryTime}
-          </p>
-        )} */}
+        <RenderTimePicker
+          option={deliveryTimeOption}
+          time={deliveryTime}
+          onChange={setDeliveryTime}
+          rangeStart={deliveryTimeRangeStart}
+          setRangeStart={setDeliveryTimeRangeStart}
+          rangeEnd={deliveryTimeRangeEnd}
+          setRangeEnd={setDeliveryTimeRangeEnd}
+          label="Delivery Time"
+          handleTimeChange={handleTimeChange}
+          handleRangeChangeForTime={handleRangeChangeForTime}
+        />
       </div>
       <div className="text-center"></div>{" "}
     </div>

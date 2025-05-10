@@ -91,7 +91,9 @@ const Services = () => {
                     height="24"
                     loading="lazy"
                     className={
-                      selectedService === service.title ? "rotate-90" : ""
+                      selectedService === service.title
+                        ? "rotate-90 lg:rotate-0"
+                        : " lg:rotate-90"
                     }
                     style={{ transition: "transform 0.3s ease" }}
                   />
@@ -123,7 +125,7 @@ const Services = () => {
                       <div>
                         <img
                           alt="service image"
-                          src="/car/USAMap.jpg"
+                          src="/car/USAMap.png"
                           className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
                         />
                       </div>
@@ -179,8 +181,8 @@ const Services = () => {
                 {" "}
                 <img
                   alt="service image"
-                  src="/car/USAMap.jpg"
-                  className="rounded-[24px] object-cover absolute inset-0 w-full h-full"
+                  src="/car/USAMap.png"
+                  className="rounded-[24px] object-cover absolute inset-0 w-full h-[400px]"
                 />
               </div>
             )}

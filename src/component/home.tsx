@@ -4,13 +4,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FeaturesBox from "./featureBox";
 import HomePageForm from "./quoetForm";
-import imageTruck from "../../public/img/download6.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCar } from "@fortawesome/free-solid-svg-icons";
 export interface IHomeProps {}
 
 export default function Home(props: IHomeProps) {
   const [quotes, setQuotes] = useState([]);
+  const [bgIndex, setBgIndex] = useState(0); // to rotate images
+
+  const bgImages = ["/img/download10.jpeg", "/img/download11.jpg"];
 
   useEffect(() => {
     const fetchQuotes = async () => {
@@ -24,36 +26,29 @@ export default function Home(props: IHomeProps) {
 
     fetchQuotes();
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBgIndex((prevIndex) => (prevIndex + 1) % bgImages.length);
+    }, 5000); // change every 5 seconds
+
+    return () => clearInterval(interval); // cleanup on unmount
+  }, []);
+
   const [showForm, setShowForm] = useState(false);
 
   return (
     <section id="home">
-      {/* <div
-        id="section-1"
-        className="relative block w-full h-[900px] mx-auto bg-gradient-to-r from-[#425059] to-[#9e9fa0] bg-opacity-70 bg-center bg-cover bg-no-repeat"
-      > */}
-      {/* <div
-        id="section-1"
-        className="relative block w-full z-20 h-[762px] lg:h-full mx-auto  bg-center bg-cover bg-no-repeat text-white"
-        style={{
-          backgroundImage: `url('/img/download10.jpeg')`,
-          backgroundSize: "cover", // Ensures the image covers the full div
-          backgroundPosition: "center", // Centers the image
-          backgroundRepeat: "no-repeat", // Prevents repeating
-          width: "100vw", // Full viewport width
-          height: "100vh", // Full viewport height
-        }}
-      > */}
       <div
         id="section-1"
         className="relative w-full h-screen text-white"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(66, 80, 89, 0.7), rgba(158, 159, 160, 0.1)), url('/img/download10.jpeg')`,
+          backgroundImage: `linear-gradient(to right, rgba(66, 80, 89, 0.7), rgba(158, 159, 160, 0.1)), url('${bgImages[bgIndex]}')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          width: "100vw",
-          height: "100vh",
+          // width: "100vw",
+          // height: "100vh",
         }}
       >
         {/* Overlay */}
@@ -102,27 +97,11 @@ export default function Home(props: IHomeProps) {
             </div>
           </div>
 
-          {/* Right Section: Form */}
-          {/* <div className=" z-[150] px-4 rounded-xl  max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[800px]">
-            <HomePageForm />
-          </div> */}
-
           {showForm && (
             <div className="z-[150]  rounded-[32px] max-w-lg w-full mt-6 md:mt-12 hidden xl:block min-h-[500px] max-h-[700px] overflow-y-auto">
               <HomePageForm />
             </div>
           )}
-
-          {/* <div
-            className="absolute right-8 top-full transform -translate-y-1/2 z-[150] p-4 rounded-xl max-w-lg w-full"
-            style={{
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              height: "400px", // Fixed height
-              overflowY: "auto", // Add scrolling for content
-            }}
-          >
-            <HomePageForm />
-          </div> */}
         </div>
       </div>
     </section>

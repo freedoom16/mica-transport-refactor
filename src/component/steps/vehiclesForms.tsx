@@ -1,3 +1,4 @@
+import { Vehicle } from "@/types/vehicleTypes";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
@@ -161,52 +162,66 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
     setErrors(newErrors);
   };
 
-  console.log(errors);
-  const scrollToQuote = () => {
-    // Use a setTimeout to ensure the DOM is ready before scrolling
-    setTimeout(() => {
-      const quoteElement = document.getElementById("quote-form");
-      if (quoteElement) {
-        quoteElement.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        console.log("Could not find the quote section to scroll.");
-      }
-    }, 300); // Adjust the timeout if needed (300ms delay gives time for rendering)
+  const createEmptyVehicle = (): Vehicle => ({
+    vehicleMaker: "",
+    vehicleModel: "",
+    vehicleYear: null,
+    type: "",
+    isDrivable: null,
+    category: "",
+    vehicleId: null,
+  });
+
+  const resetForm = () => {
+    setMakerInput("");
+    setModelInput("");
+    setYearInput("");
+    setType("");
+    setCategoryInput("");
+    setSameLocation(null);
+    setIsDrivable(null);
+
+    setFilteredMakers([]);
+    setFilteredModels([]);
+    setSelectedMaker("");
   };
 
   const handleAddVehicle = () => {
     console.log("type ", currentVehicleIndex);
+    const updatedVehiclesUndefined = vehicles.filter(
+      (v: any) => v !== undefined
+    );
+
+    setVehicles(updatedVehiclesUndefined);
+
+    const currentVehicle =
+      vehicles[currentVehicleIndex] || createEmptyVehicle();
+
+    const {
+      vehicleMaker,
+      vehicleModel,
+      vehicleYear,
+      type,
+      isDrivable,
+      category,
+    } = currentVehicle;
 
     if (
-      !vehicles[currentVehicleIndex].vehicleMaker ||
-      !vehicles[currentVehicleIndex].vehicleModel ||
-      !vehicles[currentVehicleIndex].vehicleYear ||
-      vehicles[currentVehicleIndex].isDrivable === null ||
-      !vehicles[currentVehicleIndex].type ||
-      !vehicles[currentVehicleIndex].category
+      !vehicleMaker ||
+      !vehicleModel ||
+      !vehicleYear ||
+      isDrivable === null ||
+      !type ||
+      !category
     ) {
       const newErrors = {
-        vehicleMaker: vehicles[currentVehicleIndex].vehicleMaker
-          ? ""
-          : "Vehicle maker is required",
-        vehicleModel: vehicles[currentVehicleIndex].vehicleModel
-          ? ""
-          : "Vehicle model is required",
-        vehicleYear: vehicles[currentVehicleIndex].vehicleYear
-          ? ""
-          : "Vehicle year is required",
-        isDrivable:
-          (vehicles[currentVehicleIndex].isDrivable === null) !== null
-            ? ""
-            : "Drivable status is required",
-        type: vehicles[currentVehicleIndex].type
-          ? ""
-          : "This field is required",
-        category: vehicles[currentVehicleIndex].category
-          ? ""
-          : "Vehicle catagory is required",
+        vehicleMaker: vehicleMaker ? "" : "Vehicle maker is required",
+        vehicleModel: vehicleModel ? "" : "Vehicle model is required",
+        vehicleYear: vehicleYear ? "" : "Vehicle year is required",
+        isDrivable: isDrivable !== null ? "" : "Drivable status is required",
+        type: type ? "" : "This field is required",
+        category: category ? "" : "Vehicle category is required",
       };
-
       setErrors(newErrors);
       return;
     }
@@ -217,33 +232,15 @@ const VehicleForm: React.FC<VehicleFormProps> = ({
     // return Object.values(newErrors).every((error) => !error);
 
     const updatedVehicles = [...vehicles];
-
-    // Update the vehicle at the current index or add a new one
     updatedVehicles[currentVehicleIndex] = {
-      vehicleMaker: vehicles[currentVehicleIndex].vehicleMaker,
-      vehicleModel: vehicles[currentVehicleIndex].vehicleModel,
-      vehicleYear: vehicles[currentVehicleIndex].vehicleYear,
-      type: vehicles[currentVehicleIndex].type,
-      isDrivable: vehicles[currentVehicleIndex].isDrivable,
-      category: vehicles[currentVehicleIndex].category,
+      ...currentVehicle,
       sameLocation: true,
       vehicleId: generateRandomId,
     };
 
-    // setVehicles(updatedVehicles);
     setVehicles(updatedVehicles.filter((v) => v !== undefined));
 
-    // Reset the form fields
-    setMakerInput("");
-    setModelInput("");
-    setYearInput("");
-    setType("");
-    setCategoryInput("");
-    setSameLocation(null);
-    setIsDrivable(null);
-    setFilteredMakers([]);
-    setFilteredModels([]);
-    setSelectedMaker("");
+    resetForm();
 
     // Optionally increment the index for adding new vehicles
     setCurrentVehicleIndex((prevIndex) => vehicles.length);
